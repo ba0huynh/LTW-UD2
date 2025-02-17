@@ -1,0 +1,26 @@
+html {
+  font-family: sans-serif;
+}
+main {
+  width: 100vw;
+  background-color: #F0F0F0;
+}
+
+.cta-button {
+  background-color: #c92127;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px hsl(0, 0%, 90%);
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  height: 40px;
+  width: 220px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+}
