@@ -11,8 +11,8 @@ const ProductDetail = () => {
             <h1>
                 Tây du kí
             </h1>
-            <div className="price-box">
-                <p className="price">50.000đ</p>
+            <div className="flex flex-row gap-2.5 items-center">
+                <p className="text-[#c92127] font-bold text-[32px]">50.000đ</p>
                 <p className="old-price">70.000đ</p>
                 <div className="discount-percent">-15%</div>
             </div>

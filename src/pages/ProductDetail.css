@@ -25,18 +25,7 @@ section{
     margin: 0;
 }
 
-.price-box{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-}
-.price{
-color: #c92127;
-font-weight: 700;
-font-size: 32px;
-line-height: 32px;
-}
+
 
 .old-price{
     color: #888888;
