@@ -3,7 +3,7 @@ import "./ProductDetail.css";
 const ProductDetail = () => {
   return (
     <div className="main">
-      <div className="product-detail">
+      <div className="flex flex-row justify-evenly p-6">
         <section className="left-product-details">
           <img src="" alt="" />
           <div className="mt-6 flex gap-2">
