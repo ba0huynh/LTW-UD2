@@ -137,7 +137,7 @@ class product
 
     public function updateImageProduct($idImage, $image)
     {
-        require_once __DIR__ . '../handle.php';
+        require_once __DIR__ . '    ../handle.php';
         $imageSQL = changeImageProduct($image, $idImage, $this->db);
         $sql = "UPDATE imageproducts SET image = '$imageSQL'
             WHERE idImage = $idImage";
