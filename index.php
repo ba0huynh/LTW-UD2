@@ -17,7 +17,6 @@ require_once("./database/database.php");
 
     <!-- custom css -->
     <link rel="stylesheet" href="">
-
 </head>
 
 <body>

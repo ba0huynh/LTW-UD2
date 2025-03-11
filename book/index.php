@@ -20,10 +20,15 @@ if ($bookId == null) {
 <html lang="en">
 
 <head>
+  <script defer src="../javascript/counter.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="../global.css">
+  <link
+    href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+    rel="stylesheet" type='text/css'>
   <style type="text/tailwindcss">
     @theme {
         --color-clifford: #da373d;
@@ -33,10 +38,10 @@ if ($bookId == null) {
 
 <body>
 
-  <div class="bg-[#fff1f2]">
-    <div class="flex flex-row justify-center gap-6 p-6">
-      <section class="bg-white rounded-lg p-6">
-        <img src="" alt="" />
+  <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
+    <div class="flex flex-col sm:flex-row justify-center w-full gap-6">
+      <section class="bg-white rounded-lg p-6 flex-1">
+        <img src="https://book.sachgiai.com/uploads/book/sach-giao-khoa-tieng-viet-1-tap-1/tieng-viet-1-tap-1-0.jpg" class="max-h-[600px] w-full object-contain" alt="" />
         <div class="mt-6 flex gap-2">
           <button class="flex-1 border border-red-500 text-red-500 py-2 rounded-lg flex items-center justify-center gap-2">
             🛒 Thêm vào giỏ hàng
@@ -46,34 +51,19 @@ if ($bookId == null) {
           </button>
         </div>
 
-        <div class="mt-6">
-          <h3 class="font-bold text-gray-900">
-            Chính sách ưu đãi của Fahasa
-          </h3>
-          <ul class="mt-2 space-y-2 text-sm text-gray-700">
-            <li class="flex items-center gap-2">
-              🚚 <strong>Thời gian giao hàng:</strong> Giao nhanh và uy tín
-            </li>
-            <li class="flex items-center gap-2">
-              🔄 <strong>Chính sách đổi trả:</strong> Đổi trả miễn phí toàn
-              quốc
-            </li>
-            <li class="flex items-center gap-2">
-              🏬 <strong>Chính sách khách sỉ:</strong> Ưu đãi khi mua số lượng
-              lớn
-            </li>
-          </ul>
-        </div>
+
       </section>
-      <div class="gap-4 flex flex-col max-w-[60%]">
+      <div class="gap-4 flex flex-col flex-1">
         <section class="bg-white rounded-lg p-6">
           <h1 class="text-2xl font-semibold"><?php echo $book['bookName'] ?></h1>
           <div class="mt-2 text-sm text-gray-700">
             <div class="flex -flex-row justify-between mr-10">
               <div class="flex flex-col gap-2.5">
                 <p>
-                  <span class="font-medium">Nhà cung cấp:</span>
-                  <span class="text-blue-600">NXB Trẻ</span>
+                  <span class="font-medium">Đã bán:</span>
+                  <span class="font-bold">
+                    <?php echo $book['quantitySold'] ?>
+                  </span>
                 </p>
                 <p>
                   <span class="font-medium">Môn:</span>
@@ -84,8 +74,8 @@ if ($bookId == null) {
               </div>
               <div class="flex flex-col gap-2.5">
                 <p>
-                  <span class="font-medium">Tác giả:</span>
-                  <span class="font-bold">Hajime Isayama</span>
+                  <span class="font-medium">Đánh giá:</span>
+                  <span class="font-bold"><?php  ?></span>
                 </p>
                 <p>
                   <span class="font-medium">Lớp:</span>
@@ -103,6 +93,20 @@ if ($bookId == null) {
         </section>
         <section class="bg-white rounded-lg p-6">
           <h2>Thông tin chi tiết</h2>
+          <div class="flex flex-row gap-4 items-center ">
+            <button class="mt-[-5px] cursor-pointer decrement">-</button>
+            <p class="counter">0</p>
+            <button class="increment cursor-pointer">+</button>
+
+          </div>
+          <div class="mt-6 flex gap-2">
+            <button class="flex-1 cursor-pointer border border-red-500 text-red-500 py-2 rounded-lg flex items-center justify-center gap-2">
+              🛒 Thêm vào giỏ hàng
+            </button>
+            <button class="flex-1 bg-red-500 cursor-pointer text-white py-2 rounded-lg">
+              Mua ngay
+            </button>
+          </div>
           <div class="mt-2 text-sm text-gray-700 max-w-[500px]">
             <?php
             $a = 0;
@@ -116,6 +120,9 @@ if ($bookId == null) {
 
       </div>
     </div>
+    <?php
+    include_once "../zui/BookReviewsSection.php"
+    ?>
   </div>
 
 </body>
