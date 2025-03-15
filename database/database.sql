@@ -116,6 +116,8 @@ CREATE TABLE
     email varchar(100) DEFAULT NULL,
     avatar varchar(100) DEFAULT './avatar/default-avatar.jpg',
     status int DEFAULT '1',
+    `createAt` timestamp null default CURRENT_TIMESTAMP,
+    `updateAt` timestamp null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
   )
 INSERT INTO
   users (
@@ -200,20 +202,36 @@ CREATE TABLE
     quantity int DEFAULT NULL,
     total int DEFAULT NULL
   )
+
+CREATE TABLE `inforDelivering`(
+  `idReceipt` varchar(100) DEFAULT NULL,
+  `userName` varchar(100) DEFAULT NULL,
+  `shippingAddress` varchar(250) DEFAULT NULL,
+  `phoneNumber` varchar(11) DEFAULT NULL,
+  `approvalTime` timestamp NULL DEFAULT NULL,
+  `deliveryTime` timestamp NULL DEFAULT NULL,
+  `iDpaymentMethod` varchar(250) DEFAULT NULL,
+)
+create table `paymentMethod`(
+  `idMethod` int not null,
+  `nameMethod` varchar(20) not null
+)
+insert into table `paymentMethod` (`idMethod`,`nameMethod`)
+values 
+(1,`Cash on Delivery`),
+(2,`Bank Transfer`)
+
 CREATE TABLE
   bills (
+    `iDpaymentMethod` varchar(250) DEFAULT NULL,
     idBill int NOT NULL,
     idUser int DEFAULT NULL,
     receiver varchar(100) DEFAULT NULL,
-    shippingAddress varchar(250) DEFAULT NULL,
-    phoneNumber varchar(11) DEFAULT NULL,
     totalBill double DEFAULT NULL,
-    paymentMethod varchar(250) DEFAULT NULL,
     statusBill int DEFAULT '1',
     statusRemove int DEFAULT '0',
     orderTime timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     approvalTime timestamp NULL DEFAULT NULL,
-    deliveryTime timestamp NULL DEFAULT NULL,
     completionTime timestamp NULL DEFAULT NULL
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -228,28 +246,74 @@ CREATE TABLE
     updateAt timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
+
+
 CREATE TABLE
   imageproducts (
     idImage int NOT NULL,
     idProduct int DEFAULT NULL,
     image varchar(200) DEFAULT NULL
   )
+
+create table `roledetail`(
+    `idRole` int default null,
+    `idPermission` int default null,
+    `idTask` int default null
+);
+
+create table `tasks`(
+    `idTask` int not null,
+    `taskName` varchar(50) default null
+);
+
+create table `permissiongroups`(
+    `idPermision` int not null,
+    `permissionName` varchar(100) default null
+);
+
+
+
+
+INSERT INTO `permissiongroups` (`idPermission`, `permissionName`) VALUES
+(1, 'Quản lý khách hàng'),
+(2, 'Quản lý nhân viên'),
+(3, 'Quản lý sản phẩm'),
+(4, 'Quản lý bán hàng'),
+(5, 'Quản lý phân quyền'),
+(6, 'Quản lý danh mục'),
+
+INSERT INTO `tasks` (`idTask`, `taskName`) VALUES
+(1, 'thêm'),
+(2, 'xoá'),
+(3, 'sửa'),
+(4, 'xem');
+
+INSERT INTO `roledetail` (`idRole`, `idPermission`, `idTask`) VALUES
+(2, 3, 1),
+(2, 3, 2),
+(2, 3, 3),
+(2, 4, 1),
+(2, 4, 2),
+(2, 4, 3),
+(2, 5, 1),
+(2, 5, 2),
+(2, 5, 3),
 CREATE TABLE
   roles (
     idRole int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     roleName varchar(100) DEFAULT NULL,
   )
-INSERT INTO
-  roles (roleName)
-VALUES
-  ('customer'),
-  ('admin');
+  
+INSERT INTO `roles` (`idRole`, `roleName`, `createAt`, `updateAt`) VALUES
+(1, 'Khách hàng', '2025-02-26 14:09:11', '2025-02-26 14:09:11'),
+(2, 'Admin', '2025-02-26 14:09:11', '2025-02-27 12:53:57');
 
-CREATE TABLE
-  usershippingaddress (
-    id int NOT NULL,
-    userId int DEFAULT NULL,
-    phoneNumber varchar(11) DEFAULT NULL,
-    address varchar(250) DEFAULT NULL,
-    status int DEFAULT '0',
-  )
+
+-- CREATE TABLE
+--   usershippingaddress (
+--     id int NOT NULL,
+--     userId int DEFAULT NULL,
+--     phoneNumber varchar(11) DEFAULT NULL,
+--     address varchar(250) DEFAULT NULL,
+--     status int DEFAULT '0',
+--   )

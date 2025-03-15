@@ -43,7 +43,9 @@
         </div>
         <div class="flex flex-row items-center flex-1 justify-center">
 
-            <p>Chỉ có thành viên mới có thể viết nhận xét. Vui lòng <a class="text-blue-500" href="/">đăng nhập</a> hoặc <a class="text-blue-500" href="/">đăng ký<a>.</p>
+            <p>
+                Chỉ có thành viên mới có thể viết nhận xét. Vui lòng 
+                <a class="text-blue-500" href="/">đăng nhập</a> hoặc <a class="text-blue-500" href="/">đăng ký<a>.</p>
         </div>
     </div>
     <div class="w-full h-[1px] bg-gray-200 my-[10px]"></div>
@@ -70,5 +72,5 @@
                 <p>hihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihihi</p>
             </div>
         </div>
-    </div>
+    </div> 
 </section>
