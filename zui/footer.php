@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,45 +8,56 @@
     <title>Document</title>
 </head>
 <style>
-    ul,li{
+    ul,
+    li {
         list-style-type: none;
         margin: 10px 0 !important;
     }
-    body{
+
+    body {
         margin: 0;
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 18px;
     }
-    .left-footer h1{
+
+    .left-footer h1 {
         color: red;
     }
-    h4{
+
+    h4 {
         width: 100%;
     }
-    .footer{
+
+    .footer {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
         padding: 20px 10%;
     }
-    .icon{
+
+    .icon {
         font-size: 45px;
     }
-    .left-footer{
+
+    .left-footer {
         width: 26%;
         border-right: 2px solid;
         margin: 2px 0;
     }
+
     .left-footer p {
         margin: 5px;
     }
+
     .infor {
         width: 33%;
     }
-    .infor li{
+
+    .infor li {
         text-align: left;
     }
+
     .right-footer {
         width: 70%;
         display: flex;
@@ -54,13 +66,15 @@
         margin: 20px 0;
         padding: 10px;
     }
+
     #contact {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between; 
+        justify-content: space-between;
         align-items: flex-start
     }
+
     .footer-li li {
         position: relative;
         font-size: 16px;
@@ -70,27 +84,30 @@
         transition: transform 0.3s ease-in-out, color 0.3s;
         cursor: pointer;
     }
+
     .footer-li li::before {
-        content: "—"; 
+        content: "—";
         position: absolute;
         left: -20px;
         color: pink;
         opacity: 0;
         transition: left 0.3s ease-in-out, opacity 0.3s;
     }
-    
+
     .footer-li li:hover {
-        transform: translateX(10px); 
-        color: pink; 
+        transform: translateX(10px);
+        color: pink;
     }
-    
+
     .footer-li li:hover::before {
-        left: -10px; 
+        left: -10px;
         opacity: 1;
     }
+
     #contact span {
         width: 30%;
     }
+
     .images {
         display: flex;
         flex-wrap: wrap;
@@ -98,35 +115,38 @@
         align-items: center;
         gap: 10px;
     }
-    .images div{
+
+    .images div {
         width: 30%;
         float: left;
         margin: 10px 0;
-        
+
     }
-    .images img{
+
+    .images img {
         width: 40%;
         max-width: 100%;
         height: auto;
         margin: 5px;
     }
 </style>
+
 <body>
     <div class="footer">
         <div class="left-footer">
             <img src="./images/image1.jpg" alt="100%" width="30%"><br>
             <p>Lầu 5,367-369 Hai Bà Trưng Quận 3 TP.HCM</p>
-            <p>Công Ty Cổ Phần Phát Hành Sách TP.HCM-FAHASA</p>  
+            <p>Công Ty Cổ Phần Phát Hành Sách TP.HCM-FAHASA</p>
             <p>60-62 Lê Lợi, Quận 1 TP.HCM, Việt Nam</p>
             <p>Fahasa.com nhận đặt hàng trực tuyến và giao hàng tận nơi KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả hệ thống Fahasa trên toàn quốc.</p>
             <div><img src="./images/logo-bo-cong-thuong-da-thong-bao1.webp" width="30%"></div>
             <div class="icon">
-                <span><i class='bx bxl-facebook-circle' ></i></span>
-                <span><i class='bx bxl-instagram-alt' ></i></span>
-                <span><i class='bx bxl-youtube' ></i></span>
-                <span><i class='bx bxl-twitter' ></i></span>
-                <span><i class='bx bxl-pinterest' ></i></span>
-                <span><i class='bx bxl-tumblr' ></i></span>
+                <span><i class='bx bxl-facebook-circle'></i></span>
+                <span><i class='bx bxl-instagram-alt'></i></span>
+                <span><i class='bx bxl-youtube'></i></span>
+                <span><i class='bx bxl-twitter'></i></span>
+                <span><i class='bx bxl-pinterest'></i></span>
+                <span><i class='bx bxl-tumblr'></i></span>
             </div>
             <div class="device">
                 <img src="./images/android1.webp" width="30%">
@@ -164,19 +184,20 @@
             </div>
             <div id="contact">
                 <h4>LIÊN HỆ</h4>
-                <span><i class='bx bxs-map' ></i>60-62 Lê Lợi, Q1, TP.HCM</span>
-                <span><i class='bx bxs-envelope' ></i>cskh@fahasa.com.vn</span>
-                <span><i class='bx bxs-phone' ></i>1900636467</span>
+                <span><i class='bx bxs-map'></i>60-62 Lê Lợi, Q1, TP.HCM</span>
+                <span><i class='bx bxs-envelope'></i>cskh@fahasa.com.vn</span>
+                <span><i class='bx bxs-phone'></i>1900636467</span>
             </div>
             <div class="images">
-                <div><img src="./images/logo_lex.webp" ></div>
+                <div><img src="./images/logo_lex.webp"></div>
                 <div><img src="./images/Logo_ninjavan.webp"></div>
-                <div><img src="./images/vnpost1.webp" ></div>
-                <div><img src="./images/vnpay_logo.webp" ></div>
-                <div><img src="./images/shopeepay_logo.webp" ></div>
+                <div><img src="./images/vnpost1.webp"></div>
+                <div><img src="./images/vnpay_logo.webp"></div>
+                <div><img src="./images/shopeepay_logo.webp"></div>
                 <div><img src="./images/momopay.webp" style="width: 30%"></div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

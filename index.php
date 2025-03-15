@@ -16,11 +16,13 @@ require_once("./database/database.php");
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- custom css -->
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./css/login.css">
 </head>
 
 <body>
+<?php include_once "./zui/login.php" ?>
 
+<?php include_once "./zui/footer.php" ?>
 </body>
 
 </html>

@@ -1,20 +1,28 @@
 <?php
-
+require_once "database.php";
 class UsersTable
 {
-    private $db;
-    public function __construct($db)
+    function getUserDetailsById($userId)
     {
-        $this->db = $db;
+        global $pdo;
+        $query = "SELECT * FROM users WHERE id = $userId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
-    public function getUserByEmail($email)
+    function updateUserDisplayNameById($userId, $displayName)
     {
-        $query = "SELECT * FROM users WHERE users.email = $email";
+        global $pdo;
+        $query = "UPDATE users SET fullName = $displayName WHERE id = $userId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
     }
-    public function createUser($email, $password, $name, $profileImage) {
-        $query = "INSERT INTO `users` (`roleId`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status`) VALUES (?,?,?,?,?,?,?,?,?)";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([]);
+    function updateUserStatusById($userId, $status)
+    {
+        global $pdo;
+        $query = "UPDATE users SET status = $status WHERE id = $userId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
     }
 }
-

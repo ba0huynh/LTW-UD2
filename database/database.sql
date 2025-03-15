@@ -19,7 +19,6 @@ CREATE TABLE
   )
 INSERT INTO
   books (
-    id,
     bookName,
     subjectId,
     class,
@@ -31,7 +30,6 @@ INSERT INTO
   )
 VALUES
   (
-    1,
     'Sách giáo khoa tiếng việt lớp 1 tập 1',
     1,
     1,
@@ -40,7 +38,6 @@ VALUES
     0,
   ),
   (
-    2,
     'Sách giáo khoa đại số lớp 10 tập 2',
     2,
     10,
@@ -49,7 +46,6 @@ VALUES
     0,
   ),
   (
-    3,
     'Sách giáo khoa cơ sở Python lớp 8 tập 1',
     6,
     8,
@@ -58,7 +54,6 @@ VALUES
     0,
   ),
   (
-    4,
     'Sách giáo khoa Vật lý lớp 6 tập 1',
     7,
     6,
@@ -67,7 +62,6 @@ VALUES
     0,
   ),
   (
-    5,
     'Sách giáo khoa Tiếng anh lớp 9 tập 2',
     10,
     9,
@@ -76,7 +70,6 @@ VALUES
     0,
   ),
   (
-    6,
     'Sách bài tập hình học lớp 11 tập 1',
     11,
     2,
@@ -85,7 +78,6 @@ VALUES
     0,
   ),
   (
-    7,
     'Sách giảng viên sinh học lớp 7',
     8,
     7,
@@ -94,7 +86,6 @@ VALUES
     0,
   ),
   (
-    8,
     'Sách thực hành hóa học lớp 12 tập 1',
     5,
     12,
@@ -106,7 +97,7 @@ VALUES
 -- -------------------------------------------------
 CREATE TABLE
   users (
-    id int NOT NULL,
+    id int NOT NULL AUTO_INCREMENT,
     roleId int DEFAULT '1',
     fullName varchar(100) DEFAULT NULL,
     phoneNumber varchar(11) DEFAULT NULL,
@@ -118,7 +109,6 @@ CREATE TABLE
   )
 INSERT INTO
   users (
-    id,
     roleId,
     fullName,
     phoneNumber,
@@ -130,7 +120,6 @@ INSERT INTO
   )
 VALUES
   (
-    1,
     2,
     'admin',
     '0123456789',
@@ -141,7 +130,6 @@ VALUES
     1
   ),
   (
-    2,
     2,
     'Huỳnh Tấn Bảo',
     '0912345678',
@@ -154,9 +142,10 @@ VALUES
 
 -- -------------------------------------------------
 CREATE TABLE
-  reviews (
+  review (
+    id PRIMARY KEY AUTO_INCREMENT NOT NULL,
     rating int NOT NULL DEFAULT 1,
-    reviews VARCHAR(255),
+    review VARCHAR(255),
     userId NOT NULL,
     bookId NOT NULL,
     FOREIGN KEY (bookid) REFERENCES books (id),
@@ -165,10 +154,9 @@ CREATE TABLE
   -- -------------------------------------------------
 CREATE TABLE
   subjects (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     subjectName VARCHAR(100) DEFAULT NULL,
     subjectImage VARCHAR(200) DEFAULT NULL,
-    PRIMARY KEY (id)
   );
 
 INSERT INTO
@@ -187,9 +175,9 @@ VALUES
 
 CREATE TABLE
   cartitems (
-    id INT NOT NULL PRIMARY KEY,
-    bookid INT NOT NULL,
-    userid INT NOT NULL,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    bookId INT NOT NULL,
+    userId INT NOT NULL,
     amount INT DEFAULT 1,
     FOREIGN KEY (bookid) REFERENCES books (id)
   );
