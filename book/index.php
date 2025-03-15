@@ -41,7 +41,7 @@ if ($bookId == null) {
   <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
     <div class="flex flex-col sm:flex-row justify-center w-full gap-6">
       <section class="bg-white rounded-lg p-6 flex-1">
-        <img src="https://book.sachgiai.com/uploads/book/sach-giao-khoa-tieng-viet-1-tap-1/tieng-viet-1-tap-1-0.jpg" class="max-h-[600px] w-full object-contain" alt="" />
+        <img src=<?php echo $book["imageURL"] ?> class="max-h-[600px] w-full object-contain" alt="" />
         <div class="mt-6 flex gap-2">
           <button class="flex-1 border border-red-500 text-red-500 py-2 rounded-lg flex items-center justify-center gap-2">
             🛒 Thêm vào giỏ hàng

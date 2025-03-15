@@ -1,3 +1,5 @@
+DATABASENAME = ltw&ud2
+
 SET
   SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
@@ -16,7 +18,8 @@ CREATE TABLE
     oldPrice double DEFAULT '0',
     currentPrice double DEFAULT '0',
     quantitySold int DEFAULT '0',
-  )
+    imageURL varchar(255) NOT NULL
+  );
 INSERT INTO
   books (
     bookName,
@@ -25,8 +28,7 @@ INSERT INTO
     oldPrice,
     currentPrice,
     quantitySold,
-    createAt,
-    updateAt
+    imageURL
   )
 VALUES
   (
@@ -36,6 +38,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://book.sachgiai.com/uploads/book/sach-giao-khoa-tieng-viet-1-tap-1/tieng-viet-1-tap-1-0.jpg"
   ),
   (
     'Sách giáo khoa đại số lớp 10 tập 2',
@@ -44,6 +47,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa9aLYWedvl6MYJ9sG4aeQ8UsIXUOBmx5FHA&s"
   ),
   (
     'Sách giáo khoa cơ sở Python lớp 8 tập 1',
@@ -52,6 +56,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://online.pubhtml5.com/gswf/peds/files/large/1.jpg"
   ),
   (
     'Sách giáo khoa Vật lý lớp 6 tập 1',
@@ -60,6 +65,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiGEtA_z-fIFkaZTLARTAmNx2V4cpm3phwQw&s"
   ),
   (
     'Sách giáo khoa Tiếng anh lớp 9 tập 2',
@@ -68,6 +74,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-6.jpg"
   ),
   (
     'Sách bài tập hình học lớp 11 tập 1',
@@ -76,6 +83,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://toanmath.com/wp-content/uploads/2016/12/sach-bai-tap-hinh-hoc-11-co-ban.png"
   ),
   (
     'Sách giảng viên sinh học lớp 7',
@@ -84,6 +92,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://www.vietjack.com/sach-moi/images/sgv-khoa-hoc-tu-nhien-lop-7-chan-troi-sang-tao-1.PNG"
   ),
   (
     'Sách thực hành hóa học lớp 12 tập 1',
@@ -92,6 +101,7 @@ VALUES
     2936498480,
     230000000,
     0,
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiwlUBv6ZvjJixEEiWlX8QX-4LY88_iGwOew&s"
   );
 
 -- -------------------------------------------------
@@ -156,7 +166,7 @@ CREATE TABLE
   subjects (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     subjectName VARCHAR(100) DEFAULT NULL,
-    subjectImage VARCHAR(200) DEFAULT NULL,
+    subjectImage VARCHAR(200) DEFAULT NULL
   );
 
 INSERT INTO
