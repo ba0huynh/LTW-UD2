@@ -24,11 +24,14 @@ if ($bookId == null) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="../global.css">
   <link
-    href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-    rel="stylesheet" type='text/css'>
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+  rel="stylesheet" type='text/css'>
+
+
+  <!-- Tailwindcss -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
         --color-clifford: #da373d;
