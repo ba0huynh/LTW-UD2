@@ -104,6 +104,8 @@ VALUES
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiwlUBv6ZvjJixEEiWlX8QX-4LY88_iGwOew&s"
   );
 
+  ALTER TABLE books ADD FULLTEXT(bookName);
+
 -- -------------------------------------------------
 CREATE TABLE
   users (
@@ -185,6 +187,8 @@ VALUES
   (9, 'Ngữ văn', './image/logo/puma.webp'),
   (10, 'Anh văn', './image/logo/puma.webp');
 
+-- -----------------------------------------------------------
+
 CREATE TABLE
   cartitems (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -194,14 +198,8 @@ CREATE TABLE
     FOREIGN KEY (bookid) REFERENCES books (id)
   );
 
-CREATE TABLE
-  billdetail (
-    idBill int DEFAULT NULL,
-    idProduct int DEFAULT NULL,
-    size int DEFAULT NULL,
-    quantity int DEFAULT NULL,
-    total int DEFAULT NULL
-  )
+-- -----------------------------------------------------------
+
 
 CREATE TABLE `inforDelivering`(
   `idReceipt` varchar(100) DEFAULT NULL,
@@ -211,15 +209,151 @@ CREATE TABLE `inforDelivering`(
   `approvalTime` timestamp NULL DEFAULT NULL,
   `deliveryTime` timestamp NULL DEFAULT NULL,
   `iDpaymentMethod` varchar(250) DEFAULT NULL,
-)
+);
+
+
+-- -------------------------------------------------------------
+
+
 create table `paymentMethod`(
   `idMethod` int not null,
   `nameMethod` varchar(20) not null
-)
+);
+
 insert into table `paymentMethod` (`idMethod`,`nameMethod`)
 values 
 (1,`Cash on Delivery`),
-(2,`Bank Transfer`)
+(2,`Bank Transfer`);
+
+-- -------------------------------------------------------------
+
+create table `tasks`(
+    `id` int not null,
+    `taskName` varchar(50) default null
+);
+
+INSERT INTO `tasks` (`id`, `taskName`) VALUES
+(1, 'xem'),
+(2, 'thêm'),
+(3, 'sửa'),
+(4, 'xem');
+
+-- -------------------------------------------------------
+
+create table `permissiongroups`(
+    `id` int not null,
+    `permissionName` varchar(100) default null
+);
+
+
+INSERT INTO `permissiongroups` (`id`, `permissionName`) VALUES
+(1, 'Quản lý khách hàng'),
+(2, 'Quản lý nhân viên'),
+(3, 'Quản lý sản phẩm'),
+(4, 'Quản lý bán hàng'),
+(5, 'Quản lý phân quyền'),
+(6, 'Quản lý danh mục'),
+
+
+-- ---------------------------------
+
+CREATE TABLE roles (
+  idRole INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  roleName VARCHAR(255) NOT NULL,
+
+)
+
+INSERT INTO `roles` (`idRole`, `roleName`) VALUES
+(1, 'Khách hàng'),
+(2, 'Admin');
+
+-- --------------------------------
+CREATE TABLE rolePermissionTask (
+  idRole NOT NULL,
+  idPermissionGroup NOT NULL,
+  idTask NOT NULL,
+  FOREIGN KEY (idRole) REFERENCES roles (idRole),
+  FOREIGN KEY (idPermissionGroup) REFERENCES permissiongroups (id),
+  FOREIGN KEY (idTask) REFERENCES tasks (id),
+);
+
+INSERT INTO rolePermissionTask (idRole,idPermissionGroup,idTask) VALUES
+(2,5,1),
+(2,5,2),
+(2,5,3),
+(2,5,4);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE
+  billdetail (
+    idBill int DEFAULT NULL,
+    idProduct int DEFAULT NULL,
+    size int DEFAULT NULL,
+    quantity int DEFAULT NULL,
+    total int DEFAULT NULL
+  )
 
 CREATE TABLE
   bills (
@@ -247,73 +381,3 @@ CREATE TABLE
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
 
-
-CREATE TABLE
-  imageproducts (
-    idImage int NOT NULL,
-    idProduct int DEFAULT NULL,
-    image varchar(200) DEFAULT NULL
-  )
-
-create table `roledetail`(
-    `idRole` int default null,
-    `idPermission` int default null,
-    `idTask` int default null
-);
-
-create table `tasks`(
-    `idTask` int not null,
-    `taskName` varchar(50) default null
-);
-
-create table `permissiongroups`(
-    `idPermision` int not null,
-    `permissionName` varchar(100) default null
-);
-
-
-
-
-INSERT INTO `permissiongroups` (`idPermission`, `permissionName`) VALUES
-(1, 'Quản lý khách hàng'),
-(2, 'Quản lý nhân viên'),
-(3, 'Quản lý sản phẩm'),
-(4, 'Quản lý bán hàng'),
-(5, 'Quản lý phân quyền'),
-(6, 'Quản lý danh mục'),
-
-INSERT INTO `tasks` (`idTask`, `taskName`) VALUES
-(1, 'thêm'),
-(2, 'xoá'),
-(3, 'sửa'),
-(4, 'xem');
-
-INSERT INTO `roledetail` (`idRole`, `idPermission`, `idTask`) VALUES
-(2, 3, 1),
-(2, 3, 2),
-(2, 3, 3),
-(2, 4, 1),
-(2, 4, 2),
-(2, 4, 3),
-(2, 5, 1),
-(2, 5, 2),
-(2, 5, 3),
-CREATE TABLE
-  roles (
-    idRole int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    roleName varchar(100) DEFAULT NULL,
-  )
-  
-INSERT INTO `roles` (`idRole`, `roleName`, `createAt`, `updateAt`) VALUES
-(1, 'Khách hàng', '2025-02-26 14:09:11', '2025-02-26 14:09:11'),
-(2, 'Admin', '2025-02-26 14:09:11', '2025-02-27 12:53:57');
-
-
--- CREATE TABLE
---   usershippingaddress (
---     id int NOT NULL,
---     userId int DEFAULT NULL,
---     phoneNumber varchar(11) DEFAULT NULL,
---     address varchar(250) DEFAULT NULL,
---     status int DEFAULT '0',
---   )
