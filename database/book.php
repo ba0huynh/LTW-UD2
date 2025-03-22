@@ -13,4 +13,13 @@ class BooksTable
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function searchBook($search)
+    {
+        global $pdo;
+        $query = "SELECT * FROM books WHERE MATCH(bookName) AGAINST ($search IN BOOLEAN MODE)";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

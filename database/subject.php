@@ -1,14 +1,22 @@
-<?php 
+<?php
 require_once "database.php";
 
-class SubjectsTable{
+class SubjectsTable
+{
     public function getSubjectById($id)
     {
-        global $pdo; // Add this line to access the $pdo variable from the global scope
+        global $pdo;
         $query = "SELECT * FROM subjects WHERE id = $id";
         $stmt = $pdo->prepare($query);
-        $stmt->execute(); // Bind the $id parameter
+        $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
+    }
+    public function updateSubjectName($name, $id)
+    {
+        global $pdo;
+        $query = "UPDATE subjects SET subjectName = $name WHERE id = $id";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
     }
 }

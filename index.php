@@ -22,10 +22,11 @@ require_once("./database/database.php");
 </head>
 
 <body>
-<?php include_once "./zui/login.php" ?>
-<?php include_once "./zui/header.php" ?>
+<?php include_once "./components/Navbar.php" ?>
+<?php include_once "./components/Form.php" ?>
+<?php include_once "./components/footer.php" ?>
 
-<?php include_once "./zui/footer.php" ?>
+
 </body>
 
 </html>

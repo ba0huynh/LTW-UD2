@@ -13,7 +13,6 @@ if ($bookId == null) {
   }
   $subjectTable = new SubjectsTable();
   $subject = $subjectTable->getSubjectById($book["subjectId"]);
-
 }
 ?>
 
@@ -27,8 +26,8 @@ if ($bookId == null) {
   <title>Document</title>
   <link rel="stylesheet" href="../global.css">
   <link
-  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
-  rel="stylesheet" type='text/css'>
+    href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+    rel="stylesheet" type='text/css'>
 
 
   <!-- Tailwindcss -->
@@ -41,7 +40,7 @@ if ($bookId == null) {
 </head>
 
 <body>
-  
+
   <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
     <div class="flex flex-col sm:flex-row justify-center w-full gap-6">
       <section class="bg-white rounded-lg p-6 flex-1">
