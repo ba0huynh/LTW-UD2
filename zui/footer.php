@@ -134,12 +134,12 @@
 <body>
     <div class="footer">
         <div class="left-footer">
-            <img src="./images/image1.jpg" alt="100%" width="30%"><br>
+            <img src="./images/login/image1.jpg" alt="100%" width="30%"><br>
             <p>Lầu 5,367-369 Hai Bà Trưng Quận 3 TP.HCM</p>
             <p>Công Ty Cổ Phần Phát Hành Sách TP.HCM-FAHASA</p>
             <p>60-62 Lê Lợi, Quận 1 TP.HCM, Việt Nam</p>
             <p>Fahasa.com nhận đặt hàng trực tuyến và giao hàng tận nơi KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả hệ thống Fahasa trên toàn quốc.</p>
-            <div><img src="./images/logo-bo-cong-thuong-da-thong-bao1.webp" width="30%"></div>
+            <div><img src="./images/login/logo-bo-cong-thuong-da-thong-bao1.webp" width="30%"></div>
             <div class="icon">
                 <span><i class='bx bxl-facebook-circle'></i></span>
                 <span><i class='bx bxl-instagram-alt'></i></span>
@@ -149,8 +149,8 @@
                 <span><i class='bx bxl-tumblr'></i></span>
             </div>
             <div class="device">
-                <img src="./images/android1.webp" width="30%">
-                <img src="./images/appstore1.webp" width="30%">
+                <img src="./images/login/android1.webp" width="30%">
+                <img src="./images/login/appstore1.webp" width="30%">
             </div>
         </div>
         <div class="right-footer">
@@ -189,12 +189,12 @@
                 <span><i class='bx bxs-phone'></i>1900636467</span>
             </div>
             <div class="images">
-                <div><img src="./images/logo_lex.webp"></div>
-                <div><img src="./images/Logo_ninjavan.webp"></div>
-                <div><img src="./images/vnpost1.webp"></div>
-                <div><img src="./images/vnpay_logo.webp"></div>
-                <div><img src="./images/shopeepay_logo.webp"></div>
-                <div><img src="./images/momopay.webp" style="width: 30%"></div>
+                <div><img src="./images/login/logo_lex.webp"></div>
+                <div><img src="./images/login/Logo_ninjavan.webp"></div>
+                <div><img src="./images/login/vnpost1.webp"></div>
+                <div><img src="./images/login/vnpay_logo.webp"></div>
+                <div><img src="./images/login/shopeepay_logo.webp"></div>
+                <div><img src="./images/login/momopay.webp" style="width: 30%"></div>
             </div>
         </div>
     </div>
