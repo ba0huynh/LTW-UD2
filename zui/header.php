@@ -51,7 +51,7 @@
                 <div class="headerRight"></div>
             </div>
             <div class="menuContent">
-                <div class="sideBarMenu">
+                <div class="sideBarMenu" >
                     <div>Danh mục sản phẩm</div>
                     <div>Sách trong nước</div>
                     <div>FOREIGN BOOKS</div>

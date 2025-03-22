@@ -140,3 +140,16 @@
 /* .menuContent >div:hover{
     background-color: #f3f4f6;
 } */
+.sideBarMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
+    background: white;
+    padding: 10px;
+    margin: 5px;
+}
+.sideBarMenu > div {
+    font-size: 20px;
+    text-align: left;
+}
