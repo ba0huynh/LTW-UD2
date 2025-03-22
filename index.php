@@ -18,14 +18,16 @@ require_once("./database/database.php");
     <!-- custom css -->
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/suggested_book.css">
 
 </head>
 
 <body>
-<?php include_once "./components/Navbar.php" ?>
-<?php include_once "./components/Form.php" ?>
-<?php include_once "./components/footer.php" ?>
 
+    <?php include_once "./zui/login.php" ?>
+    <?php include_once "./zui/header.php" ?>
+    <?php include_once "./zui/suggested_book.php" ?>
+    <?php include_once "./zui/footer.php" ?>
 
 </body>
 

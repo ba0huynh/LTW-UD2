@@ -15,8 +15,8 @@
         <div id="login" class="login-container">
             <form id="login-form" class="login-form">
                 <h2>Đăng Nhập</h2>
-                <label for="username"><i class="fas fa-user"></i> Số điện thoại</label>
-                <input type="text" id="login-username" name="username" placeholder="Nhập số điện thoại..." required>
+                <label for="login-email"><i class="fas fa-user"></i> Email</label>
+                <input type="text" id="login-email" name="email" placeholder="Nhập email..." required>
 
                 <label for="password"><i class="fas fa-lock"></i> Mật khẩu</label>
                 <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu" required>
@@ -31,25 +31,29 @@
         <div id="signup" class="signup-container">
             <form id="signup-form" class="signup-form">
                 <h2>Đăng Ký</h2>
-                <label for="phone"><i class="fa-solid fa-phone"></i> Số Điện Thoại</label>
-                <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" required>
-                <span class="loi" id="loiSdt"></span>
+                <label for="email"><i class="fa-solid fa-user"></i> Email:</label>
+                <input type="text" name="email" id="email" placeholder="Nhập email..." required>
+                <span class="loi" id="loiEmail"></span>
 
-                <label for="name">Họ tên:</label>
+                <!-- <label for="name">Họ tên:</label>
                 <input type="text" id="register-name" name="name" placeholder="Họ và Tên" required>
-                <span class="loi" id="loiTen"></span>
-                <!--            
+                <span class="loi" id="loiTen"></span> -->
+                           
                 <label for="name"><i class="fas fa-user-circle"></i> Mã xác nhận OTP</label>
-                <input type="text" id="name" name="name" placeholder="6 ký tự" required> -->
+                <input type="text" id="name" name="name" placeholder="6 ký tự" required>
+                <span class="loi" id="loiOtp"></span>
 
                 <label for="password"><i class="fas fa-lock"></i> Mật Khẩu</label>
-                <input type="password" id="signup-password" name="password" placeholder="Nhập Mật Khẩu" required>
-                <label for="confirm-password">Xác nhận mật khẩu:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu" required>
-                <span class="loi" id="loiPass"></span>
-                <label for="address">Địa Chỉ:</label>
+                <input type="password" id="signup-password" name="password" placeholder="Nhập Mật Khẩu..." required>
+
+                <!-- <label for="confirm-password"><i class="fas fa-lock"></i> Xác nhận mật khẩu:</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Nhập lại mật khẩu..." required>
+                <span class="loi" id="loiPass"></span><br> -->
+
+                <!-- <label for="address">Địa Chỉ:</label>
                 <input type="text" id="register-address" name="address" placeholder="Số nhà, đường, phường ..." required>
-                <span class="loi" id="loiDchi"></span>
+                <span class="loi" id="loiDchi"></span> -->
+
                 <input type="submit" value="Đăng Ký">
                 <p class="close">Bỏ Qua</p>
                 <p>Đã có tài khoản? <a href="javascript:void(0)" onclick="switchToLogin()">Đăng nhập</a></p>
@@ -100,51 +104,46 @@
 
             let isValid = true;
 
-            const phone = document.getElementById('phone').value;
-            const name = document.getElementById('register-name').value;
-            const address = document.getElementById('register-address').value;
-            const passwd = document.getElementById('signup-password').value;
-            const confirmPasswd = document.getElementById('confirm-password').value;
+            
+            const email = document.getElementById("email").value;
+            const otp = document.getElementById("name").value;
+            const passwd = document.getElementById("signup-password").value;
+            // const confirmPasswd = document.getElementById("confirm-password").value;
 
-            if (!/^0[0-9]{9}$/.test(phone)) {
-                document.getElementById('loiSdt').innerText = "Số điện thoại phải là 10 chữ số và bắt đầu bằng 0!";
-                document.getElementById('loiSdt').style.display = 'block';
-                document.getElementById('phone').focus();
+            
+
+            if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email)) {
+                document.getElementById('loiEmail').innerText = "Email không hợp lệ!";
+                document.getElementById('loiEmail').style.display = 'block';
+                document.getElementById('email').focus();
                 isValid = false;
             } else {
-                document.getElementById('loiSdt').style.display = 'none';
+                document.getElementById('loiEmail').style.display = 'none';
             }
 
-            if (!/^[a-zA-Z\s]+$/.test(name)) {
-                document.getElementById('loiTen').innerText = "Họ tên chỉ được chứa chữ cái và dấu cách!";
-                document.getElementById('loiTen').style.display = 'block';
-                document.getElementById('register-name').focus();
+            if (otp.length !== 6) {
+                document.getElementById('loiOtp').innerText = "Mã OTP phải có 6 ký tự!";
+                document.getElementById('loiOtp').style.display = 'block';
+                document.getElementById('name').focus();
                 isValid = false;
             } else {
-                document.getElementById('loiTen').style.display = 'none';
+                document.getElementById('loiOtp').style.display = 'none';
             }
 
-            if (!/^[a-zA-Z0-9\s]+$/.test(address)) {
-                document.getElementById('loiDchi').innerText = "Địa chỉ chỉ được chứa chữ cái, số và dấu cách!";
-                document.getElementById('loiDchi').style.display = 'block';
-                document.getElementById('register-address').focus();
-                isValid = false;
-            } else {
-                document.getElementById('loiDchi').style.display = 'none';
-            }
-
-            if (passwd !== confirmPasswd) {
-                document.getElementById('loiPass').innerText = "Mật khẩu và xác nhận mật khẩu không khớp!";
-                document.getElementById('loiPass').style.display = 'block';
-                document.getElementById('confirm-password').focus();
-                isValid = false;
-            } else {
-                document.getElementById('loiPass').style.display = 'none';
-            }
+            
+            // if (passwd !== confirmPasswd) {
+            //     isValid = false;
+            //     document.getElementById('loiPass').style.display = 'block';
+            //     document.getElementById('loiPass').innerText = "Xác nhận mật khẩu không khớp!";
+            // } else {
+            //     document.getElementById('loiPass').innerText = "";
+            //     document.getElementById('loiPass').style.display = 'none'; // Ẩn đi khi không có lỗi
+            // }
 
             if (isValid) {
                 document.getElementById("signup-form").submit();
             }
+           
         });
     </script>
 </body>
