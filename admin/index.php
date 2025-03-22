@@ -20,6 +20,8 @@ require_once("../database/database.php");
 
 <body>
 
+<?php include_once "../zui/adminLoginPopup.php" ?>
+
 </body>
 
 </html>

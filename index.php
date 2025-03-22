@@ -28,6 +28,8 @@ require_once("./database/database.php");
     <?php include_once "./zui/header.php" ?>
     <?php include_once "./zui/suggested_book.php" ?>
     <?php include_once "./zui/footer.php" ?>
+    <?php include_once "./components/Navbar.php" ?>
+
 
 </body>
 
