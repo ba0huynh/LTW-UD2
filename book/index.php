@@ -97,9 +97,14 @@ if ($bookId == null) {
         <section class="bg-white rounded-lg p-6">
           <h2>Thông tin chi tiết</h2>
           <div class="flex flex-row gap-4 items-center ">
-            <button class="mt-[-5px] cursor-pointer decrement">-</button>
-            <p class="counter">0</p>
-            <button class="increment cursor-pointer">+</button>
+            <button class="mt-[-5px] rounded-lg bg-gray-200 p-2 text-[24px] h-[30px] flex items-center justify-center cursor-pointer decrement">
+              <span class="mt-[-22px]">
+
+                _
+              </span>
+            </button>
+            <p class="counter -mx-[10px]">0</p>
+            <button class="increment mt-[-5px] rounded-lg bg-gray-200 p-2 text-[24px] h-[30px] flex items-center justify-center cursor-pointer ">+</button>
 
           </div>
           <div class="mt-6 flex gap-2">

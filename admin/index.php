@@ -17,6 +17,7 @@ require_once("../database/database.php");
         --color-clifford: #da373d;
       }
     </style>
+  <script type="module" src="../javascript/admin/index.js"></script>
 </head>
 
 <body>
