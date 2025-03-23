@@ -10,6 +10,7 @@ require_once("../database/database.php");
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="assets/css/layout.css">
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
   <style type="text/tailwindcss">
     @theme {
@@ -20,7 +21,7 @@ require_once("../database/database.php");
 
 <body>
 
-<?php include_once "../zui/adminLoginPopup.php" ?>
+<?php include_once "gui/layout.php" ?>
 
 </body>
 
