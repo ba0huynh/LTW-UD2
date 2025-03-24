@@ -2,7 +2,17 @@
 require_once "database.php";
 class UsersTable
 {
-    function getUserDetailsById($userId)
+    public function getUserByUsername($username)
+    {
+        global $pdo;
+        $query = "SELECT * FROM users WHERE userName = :username";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+   public function getUserDetailsById($userId)
     {
         global $pdo;
         $query = "SELECT * FROM users WHERE id = $userId";
@@ -11,14 +21,14 @@ class UsersTable
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    function updateUserDisplayNameById($userId, $displayName)
+   public function updateUserDisplayNameById($userId, $displayName)
     {
         global $pdo;
         $query = "UPDATE users SET fullName = $displayName WHERE id = $userId";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
     }
-    function updateUserStatusById($userId, $status)
+   public function updateUserStatusById($userId, $status)
     {
         global $pdo;
         $query = "UPDATE users SET status = $status WHERE id = $userId";

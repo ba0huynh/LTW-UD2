@@ -1,6 +1,15 @@
 <?php
+session_start();
 require_once("../database/database.php");
-
+require_once("../database/user.php");
+$userTable = new UsersTable();
+$user = null;
+if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
+  $user = $userTable->getUserDetailsById($_SESSION["user"]);
+  if ($user == null) {
+    unset($_SESSION["user"]);
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -22,8 +31,13 @@ require_once("../database/database.php");
 
 <body>
 
-<?php include_once "../zui/adminLoginPopup.php" ?>
-<?php include_once "gui/layout.php" ?>
+
+  <?php
+  if ($user == null) {
+    include_once "../zui/adminLoginPopup.php";
+  }
+  ?>
+  <?php include_once "gui/layout.php" ?>
 
 </body>
 

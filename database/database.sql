@@ -107,9 +107,8 @@ VALUES
   ALTER TABLE books ADD FULLTEXT(bookName);
 
 -- -------------------------------------------------
-CREATE TABLE
-  users (
-    id int NOT NULL AUTO_INCREMENT,
+CREATE TABLE users (
+    id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     roleId int DEFAULT '1',
     fullName varchar(100) DEFAULT NULL,
     phoneNumber varchar(11) DEFAULT NULL,
@@ -117,12 +116,10 @@ CREATE TABLE
     password varchar(100) DEFAULT NULL,
     email varchar(100) DEFAULT NULL,
     avatar varchar(100) DEFAULT './avatar/default-avatar.jpg',
-    status int DEFAULT '1',
-    `createAt` timestamp null default CURRENT_TIMESTAMP,
-    `updateAt` timestamp null default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP
-  )
-INSERT INTO
-  users (
+    status int DEFAULT '1'
+);
+
+INSERT INTO users (
     roleId,
     fullName,
     phoneNumber,
@@ -130,30 +127,29 @@ INSERT INTO
     password,
     email,
     avatar,
-    status,
-  )
+    status
+)
 VALUES
-  (
-    2,
-    'admin',
-    '0123456789',
-    'admin',
-    '12345',
-    'huynh8a0k5@gmail.com',
-    NULL,
-    1
-  ),
-  (
-    2,
-    'Huỳnh Tấn Bảo',
-    '0912345678',
-    'baohuynh',
-    '12345',
-    'captianbao@gmail.com',
-    NULL,
-    1
-  );
-
+    (
+        2,
+        'admin',
+        '0123456789',
+        'admin',
+        '12345',
+        'huynh8a0k5@gmail.com',
+        NULL,
+        1
+    ),
+    (
+        2,
+        'Huỳnh Tấn Bảo',
+        '0912345678',
+        'baohuynh',
+        '12345',
+        'captianbao@gmail.com',
+        NULL,
+        1
+    );
 -- -------------------------------------------------
 CREATE TABLE
   review (
