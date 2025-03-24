@@ -13,7 +13,7 @@ $user = $userTable->getUserByUsername($username);
 if ($user == null) {
     header("Location: http://localhost/LTW-UD2/admin/");
 } else {
-    if ($user["password"] == $password) {
+    if ($user["password"] == $password && $user["roleId"] != 1) {
         session_start();
         $_SESSION["user"] = $user["id"];
         header("Location: http://localhost/LTW-UD2/admin/");

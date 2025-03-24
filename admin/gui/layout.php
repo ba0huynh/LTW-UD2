@@ -1,3 +1,17 @@
+<?php
+require_once("../database/database.php");
+require_once("../database/user.php");
+$userTable = new UsersTable();
+$user = null;
+if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
+  $user = $userTable->getUserDetailsById($_SESSION["user"]);
+  if ($user == null) {
+    unset($_SESSION["user"]);
+  }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +33,7 @@
             </div>
             <div id="header-right">
                 <div id="avt"> <img src="./assets/icon/face.svg" alt=""></div>
-                <div id="user-who">Xin chào, Hienhehehe</div>
+                <div id="user-who">Xin chào, <?php echo $user['fullName'] ?></div>
 
             </div>
         </div>

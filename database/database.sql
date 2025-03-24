@@ -138,8 +138,7 @@ VALUES
         '12345',
         'huynh8a0k5@gmail.com',
         NULL,
-        1
-    ),
+        1    ),
     (
         2,
         'Huỳnh Tấn Bảo',

@@ -18,7 +18,7 @@ class UsersTable
         $query = "SELECT * FROM users WHERE id = $userId";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
    public function updateUserDisplayNameById($userId, $displayName)
