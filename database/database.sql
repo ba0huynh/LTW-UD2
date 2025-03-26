@@ -193,6 +193,11 @@ CREATE TABLE
     FOREIGN KEY (bookid) REFERENCES books (id)
   );
 
+create table cartReceipt (
+  idUser int not null,
+  id int AUTO_INCREMENT PRIMARY KEY,
+  cartItems varchar(100)
+)
 -- -----------------------------------------------------------
 
 
@@ -368,11 +373,11 @@ CREATE TABLE
   cartdetail (
     idCart int DEFAULT NULL,
     idProduct int DEFAULT NULL,
-    size double DEFAULT NULL,
     quantity int DEFAULT NULL,
-    totalProduct double DEFAULT NULL,
+    price double DEFAULT NULL,
     createAt timestamp NULL DEFAULT CURRENT_TIMESTAMP,
     updateAt timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
+
 
 

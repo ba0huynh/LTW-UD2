@@ -50,6 +50,7 @@
               type="checkbox"
               class="mr-2"
               id="select-all" />
+            
             <img src="https://phuongnam.edu.vn/storage/media/bia-sach/202306/1f14b7c9-5e35-4c50-bc96-5aa3cf29feab.jpg" class="w-[100px] h-[150px]" alt="">
             <div class="flex flex-col items-start justify-center gap-8">
               <p>sách tiếng anh lớp 4 tập 1</p>
