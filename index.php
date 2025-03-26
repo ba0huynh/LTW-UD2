@@ -32,5 +32,5 @@ require_once("./database/database.php");
 
 
 </body>
-
+<script type="module" src="index.js"></script>
 </html>

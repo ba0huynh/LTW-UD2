@@ -26,11 +26,9 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
         --color-clifford: #da373d;
       }
     </style>
-  <script type="module" src="../javascript/admin/index.js"></script>
 </head>
 
 <body>
-
 
   <?php
   if ($user == null) {
@@ -38,7 +36,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
   }
   ?>
   <?php include_once "gui/layout.php" ?>
-
+  <script type="module" src="../javascript/admin/index.js"></script>
 </body>
 
 </html>

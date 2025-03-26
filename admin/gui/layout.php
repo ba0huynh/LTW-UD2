@@ -41,30 +41,30 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
         <div id="content-container">
 
             <div id="sidebar">
-                <div class="menu-item"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
                 <h5>QUẢN LÍ THÔNG TIN </h5>
-                <div class="menu-item"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
                     Quản lý khách hàng &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/user-injured.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/user-injured.svg" class="dark-img" alt="">
                     Quản lý nhân viên &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/book.svg" class="dark-img" alt="">
+                <div class="menu-item" admin-nav-btn> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
                     Quản lý phân quyền &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/layer-group.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/layer-group.svg" class="dark-img" alt="">
                     Quản lí danh mục &#9662</div>
-                <div class="menu-item"> <img src="./assets/icon/address-card.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/address-card.svg" class="dark-img" alt="">
                     Thông tin nhà cung cấp &#9662</div>
             </div>
-            <div id="content">
+            <main id="content">
 
                 <div id="main-content">
                     Hehehehehehehe
                 </div>
-            </div>
+            </main>
 
 
         </div>

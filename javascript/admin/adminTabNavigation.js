@@ -1,6 +1,8 @@
 const Btn = document.querySelectorAll(".admin-nav-btn");
 const views = document.querySelectorAll("main");
 export function AdminTabNavigation() {
+  console.log("hehe");
+  
   views.forEach((view) => {
     view.style.display = "none";
   });
