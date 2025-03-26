@@ -1,5 +1,8 @@
 <?php 
 require_once("./database/database.php");
+require_once("./database/book.php");
+require_once("./database/subject.php");
+$booksTable = new BooksTable();
 ?>
 
 <!DOCTYPE html>
@@ -20,6 +23,8 @@ require_once("./database/database.php");
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/suggested_book.css">
 
+    <!-- Tailwindcss -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 
 <body>

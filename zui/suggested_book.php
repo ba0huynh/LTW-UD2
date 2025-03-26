@@ -1,3 +1,12 @@
+<?php
+// require_once "../database/database.php";
+// require_once "../database/subject.php";
+// require_once "../database/book.php";
+// $booksTable = new BooksTable();
+// $books = $booksTable->getRandomBookByAmount(5);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,64 +34,33 @@
             </div>
 
 
-            <div class="item">
-                <img src="https://salt.tikicdn.com/cache/280x280/ts/product/22/cb/a9/524a27dcd45e8a13ae6eecb3dfacba7c.jpg"
-                    alt="Book">
-                <h3 class="book-name">Tự Chữa Lành Thông Qua Hiểu Biết</h3>
-                <div class="price-container">
-                    <div class="discount-price">89.250 đ</div>
-                    <span class="giam-gia">-25%</span>
-                </div>
-                <div class="original-price">119.000 đ</div>
-                <p class="sold">Đã bán 102</p>
-            </div>
+            <?php
+            $books = $booksTable->getRandomBookByAmount(5);
+            foreach ($books as $book) {
+                $bookName = $book["bookName"];
+                $currentPrice = number_format($book["currentPrice"]);
+                $oldPrice = number_format($book["oldPrice"]);
+                $imageURL = $book["imageURL"];
+                $quantitySold = $book["quantitySold"];
+                $percent = round((($book["oldPrice"] - $book["currentPrice"]) / $book["oldPrice"]) * 100);
+                echo "
+                <div class='item'>
+                               <img src=$imageURL
+                                   alt='Book'>
+                               <h3 class='book-name'>$bookName</h3>
+                               <div class='price-container'>
+                                   <div class='discount-price'>$currentPrice đ</div>
+                                   <span class='giam-gia'>$percent%</span>
+                               </div>
+                               <div class='original-price'>$oldPrice đ</div>
+                               <p class='sold'>Đã bán $quantitySold</p>
+                           </div>
+               ";
+            }
 
-            <div class="item">
-                <img src="https://salt.tikicdn.com/cache/280x280/ts/product/22/cb/a9/524a27dcd45e8a13ae6eecb3dfacba7c.jpg"
-                    alt="Book">
-                <h3 class="book-name">Tự Chữa Lành Thông Qua Hiểu Biết</h3>
-                <div class="price-container">
-                    <div class="discount-price">89.250 đ</div>
-                    <span class="giam-gia">-25%</span>
-                </div>
-                <div class="original-price">119.000 đ</div>
-                <p class="sold">Đã bán 102</p>
-            </div>
 
-            <div class="item">
-                <img src="https://salt.tikicdn.com/cache/280x280/ts/product/22/cb/a9/524a27dcd45e8a13ae6eecb3dfacba7c.jpg"
-                    alt="Book">
-                <h3 class="book-name">Tự Chữa Lành Thông Qua Hiểu Biết</h3>
-                <div class="price-container">
-                    <div class="discount-price">89.250 đ</div>
-                    <span class="giam-gia">-25%</span>
-                </div>
-                <div class="original-price">119.000 đ</div>
-                <p class="sold">Đã bán 102</p>
-            </div>
+            ?>
 
-            <div class="item">
-                <img src="https://salt.tikicdn.com/cache/280x280/ts/product/22/cb/a9/524a27dcd45e8a13ae6eecb3dfacba7c.jpg"
-                    alt="Book">
-                <h3 class="book-name">Tự Chữa Lành Thông Qua Hiểu Biết</h3>
-                <div class="price-container">
-                    <div class="discount-price">89.250 đ</div>
-                    <span class="giam-gia">-25%</span>
-                </div>
-                <div class="original-price">119.000 đ</div>
-                <p class="sold">Đã bán 102</p>
-            </div>
-            <div class="item">
-                <img src="https://salt.tikicdn.com/cache/280x280/ts/product/22/cb/a9/524a27dcd45e8a13ae6eecb3dfacba7c.jpg"
-                    alt="Book">
-                <h3 class="book-name">Tự Chữa Lành Thông Qua Hiểu Biết</h3>
-                <div class="price-container">
-                    <div class="discount-price">89.250 đ</div>
-                    <span class="giam-gia">-25%</span>
-                </div>
-                <div class="original-price">119.000 đ</div>
-                <p class="sold">Đã bán 102</p>
-            </div>
         </div>
 
     </div>

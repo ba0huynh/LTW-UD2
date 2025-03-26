@@ -4,10 +4,10 @@ require_once("../database/user.php");
 $userTable = new UsersTable();
 $user = null;
 if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
-  $user = $userTable->getUserDetailsById($_SESSION["user"]);
-  if ($user == null) {
-    unset($_SESSION["user"]);
-  }
+    $user = $userTable->getUserDetailsById($_SESSION["user"]);
+    if ($user == null) {
+        unset($_SESSION["user"]);
+    }
 }
 ?>
 
@@ -41,12 +41,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
         <div id="content-container">
 
             <div id="sidebar">
-                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
                 <h5>QUẢN LÍ THÔNG TIN </h5>
-                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn" page="customer"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
                     Quản lý khách hàng &#9662</div>
-                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/user-injured.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn" page="employee"> <img src="./assets/icon/user-injured.svg" class="dark-img" alt="">
                     Quản lý nhân viên &#9662</div>
                 <div class="menu-item" admin-nav-btn> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
@@ -59,10 +59,22 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/address-card.svg" class="dark-img" alt="">
                     Thông tin nhà cung cấp &#9662</div>
             </div>
-            <main id="content">
+            <main page="analytics" id="content">
 
                 <div id="main-content">
                     Hehehehehehehe
+                </div>
+            </main>
+            <main page="customer" id="content">
+
+                <div id="main-content">
+                    khasch
+                </div>
+            </main>
+            <main page="employee" id="content">
+
+                <div id="main-content">
+                    nhan vien
                 </div>
             </main>
 

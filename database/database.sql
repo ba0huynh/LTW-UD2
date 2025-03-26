@@ -35,8 +35,8 @@ VALUES
     'Sách giáo khoa tiếng việt lớp 1 tập 1',
     1,
     1,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://book.sachgiai.com/uploads/book/sach-giao-khoa-tieng-viet-1-tap-1/tieng-viet-1-tap-1-0.jpg"
   ),
@@ -44,8 +44,8 @@ VALUES
     'Sách giáo khoa đại số lớp 10 tập 2',
     2,
     10,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa9aLYWedvl6MYJ9sG4aeQ8UsIXUOBmx5FHA&s"
   ),
@@ -53,8 +53,8 @@ VALUES
     'Sách giáo khoa cơ sở Python lớp 8 tập 1',
     6,
     8,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://online.pubhtml5.com/gswf/peds/files/large/1.jpg"
   ),
@@ -62,8 +62,8 @@ VALUES
     'Sách giáo khoa Vật lý lớp 6 tập 1',
     7,
     6,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiGEtA_z-fIFkaZTLARTAmNx2V4cpm3phwQw&s"
   ),
@@ -71,8 +71,8 @@ VALUES
     'Sách giáo khoa Tiếng anh lớp 9 tập 2',
     10,
     9,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-6.jpg"
   ),
@@ -80,8 +80,8 @@ VALUES
     'Sách bài tập hình học lớp 11 tập 1',
     11,
     2,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://toanmath.com/wp-content/uploads/2016/12/sach-bai-tap-hinh-hoc-11-co-ban.png"
   ),
@@ -89,8 +89,8 @@ VALUES
     'Sách giảng viên sinh học lớp 7',
     8,
     7,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://www.vietjack.com/sach-moi/images/sgv-khoa-hoc-tu-nhien-lop-7-chan-troi-sang-tao-1.PNG"
   ),
@@ -98,8 +98,8 @@ VALUES
     'Sách thực hành hóa học lớp 12 tập 1',
     5,
     12,
-    2936498480,
-    230000000,
+    30000,
+    20000,
     0,
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiwlUBv6ZvjJixEEiWlX8QX-4LY88_iGwOew&s"
   );

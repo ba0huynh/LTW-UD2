@@ -22,4 +22,14 @@ class BooksTable
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
+    public function getRandomBookByAmount($amount)
+    {
+        global $pdo;
+        $query = "SELECT * FROM books ORDER BY RAND() LIMIT $amount";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      
+    }
 }
