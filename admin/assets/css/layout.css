@@ -75,6 +75,8 @@ body {
     height: 90vh;
     display: flex;
     width: 100%;
+    /* justify-content: center; */
+    background-color: #ecedf3;
 }
 
 #sidebar {
@@ -90,12 +92,12 @@ body {
 }
 
 #sidebar h5 {
-    padding-left: 25px;
+    padding: 10px 0px 10px 25px;
     color: rgb(205, 207, 210);
 }
 
 .menu-item {
-    padding: 25px;
+    padding: 22px;
     display: flex;
     flex-wrap: nowrap;
 }
@@ -105,7 +107,7 @@ body {
 }
 
 .menu-item img {
-    width: 15%;
+    width: 11%;
     padding-right: 10px;
 }
 
@@ -126,4 +128,39 @@ body {
     min-height: 500px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     padding: 20px;
+}
+
+
+
+.submenu {
+    display: none;
+    height: auto;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #1a2536;
+
+}
+
+.submenu-item {
+    padding: 10px 0px 13px 40px;
+    cursor: pointer;
+    font-size: 14px;
+    color: rgb(184, 184, 184);
+    transition: 0.3s;
+}
+
+.submenu-item::before {
+    content: "\2022";
+    padding-right: 10px;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 1.1em;
+}
+
+.submenu-item:hover {
+    background-color: #080e18;
+}
+
+.submenu.active {
+    display: block;
 }

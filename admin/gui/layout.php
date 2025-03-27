@@ -43,21 +43,51 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <div id="sidebar">
                 <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
-                <h5>QUẢN LÍ THÔNG TIN </h5>
+                <h5>QUẢN LÝ THÔNG TIN </h5>
                 <div class="menu-item admin-nav-btn" page="customer"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
                     Quản lý khách hàng &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Thông tin khách hàng</div>
+                </div>
                 <div class="menu-item admin-nav-btn" page="employee"> <img src="./assets/icon/user-injured.svg" class="dark-img" alt="">
                     Quản lý nhân viên &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Thông tin nhân viên</div>
+                    <div class="submenu-item">Thêm nhân viên</div>
+                </div>
                 <div class="menu-item" admin-nav-btn> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Thông tin sản phẩm</div>
+                    <div class="submenu-item">Thêm sản phẩm</div>
+                </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Duyệt đơn hàng</div>
+                    <div class="submenu-item">Giao hàng</div>
+                    <div class="submenu-item">Đơn hàng đã hoàn thành</div>
+
+                </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
                     Quản lý phân quyền &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Xem các quyền</div>
+                    <div class="submenu-item">Thêm quyền</div>
+                </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/layer-group.svg" class="dark-img" alt="">
                     Quản lí danh mục &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Danh mục sản phẩm</div>
+                    <div class="submenu-item">Thêm danh mục</div>
+                    <div class="submenu-item">Thêm thiết kế</div>
+                </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/address-card.svg" class="dark-img" alt="">
                     Thông tin nhà cung cấp &#9662</div>
+                <div class="submenu">
+                    <div class="submenu-item">Thông tin nhà cung cấp</div>
+                    <div class="submenu-item">Thông tin chi tiết nhà cung cấp</div>
+                </div>
             </div>
             <main page="analytics" id="content">
 
@@ -83,8 +113,10 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
     </div>
 
 
+
     <script>
         function closeSidebar() {
+            
             let element = document.getElementById("sidebar");
             if (element.style.display === "none") {
                 element.style.display = "flex";
@@ -94,9 +126,11 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 document.getElementById("closeSidebar").style.float = "right";
                 document.getElementById("bars").classList.add("dark-img");
                 document.getElementById("content").style.width = "80%";
+                document.getElementById("content-container").style.justifyContent = "left";
 
 
             } else {
+                
                 element.style.display = "none";
                 document.getElementById("header-left").style.backgroundColor = "white";
                 document.getElementById("Fahahahasa").style.float = "right";
@@ -104,10 +138,42 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 document.getElementById("bars").classList.remove("dark-img");
                 document.getElementById("content").style.width = "100%";
                 document.getElementById("Fahahahasa").style.color = "#080e18";
-
+                document.getElementById("content-container").style.justifyContent = "center";
+                openContent();
+                
+                
             }
         }
+        function openContent() {
+            document.getElementById("content").style.width = "100%";
+        }       
+
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const menuItems = document.querySelectorAll(".menu-item");
+
+                menuItems.forEach(menuItem => {
+                    menuItem.addEventListener("click", function () {
+                        let nextElement = menuItem.nextElementSibling;
+            
+                        if (nextElement && nextElement.classList.contains("submenu")) {
+                            nextElement.classList.toggle("active");
+
+                            document.querySelectorAll(".submenu").forEach(submenu => {
+                                if (submenu !== nextElement) {
+                                    submenu.classList.remove("active");
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+
+
     </script>
+
+
 </body>
 
 </html>
