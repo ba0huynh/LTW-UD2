@@ -33,7 +33,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </div>
             <div id="header-right">
                 <div id="avt"> <img src="./assets/icon/face.svg" alt=""></div>
-                <div id="user-who">Xin chào, <?php echo $user['fullName'] ?></div>
+                <div id="user-who">Xin chào, <?php echo htmlspecialchars($user['fullName'])  ?></div>
 
             </div>
         </div>
@@ -98,7 +98,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <main page="customer" id="content">
 
                 <div id="main-content">
-                    khasch
+                    lmao
                 </div>
             </main>
             <main page="employee" id="content">
@@ -107,8 +107,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     nhan vien
                 </div>
             </main>
+            <main page="permission" id="content">
 
-
+                <div id="main-content">
+                    elllleee
+                </div>     
+            </main>
         </div>
     </div>
 

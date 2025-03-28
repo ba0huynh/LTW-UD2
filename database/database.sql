@@ -240,54 +240,60 @@ INSERT INTO `tasks` (`id`, `taskName`) VALUES
 
 -- -------------------------------------------------------
 
-create table `permissiongroups`(
-    `id` int not null,
-    `permissionName` varchar(100) default null
+CREATE TABLE permissiongroups (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    permissionName VARCHAR(100) DEFAULT NULL
 );
 
-
-INSERT INTO `permissiongroups` (`id`, `permissionName`) VALUES
+INSERT INTO permissiongroups (id, permissionName) VALUES
 (1, 'Quản lý khách hàng'),
 (2, 'Quản lý nhân viên'),
 (3, 'Quản lý sản phẩm'),
 (4, 'Quản lý bán hàng'),
 (5, 'Quản lý phân quyền'),
-(6, 'Quản lý danh mục'),
-
+(6, 'Quản lý danh mục');
 
 -- ---------------------------------
 
 CREATE TABLE roles (
-  idRole INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  roleName VARCHAR(255) NOT NULL,
+    idRole INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    roleName VARCHAR(255) NOT NULL
+);
 
-)
-
-INSERT INTO `roles` (`idRole`, `roleName`) VALUES
+INSERT INTO roles (idRole, roleName) VALUES
 (1, 'Khách hàng'),
 (2, 'Admin');
 
 -- --------------------------------
-CREATE TABLE rolePermissionTask (
-  idRole NOT NULL,
-  idPermissionGroup NOT NULL,
-  idTask NOT NULL,
-  FOREIGN KEY (idRole) REFERENCES roles (idRole),
-  FOREIGN KEY (idPermissionGroup) REFERENCES permissiongroups (id),
-  FOREIGN KEY (idTask) REFERENCES tasks (id),
+
+CREATE TABLE tasks (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    taskName VARCHAR(50) DEFAULT NULL
 );
 
-INSERT INTO rolePermissionTask (idRole,idPermissionGroup,idTask) VALUES
-(2,5,1),
-(2,5,2),
-(2,5,3),
-(2,5,4);
+INSERT INTO tasks (id, taskName) VALUES
+(1, 'xem'),
+(2, 'thêm'),
+(3, 'sửa'),
+(4, 'xoá');
 
+-- --------------------------------
 
+CREATE TABLE rolePermissionTask (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idRole INT NOT NULL,
+    idPermissionGroup INT NOT NULL,
+    idTask INT NOT NULL,
+    FOREIGN KEY (idRole) REFERENCES roles (idRole),
+    FOREIGN KEY (idPermissionGroup) REFERENCES permissiongroups (id),
+    FOREIGN KEY (idTask) REFERENCES tasks (id)
+);
 
-
-
-
+INSERT INTO rolePermissionTask (idRole, idPermissionGroup, idTask) VALUES
+(2, 5, 1),
+(2, 5, 2),
+(2, 5, 3),
+(2, 5, 4);
 
 
 
