@@ -55,7 +55,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item">Thông tin nhân viên</div>
                     <div class="submenu-item">Thêm nhân viên</div>
                 </div>
-                <div class="menu-item" admin-nav-btn> <img src="./assets/icon/book.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
                 <div class="submenu">
                     <div class="submenu-item">Thông tin sản phẩm</div>
@@ -69,7 +69,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item">Đơn hàng đã hoàn thành</div>
 
                 </div>
-                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
+                <div class="menu-item admin-nav-btn" page="permission"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
                     Quản lý phân quyền &#9662</div>
                 <div class="submenu">
                     <div class="submenu-item">Xem các quyền</div>
@@ -110,7 +110,10 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <main page="permission" id="content">
 
                 <div id="main-content">
-                    elllleee
+                    <?php 
+                    include './components/role_permissions.php';
+                    include './components/create_roles.php'
+                    ?>
                 </div>     
             </main>
         </div>
