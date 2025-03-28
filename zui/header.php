@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../LTW-UD2/css/header.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Document</title>
-</head>
-<body>
+
     <div>
         <div>
             <div class="header">
@@ -15,10 +6,11 @@
                 <div class="headerCenter">
                     <div class="logoHeader">
                         <div>
-                            <img id="logo" src="./assets/img/logo.jpg" alt="">
+                            <img id="logo" src="./images/forHeader/logo.jpg" alt="">
                         </div>
+
                         <div>
-                            <img id="menuLogo" src="./assets/img/menuHeader.png" alt="">
+                            <img id="menuLogo" src="./images/forHeader/menuHeader.png" alt="">
                             <i class="fa-light fa-angle-down"></i>
                         </div>
                     </div>
@@ -30,19 +22,31 @@
                     </div>
                     <div class="inforHeader">
                         <div>
-                            <img id="bell" src="./assets/img/bell.png" alt=""><br>
+                            <img id="bell" src="./images/forHeader/bell.png" alt=""><br>
                             Thông Báo
                         </div>
                         <div>
-                            <img id="cart" src="./assets/img/cart.png" alt=""><br>
+                            <img id="cart" src="./images/forHeader/cart.png" alt=""><br>
                             Giỏ Hàng
                         </div>
                         <div>
-                            <img id="account" src="./assets/img/account.png" alt=""> <br>
-                            Tài khoản
+                            <?php
+                            if (isset($_SESSION['userId'])){
+                                $useIdr=$_SESSION['userId'];
+                            ?>
+                            <img id="account" src="./images/forHeader/account.png" alt=""> <br>
+                            <a href="taikhoan.php?/userId=<?php echo $userId?>" >Tài khoản</a>
+                            <?php }
+                            else{
+                            ?>
+                            <img id="account" src="./images/forHeader/account.png" alt=""> <br>
+                            <a href="nottaikhoan.php" >Tài khoản</a>
+                            <?php }?>
+                            
+
                         </div>
                         <div id="vietNam" >
-                            <img  src="./assets/img/vietNam.png" alt="">
+                            <img  src="./images/forHeader/vietNam.png" alt="">
 
                             <i class="fa-light fa-angle-down"></i>
                         </div>
@@ -52,103 +56,69 @@
             </div>
             <div class="menuContent">
                 <div class="sideBarMenu">
-                    <div>Danh mục sản phẩm</div>
-                    <div>Sách trong nước</div>
-                    <div>FOREIGN BOOKS</div>
-                    <div>DỤNG CỤ HỌC SINH</div>
-                    <div>ĐỒ CHƠI</div>
-                    <div>LÀM ĐẸP SỨC KHỎE</div>
-                    <div>Hành trang đến trường</div>
-                    <div>Theo thương hiệu</div>
-                    <div>Ám ảnh</div>
+                    <?php
+                    for($i=6;$i<13;$i++){
+                    ?>
+                    <div class="tablinks " data-id="<?php echo $i;?>">Lớp <?php echo $i?></div>
+                    <?php
+                    }
+                    ?>
+                    <script>
+                        document.querySelectorAll(".tablinks").forEach(tab=>{
+                            tab.addEventListener("mouseenter",function(){
+                                let Class=this.dataset.id;
+                                openTab(this,Class);
+                            })
+                        })
+                        function openTab(tab,Class){
+
+                            const Tablinks=document.querySelectorAll(".tablinks");
+                            for(let i=0;i<Tablinks.length;i++){
+                                Tablinks[i].className=Tablinks[i].className.replace(" onTab","");
+                            }
+                            tab.classList.add("onTab");
+                        }
+                    </script>
+
                 </div>
                 <div class="line"></div>
-                <div>
-                    <div> <div><img src="./assets/img/menuBook.png" alt=""></div>SÁCH TRONG NƯỚC</div>
+                <div style="width: 100%;">
+                    <div> 
+                        <div><img src="./images/forHeader/menuBook.png" alt="">
+                    </div>SÁCH TRONG NƯỚC</div>
                     <div class="detailMenu">
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
-                        </div>
-                        <div>
-                            <div>VĂN HỌC</div>
-                            <div>Tiểu thuyết</div>
-                            <div>Truyện ngắn</div>
-                            <div>Light novel</div>
-                            <div>Ngôn tình</div>
-                            <div>Xem chi tiết</div>
+                        <!-- div*3 -->
                     </div>
+                    <script>
+                        const detailMenu=document.querySelector(".detailMenu");
+                        const tablinks=document.querySelectorAll(".tablinks");
+                        tablinks.forEach(tab=>{
+                            tab.addEventListener("mouseenter",function(){
+                                const Class=this.dataset.id;
+                                fetch(`contentMenu.php/?Class=${Class}`).
+                                then(response=>response.text()).
+                                then(data=>{
+                                    detailMenu.innerHTML=data;
+                                })
+                            })
+                        })
+
+                    </script>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+    <script>
+                        document.getElementById("menuLogo").addEventListener("mouseenter",function(){
+                            document.querySelector(".menuContent").style.display="flex";
+                        })
+                        document.querySelector(".menuContent").addEventListener("mouseenter",function(){
+                            document.querySelector(".menuContent").style.display="flex";
+                        })
+                        document.querySelector(".menuContent").addEventListener("mouseleave",function(){
+                            document.querySelector(".menuContent").style.display="none";
+                        })
+                        document.getElementById("menuLogo").addEventListener("mouseleave",function(){
+                            document.querySelector(".menuContent").style.display="none";
+                        })
+                        </script>

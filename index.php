@@ -1,8 +1,17 @@
 <?php 
+
 require_once("./database/database.php");
+<<<<<<< Updated upstream
 require_once("./database/book.php");
 require_once("./database/subject.php");
 $booksTable = new BooksTable();
+=======
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="ltw&ud2";
+$conn=new mysqli($servername,$username,$password,$dbname);
+>>>>>>> Stashed changes
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +31,31 @@ $booksTable = new BooksTable();
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/suggested_book.css">
+<<<<<<< Updated upstream
 
     <!-- Tailwindcss -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+=======
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href=".css/login.css">
+    <style>
+        .tablinks{
+            padding:10px;
+            color:#1e1e1e;
+            font-weight: bold;
+            /* color:aqua; */
+        }
+        .inputHeader>input{
+            outline:none;
+        }
+        #menuLogo:hover{
+            cursor:pointer;
+        }
+        .menuContent{
+            display:none;
+        }
+    </style>
+>>>>>>> Stashed changes
 </head>
 
 <body>

@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../LTW-UD2/css/login.css">
-</head>
-
-<body>
     <div id="user" class="modal">
         <!--ĐĂNG NHẬP -->
         <div id="login" class="login-container">
@@ -146,6 +135,3 @@
            
         });
     </script>
-</body>
-
-</html>

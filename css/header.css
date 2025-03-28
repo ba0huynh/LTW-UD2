@@ -13,7 +13,13 @@
     width: 100%;
     height: 100%;
 }
+.tablinks{
+    padding:10px;
 
+}
+.onTab{
+    background-color: #f3f4f6;
+}
 .headerCenter{
     display:grid;
     grid-template-columns:20% 50% 30%;

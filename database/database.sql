@@ -103,9 +103,19 @@ VALUES
     0,
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiwlUBv6ZvjJixEEiWlX8QX-4LY88_iGwOew&s"
   );
+alter table books add column type varchar(50);
 
   ALTER TABLE books ADD FULLTEXT(bookName);
-
+UPDATE books SET type = 'giáo khoa' WHERE id = 1;
+UPDATE books SET type = 'giáo khoa' WHERE id = 2;
+UPDATE books SET type = 'giáo khoa' WHERE id = 3;
+UPDATE books SET type = 'giáo trình' WHERE id = 4;
+UPDATE books SET type = 'giáo trình' WHERE id = 5;
+UPDATE books SET type = 'bài tập' WHERE id = 6;
+UPDATE books SET type = 'giáo trình' WHERE id = 7;
+UPDATE books SET type = 'giáo khoa' WHERE id = 8;
+UPDATE books SET type = 'giáo khoa' WHERE id = 9;
+UPDATE books SET type = 'giáo khoa' WHERE id = 10;
 -- -------------------------------------------------
 CREATE TABLE users (
     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
