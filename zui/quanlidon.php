@@ -68,11 +68,26 @@ $result = $conn->query($sql);
 
 </head>
 <body>
-    <h2>Đơn hàng cần duyệt</h2>
-    <form method="GET">
-        <input type="text" name="search" placeholder="Tìm kiếm" value="<?= htmlspecialchars($search) ?> " class="border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+
+    <div class="max-w-6xl w-full bg-white p-6 rounded-2xl shadow-xl mt-10">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Đơn hàng cần duyệt</h2>
+
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <label class="text-gray-600">Hiển thị</label>
+        <select class="border rounded px-2 py-1 text-sm">
+          <option>10</option>
+          <option>25</option>
+          <option>50</option>
+        </select>
+        <span class="text-gray-600">dòng</span>
+      </div>
+      <form method="GET" action="">
+        <input type="text" name="search" placeholder="Tìm kiếm" value="<?= htmlspecialchars($search) ?>" class="border px-4 py-2 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
         <button type="submit">Tìm kiếm</button>
-    </form>
+      </form>
+    </div>
     <br>
     <div class="overflow-x-auto">
       <table class="min-w-full border rounded-lg overflow-hidden">
