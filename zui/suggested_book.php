@@ -32,7 +32,7 @@
             if(!empty($_GET["type"])){
                 $type=$_GET["type"];
             }
-            $sql="SELECT * FROM books limit $start,$limit left join subjects on books.subjectId=subjects.id 
+            $sql="SELECT * FROM books  join subjects on books.subjectId=subjects.id 
             where 1=1 ";
             if(!empty($subjectId)){
                 $sql=$sql." and books.subjectId=$subjectId";
@@ -43,8 +43,9 @@
             if(!empty($type)){
                 $sql=$sql." and books.type=$type";
             }
+            $sql=$sql." limit $start,$limit";
 
-
+//
 
             $result=$conn->query($sql);
             if($result->num_rows>0){
@@ -83,3 +84,35 @@
         </div>
 
     </div>
+
+                 <?php
+                 /*
+                $books = $booksTable->getRandomBookByAmount(5);
+            foreach ($books as $book) {
+                $bookName = $book["bookName"];
+                $bookId = $book["id"];
+                $currentPrice = number_format($book["currentPrice"]);
+                $oldPrice = number_format($book["oldPrice"]);
+                $imageURL = $book["imageURL"];
+                $quantitySold = $book["quantitySold"];
+                $percent = round((($book["oldPrice"] - $book["currentPrice"]) / $book["oldPrice"]) * 100);
+                echo "
+<a href='http://localhost/LTW-UD2/book/?bookId=$bookId'>
+    
+<div class='item'>
+<img src=$imageURL
+                                   alt='Book'>
+                               <h3 class='book-name'>$bookName</h3>
+                               <div class='price-container'>
+                                   <div class='discount-price'>$currentPrice đ</div>
+                                   <span class='giam-gia'>$percent%</span>
+                                   </div>
+                                   <div class='original-price'>$oldPrice đ</div>
+                                   <p class='sold'>Đã bán $quantitySold</p>
+                                   </div>
+                                   </a>
+               ";
+            }
+
+*/
+            ?>
