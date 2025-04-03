@@ -21,7 +21,12 @@ CREATE TABLE `nhanvien` (
   PRIMARY KEY (`IDNhanVien`),
   FOREIGN KEY (`ID_TK`) REFERENCES `taikhoan`(`ID_TK`) ON DELETE CASCADE
 );
-alter table `nhanvien` modify column `MatKhau` varchar(55) not null
+alter table nhanvien add column ID_NhomQuyen int not null;
+ALTER TABLE nhanvien
+ADD CONSTRAINT fk_nhanvien_nhomquyen
+FOREIGN KEY (`ID_NhomQuyen`) REFERENCES nhomquyen(`ID_NhomQuyen`);
+
+alter table `nhanvien` modify column `MatKhau` varchar(55) not null;
 CREATE TABLE `chitietquyen` (
   `ID_ChiTiet` INT(11) NOT NULL AUTO_INCREMENT,
   `ID_NhomQuyen` INT(11) NOT NULL,
@@ -115,8 +120,10 @@ CREATE TABLE hoadon (
   statusRemove INT(11) DEFAULT 0,       -- 0: hiển thị, 1: đã xóa mềm
   FOREIGN KEY (idUser) REFERENCES users(id) ON DELETE CASCADE
 );
+alter table hoadon add column create_at timestamp;
+
 CREATE TABLE thongtinhoadon (
-    id int AUTO_INCREMENT not null primary key,
+  id int AUTO_INCREMENT not null primary key,
   idHoadon INT NOT NULL,
   shippingAddress VARCHAR(250),
   orderTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -132,6 +139,22 @@ CREATE TABLE chitiethoadon (
   FOREIGN KEY (idBook) REFERENCES books(id) ON DELETE CASCADE,
   FOREIGN KEY (idHoadon) REFERENCES hoadon(idBill) ON DELETE CASCADE
 );
+
+create table hoadonxuat(
+  id int not null auto_increment primary key,
+  idBill int not null,
+  status int default 0,
+  IDNhanVien int not null,
+  foreign key(idBill) references hoadon(idBill),
+  foreign key(IDNhanVien) references nhanvien(IDNhanVien)
+);
+alter table hoadonxuat modify column status int default 0;
+
+INSERT INTO hoadonxuat (idBill, IDNhanVien) VALUES
+(5, 3),
+(2, 5),
+(3, 7);
+
 
 ALTER TABLE `books`
   ADD CONSTRAINT `fk_books_subject` FOREIGN KEY (`subjectId`) REFERENCES `subjects` (`id`);
@@ -358,13 +381,22 @@ INSERT INTO `nhanvien` (`TenNhanVien`, `username`, `Mail`, `SDT`, `avatar`, `sta
 ('Đoàn Văn Minh', 'doanvanminh', 'm@example.com', '0988776655', 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 13),
 ('Bùi Thị Nga', 'buithinga', 'n@example.com', '0966332211', 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 14),
 ('Võ Minh Nhật', 'vominhnhat', 'o@example.com', '0944225566', 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 15);
-
-
-
-
-
-
-
+-- Giả sử IDNhanVien từ 1 đến 15, bạn gán theo vòng lặp (1 → 2 → 3 → 4 → 1 → ...)
+UPDATE nhanvien SET ID_NhomQuyen = 1 WHERE IDNhanVien = 1;
+UPDATE nhanvien SET ID_NhomQuyen = 2 WHERE IDNhanVien = 2;
+UPDATE nhanvien SET ID_NhomQuyen = 3 WHERE IDNhanVien = 3;
+UPDATE nhanvien SET ID_NhomQuyen = 4 WHERE IDNhanVien = 4;
+UPDATE nhanvien SET ID_NhomQuyen = 1 WHERE IDNhanVien = 5;
+UPDATE nhanvien SET ID_NhomQuyen = 2 WHERE IDNhanVien = 6;
+UPDATE nhanvien SET ID_NhomQuyen = 3 WHERE IDNhanVien = 7;
+UPDATE nhanvien SET ID_NhomQuyen = 4 WHERE IDNhanVien = 8;
+UPDATE nhanvien SET ID_NhomQuyen = 1 WHERE IDNhanVien = 9;
+UPDATE nhanvien SET ID_NhomQuyen = 2 WHERE IDNhanVien = 10;
+UPDATE nhanvien SET ID_NhomQuyen = 3 WHERE IDNhanVien = 11;
+UPDATE nhanvien SET ID_NhomQuyen = 4 WHERE IDNhanVien = 12;
+UPDATE nhanvien SET ID_NhomQuyen = 1 WHERE IDNhanVien = 13;
+UPDATE nhanvien SET ID_NhomQuyen = 2 WHERE IDNhanVien = 14;
+UPDATE nhanvien SET ID_NhomQuyen = 3 WHERE IDNhanVien = 15;
 
 INSERT INTO `users`
 (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status`, `ID_TK`) VALUES
@@ -485,5 +517,7 @@ INSERT INTO chitiethoadon (idBook, idHoadon, amount) VALUES
 (18, 14, 2),
 
 (19, 15, 1);
+
+insert in
 
 

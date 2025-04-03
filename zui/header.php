@@ -27,6 +27,12 @@
                         </div>
                         <div>
                             <img id="cart" src="./images/forHeader/cart.png" alt=""><br>
+                            <?php
+                            if(isset($_SESSION('user_id'))){
+                                $queryCountCart=`select count(*) from cart,user where cart. `;
+                                //const count_number_cart
+                            }
+                            ?>
                             Giỏ Hàng
                         </div>
                         <div>

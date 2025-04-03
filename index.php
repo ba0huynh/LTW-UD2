@@ -5,7 +5,8 @@ require_once("./database/database.php");
 $servername="localhost";
 $username="root";
 $password="";
-$dbname="ltw&ud2";
+//$dbname="ltw&ud2";
+$dbname="ltd2&ud2";
 
 $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
@@ -39,10 +40,13 @@ if($conn->connect_error) {
 <body>
 
     <?php include_once "./zui/login.php" ?>
-    <?php include_once "./zui/header.php" ?>
+
+    <?php include_once "./zui/header2.php" ?>
+    <?php
+      include_once'./zui/banner.php'
+      ?>
     <?php include_once "./zui/suggested_book.php" ?>
     <?php include_once "./zui/footer.php" ?>
-    <?php include_once "./components/Navbar.php" ?>
 
 
 </body>
