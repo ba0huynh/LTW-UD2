@@ -32,4 +32,13 @@ class BooksTable
         return $result;
       
     }
+    public function getAllBook()
+    {
+        global $pdo;
+        $query = "SELECT * FROM books";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

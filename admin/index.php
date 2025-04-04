@@ -2,7 +2,9 @@
 session_start();
 require_once("../database/database.php");
 require_once("../database/user.php");
+require_once("../database/book.php");
 $userTable = new UsersTable();
+$bookTable = new BooksTable();
 $user = null;
 if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
   $user = $userTable->getUserDetailsById($_SESSION["user"]);

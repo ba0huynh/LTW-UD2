@@ -92,7 +92,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <main page="analytics" id="content">
 
                 <div id="main-content">
-                    Hehehehehehehe
+                    <?php include_once './gui/analytics.php' ?>
                 </div>
             </main>
             <main page="customer" id="content">

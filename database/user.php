@@ -35,4 +35,12 @@ class UsersTable
         $stmt = $pdo->prepare($query);
         $stmt->execute();
     }
+    public function getAllUser()
+  {  global $pdo;
+    $query = "SELECT * FROM users";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+  }
 }
