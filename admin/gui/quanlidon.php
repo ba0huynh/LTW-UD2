@@ -117,12 +117,12 @@ $result = $conn->query($sql);
                         </form>
                     <?php } else { echo "Đã duyệt"; } ?>
                 </td>
-                <td>
+                <!-- <td>
                     <form method="POST" style="display:inline;">
                         <input type="hidden" name="idBill" value="<?= $row['idBill'] ?>">
                         <button type="submit" name="delete" class="text-red-500 hover:text-red-700 text-xl">🗑️</button>
                     </form>
-                </td>
+                </td> -->
                 <td class="px-6 py-4 text-center space-x-2">
                     <form method="POST" action="#" style="display:inline;">
                         <input type="hidden" name="idBill" value="1">
