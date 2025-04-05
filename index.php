@@ -42,11 +42,17 @@ if($conn->connect_error) {
     <?php include_once "./zui/login.php" ?>
 
     <?php include_once "./zui/header2.php" ?>
-    <?php
-      include_once'./zui/banner.php'
-      ?>
-    <?php include_once "./zui/suggested_book.php" ?>
-    <?php include_once "./zui/footer.php" ?>
+   <div class="flex flex-col items-center justify-center w-[80%]>
+
+       <?php
+       include_once'./zui/banner.php'
+       ?>
+       <div class="flex-col flex">
+           
+           <?php include_once "./zui/suggested_book.php" ?>
+           <?php include_once "./zui/footer.php" ?>
+        </div>
+    </div>
 
 
 </body>

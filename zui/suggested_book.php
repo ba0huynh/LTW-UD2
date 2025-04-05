@@ -9,9 +9,9 @@
 
 
 
-    <div class="wrapped">
+    <div class="flex justify-center items-center flex-col">
 
-        <div class="container">
+        <div class="bg-gradient-to-b from-[#41cf6f] to-[#f7fdf8] rounded-lg border-2 border-white">
             <div class="Suggesting">
                 <h1 id="section">
                     <div class="icon-overlay"></div>

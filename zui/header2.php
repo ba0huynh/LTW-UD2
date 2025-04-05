@@ -6,7 +6,7 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
 
 ?>
 <div >
-        <div class="max-w-7xl mx-auto flex items-center justify-between py-2 px-4 bg-white shadow-sm">
+        <div class="mx-auto flex items-center justify-between py-2 px-[10%] bg-white shadow-sm">
           <!-- Logo -->
           <div class="flex items-center gap-2">
             <img src="./images/forHeader/logo.jpg" alt="Logo" class="h-12">
