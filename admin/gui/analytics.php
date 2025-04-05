@@ -26,7 +26,7 @@
         <div class="bg-white shadow-md rounded-lg p-6 flex flex-col flex-1 items-start justify-center text-center">
             <h3 class="text-lg font-semibold text-gray-700">khach hang</h3>
             <div class="text-4xl font-bold text-blue-500 mt-2">
-                <?php 
+                <?php
                 $users = $userTable->getAllUser();
                 echo count($users); ?>
             </div>
@@ -54,10 +54,10 @@
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
             datasets: [{
                 label: 'So luong san pham da ban qua 6 thang qua',
-                data: [12, 19, 3, 5, 2, 3],
+                data: [12, 19, 3, 5, 2, 3, 9, 10, 11, 12, 30, 14, 15],
                 borderWidth: 1
             }]
         },

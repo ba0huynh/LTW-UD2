@@ -71,13 +71,6 @@ body {
     padding-left: 10px;
 }
 
-#content-container {
-    height: 90vh;
-    display: flex;
-    width: 100%;
-    /* justify-content: center; */
-    background-color: #ecedf3;
-}
 
 #sidebar {
     width: 20%;

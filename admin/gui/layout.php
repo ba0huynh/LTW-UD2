@@ -38,7 +38,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </div>
         </div>
 
-        <div id="content-container">
+        <div class="flex w-full bg-[#ecedf3]">
 
             <div id="sidebar">
                 <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
