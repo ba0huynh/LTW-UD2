@@ -64,7 +64,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662</div>
                 <div class="submenu">
-                    <div class="submenu-item">Duyệt đơn hàng</div>
+                    <div page="quanlidon" class="submenu-item admin-nav-btn">Duyệt đơn hàng</div>
                     <div class="submenu-item">Giao hàng</div>
                     <div class="submenu-item">Đơn hàng đã hoàn thành</div>
 
@@ -95,6 +95,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <?php include_once './gui/analytics.php' ?>
                 </div>
             </main>
+            <main page="quanlidon" id="content">
+
+                <div id="main-content">
+                    <?php include_once './gui/quanlidon.php' ?>
+                </div>
+            </main>
             <main page="customer" id="content">
 
                 <div id="main-content">
@@ -110,11 +116,11 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <main page="permission" id="content">
 
                 <div id="main-content">
-                    <?php 
+                    <?php
                     include './components/role_permissions.php';
                     include './components/create_roles.php'
                     ?>
-                </div>     
+                </div>
             </main>
         </div>
     </div>
@@ -123,7 +129,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
 
     <script>
         function closeSidebar() {
-            
+
             let element = document.getElementById("sidebar");
             if (element.style.display === "none") {
                 element.style.display = "flex";
@@ -137,7 +143,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
 
 
             } else {
-                
+
                 element.style.display = "none";
                 document.getElementById("header-left").style.backgroundColor = "white";
                 document.getElementById("Fahahahasa").style.float = "right";
@@ -147,37 +153,35 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 document.getElementById("Fahahahasa").style.color = "#080e18";
                 document.getElementById("content-container").style.justifyContent = "center";
                 openContent();
-                
-                
+
+
             }
         }
+
         function openContent() {
             document.getElementById("content").style.width = "100%";
-        }       
+        }
 
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const menuItems = document.querySelectorAll(".menu-item");
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll(".menu-item");
 
-                menuItems.forEach(menuItem => {
-                    menuItem.addEventListener("click", function () {
-                        let nextElement = menuItem.nextElementSibling;
-            
-                        if (nextElement && nextElement.classList.contains("submenu")) {
-                            nextElement.classList.toggle("active");
+            menuItems.forEach(menuItem => {
+                menuItem.addEventListener("click", function() {
+                    let nextElement = menuItem.nextElementSibling;
 
-                            document.querySelectorAll(".submenu").forEach(submenu => {
-                                if (submenu !== nextElement) {
-                                    submenu.classList.remove("active");
-                                }
-                            });
-                        }
-                    });
+                    if (nextElement && nextElement.classList.contains("submenu")) {
+                        nextElement.classList.toggle("active");
+
+                        document.querySelectorAll(".submenu").forEach(submenu => {
+                            if (submenu !== nextElement) {
+                                submenu.classList.remove("active");
+                            }
+                        });
+                    }
                 });
             });
-
-
-
+        });
     </script>
 
 

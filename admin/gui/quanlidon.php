@@ -70,7 +70,7 @@ $result = $conn->query($sql);
 <body>
 
 
-    <div class="max-w-6xl w-full bg-white p-6 rounded-2xl shadow-xl mt-10">
+    <div class="w-full bg-white p-6 rounded-2xl mt-10">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Đơn hàng cần duyệt</h2>
 
     <div class="flex justify-between items-center mb-4">
