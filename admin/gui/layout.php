@@ -65,8 +65,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     Quản lý đơn hàng &#9662</div>
                 <div class="submenu">
                     <div page="quanlidon" class="submenu-item admin-nav-btn">Duyệt đơn hàng</div>
-                    <div class="submenu-item">Giao hàng</div>
-                    <div class="submenu-item">Đơn hàng đã hoàn thành</div>
+                    <div class="submenu-item" page="giaohang">Giao hàng</div>
+                    <div class="submenu-item" page="donhang">Đơn hàng đã hoàn thành</div>
 
                 </div>
                 <div class="menu-item admin-nav-btn" page="permission"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
@@ -96,11 +96,21 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 </div>
             </main>
             <main page="quanlidon" id="content">
-
                 <div id="main-content">
                     <?php include_once './gui/quanlidon.php' ?>
                 </div>
             </main>
+            <main page="giaohang" id="content">
+                <div id="main-content">
+                    <?php include_once './gui/giaohang.php' ?>
+                </div>
+            </main>
+            <main page="donhang" id="content">
+                <div id="main-content">
+                    <?php include_once './gui/donhang.php' ?>
+                </div>
+            </main>
+            
             <main page="customer" id="content">
 
                 <div id="main-content">
