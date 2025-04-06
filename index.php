@@ -6,7 +6,7 @@ $servername="localhost";
 $username="root";
 $password="";
 //$dbname="ltw&ud2";
-$dbname="ltd2&ud2";
+$dbname="ltw_ud2";
 
 $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
