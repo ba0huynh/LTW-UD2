@@ -4,7 +4,6 @@ require_once("./database/database.php");
 $servername="localhost";
 $username="root";
 $password="";
-$dbname="ltw&ud2";
 $dbname="ltw_ud2";
 $conn=new mysqli($servername,$username,$password,$dbname);
 ?>    
