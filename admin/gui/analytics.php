@@ -42,13 +42,13 @@
         </div>
     </div>
 
-<div>
-      <select name="" id="ChartSelect" class="border border-gray-300 rounded-md p-2 mt-4">
-        <option value="6month">6 tháng trước</option>
-        <option value="topCustomer">Top khách hàng</option>
-      </select>
-      
-</div>
+    <div>
+        <select name="" id="ChartSelect" class="border border-gray-300 rounded-md p-2 mt-4">
+            <option value="6month">6 tháng trước</option>
+            <option value="topCustomer">Top khách hàng</option>
+        </select>
+
+    </div>
     <div>
         <canvas id="MonthSalesChart"></canvas>
     </div>
@@ -56,50 +56,48 @@
         <canvas id="TopCustomerChart"></canvas>
     </div>
 
-
-
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
-
-document.getElementById('ChartSelect').addEventListener('change', function () {
-    const selectedValue = this.value;
-
-    // Get the chart canvas elements
-    const monthSalesChart = document.getElementById('MonthSalesChart');
-    const topCustomerChart = document.getElementById('TopCustomerChart');
-
-    // Toggle visibility based on the selected value
-    if (selectedValue === '6month') {
-        monthSalesChart.style.display = 'block';
-        topCustomerChart.style.display = 'none';
-    } else if (selectedValue === 'topCustomer') {
-        monthSalesChart.style.display = 'none';
-        topCustomerChart.style.display = 'block';
-    }
-});
-
-// Set default visibility (optional)
-document.getElementById('MonthSalesChart').style.display = 'block';
-document.getElementById('TopCustomerChart').style.display = 'none';
-
-
-
-
-
     const MonthSalesChart = document.getElementById('MonthSalesChart');
     const TopCustomerChart = document.getElementById('TopCustomerChart');
+    TopCustomerChart.style.display = 'none';
+    document.getElementById('ChartSelect').addEventListener('change', function() {
+        const selectedValue = this.value;
+        removeAllCharts();
 
+        if (selectedValue === '6month') {
+            MonthSalesChart.style.display = 'block';
+        } else if (selectedValue === 'topCustomer') {
+            TopCustomerChart.style.display = 'block';
+        }
+    });
+
+    function removeAllCharts() {
+        TopCustomerChart.style.display = 'none';
+        MonthSalesChart.style.display = 'none';
+
+    }
 
     new Chart(MonthSalesChart, {
         type: 'line',
         data: {
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            labels: <?php
+                    function getLastSixMonths()
+                    {
+                        $months = [];
+                        for ($i = 5; $i >= 0; $i--) {
+                            $months[] = (int) date('n', strtotime("-$i month")); // Get the month as an integer
+                        }
+                        return $months;
+                    }
+
+                    // Example usage:
+                    echo json_encode(getLastSixMonths());  ?>,
             datasets: [{
                 label: 'So luong san pham da ban qua 6 thang qua',
-                data: [12, 19, 3, 5, 2, 3, 9, 10, 11, 12, 30, 14, 15],
+                data: [12, 19, 3, 5, 2, 3],
                 borderWidth: 1
             }]
         },
@@ -118,7 +116,7 @@ document.getElementById('TopCustomerChart').style.display = 'none';
             labels: <?php echo json_encode(array_column($top5User, 'userName')); ?>,
             datasets: [{
                 label: 'Top Customers',
-                data: <?php echo json_encode(array_column($top5User, 'totalBooksOrdered')); ?> ,
+                data: <?php echo json_encode(array_column($top5User, 'totalSpent')); ?>,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 159, 64, 0.2)',

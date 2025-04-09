@@ -30,6 +30,7 @@ $allUsers = $userTable->getAllUser();
   <title>Document</title>
   <link rel="stylesheet" href="assets/css/layout.css">
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script type="module" src="../javascript/admin/index.js">  </script>
 
 
 </head>
@@ -38,7 +39,5 @@ $allUsers = $userTable->getAllUser();
 
 
   <?php include_once "gui/layout.php" ?>
-  <script type="module" src="../javascript/admin/index.js"></script>
 </body>
-
 </html>

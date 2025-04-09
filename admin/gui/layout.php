@@ -34,15 +34,15 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             <div id="header-right">
                 <div id="avt"> <img src="./assets/icon/face.svg" alt=""></div>
                 <div id="user-who">Xin chào, <?php if ($user != null) {
-                  echo htmlspecialchars($user['fullName']) ;  # code...
-                }  ?></div>
+                                                    echo htmlspecialchars($user['fullName']);  # code...
+                                                }  ?></div>
 
             </div>
         </div>
 
         <div class="flex w-full bg-[#ecedf3]">
 
-            <div  class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
+            <div class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
                 <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
                 <h5>QUẢN LÝ THÔNG TIN </h5>
@@ -112,7 +112,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <?php include_once './gui/donhang.php' ?>
                 </div>
             </main>
-            
+
             <main page="customer" id="content">
 
                 <div id="main-content">
