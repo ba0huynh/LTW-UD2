@@ -33,7 +33,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
 
 <body>
 
-  
+
   <?php include_once "gui/layout.php" ?>
   <script type="module" src="../javascript/admin/index.js"></script>
 </body>
