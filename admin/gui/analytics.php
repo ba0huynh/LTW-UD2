@@ -42,7 +42,13 @@
         </div>
     </div>
 
-
+<div>
+      <select name="" id="ChartSelect" class="border border-gray-300 rounded-md p-2 mt-4">
+        <option value="6month">6 tháng trước</option>
+        <option value="topCustomer">Top khách hàng</option>
+      </select>
+      
+</div>
     <div>
         <canvas id="MonthSalesChart"></canvas>
     </div>
@@ -56,6 +62,33 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
+
+
+document.getElementById('ChartSelect').addEventListener('change', function () {
+    const selectedValue = this.value;
+
+    // Get the chart canvas elements
+    const monthSalesChart = document.getElementById('MonthSalesChart');
+    const topCustomerChart = document.getElementById('TopCustomerChart');
+
+    // Toggle visibility based on the selected value
+    if (selectedValue === '6month') {
+        monthSalesChart.style.display = 'block';
+        topCustomerChart.style.display = 'none';
+    } else if (selectedValue === 'topCustomer') {
+        monthSalesChart.style.display = 'none';
+        topCustomerChart.style.display = 'block';
+    }
+});
+
+// Set default visibility (optional)
+document.getElementById('MonthSalesChart').style.display = 'block';
+document.getElementById('TopCustomerChart').style.display = 'none';
+
+
+
+
+
     const MonthSalesChart = document.getElementById('MonthSalesChart');
     const TopCustomerChart = document.getElementById('TopCustomerChart');
 

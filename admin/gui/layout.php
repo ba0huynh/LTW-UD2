@@ -33,7 +33,9 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </div>
             <div id="header-right">
                 <div id="avt"> <img src="./assets/icon/face.svg" alt=""></div>
-                <div id="user-who">Xin chào, <?php echo htmlspecialchars($user['fullName'])  ?></div>
+                <div id="user-who">Xin chào, <?php if ($user != null) {
+                  echo htmlspecialchars($user['fullName']) ;  # code...
+                }  ?></div>
 
             </div>
         </div>
