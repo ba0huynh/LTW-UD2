@@ -5,14 +5,14 @@ include_once("../database/book.php");
 include_once("../database/cartItems.php");
 
 
-$servername="localhost";
-$username="root";
-$password="";
+$servername = "localhost";
+$username = "root";
+$password = "";
 
-$dbname="ltw_ud2";
-$conn=new mysqli($servername,$username,$password,$dbname);
-if($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+$dbname = "ltw_ud2";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
 
 
@@ -26,13 +26,15 @@ if (isset($_SESSION["userId"]) && $_SESSION["userId"] != null) {
   $userId = $_SESSION["userId"]; // Assign the session userId here
 
   if ($userId == null) { // This condition will no longer always be true
-    header("Location: ../index.php");
+    header("Location: http://localhost/LTW-UD2/");
     unset($_SESSION["userId"]);
     exit();
   }
   $cartItems = $cartItemsTables->getAllItemsFromUserId($userId);
 
   $user = $userTable->getUserDetailsById($userId);
+} else {
+  // header("Location: ../index.php");
 }
 
 ?>
@@ -51,9 +53,9 @@ if (isset($_SESSION["userId"]) && $_SESSION["userId"] != null) {
 
 <body>
 
-    <?php include_once "../zui/header2.php" ?>
+  <?php include_once "../zui/header2.php" ?>
 
-<div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
+  <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
     <section class="bg-white w-full flex flex-col items-center rounded-lg gap-3 p-10">
       <img src="../images/empty-cart.png" class="w-[20%]" alt="">
       <p>Chưa có sản phẩm trong giỏ hàng của bạn.</p>
@@ -64,10 +66,10 @@ if (isset($_SESSION["userId"]) && $_SESSION["userId"] != null) {
         </button>
       </a>
     </section>
-    <?php if ($user != null): ?>
+    <?php if ($user == null): ?>
 
       <section class="w-full gap-4 flex flex-row">
-        <section class="flex-5 bg-white rounded-lg p-4">
+        <section class="flex-3 bg-white rounded-lg p-4">
 
           <div class="flex items-center mb-4">
             <div class="flex-10 checkbox-wrapper-13">
@@ -127,14 +129,33 @@ if (isset($_SESSION["userId"]) && $_SESSION["userId"] != null) {
             </div>
           </div>
 
-
-          <button class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded">
+          <div class="p-4 mb-4">
+            <div class="mb-4">
+              <label for="name" class="block text-gray-700 font-bold mb-2">Họ và tên:</label>
+              <input type="text" id="name" name="name" class="w-full border rounded-lg p-2" placeholder="Nhập họ và tên của bạn">
+              <div id="name-error" class="text-red-500 text-sm mt-2"></div>
+            </div>
+            <div class="mb-4">
+              <label for="address" class="block text-gray-700 font-bold mb-2">Địa chỉ:</label>
+              <input type="text" id="address" name="address" class="w-full border rounded-lg p-2" placeholder="Nhập địa chỉ của bạn">
+              <div id="address-error" class="text-red-500 text-sm mt-2"></div>
+            </div>
+            <div class="mb-4">
+              <label for="phone" class="block text-gray-700 font-bold mb-2">Số điện thoại:</label>
+              <input type="text" id="phone" name="phone" class="w-full border rounded-lg p-2" placeholder="Nhập số điện thoại của bạn">
+              <div id="phone-error" class="text-red-500 text-sm mt-2"></div>
+            </div>
+          </div>
+          <button class="thanhtoanbutton w-full bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded">
             THANH TOÁN
           </button>
+          <div id="error-message" class="text-red-500 text-sm mt-2"></div>
         </section>
       <?php endif; ?>
       </sec>
   </div>
 </body>
+
+<script type="module" src="./index.js"></script>
 
 </html>
