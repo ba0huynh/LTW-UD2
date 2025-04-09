@@ -4,6 +4,18 @@ include_once("../database/database.php");
 include_once("../database/book.php");
 include_once("../database/cartItems.php");
 
+
+$servername="localhost";
+$username="root";
+$password="";
+
+$dbname="ltw_ud2";
+$conn=new mysqli($servername,$username,$password,$dbname);
+if($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
 $cartItemsTables = new CartItemsTable();
 $bookTable = new BooksTable();
 $user = null;
@@ -39,7 +51,7 @@ if (isset($_SESSION["userId"]) && $_SESSION["userId"] != null) {
 
 <body>
 
-<?php include_once "./zui/header2.php" ?>
+    <?php include_once "../zui/header2.php" ?>
 
 <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
     <section class="bg-white w-full flex flex-col items-center rounded-lg gap-3 p-10">

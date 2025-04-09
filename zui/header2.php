@@ -1,4 +1,6 @@
 <?php
+
+
 $id_user=isset($_SESSION['id_user'])?$_SESSION['id_user']: 0;
 $query_count_cart="select count(*) as total from cart,users,cartitems where cart.idUser=users.id and cartitems.cartId=cart.idCart";
 $query_count_cart=$conn->query($query_count_cart);
