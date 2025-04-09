@@ -40,7 +40,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
 
         <div class="flex w-full bg-[#ecedf3]">
 
-            <div id="sidebar">
+            <div  class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
                 <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
                 <h5>QUẢN LÝ THÔNG TIN </h5>
