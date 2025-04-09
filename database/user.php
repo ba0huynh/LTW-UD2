@@ -43,4 +43,29 @@ class UsersTable
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
   }
+  public function getTop5UsersByBooksOrdered()
+{
+    global $pdo;
+    $query = "
+        SELECT 
+            u.id AS userId,
+            u.username AS userName,
+            SUM(ct.amount) AS totalBooksOrdered
+        FROM 
+            users u
+        JOIN 
+            hoadon h ON u.id = h.idUser
+        JOIN 
+            chitiethoadon ct ON h.idBill = ct.idHoadon
+        GROUP BY 
+            u.id, u.username
+        ORDER BY 
+            totalBooksOrdered DESC
+        LIMIT 5;
+    ";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
 }

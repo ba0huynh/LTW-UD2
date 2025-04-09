@@ -20,7 +20,8 @@
         <div class="bg-white shadow-md rounded-lg p-6 flex flex-1 flex-col items-start justify-center text-center">
             <h3 class="text-lg font-semibold text-gray-700">Don hang</h3>
             <div class="text-4xl font-bold text-blue-500 mt-2">
-                <?php echo "8964"; ?>
+                <?php
+                echo count($allHoaDon); ?>
             </div>
         </div>
         <div class="bg-white shadow-md rounded-lg p-6 flex flex-col flex-1 items-start justify-center text-center">
@@ -34,7 +35,9 @@
         <div class="bg-white shadow-md rounded-lg p-6 flex flex-col flex-1 items-start justify-center text-center">
             <h3 class="text-lg font-semibold text-gray-700">Da ban</h3>
             <div class="text-4xl font-bold text-blue-500 mt-2">
-                <?php echo "8964"; ?>
+                <?php
+                $daban = $chiTietHoadonTable->getAll();
+                echo count($daban); ?>
             </div>
         </div>
     </div>
@@ -77,41 +80,41 @@
     });
 
     new Chart(TopCustomerChart, {
-    type: 'bar',
-    data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'], // Replace with your desired labels
-        datasets: [{
-            label: 'Top Customers',
-            data: [65, 59, 80, 81, 56, 55, 40], // Replace with your actual data
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode(array_column($top5User, 'userName')); ?>,
+            datasets: [{
+                label: 'Top Customers',
+                data: <?php echo json_encode(array_column($top5User, 'totalBooksOrdered')); ?> ,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             }
         }
-    }
-});
+    });
 </script>
 
 </html>
