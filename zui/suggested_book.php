@@ -9,15 +9,11 @@
 
 
 
-    <div class="flex justify-center items-center flex-col">
+    <div class="wrapped">
 
-        <div class="bg-gradient-to-b from-[#41cf6f] to-[#f7fdf8] rounded-lg border-2 border-white">
+        <div class="container">
             <div class="Suggesting">
-                <h1 id="section">
-                    <div class="icon-overlay"></div>
-                    <i class='bx bxs-book-open' style='color:#f9f6f6'></i>
-                    Gợi ý cho bạn
-                </h1>
+                <img src="./images/banner_personalization.png" alt="">
             </div>
             <?php
             $page=isset($_GET["page"])?(int)$_GET["page"]:1;

@@ -34,6 +34,8 @@
         justify-content: space-between;
         flex-wrap: wrap;
         padding: 20px 10%;
+        width: 100%;
+        padding-top: 50px;
     }
 
     .icon {

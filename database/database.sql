@@ -207,18 +207,18 @@ create table cartReceipt (
   idUser int not null,
   id int AUTO_INCREMENT PRIMARY KEY,
   cartItems varchar(100)
-)
+);
 -- -----------------------------------------------------------
 
 
 CREATE TABLE `inforDelivering`(
-  `idReceipt` varchar(100) DEFAULT NULL,
+  `idReceipt` INT NOT NULL PRIMARY KEY,
   `userName` varchar(100) DEFAULT NULL,
   `shippingAddress` varchar(250) DEFAULT NULL,
   `phoneNumber` varchar(11) DEFAULT NULL,
   `approvalTime` timestamp NULL DEFAULT NULL,
   `deliveryTime` timestamp NULL DEFAULT NULL,
-  `iDpaymentMethod` varchar(250) DEFAULT NULL,
+  `iDpaymentMethod` varchar(250) DEFAULT NULL
 );
 
 
@@ -230,7 +230,7 @@ create table `paymentMethod`(
   `nameMethod` varchar(20) not null
 );
 
-insert into table `paymentMethod` (`idMethod`,`nameMethod`)
+insert into `paymentMethod` (`idMethod`,`nameMethod`)
 values 
 (1,`Cash on Delivery`),
 (2,`Bank Transfer`);

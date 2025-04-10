@@ -9,7 +9,7 @@
 
                 <label for="password"><i class="fas fa-lock"></i> Mật khẩu</label>
                 <input type="password" id="login-password" name="password" placeholder="Nhập mật khẩu" required>
-                <!-- <p>Quên Mật Khẩu?</p> -->
+                <!-- <p>Quên Mật Khẩu?</p>      -->
                 <input type="submit" value="Đăng Nhập">
                 <p class="close">Bỏ Qua</p>
                 <p>Chưa Có Tài Khoản? <a href="javascript:void(0)" onclick="switchToSignup()">Đăng Ký</a></p>

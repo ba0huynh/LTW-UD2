@@ -5,9 +5,13 @@ require_once("./database/database.php");
 $servername="localhost";
 $username="root";
 $password="";
+<<<<<<< HEAD
 //$dbname="ltw&ud2";
 $dbname="ltw_ud2";
+=======
+>>>>>>> 88444d72b098271bcb91d30ab7d724332ac324e8
 
+$dbname="ltw_ud2";
 $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

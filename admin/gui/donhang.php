@@ -1,19 +1,24 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quản lí giao hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
 <?php
 $conn = new mysqli("localhost", "root", "", "ltw_ud2");
 if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
-// Xử lý duyệt đơn
-if (isset($_POST['approve'])) {
+
+if (isset($_POST['giaohang'])) {
     $idBill = $_POST['idBill'];
-    $updateQuery = "UPDATE hoadon SET statusBill=1 WHERE idBill=$idBill";
+    $updateQuery = "UPDATE quanlihoadon SET status =2 WHERE idBill=$idBill";
     if ($conn->query($updateQuery)) {
-        echo "<script>alert('Đã duyệt và giao đơn hàng cho bên vận chuyển $idBill'); window.location.href=window.location.href;</script>";
-    } else {
-        echo "Lỗi: " . $conn->error;
-    }
-    $updateQuery = "UPDATE quanlihoadon SET status=3 WHERE hoadon.idBill=hoadon.idBill hoadon.idBill=$idBill";
-    if ($conn->query($updateQuery)) {
+        echo "<script>alert('Đã giao $idBill'); window.location.href=window.location.href;</script>";
     } else {
         echo "Lỗi: " . $conn->error;
     }
@@ -23,60 +28,53 @@ if(isset($_POST['trahang'])){
     $idBill=$_POST["idBill"];
     $deleteQuery="update hoadon set statusBill=-1 where idBill=$idBill";
     if($conn->query($deleteQuery)){
-        echo "<script>alert('đã trả hàng');window.location.href=window.location.href;</script>";
+        echo "<script>alert('đã xóa');window.location.href=window.location.href;</script>";
     }else{
         echo "lỗi".$conn->error;
     }
 }
-// Xử lý xóa đơn
-if (isset($_POST['delete'])) {
-    $idBill = $_POST['idBill'];
-    $conn->query("DELETE FROM hoadon where idBill=$idBill");
-}
 
-// Tìm kiếm
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
+// Tìm kiếm
+// $search = isset($_GET['search']) ? $_GET['search'] : '';
+if(!empty($_GET["search"])){
+    $search = $conn->real_escape_string($search); // Bảo vệ khỏi SQL Injection
+}
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
 // Đếm tổng số bản ghi
-$count_sql_search = "SELECT COUNT(*) AS total FROM hoadon,users WHERE  hoadon.statusBill=0 and hoadon.idUser=users.id and fullName LIKE '%$search%'";
-$count_sql="SELECT COUNT(*) AS total FROM hoadon,users WHERE hoadon.statusBill=0 and hoadon.idUser=users.id ";
+$count_sql_search = "SELECT COUNT(*) AS total FROM hoadon,users,quanlihoadon WHERE   hoadon.idUser=users.id and fullName LIKE '%$search%' and quanlihoadon.idBill=hoadon.idBill and quanlihoadon.status=2 ";
+$count_sql="SELECT COUNT(*) AS total FROM hoadon,quanlihoadon WHERE    quanlihoadon.idBill=hoadon.idBill and quanlihoadon.status=2  ";
 $show=empty($search)?$count_sql:$count_sql_search;
+
 $count_result = $conn->query($show);
 $total_rows = $count_result ->fetch_assoc()['total'];
 $total_pages = ceil($total_rows / $limit);
 
 
-$sql = empty($search)
-    ? "SELECT hoadon.*, thongtinhoadon.*, users.fullName 
-       FROM hoadon 
-       JOIN thongtinhoadon ON thongtinhoadon.idHoadon = hoadon.idBill 
-       JOIN users ON hoadon.idUser = users.id 
-       LIMIT $limit OFFSET $offset"
-    : "SELECT hoadon.*, thongtinhoadon.*, users.fullName 
-       FROM hoadon 
-       JOIN thongtinhoadon ON thongtinhoadon.idHoadon = hoadon.idBill 
-       JOIN users ON hoadon.idUser = users.id 
-       WHERE users.fullName LIKE '%$search%' 
-       LIMIT $limit OFFSET $offset";
+$query=empty($search)?"select * from hoadon 
+        join quanlihoadon on hoadon.idBill=quanlihoadon.idBill 
+        join thongtinhoadon on hoadon.idBill=thongtinhoadon.idHoadon
+        join users on hoadon.idUser=users.id
+      where  quanlihoadon.status=2
+      LIMIT $limit OFFSET $offset"
+      :"select * from hoadon 
+      join quanlihoadon on hoadon.idBill=quanlihoadon.idBill 
+      join thongtinhoadon on hoadon.idBill=thongtinhoadon.idHoadon
+      join users on hoadon.idUser=users.id
+      where  quanlihoadon.status=2 and fullName like '%$search%' 
+      LIMIT $limit OFFSET $offset";
 
-$result = $conn->query($sql);
+$result=$conn->query($query);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Đơn hàng cần duyệt</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-</head>
-<body>
-
-
     <div class="w-full bg-white p-6 rounded-2xl mt-10">
-    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Đơn hàng cần duyệt</h2>
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Đơn hàng đã hoàn thành</h2>
 
     <div class="flex justify-between items-center mb-4">
       <div class="flex items-center space-x-2">
@@ -102,38 +100,28 @@ $result = $conn->query($sql);
             <th class="px-6 py-4 text-left">Số điện thoại</th>
             <th class="px-6 py-4 text-left">Địa chỉ</th>
             <th class="px-6 py-4 text-left">Tổng hóa đơn</th>
-            <th class="px-6 py-4 text-center">Duyệt đơn</th>
+            <th class="px-6 py-4 text-center">Giao hàng</th>
             <th class="px-6 py-4 text-center">Chức năng</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
           <!-- Dòng dữ liệu -->
+          <?php if ($result->num_rows == 0) { ?>
+            <tr>
+                <td colspan="6" class="text-center py-4">Không có đơn hàng nào</td>
+            </tr>
+          <?php }else{ ?>
           <?php while ($row = $result->fetch_assoc()) { ?>
             <tr>
-                <td class="px-6 py-4"><?= htmlspecialchars($row['receiver']) ?></td>
+                <td class="px-6 py-4"><?= htmlspecialchars($row['fullName']) ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($row['phoneNumber']) ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($row['shippingAddress']) ?></td>
                 <td class="px-6 py-4 text-blue-600 font-semibold"><?= number_format($row['totalBill'], 0, ',', '.') ?>đ</td>
-                <td class="px-6 py-4 text-center">
-                    <?php if ($row['statusBill'] == 0) { ?>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="idBill" value="<?= $row['idBill'] ?>">
-                            <button type="submit" name="approve" class="approve-btn  bg-pink-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">Duyệt</button>
-                        </form>
-                    <?php } else {   ?>
-                    <button class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"><?php echo "Đã duyệt"; ?></button>
-                    <?php }?>
-                </td>
-
                 <td class="px-6 py-4 text-center space-x-2">
-                    <form method="POST" action="#" style="display:inline;">
-                        <input type="hidden" name="idBill" value="1">
-                        <button type="submit" name="trahang" class="text-white hover:bg-red-500  bg-red-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">hủy đơn</button>
-                    </form>
                     <button class="text-green-500 hover:text-green-700 text-xl">👁️</button>
                 </td>
             </tr>
-        <?php } ?>
+        <?php }} ?>
            <!--  -->
 
         </tbody>

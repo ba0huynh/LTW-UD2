@@ -33,14 +33,16 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </div>
             <div id="header-right">
                 <div id="avt"> <img src="./assets/icon/face.svg" alt=""></div>
-                <div id="user-who">Xin chào, <?php echo htmlspecialchars($user['fullName'])  ?></div>
+                <div id="user-who">Xin chào, <?php if ($user != null) {
+                                                    echo htmlspecialchars($user['fullName']);  # code...
+                                                }  ?></div>
 
             </div>
         </div>
 
-        <div id="content-container">
+        <div class="flex w-full min-h-screen bg-[#ecedf3]">
 
-            <div id="sidebar">
+            <div class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
                 <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
                     Thống kê </div>
                 <h5>QUẢN LÝ THÔNG TIN </h5>
@@ -65,8 +67,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     Quản lý đơn hàng &#9662</div>
                 <div class="submenu">
                     <div page="quanlidon" class="submenu-item admin-nav-btn">Duyệt đơn hàng</div>
-                    <div class="submenu-item">Giao hàng</div>
-                    <div class="submenu-item">Đơn hàng đã hoàn thành</div>
+                    <div class="submenu-item" page="giaohang">Giao hàng</div>
+                    <div class="submenu-item" page="donhang">Đơn hàng đã hoàn thành</div>
 
                 </div>
                 <div class="menu-item admin-nav-btn" page="permission"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
@@ -96,11 +98,21 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 </div>
             </main>
             <main page="quanlidon" id="content">
-
                 <div id="main-content">
                     <?php include_once './gui/quanlidon.php' ?>
                 </div>
             </main>
+            <main page="giaohang" id="content">
+                <div id="main-content">
+                    <?php include_once './gui/giaohang.php' ?>
+                </div>
+            </main>
+            <main page="donhang" id="content">
+                <div id="main-content">
+                    <?php include_once './gui/donhang.php' ?>
+                </div>
+            </main>
+
             <main page="customer" id="content">
 
                 <div id="main-content">

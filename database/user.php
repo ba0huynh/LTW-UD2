@@ -12,7 +12,7 @@ class UsersTable
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
-   public function getUserDetailsById($userId)
+    public function getUserDetailsById($userId)
     {
         global $pdo;
         $query = "SELECT * FROM users WHERE id = $userId";
@@ -21,14 +21,14 @@ class UsersTable
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
-   public function updateUserDisplayNameById($userId, $displayName)
+    public function updateUserDisplayNameById($userId, $displayName)
     {
         global $pdo;
         $query = "UPDATE users SET fullName = $displayName WHERE id = $userId";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
     }
-   public function updateUserStatusById($userId, $status)
+    public function updateUserStatusById($userId, $status)
     {
         global $pdo;
         $query = "UPDATE users SET status = $status WHERE id = $userId";
@@ -36,11 +36,37 @@ class UsersTable
         $stmt->execute();
     }
     public function getAllUser()
-  {  global $pdo;
-    $query = "SELECT * FROM users";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $result;
-  }
+    {
+        global $pdo;
+        $query = "SELECT * FROM users";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function getTop5UsersByBooksOrdered()
+    {
+        global $pdo;
+        $query = "
+      SELECT 
+    u.id AS userId,
+    u.username AS userName,
+    SUM(h.totalBill) AS totalSpent
+FROM 
+    users u
+JOIN 
+    hoadon h ON u.id = h.idUser
+WHERE 
+    h.statusBill = 1 -- Only include completed orders
+GROUP BY 
+    u.id, u.username
+ORDER BY 
+    totalSpent DESC
+LIMIT 5;
+    ";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }
