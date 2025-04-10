@@ -50,6 +50,9 @@
 
     </div>
     <div>
+      
+    </div>
+    <div>
         <canvas id="MonthSalesChart"></canvas>
     </div>
     <div>
@@ -83,21 +86,10 @@
     new Chart(MonthSalesChart, {
         type: 'line',
         data: {
-            labels: <?php
-                    function getLastSixMonths()
-                    {
-                        $months = [];
-                        for ($i = 5; $i >= 0; $i--) {
-                            $months[] = (int) date('n', strtotime("-$i month")); // Get the month as an integer
-                        }
-                        return $months;
-                    }
-
-                    // Example usage:
-                    echo json_encode(getLastSixMonths());  ?>,
+            labels:<?php echo json_encode(array_column($hoadonTable->getlast6Monthstotal(), 'month')) ?>,
             datasets: [{
                 label: 'So luong san pham da ban qua 6 thang qua',
-                data: [12, 19, 3, 5, 2, 3],
+                data: <?php echo json_encode(array_column($hoadonTable->getlast6Monthstotal(), 'total_bill')) ?>,
                 borderWidth: 1
             }]
         },
