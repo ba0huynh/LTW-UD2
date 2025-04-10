@@ -15,10 +15,9 @@ class CartItemsTable
     {
 
         global $pdo;
-        $query = "SELECT * FROM cartitems WHERE id = $itemId";
+        $query = "UPDATE cartitems SET amount = $amount WHERE id = $itemId";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
     }
     function addItemToCart($bookId, $amount)
     {
