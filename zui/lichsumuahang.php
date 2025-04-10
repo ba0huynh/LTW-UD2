@@ -36,7 +36,7 @@
     </div>
 
     <div class="flex items-start gap-4">
-      <img src="https://cf.shopee.vn/file/8d92752e3a3ddbf750c2e97e10f34a35" alt="Bột ớt" class="w-24 h-24 object-cover rounded border">
+      <img src="https://cf.shopee.vn/file/8d92752e3a3ddbf750c2e97e10f34a35" alt="math" class="w-24 h-24 object-cover rounded border">
       <div class="flex-1">
         <h2 class="font-semibold text-gray-700">Sách giáo khoa toán học lớp 12</h2>
         <p class="text-sm text-gray-500 mt-1">Môn học : toán</p>
