@@ -199,7 +199,7 @@ CREATE TABLE `hoadon` (
   `totalBill` double DEFAULT 0,
   `paymentMethod` varchar(250) DEFAULT NULL,
   `statusBill` int(11) DEFAULT 0,
-  `Date` date NOT NULL DEFAULT current_timestamp()
+  `Date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
