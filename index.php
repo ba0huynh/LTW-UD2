@@ -42,6 +42,7 @@ if($conn->connect_error) {
        include_once'./zui/banner.php'
        ?>
        <div class="flex-col flex">
+       <?php include_once "./components/Navbar.php" ?>
            
            <?php include_once "./zui/suggested_book.php" ?>
            <?php include_once "./zui/footer.php" ?>

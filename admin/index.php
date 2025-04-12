@@ -30,14 +30,20 @@ $allUsers = $userTable->getAllUser();
   <title>Document</title>
   <link rel="stylesheet" href="assets/css/layout.css">
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script type="module" src="../javascript/admin/index.js">  </script>
+  <script type="module" src="../javascript/admin/index.js"> </script>
 
 
 </head>
 
 <body>
 
-
-  <?php include_once "gui/layout.php" ?>
+<?php echo $_SESSION['admin'] ?>
+  <?php 
+  
+  include_once "gui/layout.php" ?>
+  <?php 
+    include_once "gui/adminLoginPopup.php.php";
+  
+     ?>;
 </body>
 </html>
