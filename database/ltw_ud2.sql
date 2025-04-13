@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 02:27 PM
+-- Generation Time: Apr 13, 2025 at 01:30 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -199,7 +199,7 @@ CREATE TABLE `hoadon` (
   `totalBill` double DEFAULT 0,
   `paymentMethod` varchar(250) DEFAULT NULL,
   `statusBill` int(11) DEFAULT 0,
-  `Date` datetime NOT NULL DEFAULT current_timestamp()
+  `Date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -213,7 +213,7 @@ INSERT INTO `hoadon` (`idBill`, `idUser`, `receiver`, `phoneNumber`, `totalBill`
 (6, 6, 'Nam Đặng', '0911666777', 2300000, 'Thanh toán khi nhận hàng', 1, '2025-02-11'),
 (7, 7, 'Tú Vũ', '0911777888', 180000, 'Thanh toán khi nhận hàng', 1, '2025-03-21'),
 (8, 8, 'Quỳnh Anh', '0911888999', 1290000, 'Chuyển khoản ngân hàng', 1, '2025-03-19'),
-(9, 9, 'Michael Nguyen', '0911999000', 670000, 'Thanh toán khi nhận hàng', 0, '2024-12-23'),
+(9, 9, 'Michael Nguyen', '0911999000', 670000, 'Thanh toán khi nhận hàng', 1, '2024-12-23'),
 (10, 10, 'Jessica Trinh', '0912000111', 560000, 'Chuyển khoản ngân hàng', 1, '2025-03-17'),
 (11, 11, 'Tommy Le', '0912111222', 985000, 'Thanh toán khi nhận hàng', 1, '2025-01-29'),
 (12, 12, 'David Hoang', '0912222333', 310000, 'Thanh toán khi nhận hàng', 0, '2025-04-09'),
@@ -409,19 +409,26 @@ INSERT INTO `nhanvien` (`IDNhanVien`, `TenNhanVien`, `Mail`, `SDT`, `ID_TK`, `av
 
 CREATE TABLE `nhomquyen` (
   `ID_NhomQuyen` int(11) NOT NULL,
-  `TenNhomQuyen` varchar(255) NOT NULL
+  `TenNhomQuyen` varchar(255) NOT NULL,
+  `analytics` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`analytics`)),
+  `users` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`users`)),
+  `employee` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`employee`)),
+  `subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`subjects`)),
+  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`roles`)),
+  `books` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`books`)),
+  `bill` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`bill`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nhomquyen`
 --
 
-INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`) VALUES
-(1, 'Admin'),
-(2, 'Người quản lí'),
-(3, 'Nhân viên kho'),
-(4, 'Nhân viên bán hàng'),
-(5, 'Người mua hàng');
+INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`, `analytics`, `users`, `employee`, `subjects`, `roles`, `books`, `bill`) VALUES
+(1, 'Admin', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }'),
+(2, 'Người quản lí', '0', '0', '0', '0', '0', '0', '0'),
+(3, 'Nhân viên kho', '0', '0', '0', '0', '0', '0', '0'),
+(4, 'Nhân viên bán hàng', '0', '0', '0', '0', '0', '0', '0'),
+(5, 'Người mua hàng', '0', '0', '0', '0', '0', '0', '0');
 
 -- --------------------------------------------------------
 
