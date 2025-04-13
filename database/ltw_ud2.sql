@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2025 at 01:30 PM
+-- Generation Time: Apr 13, 2025 at 01:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -161,29 +161,30 @@ INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
 CREATE TABLE `chitietquyen` (
   `ID_ChiTiet` int(11) NOT NULL,
   `ID_NhomQuyen` int(11) NOT NULL,
-  `ChucNang` varchar(255) NOT NULL
+  `ID_ChucNang` int(255) NOT NULL,
+  `id_quanly` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chucnangquyen`
+--
+
+CREATE TABLE `chucnangquyen` (
+  `id` int(10) NOT NULL,
+  `chucnang` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chitietquyen`
+-- Dumping data for table `chucnangquyen`
 --
 
-INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ChucNang`) VALUES
-(1, 1, 'Quản lí khách hàng'),
-(2, 1, 'Quản lí nhân viên'),
-(3, 1, 'Thống kê'),
-(4, 2, 'Quản lí khách hàng'),
-(5, 2, 'Quản lí nhân viên'),
-(6, 2, 'Thống kê'),
-(7, 2, 'Quản lí sản phẩm'),
-(8, 2, 'Nhập hàng'),
-(9, 2, 'Quản lí danh mục'),
-(10, 2, 'Quản lí đơn hàng'),
-(11, 3, 'Quản lí sản phẩm'),
-(12, 3, 'Nhập hàng'),
-(13, 3, 'Quản lí danh mục'),
-(14, 4, 'Quản lí khách hàng'),
-(15, 4, 'Quản lí đơn hàng');
+INSERT INTO `chucnangquyen` (`id`, `chucnang`) VALUES
+(1, 'Xem'),
+(2, 'Thêm'),
+(3, 'Sửa'),
+(4, 'Xóa');
 
 -- --------------------------------------------------------
 
@@ -409,26 +410,19 @@ INSERT INTO `nhanvien` (`IDNhanVien`, `TenNhanVien`, `Mail`, `SDT`, `ID_TK`, `av
 
 CREATE TABLE `nhomquyen` (
   `ID_NhomQuyen` int(11) NOT NULL,
-  `TenNhomQuyen` varchar(255) NOT NULL,
-  `analytics` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`analytics`)),
-  `users` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`users`)),
-  `employee` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`employee`)),
-  `subjects` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`subjects`)),
-  `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`roles`)),
-  `books` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`books`)),
-  `bill` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '{   "xem": false,   "them": false,   "sua": false,   "xoa": false }' CHECK (json_valid(`bill`))
+  `TenNhomQuyen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `nhomquyen`
 --
 
-INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`, `analytics`, `users`, `employee`, `subjects`, `roles`, `books`, `bill`) VALUES
-(1, 'Admin', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }', '{ \"xem\": false, \"them\": false, \"sua\": false, \"xoa\": false }'),
-(2, 'Người quản lí', '0', '0', '0', '0', '0', '0', '0'),
-(3, 'Nhân viên kho', '0', '0', '0', '0', '0', '0', '0'),
-(4, 'Nhân viên bán hàng', '0', '0', '0', '0', '0', '0', '0'),
-(5, 'Người mua hàng', '0', '0', '0', '0', '0', '0', '0');
+INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`) VALUES
+(1, 'Admin'),
+(2, 'Người quản lí'),
+(3, 'Nhân viên kho'),
+(4, 'Nhân viên bán hàng'),
+(5, 'Người mua hàng');
 
 -- --------------------------------------------------------
 
@@ -461,6 +455,29 @@ INSERT INTO `quanlihoadon` (`idBill`, `create_at`, `IDNhanVien`, `status`) VALUE
 (13, '2025-04-06 17:08:31', 4, 3),
 (14, '2025-04-06 17:08:31', 8, 2),
 (15, '2025-04-06 17:08:31', 12, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quanly`
+--
+
+CREATE TABLE `quanly` (
+  `id` int(11) NOT NULL,
+  `quanly` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quanly`
+--
+
+INSERT INTO `quanly` (`id`, `quanly`) VALUES
+(1, 'Thống kê'),
+(2, 'Quản lý sách'),
+(3, 'Quản lí nhân viên'),
+(4, 'Quản lí người dùng'),
+(5, 'Quản lý nhập hàng'),
+(6, 'Quản lý đơn hàng');
 
 -- --------------------------------------------------------
 
