@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2025 at 01:48 PM
+-- Generation Time: Apr 14, 2025 at 03:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -161,9 +161,28 @@ INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
 CREATE TABLE `chitietquyen` (
   `ID_ChiTiet` int(11) NOT NULL,
   `ID_NhomQuyen` int(11) NOT NULL,
-  `ID_ChucNang` int(255) NOT NULL,
+  `ID_ChucNang` tinyint(255) NOT NULL,
   `id_quanly` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chitietquyen`
+--
+
+INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ID_ChucNang`, `id_quanly`) VALUES
+(16, 1, 1, 1),
+(17, 1, 1, 3),
+(18, 1, 2, 3),
+(19, 1, 4, 3),
+(20, 1, 3, 3),
+(21, 1, 1, 7),
+(22, 1, 2, 7),
+(23, 1, 3, 7),
+(24, 1, 4, 7),
+(25, 1, 1, 2),
+(26, 1, 2, 2),
+(27, 1, 3, 2),
+(28, 1, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -477,7 +496,8 @@ INSERT INTO `quanly` (`id`, `quanly`) VALUES
 (3, 'Quản lí nhân viên'),
 (4, 'Quản lí người dùng'),
 (5, 'Quản lý nhập hàng'),
-(6, 'Quản lý đơn hàng');
+(6, 'Quản lý đơn hàng'),
+(7, 'Quản lý quyền');
 
 -- --------------------------------------------------------
 
@@ -798,7 +818,7 @@ ALTER TABLE `cartitems`
 -- AUTO_INCREMENT for table `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
-  MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `hoadon`
