@@ -41,4 +41,53 @@ class BooksTable
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+    
+    public function getSubjectNameById($sId) {
+        global $pdo;
+        $query = "SELECT subjectName FROM subjects WHERE id = $sId";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['subjectName'] ?? '';
+    }
+
+    public function getBooksByCondition($cond){
+        global $pdo;
+        $query = $cond;
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function deleteById($id){
+        global $pdo;
+        $query = "UPDATE books SET status = 0 WHERE id = $id ";
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute();
+    }
+
+    public function getAllSubject()
+    {
+        global $pdo;
+        $query = "SELECT * FROM subjects";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function updateBook($id, $name, $subject, $class, $image, $description) {
+    global $pdo;
+    $query = "UPDATE books SET 
+                name = '$name', 
+                subject = '$subject', 
+                class = '$class', 
+                image = '$image', 
+                description = '$description' 
+              WHERE id = $id";
+    $stmt = $pdo->prepare($query);
+    return $stmt->execute();
+}
+
 }
