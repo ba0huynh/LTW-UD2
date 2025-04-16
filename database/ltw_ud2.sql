@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2025 at 02:27 PM
+-- Generation Time: Apr 14, 2025 at 03:34 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -161,29 +161,49 @@ INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
 CREATE TABLE `chitietquyen` (
   `ID_ChiTiet` int(11) NOT NULL,
   `ID_NhomQuyen` int(11) NOT NULL,
-  `ChucNang` varchar(255) NOT NULL
+  `ID_ChucNang` tinyint(255) NOT NULL,
+  `id_quanly` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `chitietquyen`
 --
 
-INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ChucNang`) VALUES
-(1, 1, 'Quản lí khách hàng'),
-(2, 1, 'Quản lí nhân viên'),
-(3, 1, 'Thống kê'),
-(4, 2, 'Quản lí khách hàng'),
-(5, 2, 'Quản lí nhân viên'),
-(6, 2, 'Thống kê'),
-(7, 2, 'Quản lí sản phẩm'),
-(8, 2, 'Nhập hàng'),
-(9, 2, 'Quản lí danh mục'),
-(10, 2, 'Quản lí đơn hàng'),
-(11, 3, 'Quản lí sản phẩm'),
-(12, 3, 'Nhập hàng'),
-(13, 3, 'Quản lí danh mục'),
-(14, 4, 'Quản lí khách hàng'),
-(15, 4, 'Quản lí đơn hàng');
+INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ID_ChucNang`, `id_quanly`) VALUES
+(16, 1, 1, 1),
+(17, 1, 1, 3),
+(18, 1, 2, 3),
+(19, 1, 4, 3),
+(20, 1, 3, 3),
+(21, 1, 1, 7),
+(22, 1, 2, 7),
+(23, 1, 3, 7),
+(24, 1, 4, 7),
+(25, 1, 1, 2),
+(26, 1, 2, 2),
+(27, 1, 3, 2),
+(28, 1, 4, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chucnangquyen`
+--
+
+CREATE TABLE `chucnangquyen` (
+  `id` int(10) NOT NULL,
+  `chucnang` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chucnangquyen`
+--
+
+INSERT INTO `chucnangquyen` (`id`, `chucnang`) VALUES
+(1, 'Xem'),
+(2, 'Thêm'),
+(3, 'Sửa'),
+(4, 'Xóa');
 
 -- --------------------------------------------------------
 
@@ -213,7 +233,7 @@ INSERT INTO `hoadon` (`idBill`, `idUser`, `receiver`, `phoneNumber`, `totalBill`
 (6, 6, 'Nam Đặng', '0911666777', 2300000, 'Thanh toán khi nhận hàng', 1, '2025-02-11'),
 (7, 7, 'Tú Vũ', '0911777888', 180000, 'Thanh toán khi nhận hàng', 1, '2025-03-21'),
 (8, 8, 'Quỳnh Anh', '0911888999', 1290000, 'Chuyển khoản ngân hàng', 1, '2025-03-19'),
-(9, 9, 'Michael Nguyen', '0911999000', 670000, 'Thanh toán khi nhận hàng', 0, '2024-12-23'),
+(9, 9, 'Michael Nguyen', '0911999000', 670000, 'Thanh toán khi nhận hàng', 1, '2024-12-23'),
 (10, 10, 'Jessica Trinh', '0912000111', 560000, 'Chuyển khoản ngân hàng', 1, '2025-03-17'),
 (11, 11, 'Tommy Le', '0912111222', 985000, 'Thanh toán khi nhận hàng', 1, '2025-01-29'),
 (12, 12, 'David Hoang', '0912222333', 310000, 'Thanh toán khi nhận hàng', 0, '2025-04-09'),
@@ -454,6 +474,30 @@ INSERT INTO `quanlihoadon` (`idBill`, `create_at`, `IDNhanVien`, `status`) VALUE
 (13, '2025-04-06 17:08:31', 4, 3),
 (14, '2025-04-06 17:08:31', 8, 2),
 (15, '2025-04-06 17:08:31', 12, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quanly`
+--
+
+CREATE TABLE `quanly` (
+  `id` int(11) NOT NULL,
+  `quanly` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `quanly`
+--
+
+INSERT INTO `quanly` (`id`, `quanly`) VALUES
+(1, 'Thống kê'),
+(2, 'Quản lý sách'),
+(3, 'Quản lí nhân viên'),
+(4, 'Quản lí người dùng'),
+(5, 'Quản lý nhập hàng'),
+(6, 'Quản lý đơn hàng'),
+(7, 'Quản lý quyền');
 
 -- --------------------------------------------------------
 
@@ -774,7 +818,7 @@ ALTER TABLE `cartitems`
 -- AUTO_INCREMENT for table `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
-  MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `hoadon`

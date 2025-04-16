@@ -1,7 +1,7 @@
 <div class="w-[100vw] h-[100vh] flex justify-center items-center bg-[#00000080] fixed top-0 left-0 z-50" id="admin-login-popup">
     <div class="form-box bg-white p-8 rounded-lg shadow-lg w-96">
 
-        <form action="../handler/adminLogin.php" method="get" id="admin-login-form">
+        <form action="../../handler/adminLogin.php" method="get" id="admin-login-form">
             <div class="mb-4">
                 <input type="text" name="username" id="username" placeholder="Username" required class="w-full px-3 py-2 border rounded">
             </div>

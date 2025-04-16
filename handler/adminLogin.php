@@ -15,7 +15,7 @@ if ($user == null) {
 } else {
     if ($user["password"] == $password && $user["roleId"] != 1) {
         session_start();
-        $_SESSION["user"] = $user["id"];
+        $_SESSION["admin"] = $user["id"];
         header("Location: http://localhost/LTW-UD2/admin/");
     } else {
         header("Location: http://localhost/LTW-UD2/admin/");
