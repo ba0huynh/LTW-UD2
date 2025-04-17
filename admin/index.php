@@ -41,7 +41,7 @@ $allUsers = $userTable->getAllUser();
 <body>
 
 <?php echo $_SESSION['admin'] ?>
-  <?php 
+  <?php
   
   include_once "gui/layout.php" ?>
   <?php 

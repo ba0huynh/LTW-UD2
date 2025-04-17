@@ -38,12 +38,11 @@ if($conn->connect_error) {
 <body>
    <div class="flex flex-col items-center justify-center w-[80%]>
 
-       <?php
-       include_once'./zui/banner.php'
-       ?>
        <div class="flex-col flex">
        <?php include_once "./components/Navbar.php" ?>
-           
+       <?php
+       include_once './zui/banner.php'
+       ?>
            <?php include_once "./zui/suggested_book.php" ?>
            <?php include_once "./zui/footer.php" ?>
         </div>
