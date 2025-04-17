@@ -20,6 +20,35 @@ $(document).ready(function () {
     });
 });
 
+function loadProducts(page = 1, search = "") {
+    $.ajax({
+        type: 'POST',
+        url: './gui/thongtinsanpham.php',
+        data: {
+            valueSearch: search,
+            currentPage: page
+        },
+        success: function (response) {
+            $('.table-container').html(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX lỗi:", error);
+        }
+    });
+}
+
+$(document).on('keyup change', '#searchInput', function () {
+    const keyword = $(this).val();
+    loadProducts(1, keyword);
+});
+
+$(document).on('click', '.page-number', function (e) {
+    e.preventDefault();
+    const page = $(this).data('page');
+    const search = $('#searchInput').val();
+    loadProducts(page, search);
+});
+
 $(document).on('click', '.delete-icon', function () {
     let id = $(this).data("id");
 
@@ -77,6 +106,12 @@ $(document).on("click", ".update-icon", function (e) {
         success: function (response) {
             $(".modal-content").html(response);
             $("#myModal").css("display", "flex");
+
+            $('#book-name').data('original', $('#book-name').val());
+            $('#subject').data('original', $('#subject').val());
+            $('#class').data('original', $('#class').val());
+            $('#image-url').data('original', $('#image-url').val());
+            $('#description').data('original', $('#description').val());
         },
         error: function () {
             alert("Có lỗi xảy ra khi lấy dữ liệu sản phẩm.");
@@ -155,8 +190,20 @@ $(document).on("change", "#description", function () {
         $textarea.val(original);
     }
 });
+
 $(document).on('submit', '#editProductForm', function (e) {
     e.preventDefault();
+
+
+    if (!hasChanges()) {
+        Swal.fire({
+            icon: "info",
+            title: "Không có thay đổi",
+            text: "Không có thay đổi nào để cập nhật!",
+        });
+        return;
+    }
+
 
     let formData = new FormData(this);
 
@@ -170,16 +217,6 @@ $(document).on('submit', '#editProductForm', function (e) {
         cancelButtonText: "Hủy bỏ",
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire({
-                title: "Đang cập nhật sản phẩm...",
-                text: "Vui lòng chờ một chút.",
-                icon: "info",
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
 
             $.ajax({
                 type: "POST",
@@ -188,6 +225,7 @@ $(document).on('submit', '#editProductForm', function (e) {
                 processData: false,
                 contentType: false,
                 success: function (response) {
+                    console.log(response);
                     Swal.fire({
                         title: "Cập nhật thành công!",
                         icon: "success",
@@ -195,14 +233,12 @@ $(document).on('submit', '#editProductForm', function (e) {
                         showConfirmButton: false
                     });
 
-                    // Load lại danh sách sản phẩm
                     $.ajax({
                         type: "POST",
                         url: "./gui/sanphan.php",
                         success: function (response) {
                             $('.container').html(response);
                             $('#myModal').css('display', 'none');
-
                         }
                     });
                 },
@@ -216,3 +252,18 @@ $(document).on('submit', '#editProductForm', function (e) {
         }
     });
 });
+
+
+function hasChanges() {
+    let isChanged = false;
+
+    // Kiểm tra sự thay đổi của các trường bằng cách so sánh với giá trị ban đầu lưu trong data('original')
+    if ($('#book-name').val() !== $('#book-name').data('original')) isChanged = true;
+    if ($('#subject').val() !== $('#subject').data('original')) isChanged = true;
+    if ($('#class').val() !== $('#class').data('original')) isChanged = true;
+    if ($('#image-url').val() !== $('#image-url').data('original')) isChanged = true;
+    if ($('#description').val() !== $('#description').data('original')) isChanged = true;
+
+    return isChanged;
+}
+

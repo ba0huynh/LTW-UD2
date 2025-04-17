@@ -4,10 +4,6 @@
     require_once __DIR__ . "/../../database/book.php";
 
     $product = new BooksTable($pdo);
-    // $products = $product->getAllBook();
-
-    
-
 
     if (isset($_POST['name'], $_POST['subject'], $_POST['class'], $_POST['image'], $_POST['description'], $_POST['id'])) {
         $id = $_POST['id'];
@@ -17,29 +13,27 @@
         $image = $_POST['image'];
         $description = $_POST['description'];
 
-        var_dump($id, $name, $subject, $class, $image, $description);
-        $updateSuccess = $products->updateBook($id,$name, $subject, $class, $image, $description); 
+        $subjectId = $subject;
+
+        $updateSuccess = $product->updateBook($id,$name, $subjectId, $class, $image, $description); 
 
         echo $updateSuccess ? "success" : "error";
         exit; 
     }
-
 
     if (isset ($_POST['update-product'])) {
         $id = $_POST['id'];
         $products = $product->getBookById($id);
         $img = $products['imageURL'];
         $name = $products['bookName'];
-        $subject = $product->getSubjectNameById($id);
+        $sId = $products['subjectId'];
+        $subject = $product->getSubjectNameById($sId);
         $class = $products['classNumber'];
         $price = $products['currentPrice'];
         $description = $products['description'];
         $subjects = $product->getAllSubject();
     }
 ?>
-
-
-
 
 <h3>Cập nhật thông tin sách</h3>
 <form id="editProductForm">
@@ -88,3 +82,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
  -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+ <style>
+.modal {font-family: 'Poppins', sans-serif;}
+ </style>

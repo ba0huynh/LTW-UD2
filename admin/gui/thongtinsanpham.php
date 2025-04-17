@@ -12,7 +12,19 @@
         exit();
     }
 
+    $itemPerPage = 4;
+    $currentPage = isset($_POST['currentPage']) ? (int)$_POST['currentPage'] : 1;
     $search = isset($_POST['valueSearch']) ? $_POST['valueSearch'] : "";
+
+    $offset = ($currentPage - 1) * $itemPerPage;
+
+    $sqlCount = "SELECT COUNT(*) as total FROM books WHERE status = 1";
+    if ($search !== "") {
+        $sqlCount .= " AND bookName LIKE '%$search%'";
+    }
+    $totalResult = $pdo->query($sqlCount)->fetch();
+    $totalItems = $totalResult['total'];
+    $totalPages = ceil($totalItems / $itemPerPage);
 
     $sql = "SELECT * FROM books
         WHERE books.status = 1";
@@ -20,6 +32,7 @@
     if ($search != "") {
         $sql .= " AND books.bookName like '%$search%'";
     }
+    $sql .= " LIMIT $itemPerPage OFFSET $offset";
     $products = $product->getBooksByCondition($sql);
 ?>
 
@@ -84,7 +97,7 @@
                         // $image = '.' . $product['image'] . "?" . time();
                         ?>
                         <div>
-                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="70" height="70">
+                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="55" height="55">
                         </div>
                     </td>
                     <td>
@@ -111,7 +124,17 @@
         </tbody>
     </table>
 </div>
-
+<?php if ($totalPages > 1): ?>
+<div class="pagination">
+    <ul class="pagination">
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                <a class="page-link page-number" href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+    </ul>
+</div>
+<?php endif; ?>
 
 
 
@@ -139,19 +162,20 @@
 .table th:nth-child(4) div,
 .table th:nth-child(5) div{
     text-align: center;
-    padding: 20px;
+    padding: 17px 25px;
 }
 .table th:nth-child(1),
 .table td:nth-child(1) div{
-    padding-left: 25px;
+    padding-left: 30px;
     padding-right: 15px;
 }
 .table th:nth-child(8){
+    padding: 10px 15px;
     text-align: center;
-    padding: 10px;
 }
 .table td:nth-child(8) {
-    padding: 10px;
+    padding: 10px 10px 10px 33px;
+
 }
 .th div{
     padding:150px;
@@ -180,5 +204,50 @@
     color: #005f94;
     font-size: 23px;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-left: 0;
+}
+
+.pagination ul {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination .page-item {
+    display: inline-block;
+}
+
+.pagination .page-link {
+    display: inline-block;
+    padding: 5px 11px;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
 
 </style>

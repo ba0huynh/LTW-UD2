@@ -13,7 +13,6 @@
         <?php require_once "thongtinsanpham.php" ?>
     </div>
 
-</div>
 
 
 

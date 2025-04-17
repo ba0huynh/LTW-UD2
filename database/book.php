@@ -51,6 +51,15 @@ class BooksTable
         return $result['subjectName'] ?? '';
     }
 
+    public function getSubjectIdByName($name) {
+        global $pdo;
+        $query = "SELECT id FROM subjects WHERE subjectName = $name";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['id'] ?? '';
+    }
+
     public function getBooksByCondition($cond){
         global $pdo;
         $query = $cond;
@@ -77,17 +86,17 @@ class BooksTable
         return $result;
     }
 
-    public function updateBook($id, $name, $subject, $class, $image, $description) {
-    global $pdo;
-    $query = "UPDATE books SET 
-                name = '$name', 
-                subject = '$subject', 
-                class = '$class', 
-                image = '$image', 
+    public function updateBook($id, $name, $subjectId, $class, $image, $description) {
+        global $pdo;
+        $query = "UPDATE books SET 
+                bookName = '$name', 
+                subjectId = '$subjectId', 
+                classNumber = '$class', 
+                imageURL = '$image', 
                 description = '$description' 
               WHERE id = $id";
-    $stmt = $pdo->prepare($query);
-    return $stmt->execute();
-}
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute();
+    }
 
 }
