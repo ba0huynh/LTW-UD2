@@ -35,6 +35,7 @@ $allUsers = $userTable->getAllUser();
   <script type="module" src="../javascript/admin/index.js"> </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="assets/script/product.js"></script>
+  <!-- <script src="assets/script/script.js"></script> -->
 
 </head>
 

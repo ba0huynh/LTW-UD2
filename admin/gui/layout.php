@@ -57,10 +57,10 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item">Thông tin nhân viên</div>
                     <div class="submenu-item">Thêm nhân viên</div>
                 </div>
-                <div class="menu-item admin-nav-btn" page="products"> <img src="./assets/icon/book.svg" class="dark-img" alt="">
+                <div class="menu-item"> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
                 <div class="submenu">
-                    <div class="submenu-item">Thông tin sản phẩm</div>
+                    <div class="submenu-item admin-nav-btn"  page="thongtinsanpham">Thông tin sản phẩm</div>
                     <div class="submenu-item">Thêm sản phẩm</div>
                 </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
@@ -125,7 +125,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     nhan vien
                 </div>
             </main>
-            <main page="products" id="content">
+            <main page="thongtinsanpham" id="content">
 
                 <div id="main-content">
                     <?php require_once "sanphan.php" ?>

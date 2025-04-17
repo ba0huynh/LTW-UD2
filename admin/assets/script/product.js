@@ -257,7 +257,6 @@ $(document).on('submit', '#editProductForm', function (e) {
 function hasChanges() {
     let isChanged = false;
 
-    // Kiểm tra sự thay đổi của các trường bằng cách so sánh với giá trị ban đầu lưu trong data('original')
     if ($('#book-name').val() !== $('#book-name').data('original')) isChanged = true;
     if ($('#subject').val() !== $('#subject').data('original')) isChanged = true;
     if ($('#class').val() !== $('#class').data('original')) isChanged = true;
