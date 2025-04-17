@@ -60,8 +60,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 <div class="menu-item"> <img src="./assets/icon/book.svg" class="dark-img" alt="">
                     Quản lí sản phẩm &#9662</div>
                 <div class="submenu">
-                    <div class="submenu-item admin-nav-btn"  page="thongtinsanpham">Thông tin sản phẩm</div>
-                    <div class="submenu-item">Thêm sản phẩm</div>
+                    <div class="submenu-item admin-nav-btn" page="thongtinsanpham">Thông tin sản phẩm</div>
+                    <div class="submenu-item admin-nav-btn" page="themsac">Thêm sản phẩm</div>
                 </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662</div>
@@ -129,6 +129,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
 
                 <div id="main-content">
                     <?php require_once "sanphan.php" ?>
+                </div>
+            </main>
+            <main page="themsac" id="content">
+
+                <div id="main-content">
+                    <?php require_once "themsanpham.php" ?>
                 </div>
             </main>
             <main page="permission" id="content">
