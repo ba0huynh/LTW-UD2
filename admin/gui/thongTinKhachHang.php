@@ -55,7 +55,7 @@
         display: flex;
         justify-content: center;
     }
-
+/* 
     .container {
         width: 90%;
         max-width: 1200px;
@@ -63,7 +63,7 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+    } */
 
     h2 {
         font-size: 22px;

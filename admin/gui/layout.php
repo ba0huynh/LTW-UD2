@@ -138,12 +138,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </main>
             <main page="nhaphang" id="content">
                 <div id="main-content">
-                    <?php require_once "nhapSanPham.php" ?>
+                    nhập hàng
                 </div>
             </main>
             <main page="thongtinnhaphang" id="content">
                 <div id="main-content">
-                    <?php require_once "thongTinPhieuNhap.php" ?>
+                    thông tin phiếu nhập
                 </div>
             </main>
             <main page="permission" id="content">

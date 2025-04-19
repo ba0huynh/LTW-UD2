@@ -34,11 +34,13 @@
         </div>
 
         <div class="form-group">
-            <label for="price">Giá:</label>
+            <label for="price">Giá bán:</label>
             <input type="text" id="price" name="price" required>
         </div>
     </div>
-
+    
+    <div class="form-bottom">
+    <div class="f-left">
     <div class="form-group full-width">
         <label for="image-url">Hình ảnh (đường dẫn):</label>
         <input type="text" id="image-url" name="image" required>
@@ -47,6 +49,11 @@
     <div class="form-group full-width">
         <label for="description">Mô tả:</label>
         <textarea id="description" name="description" required></textarea>
+    </div>
+    </div>
+    <div class="f-right">
+                <img src="https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png" alt="">
+    </div>
     </div>
 
     <div class="submit-container">
@@ -142,6 +149,25 @@
     }
 
     #addProductForm button[type="submit"]:hover {
-        background-color: #428fef;
+        background-color:rgb(61, 134, 223);
+    }
+
+    .form-bottom{
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+    .f-left{
+        width: 80%;
+    }
+    .f-right{
+        width: 20%;
+        padding: 15px;
+    }
+    .f-right img{
+        width: auto;
+        height: 100%;
+        padding: 0;
     }
 </style>

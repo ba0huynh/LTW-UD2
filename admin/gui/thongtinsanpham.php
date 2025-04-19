@@ -37,106 +37,6 @@
 ?>
 
 
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th><div>Môn học</div></th>
-                <th><div>Tên sách</div></th>
-                <th><div>Lớp</div></th>
-                <th><div>Giá cả</div></th>
-                <th><div>Hình ảnh</div></th>
-                <th><div>Số lượng bán</div></th>
-                <th><div>Mô tả</div></th>
-
-                <?php
-                // if ($checkDeleteAndUpdate) {
-                    ?>
-                    <th>Chức năng</th>
-                    <?php
-                // }
-                ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (!$products) {
-                ?>
-
-                <tr>
-                    <td style="padding: 15px;" colspan="8">Không tìm thấy sản phẩm</td>
-                </tr>
-                <?php
-            }
-            $book = new BooksTable($pdo);
-            $vnd ='đ';
-            foreach ($products as $product) {
-                ?>
-                <tr>
-                    <td>
-                        <div>
-                            <?php echo $book->getSubjectNameById($product['subjectId']) ?>
-                        </div>
-                        
-                    </td>
-                    <td>
-                        <?php echo $product['bookName'] ?>
-                    </td>
-                    <td>
-                        <div>
-                            <?php echo $product['classNumber'] ?>
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                        <?php echo $product['currentPrice'].$vnd; ?>
-                        </div>
-                    </td>
-                    <td>
-                        <?php
-                        // $image = '.' . $product['image'] . "?" . time();
-                        ?>
-                        <div>
-                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="55" height="55">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            <?php echo $product['quantitySold'] ?>
-                        </div>
-                        
-                    </td>
-                    <td>
-                        <?php echo $product['description'] ?>
-                    </td>
-
-                    <td>
-                        <div class="icon">
-                            <i class="fa-solid fa-trash delete-icon" data-id="<?php echo $product['id'] ?>"></i>
-                            <i id="openModalBtn" class="fa-regular fa-pen-to-square update-icon"  data-id="<?php echo $product['id'] ?>"></i>
-                        </div>
-
-                    </td>
-                </tr>
-                <?php
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
-<?php if ($totalPages > 1): ?>
-<div class="pagination">
-    <ul class="pagination">
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                <a class="page-link page-number" href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
-            </li>
-        <?php endfor; ?>
-    </ul>
-</div>
-<?php endif; ?>
-
-
 
 <style>
 .table-responsive{
@@ -250,4 +150,107 @@
 }
 
 
+
+
 </style>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th><div>Môn học</div></th>
+                <th><div>Tên sách</div></th>
+                <th><div>Lớp</div></th>
+                <th><div>Giá bán</div></th>
+                <th><div>Hình ảnh</div></th>
+                <th><div>Số lượng bán</div></th>
+                <th><div>Mô tả</div></th>
+
+                <?php
+                // if ($checkDeleteAndUpdate) {
+                    ?>
+                    <th>Chức năng</th>
+                    <?php
+                // }
+                ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (!$products) {
+                ?>
+
+                <tr>
+                    <td style="padding: 15px;" colspan="8">Không tìm thấy sản phẩm</td>
+                </tr>
+                <?php
+            }
+            $book = new BooksTable($pdo);
+            $vnd ='đ';
+            foreach ($products as $product) {
+                ?>
+                <tr>
+                    <td>
+                        <div>
+                            <?php echo $book->getSubjectNameById($product['subjectId']) ?>
+                        </div>
+                        
+                    </td>
+                    <td>
+                        <?php echo $product['bookName'] ?>
+                    </td>
+                    <td>
+                        <div>
+                            <?php echo $product['classNumber'] ?>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                        <?php echo $product['currentPrice'].$vnd; ?>
+                        </div>
+                    </td>
+                    <td>
+                        <?php
+                        // $image = '.' . $product['image'] . "?" . time();
+                        ?>
+                        <div>
+                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="55" height="55">
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <?php echo $product['quantitySold'] ?>
+                        </div>
+                        
+                    </td>
+                    <td>
+                        <?php echo $product['description'] ?>
+                    </td>
+
+                    <td>
+                        <div class="icon">
+                            <i class="fa-solid fa-trash delete-icon" data-id="<?php echo $product['id'] ?>"></i>
+                            <i id="openModalBtn" class="fa-regular fa-pen-to-square update-icon"  data-id="<?php echo $product['id'] ?>"></i>
+                        </div>
+
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
+<?php if ($totalPages > 1): ?>
+<div class="pagination">
+    <ul class="pagination">
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <li class="page-item <?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                <a class="page-link page-number" href="#" data-page="<?php echo $i; ?>"><?php echo $i; ?></a>
+            </li>
+        <?php endfor; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
+
