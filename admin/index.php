@@ -39,14 +39,15 @@ $allUsers = $userTable->getAllUser();
 
 </head>
 
-<body>
+<body class="p-0">
 
-<?php echo $_SESSION['admin'] ?>
+<?php 
+// echo $_SESSION['admin'] ?>
   <?php
   
   include_once "gui/layout.php" ?>
   <?php 
-    include_once "gui/adminLoginPopup.php.php";
+    // include_once "gui/adminLoginPopup.php";
   
      ?>;
 </body>
