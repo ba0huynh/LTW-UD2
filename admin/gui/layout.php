@@ -114,9 +114,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
             </main>
 
             <main page="customer" id="content">
-
                 <div id="main-content">
-                    lmao
+                    <?php  include_once './gui/thongTinKhachHang.php' ?>
                 </div>
             </main>
             <main page="employee" id="content">
