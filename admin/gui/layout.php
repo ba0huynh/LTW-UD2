@@ -62,6 +62,8 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 <div class="submenu">
                     <div class="submenu-item admin-nav-btn" page="thongtinsanpham">Thông tin sản phẩm</div>
                     <div class="submenu-item admin-nav-btn" page="themsac">Thêm sản phẩm</div>
+                    <div class="submenu-item admin-nav-btn" page="nhaphang">Nhập hàng</div>
+                    <div class="submenu-item admin-nav-btn" page="thongtinnhaphang">Thông tin nhập hàng</div>
                 </div>
                 <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662</div>
@@ -125,19 +127,26 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 </div>
             </main>
             <main page="thongtinsanpham" id="content">
-
                 <div id="main-content">
                     <?php require_once "sanphan.php" ?>
                 </div>
             </main>
             <main page="themsac" id="content">
-
                 <div id="main-content">
                     <?php require_once "themsanpham.php" ?>
                 </div>
             </main>
+            <main page="nhaphang" id="content">
+                <div id="main-content">
+                    <?php require_once "nhapSanPham.php" ?>
+                </div>
+            </main>
+            <main page="thongtinnhaphang" id="content">
+                <div id="main-content">
+                    <?php require_once "thongTinPhieuNhap.php" ?>
+                </div>
+            </main>
             <main page="permission" id="content">
-
                 <div id="main-content">
                     <?php
                     include './components/role_permissions.php';

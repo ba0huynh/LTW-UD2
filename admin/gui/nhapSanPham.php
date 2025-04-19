@@ -6,18 +6,18 @@
             <div class="form-group">
                 <label>Hãng</label>
                 <select>
-                    <option>Adidas</option>
-                    <option>Nike</option>
-                    <option>Puma</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
                 </select>
             </div>
         
             <div class="form-group">
                 <label>Thiết kế</label>
                 <select>
-                    <option>Yeezy</option>
-                    <option>Jordan</option>
-                    <option>Classic</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
                 </select>
             </div>
         </div>
@@ -32,8 +32,8 @@
             <div class="form-group">
                 <label>Size</label>
                 <select>
-                    <option>36</option>
-                    <option>37</option>
+                    <option></option>
+                    <option></option>
                     <option>38</option>
                 </select>
             </div>
@@ -120,7 +120,7 @@
             padding: 20px;
             margin-top: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         h2 {
