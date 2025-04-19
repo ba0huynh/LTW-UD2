@@ -82,7 +82,7 @@ $(document).on('click', '.delete-icon', function () {
                         url: "./gui/sanphan.php",
                         dataType: "html",
                         success: function (response) {
-                            $('.container').html(response);
+                            $('.sp-container').html(response);
                         },
                     });
 
@@ -237,7 +237,7 @@ $(document).on('submit', '#editProductForm', function (e) {
                         type: "POST",
                         url: "./gui/sanphan.php",
                         success: function (response) {
-                            $('.container').html(response);
+                            $('.sp-container').html(response);
                             $('#myModal').css('display', 'none');
                         }
                     });

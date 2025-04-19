@@ -1,4 +1,4 @@
-<div class="container">
+<div class="sp-container">
     <h2 class="title">Thông tin sản phẩm</h2>
 
     <div class="tool">
@@ -16,6 +16,9 @@
 
 
 <style>
+.sp-container{
+    margin: 27px;
+} 
 .title {
     font-size: 23px;
     font-weight: 600;
