@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 03:34 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 19, 2025 lúc 02:32 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ltw_ud2`
+-- Cơ sở dữ liệu: `ltw_ud2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `books`
+-- Cấu trúc bảng cho bảng `books`
 --
 
 CREATE TABLE `books` (
@@ -32,51 +32,50 @@ CREATE TABLE `books` (
   `bookName` varchar(255) NOT NULL,
   `subjectId` int(11) DEFAULT NULL,
   `classNumber` int(11) NOT NULL,
-  `oldPrice` double DEFAULT 0,
-  `currentPrice` double DEFAULT 0,
-  `quantitySold` int(11) DEFAULT 0,
+  `importPrice` double DEFAULT 0,
+  `profit` double DEFAULT 0,
+  `quantityStock` int(17) DEFAULT 0,
   `imageURL` varchar(255) NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
-  `description` varchar(3000) DEFAULT NULL,
-  `type` varchar(50) DEFAULT NULL
+  `description` varchar(3000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `books`
+-- Đang đổ dữ liệu cho bảng `books`
 --
 
-INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `description`, `type`) VALUES
-(1, 'Toán 6 - Giáo Khoa Cơ Bản', 1, 6, 18000, 16000, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(2, 'Ngữ Văn 6 - Giáo Trình', 2, 6, 20000, 18000, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 1, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
-(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, 7, 19000, 17000, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(4, 'Ngữ Văn 7 - Bài Tập', 2, 7, 21000, 19000, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
-(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, 8, 20000, 18000, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
-(6, 'Hóa Học 8 - Bài Tập', 7, 8, 22000, 20000, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
-(7, 'Toán 9 - Ôn Thi vào 10', 1, 9, 25000, 23000, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
-(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, 9, 24000, 22000, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
-(9, 'Tiếng Anh 9 - Ôn Thi', 8, 9, 23000, 21000, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
-(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, 9, 24000, 22000, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(11, 'Vật Lý 9 - Giáo Trình', 5, 9, 22500, 20500, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 1, 'Vật lý lớp 9.', 'Giáo Trình'),
-(12, 'Ngữ Văn 9 - Bài Tập', 2, 9, 22000, 20000, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 'Bài tập văn học lớp 9.', 'Bài Tập'),
-(13, 'Sinh Học 9 - Ôn Thi', 6, 9, 23000, 21500, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
-(14, 'Hóa Học 9 - Ôn Thi', 7, 9, 23500, 21500, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
-(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, 10, 26000, 24000, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(16, 'Ngữ Văn 10 - Bài Giảng', 2, 10, 27000, 25000, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
-(17, 'Toán 11 - Giáo Trình', 1, 11, 28000, 26000, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
-(18, 'Ngữ Văn 11 - Ôn Thi', 2, 11, 28500, 26500, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
-(19, 'Toán 12 - Ôn Thi THPT', 1, 12, 32000, 30000, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 1, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
-(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, 12, 31000, 29000, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
-(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, 12, 30000, 28000, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
-(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, 12, 31000, 29000, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 1, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(23, 'Vật Lý 12 - Giáo Trình', 5, 12, 30000, 28000, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 1, 'Giáo trình Vật lý lớp 12.', 'Giáo Trình'),
-(24, 'Sinh Học 12 - Ôn Thi THPT', 6, 12, 30500, 28500, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
-(25, 'Hóa Học 12 - Ôn Thi THPT', 7, 12, 31000, 29000, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
-(26, 'Ngữ Văn 12 - Bài Tập', 2, 12, 30000, 28000, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 'Bài tập Văn học lớp 12.', 'Bài Tập');
+INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `importPrice`, `profit`, `quantityStock`, `imageURL`, `status`, `description`) VALUES
+(1, 'Toán 6 - Giáo Khoa Cơ Bản', 1, 6, 18000, 10, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 'Toán lớp 6 bản cơ bản.'),
+(2, 'Ngữ Văn 6 - Giáo Trình', 2, 6, 20000, 10, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 1, 'Giáo trình Ngữ văn lớp 6.'),
+(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, 7, 19000, 10, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 'Toán lớp 7 bản cơ bản.'),
+(4, 'Ngữ Văn 7 - Bài Tập', 2, 7, 21000, 10, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 'Bài tập Ngữ văn lớp 7.'),
+(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, 8, 20000, 10, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 'Toán lớp 8 nâng cao.'),
+(6, 'Hóa Học 8 - Bài Tập', 7, 8, 22000, 10, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 1, 'Bài tập Hóa học lớp 8.'),
+(7, 'Toán 9 - Ôn Thi vào 10', 1, 9, 25000, 10, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 'Ôn thi Toán lớp 9 vào 10.'),
+(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, 9, 24000, 10, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 'Ôn thi Ngữ văn lớp 9.'),
+(9, 'Tiếng Anh 9 - Ôn Thi', 8, 9, 23000, 10, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 'Ôn thi tiếng Anh lớp 9.'),
+(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, 9, 24000, 10, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 'Toán lớp 9 cơ bản.'),
+(11, 'Vật Lý 9 - Giáo Trình', 5, 9, 22500, 10, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 1, 'Vật lý lớp 9.'),
+(12, 'Ngữ Văn 9 - Bài Tập', 2, 9, 22000, 10, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 'Bài tập văn học lớp 9.'),
+(13, 'Sinh Học 9 - Ôn Thi', 6, 9, 23000, 10, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 'Ôn thi Sinh học lớp 9.'),
+(14, 'Hóa Học 9 - Ôn Thi', 7, 9, 23500, 10, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 'Ôn thi Hóa lớp 9.'),
+(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, 10, 26000, 10, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 'Toán lớp 10 bản cơ bản.'),
+(16, 'Ngữ Văn 10 - Bài Giảng', 2, 10, 27000, 10, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 1, 'Bài giảng Văn học lớp 10.'),
+(17, 'Toán 11 - Giáo Trình', 1, 11, 28000, 10, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 'Giáo trình Toán lớp 11.'),
+(18, 'Ngữ Văn 11 - Ôn Thi', 2, 11, 28500, 10, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 'Ôn thi Ngữ văn lớp 11.'),
+(19, 'Toán 12 - Ôn Thi THPT', 1, 12, 32000, 10, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 1, 'Ôn thi tốt nghiệp môn Toán.'),
+(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, 12, 31000, 10, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 'Ôn thi tốt nghiệp môn Ngữ văn.'),
+(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, 12, 30000, 10, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 'Ôn thi tiếng Anh THPT.'),
+(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, 12, 31000, 10, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 1, 'Toán lớp 12 cơ bản.'),
+(23, 'Vật Lý 12 - Giáo Trình', 5, 12, 30000, 10, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 1, 'Giáo trình Vật lý lớp 12.'),
+(24, 'Sinh Học 12 - Ôn Thi THPT', 6, 12, 30500, 10, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 'Ôn thi Sinh học THPT.'),
+(25, 'Hóa Học 12 - Ôn Thi THPT', 7, 12, 31000, 10, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 'Ôn thi Hóa học THPT.'),
+(26, 'Ngữ Văn 12 - Bài Tập', 2, 12, 30000, 28000, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 'Bài tập Văn học lớp 12.');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Cấu trúc bảng cho bảng `cart`
 --
 
 CREATE TABLE `cart` (
@@ -86,7 +85,7 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cart`
+-- Đang đổ dữ liệu cho bảng `cart`
 --
 
 INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
@@ -97,7 +96,7 @@ INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cartitems`
+-- Cấu trúc bảng cho bảng `cartitems`
 --
 
 CREATE TABLE `cartitems` (
@@ -108,7 +107,7 @@ CREATE TABLE `cartitems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cartitems`
+-- Đang đổ dữ liệu cho bảng `cartitems`
 --
 
 INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
@@ -122,7 +121,7 @@ INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitiethoadon`
+-- Cấu trúc bảng cho bảng `chitiethoadon`
 --
 
 CREATE TABLE `chitiethoadon` (
@@ -132,7 +131,7 @@ CREATE TABLE `chitiethoadon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chitiethoadon`
+-- Đang đổ dữ liệu cho bảng `chitiethoadon`
 --
 
 INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
@@ -155,7 +154,7 @@ INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitietquyen`
+-- Cấu trúc bảng cho bảng `chitietquyen`
 --
 
 CREATE TABLE `chitietquyen` (
@@ -166,7 +165,7 @@ CREATE TABLE `chitietquyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chitietquyen`
+-- Đang đổ dữ liệu cho bảng `chitietquyen`
 --
 
 INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ID_ChucNang`, `id_quanly`) VALUES
@@ -187,7 +186,7 @@ INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ID_ChucNang`, `id_qua
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chucnangquyen`
+-- Cấu trúc bảng cho bảng `chucnangquyen`
 --
 
 CREATE TABLE `chucnangquyen` (
@@ -196,7 +195,7 @@ CREATE TABLE `chucnangquyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chucnangquyen`
+-- Đang đổ dữ liệu cho bảng `chucnangquyen`
 --
 
 INSERT INTO `chucnangquyen` (`id`, `chucnang`) VALUES
@@ -208,7 +207,7 @@ INSERT INTO `chucnangquyen` (`id`, `chucnang`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoadon`
+-- Cấu trúc bảng cho bảng `hoadon`
 --
 
 CREATE TABLE `hoadon` (
@@ -223,7 +222,7 @@ CREATE TABLE `hoadon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `hoadon`
+-- Đang đổ dữ liệu cho bảng `hoadon`
 --
 
 INSERT INTO `hoadon` (`idBill`, `idUser`, `receiver`, `phoneNumber`, `totalBill`, `paymentMethod`, `statusBill`, `Date`) VALUES
@@ -244,7 +243,7 @@ INSERT INTO `hoadon` (`idBill`, `idUser`, `receiver`, `phoneNumber`, `totalBill`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoadonxuat`
+-- Cấu trúc bảng cho bảng `hoadonxuat`
 --
 
 CREATE TABLE `hoadonxuat` (
@@ -255,7 +254,7 @@ CREATE TABLE `hoadonxuat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `hoadonxuat`
+-- Đang đổ dữ liệu cho bảng `hoadonxuat`
 --
 
 INSERT INTO `hoadonxuat` (`id`, `idBill`, `status`, `create_at`) VALUES
@@ -266,7 +265,7 @@ INSERT INTO `hoadonxuat` (`id`, `idBill`, `status`, `create_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imageproduct`
+-- Cấu trúc bảng cho bảng `imageproduct`
 --
 
 CREATE TABLE `imageproduct` (
@@ -276,7 +275,7 @@ CREATE TABLE `imageproduct` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `imageproduct`
+-- Đang đổ dữ liệu cho bảng `imageproduct`
 --
 
 INSERT INTO `imageproduct` (`id`, `idBook`, `imageURL`) VALUES
@@ -384,7 +383,7 @@ INSERT INTO `imageproduct` (`id`, `idBook`, `imageURL`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhanvien`
+-- Cấu trúc bảng cho bảng `nhanvien`
 --
 
 CREATE TABLE `nhanvien` (
@@ -401,7 +400,7 @@ CREATE TABLE `nhanvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `nhanvien`
+-- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
 INSERT INTO `nhanvien` (`IDNhanVien`, `TenNhanVien`, `Mail`, `SDT`, `ID_TK`, `avatar`, `status`, `MatKhau`, `username`, `ID_NhomQuyen`) VALUES
@@ -424,7 +423,7 @@ INSERT INTO `nhanvien` (`IDNhanVien`, `TenNhanVien`, `Mail`, `SDT`, `ID_TK`, `av
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhomquyen`
+-- Cấu trúc bảng cho bảng `nhomquyen`
 --
 
 CREATE TABLE `nhomquyen` (
@@ -433,7 +432,7 @@ CREATE TABLE `nhomquyen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `nhomquyen`
+-- Đang đổ dữ liệu cho bảng `nhomquyen`
 --
 
 INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`) VALUES
@@ -446,7 +445,7 @@ INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quanlihoadon`
+-- Cấu trúc bảng cho bảng `quanlihoadon`
 --
 
 CREATE TABLE `quanlihoadon` (
@@ -457,7 +456,7 @@ CREATE TABLE `quanlihoadon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `quanlihoadon`
+-- Đang đổ dữ liệu cho bảng `quanlihoadon`
 --
 
 INSERT INTO `quanlihoadon` (`idBill`, `create_at`, `IDNhanVien`, `status`) VALUES
@@ -478,7 +477,7 @@ INSERT INTO `quanlihoadon` (`idBill`, `create_at`, `IDNhanVien`, `status`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `quanly`
+-- Cấu trúc bảng cho bảng `quanly`
 --
 
 CREATE TABLE `quanly` (
@@ -487,7 +486,7 @@ CREATE TABLE `quanly` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `quanly`
+-- Đang đổ dữ liệu cho bảng `quanly`
 --
 
 INSERT INTO `quanly` (`id`, `quanly`) VALUES
@@ -502,7 +501,7 @@ INSERT INTO `quanly` (`id`, `quanly`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Cấu trúc bảng cho bảng `review`
 --
 
 CREATE TABLE `review` (
@@ -516,7 +515,7 @@ CREATE TABLE `review` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `statusdelivery`
+-- Cấu trúc bảng cho bảng `statusdelivery`
 --
 
 CREATE TABLE `statusdelivery` (
@@ -528,7 +527,7 @@ CREATE TABLE `statusdelivery` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subjects`
+-- Cấu trúc bảng cho bảng `subjects`
 --
 
 CREATE TABLE `subjects` (
@@ -538,7 +537,7 @@ CREATE TABLE `subjects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `subjects`
+-- Đang đổ dữ liệu cho bảng `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `subjectName`, `subjectImage`) VALUES
@@ -554,7 +553,7 @@ INSERT INTO `subjects` (`id`, `subjectName`, `subjectImage`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taikhoan`
+-- Cấu trúc bảng cho bảng `taikhoan`
 --
 
 CREATE TABLE `taikhoan` (
@@ -563,7 +562,7 @@ CREATE TABLE `taikhoan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `taikhoan`
+-- Đang đổ dữ liệu cho bảng `taikhoan`
 --
 
 INSERT INTO `taikhoan` (`ID_TK`, `ID_NhomQuyen`) VALUES
@@ -601,7 +600,7 @@ INSERT INTO `taikhoan` (`ID_TK`, `ID_NhomQuyen`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongtinhoadon`
+-- Cấu trúc bảng cho bảng `thongtinhoadon`
 --
 
 CREATE TABLE `thongtinhoadon` (
@@ -612,7 +611,7 @@ CREATE TABLE `thongtinhoadon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `thongtinhoadon`
+-- Đang đổ dữ liệu cho bảng `thongtinhoadon`
 --
 
 INSERT INTO `thongtinhoadon` (`idHoadon`, `shippingAddress`, `orderTime`, `approvalTime`) VALUES
@@ -633,7 +632,7 @@ INSERT INTO `thongtinhoadon` (`idHoadon`, `shippingAddress`, `orderTime`, `appro
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -649,7 +648,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status_user`, `ID_TK`) VALUES
@@ -670,11 +669,11 @@ INSERT INTO `users` (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `e
 (15, 'Anthony Tran', '0912555666', 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 30);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `books`
+-- Chỉ mục cho bảng `books`
 --
 ALTER TABLE `books`
   ADD PRIMARY KEY (`id`),
@@ -682,14 +681,14 @@ ALTER TABLE `books`
 ALTER TABLE `books` ADD FULLTEXT KEY `bookName` (`bookName`);
 
 --
--- Indexes for table `cart`
+-- Chỉ mục cho bảng `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
   ADD KEY `fk_cart_users` (`idUser`);
 
 --
--- Indexes for table `cartitems`
+-- Chỉ mục cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
   ADD PRIMARY KEY (`id`),
@@ -697,42 +696,42 @@ ALTER TABLE `cartitems`
   ADD KEY `cartId` (`cartId`);
 
 --
--- Indexes for table `chitiethoadon`
+-- Chỉ mục cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD PRIMARY KEY (`idBook`,`idHoadon`),
   ADD KEY `idHoadon` (`idHoadon`);
 
 --
--- Indexes for table `chitietquyen`
+-- Chỉ mục cho bảng `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
   ADD PRIMARY KEY (`ID_ChiTiet`),
   ADD KEY `ID_NhomQuyen` (`ID_NhomQuyen`);
 
 --
--- Indexes for table `hoadon`
+-- Chỉ mục cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`idBill`),
   ADD KEY `idUser` (`idUser`);
 
 --
--- Indexes for table `hoadonxuat`
+-- Chỉ mục cho bảng `hoadonxuat`
 --
 ALTER TABLE `hoadonxuat`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idBill` (`idBill`);
 
 --
--- Indexes for table `imageproduct`
+-- Chỉ mục cho bảng `imageproduct`
 --
 ALTER TABLE `imageproduct`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_imageProduct_products` (`idBook`);
 
 --
--- Indexes for table `nhanvien`
+-- Chỉ mục cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
   ADD PRIMARY KEY (`IDNhanVien`),
@@ -740,20 +739,20 @@ ALTER TABLE `nhanvien`
   ADD KEY `fk_nhanvien_nhomquyen` (`ID_NhomQuyen`);
 
 --
--- Indexes for table `nhomquyen`
+-- Chỉ mục cho bảng `nhomquyen`
 --
 ALTER TABLE `nhomquyen`
   ADD PRIMARY KEY (`ID_NhomQuyen`);
 
 --
--- Indexes for table `quanlihoadon`
+-- Chỉ mục cho bảng `quanlihoadon`
 --
 ALTER TABLE `quanlihoadon`
   ADD PRIMARY KEY (`idBill`),
   ADD KEY `IDNhanVien` (`IDNhanVien`);
 
 --
--- Indexes for table `review`
+-- Chỉ mục cho bảng `review`
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`id`),
@@ -761,214 +760,214 @@ ALTER TABLE `review`
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `statusdelivery`
+-- Chỉ mục cho bảng `statusdelivery`
 --
 ALTER TABLE `statusdelivery`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `subjects`
+-- Chỉ mục cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `taikhoan`
+-- Chỉ mục cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD PRIMARY KEY (`ID_TK`),
   ADD KEY `ID_NhomQuyen` (`ID_NhomQuyen`);
 
 --
--- Indexes for table `thongtinhoadon`
+-- Chỉ mục cho bảng `thongtinhoadon`
 --
 ALTER TABLE `thongtinhoadon`
   ADD PRIMARY KEY (`idHoadon`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `ID_TK` (`ID_TK`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `books`
+-- AUTO_INCREMENT cho bảng `books`
 --
 ALTER TABLE `books`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
   MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `cartitems`
+-- AUTO_INCREMENT cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `chitietquyen`
+-- AUTO_INCREMENT cho bảng `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
   MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `hoadon`
+-- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `hoadonxuat`
+-- AUTO_INCREMENT cho bảng `hoadonxuat`
 --
 ALTER TABLE `hoadonxuat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `imageproduct`
+-- AUTO_INCREMENT cho bảng `imageproduct`
 --
 ALTER TABLE `imageproduct`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
--- AUTO_INCREMENT for table `nhanvien`
+-- AUTO_INCREMENT cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
   MODIFY `IDNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `nhomquyen`
+-- AUTO_INCREMENT cho bảng `nhomquyen`
 --
 ALTER TABLE `nhomquyen`
   MODIFY `ID_NhomQuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `quanlihoadon`
+-- AUTO_INCREMENT cho bảng `quanlihoadon`
 --
 ALTER TABLE `quanlihoadon`
   MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `review`
+-- AUTO_INCREMENT cho bảng `review`
 --
 ALTER TABLE `review`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `statusdelivery`
+-- AUTO_INCREMENT cho bảng `statusdelivery`
 --
 ALTER TABLE `statusdelivery`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `subjects`
+-- AUTO_INCREMENT cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `taikhoan`
+-- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   MODIFY `ID_TK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `cart`
+-- Các ràng buộc cho bảng `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `cartitems`
+-- Các ràng buộc cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
   ADD CONSTRAINT `cartitems_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cartitems_ibfk_2` FOREIGN KEY (`cartId`) REFERENCES `cart` (`idCart`) ON DELETE CASCADE;
 
 --
--- Constraints for table `chitiethoadon`
+-- Các ràng buộc cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE;
 
 --
--- Constraints for table `chitietquyen`
+-- Các ràng buộc cho bảng `chitietquyen`
 --
 ALTER TABLE `chitietquyen`
   ADD CONSTRAINT `chitietquyen_ibfk_1` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`) ON DELETE CASCADE;
 
 --
--- Constraints for table `hoadon`
+-- Các ràng buộc cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `hoadonxuat`
+-- Các ràng buộc cho bảng `hoadonxuat`
 --
 ALTER TABLE `hoadonxuat`
   ADD CONSTRAINT `hoadonxuat_ibfk_1` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`);
 
 --
--- Constraints for table `imageproduct`
+-- Các ràng buộc cho bảng `imageproduct`
 --
 ALTER TABLE `imageproduct`
   ADD CONSTRAINT `fk_imageProduct_products` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `nhanvien`
+-- Các ràng buộc cho bảng `nhanvien`
 --
 ALTER TABLE `nhanvien`
   ADD CONSTRAINT `fk_nhanvien_nhomquyen` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`),
   ADD CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`ID_TK`) REFERENCES `taikhoan` (`ID_TK`) ON DELETE CASCADE;
 
 --
--- Constraints for table `quanlihoadon`
+-- Các ràng buộc cho bảng `quanlihoadon`
 --
 ALTER TABLE `quanlihoadon`
   ADD CONSTRAINT `quanlihoadon_ibfk_1` FOREIGN KEY (`IDNhanVien`) REFERENCES `nhanvien` (`IDNhanVien`),
   ADD CONSTRAINT `quanlihoadon_ibfk_2` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`);
 
 --
--- Constraints for table `review`
+-- Các ràng buộc cho bảng `review`
 --
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`),
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `taikhoan`
+-- Các ràng buộc cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
   ADD CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`) ON DELETE CASCADE;
 
 --
--- Constraints for table `thongtinhoadon`
+-- Các ràng buộc cho bảng `thongtinhoadon`
 --
 ALTER TABLE `thongtinhoadon`
   ADD CONSTRAINT `thongtinhoadon_ibfk_1` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE;
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`ID_TK`) REFERENCES `taikhoan` (`ID_TK`) ON DELETE CASCADE;
