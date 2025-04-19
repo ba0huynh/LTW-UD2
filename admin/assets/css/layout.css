@@ -166,11 +166,12 @@ body {
 /* Nội dung modal */
 .modal-content {
     background-color: white;
-    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 50%;
+    min-width: 400px;
     max-width: 600px;
+    padding: 25px 45px;
 }
 
 .modal-content input,
@@ -190,20 +191,20 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-left: calc(50% - 68px);
 }
 
 .modal-content button:hover {
     background-color: #0056b3;
 }
 
-
-
-
-
-
-
-
-
 .swal2-container {
     z-index: 10000 !important;
+}
+
+.modal-content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
 }
