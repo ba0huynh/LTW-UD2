@@ -1,135 +1,98 @@
-<footer class="footer">
-    <div class="left-footer">
-        <h1 class="text-red">Book</h1>
-        <p class="mt-4">Chuyên cung cấp sách giáo trình, văn phòng phẩm, đồ dùng học tập</p>
-        <p>Book.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống Fahasa trên toàn quốc.</p>
-        <div class="social-icons"> 
-            <a href="#" target="_blank">Download on Android <i class="fa-brands fa-google-play"></i></a>
-            <a href="#" target="_blank">Download on iOS <i class="fa-brands fa-app-store-ios"></i></a>
-        </div>    
+<footer class="bg-gray-100 text-gray-700 pt-12 w-full mt-4">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+
+      <!-- Logo & Description -->
+      <div class="space-y-4">
+        <img src="./images/login/image1.jpg" alt="Logo" class="w-20">
+        <p class="text-sm">Lầu 5, 367-369 Hai Bà Trưng, Q.3, TP.HCM</p>
+        <p class="text-sm">Công Ty CP Phát Hành Sách TP.HCM - FAHASA</p>
+        <p class="text-sm">Fahasa.com nhận đặt hàng trực tuyến và giao hàng tận nơi.</p>
+        <img src="./images/login/logo-bo-cong-thuong-da-thong-bao1.webp" alt="Đã thông báo" class="w-28 mt-4">
+        <div class="flex gap-3 text-2xl text-gray-500 mt-4">
+          <i class='bx bxl-facebook-circle hover:text-blue-600'></i>
+          <i class='bx bxl-instagram-alt hover:text-pink-500'></i>
+          <i class='bx bxl-youtube hover:text-red-600'></i>
+          <i class='bx bxl-twitter hover:text-blue-400'></i>
+        </div>
+      </div>
+
+      <!-- Dịch vụ -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">DỊCH VỤ</h4>
+        <ul class="space-y-2">
+          <li class="footer-item">Điều khoản sử dụng</li>
+          <li class="footer-item">Chính sách bảo mật thông tin</li>
+          <li class="footer-item">Chính sách bảo mật thanh toán</li>
+          <li class="footer-item">Giới thiệu Fahasa</li>
+        </ul>
+      </div>
+
+      <!-- Hỗ trợ -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">HỖ TRỢ</h4>
+        <ul class="space-y-2">
+          <li class="footer-item">Chính sách đổi - trả</li>
+          <li class="footer-item">Chính sách vận chuyển</li>
+          <li class="footer-item">Chính sách bảo hành</li>
+          <li class="footer-item">Khách sĩ</li>
+        </ul>
+      </div>
+
+      <!-- Liên hệ -->
+      <div>
+        <h4 class="font-bold text-lg mb-4">LIÊN HỆ</h4>
+        <ul class="space-y-2 text-sm">
+          <li class="flex items-center gap-2"><i class='bx bxs-map'></i> 60-62 Lê Lợi, Q1, TP.HCM</li>
+          <li class="flex items-center gap-2"><i class='bx bxs-envelope'></i> cskh@fahasa.com.vn</li>
+          <li class="flex items-center gap-2"><i class='bx bxs-phone'></i> 1900 636 467</li>
+        </ul>
+        <div class="flex gap-3 mt-4">
+          <img src="./images/login/android1.webp" class="w-24">
+          <img src="./images/login/appstore1.webp" class="w-24">
+        </div>
+      </div>
     </div>
-    <div class="right-footer">
-        <div class="service">
-            <h1 class="font-bold">Dịch vụ</h1>
-            <ul>
-                <li>Điều khoản sử dụng</li>
-                <li>Chính sách bảo mật thông tin cá nhân</li>
-                <li>Chính sách bảo mật thanh toán</li>
-                <li>Giới thiệu</li>
-                <li>Hệ thống trung tâm - nhà sách</li>
-            </ul>
-        </div>
-        
-        <div class="help">
-            <h1 class="font-bold">Hỗ trợ</h1>
-            <ul>
-                <li>Chính sách đổi - trả - hoàn tiền</li>
-                <li>Chính sách bảo hành - bồi hoàn</li>
-                <li>Chính sách vận chuyển</li>
-                <li>Chính sách khách sỉ</li>
-            </ul>
-        </div>
-        
-        <div class="my-account">
-            <h1 class="font-bold">Tài khoản của tôi</h1>
-            <ul>
-                <li>Đăng nhập/Tạo mới tài khoản</li>
-                <li>Thay đổi địa chỉ khách hàng</li>
-                <li>Chi tiết thanh toán</li>
-                <li>Lịch sử mua hàng</li>
-            </ul>
-        </div>
-        
-        <div class="contact">
-            <h1 class="font-bold">Liên hệ</h1>
-            <ul>
-                <li><i class="fa-solid fa-location-dot"></i> 123-Đường abc - Q.x -TP.HCM</li>
-                <li><i class="fa-solid fa-envelope"></i> abcxyz#gmail.com</li>
-                <li><i class="fa-solid fa-phone"></i> 1900******</li>
-            </ul>
-        </div>
+
+    <!-- Payments -->
+    <div class="mt-12 border-t pt-6 flex flex-wrap justify-center items-center gap-6">
+      <img src="./images/login/logo_lex.webp" class="h-10">
+      <img src="./images/login/Logo_ninjavan.webp" class="h-10">
+      <img src="./images/login/vnpost1.webp" class="h-10">
+      <img src="./images/login/vnpay_logo.webp" class="h-10">
+      <img src="./images/login/shopeepay_logo.webp" class="h-10">
+      <img src="./images/login/momopay.webp" class="h-10 w-auto">
     </div>
+
+    <p class="text-center text-sm text-gray-400 mt-6 pb-6">© 2025 Fahasa. All rights reserved.</p>
+  </div>
+
+  <style>
+    .footer-item {
+      position: relative;
+      padding-left: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .footer-item::before {
+      content: "—";
+      position: absolute;
+      left: -20px;
+      color: #ec4899;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .footer-item:hover {
+      transform: translateX(6px);
+      color: #ec4899;
+    }
+
+    .footer-item:hover::before {
+      left: -10px;
+      opacity: 1;
+    }
+  </style>
 </footer>
-<style>
-    .footer {
-    background-color: white;
-    color: #000;
-    text-align: center;
-    padding: 24px 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px;
-}
-
-.left-footer {
-    width: 30%;
-    text-align: left;
-    padding: 20px;
-    justify-content: space-between;
-
-}
-
-.text-red {
-    color: #ef4444;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.social-icons {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.social-icons a {
-    color: #000;
-    text-decoration: none;
-}
-
-.right-footer {
-    border-left: 3px solid #555;
-    width: 55%;
-    display: flex;
-    padding-left: 20px;
-}
-.right-footer > div {
-    width: 45%;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.font-bold {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    margin-top: 5px;
-}
-
-.contact i {
-    margin-right: 5px;
-}
-
-@media (max-width: 768px) {
-    .footer {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .left-footer, .right-footer {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .right-footer {
-        flex-direction: column;
-    }
-}
-
-</style>
