@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 require_once("./database/database.php");
 
 $servername="localhost";
@@ -28,7 +28,7 @@ if($conn->connect_error) {
     
     <!-- custom css -->
     <link rel="stylesheet" href="./css/login.css">
-    <link rel="stylesheet" href="./css/header.css">
+
     <link rel="stylesheet" href="./css/suggested_book.css">
 
     <!-- Tailwindcss -->
@@ -36,17 +36,24 @@ if($conn->connect_error) {
 </head>
 
 <body>
-   <div class="flex flex-col items-center justify-center w-[80%]>
-
-       <div class="flex-col flex">
-       <?php include_once "./components/Navbar.php" ?>
-       <?php
-       include_once './zui/banner.php'
-       ?>
-           <?php include_once "./zui/suggested_book.php" ?>
-           <?php include_once "./zui/footer.php" ?>
-        </div>
+<?php include_once "./components/header2.php";?>
+<?php
+if(isset($_SESSION["user_id"])){
+  echo $_SESSION["user_id"]."day laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+}else{
+  echo "khogn co";
+}
+?>
+<div class="min-h-screen flex items-center justify-center">
+  <div class="w-[80%] flex flex-col items-center">
+    <div class="flex flex-col">
+      <?php include_once "./zui/suggested_book.php" ?>
+      
     </div>
+  </div>
+</div>
+<?php include_once "./components/footer.php";?>
+
 
 
 </body>
