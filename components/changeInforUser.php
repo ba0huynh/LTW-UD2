@@ -43,7 +43,7 @@
 <?php
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /LTWUD2/");
+    header("Location: /LTW_UD2/");
     exit(); // rất quan trọng: dừng script sau khi redirect
 }
 
@@ -57,7 +57,7 @@ $user = $result->fetch_assoc();
             </div>
         
             <div class="mainForm">
-              <form action="/LTWUD2/account.php" method="post" >
+              <form action="/LTW_UD2/account.php" method="post" >
                 <div class="flex-1 bg-white rounded-2xl shadow-md p-8">
                     <h2 class="text-2xl font-semibold text-gray-800 mb-6">Hồ sơ cá nhân</h2>
               
@@ -92,7 +92,7 @@ $user = $result->fetch_assoc();
              <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl changePass hidden ">
               <h2 class="text-xl font-semibold text-gray-800 mb-6">Đổi mật khẩu</h2>
           
-              <form class="space-y-5" action="/LTWUD2/account.php" method="post">
+              <form class="space-y-5" action="/LTW_UD2/account.php" method="post">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu hiện tại <span class="text-red-500">*</span></label>
                   <input name="user_old_password" type="password" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">

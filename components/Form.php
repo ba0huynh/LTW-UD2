@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['user'] = $nhanvien['IDNhanVien'];
 
                 if ($nhanvien['ID_NhomQuyen'] == 1) {
-                    header("Location: http://localhost/LTW-UD2/admin/");
+                    header("Location: http://localhost/LTW_UD2/admin/");
                 } else {
-                    header("Location: http://localhost/LTW-UD2/index.php");
+                    header("Location: http://localhost/LTW_UD2/index.php");
                 }
                 exit;
             } else {

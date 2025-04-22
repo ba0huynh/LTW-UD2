@@ -36,7 +36,7 @@ if(isset($_SESSION["user_id"])){
 
 
 ?>
-<form action="/LTWUD2/zui/payment.php" method="post" id="cartForm">
+<form action="/LTW_UD2/zui/payment.php" method="post" id="cartForm">
   <div class="max-w-6xl mx-auto mt-10 flex gap-6">
     <!-- Thanh toán -->
 <div class="w-full max-w-sm bg-white p-6 rounded-2xl shadow-xl border border-gray-200">

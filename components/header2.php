@@ -9,11 +9,11 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
 ?>
         <div class="relative mx-auto w-full flex items-center justify-between py-2 px-[10%] bg-white shadow-sm">
           <div class="flex items-center gap-2">
-            <a href="/LTWUD2/"><img src="/LTWUD2/images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
+            <a href="/LTW_UD2/"><img src="/LTW_UD2/images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
           </div>
-          <img src="/LTWUD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
+          <img src="/LTW_UD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
           <div class="flex-1 max-w-2xl mx-4">
-            <form action="/LTWUD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
+            <form action="/LTW_UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
               <input
                 type="text"
                 name="search"
@@ -110,7 +110,7 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
                         ?>
                         <?php echo $user_id?>
                           <p class=" m-5 font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200">
-                            <a href="/LTWUD2/account.php">Đăng nhập</a>
+                            <a href="/LTW_UD2/account.php">Đăng nhập</a>
                           </p>
 
 
@@ -154,7 +154,7 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
               <!--  -->
             </div>
             <!-- Giỏ hàng -->
-             <a href="/LTWUD2/zui/cart.php">
+             <a href="/LTW_UD2/zui/cart.php">
 
                  <div class="relative flex flex-col items-center">
                      
@@ -171,8 +171,8 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
       
             <!-- Tài khoản -->
             <div class="flex flex-col items-center">
-                <span class="text-xl"><a href="/LTWUD2/account.php">👤</a></span>
-                <a href="/LTWUD2/account.php">Tài khoản</a>
+                <span class="text-xl"><a href="/LTW_UD2/account.php">👤</a></span>
+                <a href="/LTW_UD2/account.php">Tài khoản</a>
 
             </div>
       
@@ -181,7 +181,7 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
                 <img  src="./images/forHeader/vietNam.png" alt="">
 
             </div>
-            <a href="/LTWUD2/components/logout.php"
+            <a href="/LTW_UD2/components/logout.php"
               class="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />

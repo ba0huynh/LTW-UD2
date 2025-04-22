@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_old_password']))
             if ($stmt) {
                 mysqli_stmt_bind_param($stmt, "si", $new_hashed, $user_id);
                 if (mysqli_stmt_execute($stmt)) {
-                    echo "<script>alert('Đổi mật khẩu thành công!'); window.location.href='/LTWUD2/account.php';</script>";
+                    echo "<script>alert('Đổi mật khẩu thành công!'); window.location.href='/LTW_UD2/account.php';</script>";
                 } else {
                     echo "<script>alert('Lỗi khi cập nhật mật khẩu.');</script>";
                 }
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_bind_param($stmt, $types, ...$values);
 
             if (mysqli_stmt_execute($stmt)) {
-                echo "<script>alert('Cập nhật thông tin thành công!'); window.location.href='/LTWUD2/account.php';</script>";
+                echo "<script>alert('Cập nhật thông tin thành công!'); window.location.href='/LTW_UD2/account.php';</script>";
             } else {
                 echo "<script>alert('Lỗi khi cập nhật: " . mysqli_stmt_error($stmt) . "');</script>";
             }

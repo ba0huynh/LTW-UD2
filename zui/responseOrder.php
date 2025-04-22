@@ -1,7 +1,7 @@
 <?php 
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /LTWUD2/");
+    header("Location: /LTW_UD2/");
     exit();
 }
 session_start();
