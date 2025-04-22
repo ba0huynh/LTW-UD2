@@ -22,6 +22,7 @@ $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+session_start();
 if(!empty($_GET["class"]))
   $class=$_GET["class"];
 if(!empty($_GET["subject"]))
@@ -61,10 +62,14 @@ if(!empty($_GET["search"]))
   $search=$_GET["search"];
 $query="select * from books
         ";
+
 if(!empty($subject)){
   $query.="join subjects on books.idSubject=subjects.idSubject where subjects.id=books.subjectId";
 }else{
   $query.=" where 1=1";
+}
+if(!empty($search)){
+  $query.=" and books.bookName like '%$search%' ";
 }
 if(!empty($type)){
   $query.=" and books.type=$type";
@@ -97,7 +102,7 @@ $result=$conn->query($query);
 ?>
 <body class="bg-gray-100 text-gray-800">
     <?php
-    include './zui/header2.php'
+    include './components/header2.php'
     ?>
   <div class="container mx-auto px-4 py-6">
     <div class="grid grid-cols-12 gap-6">
@@ -120,7 +125,8 @@ $result=$conn->query($query);
             <?php } ?>
 
             <div class="accent-blue-500">
-                <?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?> 
+                Từ khóa tìm kiếm : 
+                <?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?> <br>
                 Kết quả tìm kiếm : (<?php echo $result->num_rows ?? 0; ?>)
             </div>
             </div>
@@ -176,7 +182,7 @@ $result=$conn->query($query);
 
 
         <!-- Products Grid -->
-        <div class="bg-white rounded-2xl shadow p-4">
+        <div class="bg-white rounded-2xl shadow p-4 min-h-full">
           <div class="flex justify-between items-center mb-4">
           <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500"> <?php if(!empty($search)) echo $search ;?> (<?php echo $result->num_rows;?> kết quả)</span></h2>
           <form action="searchPage.php" method="GET" id="filterForm" class="flex items-center gap-2">
@@ -211,5 +217,6 @@ $result=$conn->query($query);
       </main>
     </div>
   </div>
+  <?php include_once "./components/footer.php";?>
 </body>
 </html>
