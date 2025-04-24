@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: /LTWUD2/");
+    header("Location: /LTW_UD2/");
     exit();
 }
 
@@ -37,12 +37,7 @@ if(isset($_SESSION["user_id"])){
 
 ?>
 
-<?php
-  $sql2 = "SELECT * FROM thongTinGiaoHang where id_user".$_SESSION["user_id"];
-  $result = $conn->query($sql);
 
-
-  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,12 +73,18 @@ if(isset($_SESSION["user_id"])){
     </svg>
     Địa Chỉ Nhận Hàng
   </div>
-
+<?php 
+$sql2 = "SELECT * FROM thongTinGiaoHang where id_user".$_SESSION["user_id"] ."and status=1";
+$result = $conn->query($sql);
+if($result->num_rows>0){
+  while($row=$result->fetch_assoc()){
+?>
   <div class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
     <div class="flex-1">
-      <span class="font-bold text-gray-900">Yến Nhi</span> 
-      <span class="text-gray-700">(+84) 793472637</span><br>
-      506/49/60C, Lạc Long Quân, Phường 5, Quận 11, TP. Hồ Chí Minh
+      <span class="font-bold text-gray-900"><?php echo $row["tennguoinhan"]?></span> 
+      <span class="text-gray-700"><?php echo $row["sdt"]?></span><br>
+      <?php echo $row["diachi"]?>, <?php //echo $row["duong"]?>
+      ,Phường <?php //echo $row["phuong"]?>,Quận <?php echo $row["quan"]?>, <?php //echo $row["thanhpho"]?>
     </div>
 
     <div class="flex gap-3 items-center mt-2 sm:mt-0">
@@ -93,6 +94,9 @@ if(isset($_SESSION["user_id"])){
   </div>
 </div>
 </div>
+<?php }}else{?>
+
+<?php }?>
 <form method="POST" action="/cart/confirm">
   <div class="bg-gray-100">
 
@@ -256,28 +260,47 @@ if(isset($_SESSION["user_id"])){
   <h2 class="text-lg font-bold text-gray-800 mb-2">Địa Chỉ Của Tôi</h2>
 
   <!-- Địa chỉ 1 (mặc định) -->
-  <div class="flex items-start space-x-3 border-b pb-4">
-    <input type="radio" name="address" class="mt-1 text-red-600" checked />
-    <div class="flex-1 space-y-1">
-      <div class="flex justify-between items-center">
-        <span class="font-semibold text-gray-800">Yến Nhi</span>
-        <a href="#" class="text-blue-600 text-sm hover:underline">Cập nhật</a>
+  <?php 
+$sql2 = "SELECT * FROM thongTinGiaoHang where id_user".$_SESSION["user_id"] ."and status=1";
+$result = $conn->query($sql);
+if($result->num_rows>0){
+  while($row=$result->fetch_assoc()){
+?>
+  <form action="payment.php" method="post">
+    <div class="flex items-start space-x-3 border-b pb-4">
+      <input type="radio" name="address" class="mt-1 text-red-600" checked />
+      <div class="flex-1 space-y-1">
+        <div class="flex justify-between items-center">
+          <span class="font-semibold text-gray-800"><?php echo $row["tennguoinhan"]?></span>
+          <!-- dùng ajax để cập nhật mặc định -->
+          <button type="submit" class="text-blue-600 text-sm hover:underline">
+            Cập nhật
+          </button>
+          
+        </div>
+        <div class="text-sm text-gray-700"><?php echo $row["sdt"]?></div>
+        <div class="text-sm text-gray-600">
+        <?php echo $row["diachi"]?>, <?php echo $row["duong"]?><br>Phường <?php echo $row["phuong"]?>, <?php echo $row["quan"]?>, <?php echo $row["thanhpho"]?>
+        </div>
+        <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded inline-block mt-1">Mặc định</span>
       </div>
-      <div class="text-sm text-gray-700">(+84) 793 472 637</div>
-      <div class="text-sm text-gray-600">
-        506/49/60C, Lạc Long Quân<br>Phường 5, Quận 11, TP. Hồ Chí Minh
-      </div>
-      <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded inline-block mt-1">Mặc định</span>
-    </div>
+    </form>
+    <?php }}else{?>
+
+      <?php }?>
   </div>
 
 
-  <!-- Thêm địa chỉ -->
-  <button onclick="toggleAddressForm()" class="flex items-center gap-2 border border-gray-300 text-gray-700 rounded px-4 py-2 mt-2 hover:bg-gray-100 transition">
-    <span class="text-xl">＋</span> Thêm Địa Chỉ Mới
-  </button>
+  <!-- thêm địa chỉ mới bằng ajax -->
+  <form action="payment.php">
+    <button type="submit" onclick="toggleAddressForm()" class="flex items-center gap-2 border border-gray-300 text-gray-700 rounded px-4 py-2 mt-2 hover:bg-gray-100 transition">
+      <span class="text-xl">＋</span> Thêm Địa Chỉ Mới
+    </button>
+  </form>
+
 
   <!-- Hủy và Xác nhận -->
+   <!-- xác nhận bằng ajax -->
   <div class="flex justify-end gap-4 mt-6">
     <button type="button" onclick="toggleAddressPopup()" class="px-5 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition">Hủy</button>
     <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition font-semibold">Xác nhận</button>

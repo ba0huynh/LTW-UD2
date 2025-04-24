@@ -2,9 +2,11 @@
 
 
 $user_id=isset($_SESSION['user_id'])?$_SESSION['user_id']: 0;
-$query_count_cart="select count(*) as total from cart,users,cartitems where cart.idUser=users.id and cartitems.cartId=cart.idCart";
+if(!empty($user_id)){
+  $query_count_cart="select count(*) as total from cart,users,cartitems where cart.idUser=users.id and cartitems.cartId=cart.idCart";
 $query_count_cart=$conn->query($query_count_cart);
 $countOfCart=$query_count_cart->fetch_assoc()['total'];
+}
 
 ?>
         <div class="relative mx-auto w-full flex items-center justify-between py-2 px-[10%] bg-white shadow-sm">
@@ -161,7 +163,9 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
                     
                     <span class="text-xl">🛒  </span>
                     <span>Giỏ Hàng</span>
+                    <?php if(!empty($countOfCart)){?>
                     <span class="absolute -top-1 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?php echo $countOfCart?></span>
+                    <?php }?>
                 </div>
             </a>
 

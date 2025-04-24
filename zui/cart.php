@@ -93,6 +93,7 @@ if(isset($_SESSION["user_id"])){
       </h2>
       <p class="text-red-600 font-semibold text-sm item-price" data-price="<?php echo $row2['currentPrice']; ?>">
         <?php echo number_format($row2['currentPrice'], 0, ',', '.'); ?> đ
+
         <?php if ($row2['oldPrice'] > $row2['currentPrice']) { ?>
           <span class="text-xs text-gray-400 line-through ml-2">
             <?php echo number_format($row2['oldPrice'], 0, ',', '.'); ?> đ
@@ -104,7 +105,7 @@ if(isset($_SESSION["user_id"])){
     <div class="flex items-center gap-2">
       <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded decrease">−</button>
       <span class="quantity text-sm text-gray-800">
-        <?php echo $row2['amount']; ?>
+        <?php echo $row2['amount'];  ?> 
       </span>
       <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded increase">+</button>
     </div>
