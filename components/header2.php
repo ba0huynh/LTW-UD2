@@ -1,12 +1,20 @@
 <?php
 
 
-$user_id=isset($_SESSION['user_id'])?$_SESSION['user_id']: 0;
-if(!empty($user_id)){
-  $query_count_cart="select count(*) as total from cart,users,cartitems where cart.idUser=users.id and cartitems.cartId=cart.idCart";
-$query_count_cart=$conn->query($query_count_cart);
-$countOfCart=$query_count_cart->fetch_assoc()['total'];
+if (isset($_SESSION['user_id'])) {
+  $user_id = $_SESSION['user_id'];
+
+  $query_count_cart = "
+    SELECT COUNT(*) as total 
+    FROM cart 
+    JOIN cartitems ON cartitems.cartId = cart.idCart 
+    WHERE cart.idUser = $user_id
+  ";
+
+  $result = $conn->query($query_count_cart);
+  $countOfCart = $result->fetch_assoc()['total'];
 }
+
 
 ?>
         <div class="relative mx-auto w-full flex items-center justify-between py-2 px-[10%] bg-white shadow-sm">
@@ -41,113 +49,16 @@ $countOfCart=$query_count_cart->fetch_assoc()['total'];
               <!--  -->
               
 
-
-                <div id="notificationPanel" class="hidden absolute right-60 mt-12 w-80 bg-white border border-gray-200 rounded-xl shadow-lg z-50 ">
-                    <!-- Tiêu đề -->
-                    <div class="flex justify-between items-center p-4 border-b border-gray-200">
-                        <h3 class="font-semibold text-gray-800 flex items-center gap-2 text-base">
-                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg> 
-                        Thông báo
-                        </h3>
-                        <?php if(isset($_SESSION["user_id"])){?>
-                        <a href="#" class="text-blue-600 text-sm hover:underline">Xem tất cả</a>
-                        <?php }?>
-                    </div>
-                
-                    <!-- Danh sách thông báo -->
-                    <ul class="divide-y divide-gray-200 max-h-72 overflow-y-auto">
-                        <!-- <?php
-                        //$query="select * from hoadon,chitiethoadon,hoadonxuat where hoadon.idBill=chitiethoadon.idBill and hoadonxuat.idBill=hoadon.idBill";
-                        ?>
-                        
-                        <li class="px-4 py-3 hover:bg-gray-50 transition-all duration-200">
-                            <div class="flex gap-3 items-start">
-                                <div class="bg-blue-100 text-blue-600 rounded-full p-2">
-                                📦
-                                </div>
-                                <div class="flex-1">
-                                <p class="font-medium text-gray-800">Đơn hàng đã được xác nhận</p>
-                                <p class="text-sm text-gray-500">Mã đơn #12345 đã được xử lý thành công</p>
-                                <span class="text-xs text-gray-400">2 phút trước</span>
-                                </div>
-                            </div>
-                        </li> -->
-                        <?php
-                        if(!empty($user_id)){
-                        ?>
-                        <?php
-                        $query = "SELECT hoadon.idBill, hoadon.statusBill, hoadonxuat.status AS statusXuat 
-                                FROM hoadon 
-                                JOIN chitiethoadon ON hoadon.idBill = chitiethoadon.idHoadon
-                                JOIN hoadonxuat ON hoadon.idBill = hoadonxuat.idBill and hoadon.idUser=$user_id";
-
-                        $result = $conn->query($query);
-
-                        while ($row = $result->fetch_assoc()) {
-                            // Trạng thái duyệt đơn
-                            $duyet = $row['statusBill'] == 1 ? "Đã duyệt" : "Chưa duyệt";
-
-                            // Trạng thái giao hàng
-                            $giaohang = $row['statusXuat'] == 1 ? "Đã giao hàng" : "Chưa giao hàng";
-                        ?>
-                            <li class="px-4 py-3 hover:bg-gray-50 transition-all duration-200">
-                                <div class="flex gap-3 items-start">
-                                    <div class="bg-blue-100 text-blue-600 rounded-full p-2">
-                                        📦
-                                    </div>
-                                    <div class="flex-1">
-                                        <p class="font-medium text-gray-800">Mã đơn #<?= $row['idBill'] ?> - <?= $duyet ?></p>
-                                        <p class="text-sm text-gray-500">Mã đơn #<?= $row['idBill'] ?> - <?= $giaohang ?></p>
-                                        <span class="text-xs text-gray-400">Vừa xong</span>
-                                    </div>
-                                </div>
-                            </li>
-                        <?php } ?>
-                        <?php
-                        }else{
-                        ?>
-                        <?php echo $user_id?>
-                          <p class=" m-5 font-medium text-blue-600 hover:text-blue-800 transition-colors duration-200">
-                            <a href="/LTW_UD2/account.php">Đăng nhập</a>
-                          </p>
+<!-- 1.đã được nhận -->
+<!-- 2.đang xử lí -->
+<!-- 3.đang được giao -->
+<!-- 4.giao hàng thành công -->
+<!-- 5.đơn hàng đã trả -->
+<!-- 6.đơn hàng đã bị hủy -->
+ 
 
 
 
-
-                        <?php
-                        }
-                        ?>
-
-                        <!-- <li class="px-4 py-3 hover:bg-gray-50 transition-all duration-200">
-                        <div class="flex gap-3 items-start">
-                            <div class="bg-green-100 text-green-600 rounded-full p-2">
-                            🎁
-                            </div>
-                            <div class="flex-1">
-                            <p class="font-medium text-gray-800">Khuyến mãi mới!</p>
-                            <p class="text-sm text-gray-500">Giảm 50% sách tham khảo trong hôm nay</p>
-                            <span class="text-xs text-gray-400">1 giờ trước</span>
-                            </div>
-                        </div>
-                        </li>
-                        <li class="px-4 py-3 hover:bg-gray-50 transition-all duration-200">
-                        <div class="flex gap-3 items-start">
-                            <div class="bg-yellow-100 text-yellow-600 rounded-full p-2">
-                            ⚠️
-                            </div>
-                            <div class="flex-1">
-                            <p class="font-medium text-gray-800">Cập nhật bảo trì hệ thống</p>
-                            <p class="text-sm text-gray-500">Website sẽ bảo trì từ 22:00 đến 23:00</p>
-                            <span class="text-xs text-gray-400">Hôm qua</span>
-                            </div>
-                        </div>
-                        </li> -->
-                    </ul>
-                </div>
 
 
 

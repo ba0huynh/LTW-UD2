@@ -1,6 +1,9 @@
 <?php 
 session_start();
-
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /LTW_UD2/");
+    exit();
+}
 $servername="localhost";
 $username="root";
 $password="";
@@ -9,6 +12,7 @@ $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+$user_id=$_SESSION["user_id"]
 
 ?>
 <!DOCTYPE html>
@@ -90,24 +94,26 @@ if ($result->num_rows > 0) {
           <span class="{{TrangThaiColor}}"><?php echo $row["statusBill"]?></span>
 
         </span>
-        <span class="text-gray-400">|</span>
-        <span class="text-yellow-500 font-bold uppercase">HOÀN THÀNH </span>
       </div>
     </div>
 
     <?php
 $query2="
 select *
-from chitiethoadon,books
-where chitiethoadon.idBook=books.id and chitiethoadon.idHoadon=
-".$row["idBill"];
+from chitiethoadon,hoadon,hoadon_trangthai,books
+where chitiethoadon.idBook=books.id and chitiethoadon.idHoadon=". $row['idBill']
+."
+and hoadon.idBill=chitiethoadon.idHoadon
+and hoadon.idUser=$user_id
+and hoadon_trangthai.idBill=hoadon.idBill"
+;
 $result2=mysqli_query($conn,$query2);
 if ($result2->num_rows > 0) {
   while ($row2 = $result->fetch_assoc()) {
 ?>
       <div class="flex justify-between  pb-4 mb-4 border-t pt-4 mt-4">
         <div class="flex items-start gap-4">
-          <img src="{{this.Anh}}" alt="math" class="w-24 h-24 object-cover rounded border">
+          <img src="<?php $row["imageURL"]?>" alt="math" class="w-24 h-24 object-cover rounded border">
           <div>
             <h2 class="font-semibold text-gray-700">Tên : <?php echo $row2["bookName"]?></h2>
             <p class="text-red-500 font-semibold mt-2">Giá : <?php echo $row2["currentPrice"]*(1+$row2["profit"]) ?></p>
@@ -121,14 +127,13 @@ if ($result2->num_rows > 0) {
             <span class="text-xl font-bold text-red-600 k"><?php echo $row2["amount"]*($row2["currentPrice"]*(1+$row2["profit"]) )?></span>
           </div>
           <div class="flex gap-2 mt-4">
-            <form method="POST" action="/cart/addToCart" style="display: inline;">
-              <input type="hidden" name="productId" value="{{../IDHoaDonXuat}}">
+            <form method="POST" action="" style="display: inline;">
               <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-medium ">
                 Mua Lại
               </button>
             </form>
 
-            {{#unless ../DaHuy}}
+            <?php if($row["statusBill"==6]){?>
             <form action="/order/huyDonHang" method="POST">
               <input type="hidden"  name="IDHoaDonXuat" value="{{../IDHoaDonXuat}}">
 
@@ -136,7 +141,7 @@ if ($result2->num_rows > 0) {
                 Hủy
               </button>
             </form>
-            {{/unless}}
+            <?php }?>
 
 
           </div>
