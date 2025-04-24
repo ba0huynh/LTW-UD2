@@ -35,14 +35,9 @@
         <a href="chitiet.php?id=123" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
           <span class="icon text-xl">🔍</span>
         </a>
-
-        <!-- Thêm vào giỏ hàng -->
-        <form method="POST" action="add_to_cart.php">
-          <input type="hidden" name="product_id" value="123">
-          <button type="submit" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+        <button onclick="themVaoGio(<?= $row2['id'] ?>)" type="" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
             <span class="icon text-xl">🛒</span>
-          </button>
-        </form>
+        </button>
       </div>
 
 
@@ -51,8 +46,10 @@
         <div class="flex items-center space-x-2 mt-2">
           <span class="text-lg font-bold text-red-500"><?php echo htmlspecialchars($row2["currentPrice"]); ?>₫</span>
           <span class="text-sm text-gray-400 line-through"><?php echo htmlspecialchars($row2["oldPrice"]); ?>₫</span>
+          <!-- cái này là gì:')) -->
           <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">-25%</span>
         </div>
+        <!-- sửa lại cái này nha Phước Hìn -->
         <p class="text-sm text-gray-500 mt-1">Đã bán 102</p>
       </div>
     </div>
@@ -64,3 +61,34 @@
   }
   ?>
 </div>
+<script>
+function themVaoGio(bookId) {
+  fetch('controllers/add_to_cart.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'book_id=' + bookId
+  })
+  .then(res => {
+    console.log("Status:", res.status);
+    return res.text(); // 👉 để xem nội dung gốc
+  })
+  .then(text => {
+    console.log("Response text:", text);
+    try {
+      const data = JSON.parse(text);
+      alert(data.message);
+    } catch (err) {
+      console.error("Không phải JSON:", err);
+      alert("❌ Server không trả đúng JSON!");
+    }
+  })
+  .catch(err => {
+    console.error("Lỗi khi gửi request:", err);
+    alert("❌ Có lỗi khi thêm giỏ hàng.");
+  });
+}
+
+</script>
+
