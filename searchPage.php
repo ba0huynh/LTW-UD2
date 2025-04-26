@@ -46,12 +46,13 @@ if(!empty($_GET["Optioncost"])){
 }
 
 
-if(!empty($_GET["age"]))
-  $age=$_GET["age"];
-if(!empty($_GET["min_age"]))
-  $min_age=$_GET["min_age"];
-if(!empty($_GET["max_age"]))
-  $max_age=$_GET["max_age"];
+if(!empty($_GET["class"]))
+  $class=$_GET["class"];
+
+if(!empty($_GET["min_class"]))
+  $min_class=$_GET["min_class"];
+if(!empty($_GET["max_class"]))
+  $max_class=$_GET["max_class"];
 
 if(!empty($_GET["min_cost"]))
   $min_cost=$_GET["min_cost"];
@@ -68,20 +69,21 @@ if(!empty($subject)){
 }else{
   $query.=" where 1=1";
 }
-if(!empty($search)){
-  $query.=" and books.bookName like '%$search%' ";
+if (!empty($search)) {
+    $query .= " AND bookName LIKE '%$search%'";
 }
+
 if(!empty($type)){
   $query.=" and books.type=$type";
 }
 if(!empty($min_cost) && !empty($max_cost)){
   $query.=" and books.currentPrice>= $min_cost and books.currentPrice<= $max_cost";
 }
-if(!empty($age)){
-  $query.=" and books.classNumber=$age";
+if(!empty($class)){
+  $query.=" and books.classNumber=$class";
 }
-if(!empty($min_age) && !empty($max_age)){
-  $query.=" and books.classNumber>=$min_age and books.classNumber<=$max_age";
+if(!empty($min_class) && !empty($max_class)){
+  $query.=" and books.classNumber>=$min_class and books.classNumber<=$max_class";
 }
 if(!empty($class)){
     $query.=" and books.classNumber=$class";
@@ -120,13 +122,14 @@ $result=$conn->query($query);
             <?php } ?>
             <?php if (!empty($_GET["type"])) { ?>
                 <h3 class="font-semibold mb-2">THỂ LOẠI : 
-                <input name="type" type="text" value="<?php echo htmlspecialchars($_GET["type"]); ?>">
+                <input  name="type" type="text" value="<?php echo htmlspecialchars($_GET["type"]); ?>">
                 </h3>
             <?php } ?>
 
             <div class="accent-blue-500">
                 Từ khóa tìm kiếm : 
                 <?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?> <br>
+                <input type="hidden" name="search" value="<?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?>">
                 Kết quả tìm kiếm : (<?php echo $result->num_rows ?? 0; ?>)
             </div>
             </div>
@@ -136,15 +139,15 @@ $result=$conn->query($query);
             <h3 class="font-semibold mb-2">GIÁ</h3>
             <div class="space-y-1">
                 <label class="flex items-center gap-2">
-                <input type="checkbox" name="Optioncost" value="1" class="accent-blue-500" >
+                <input type="checkbox" <?php if(isset($_GET["Optioncost"])){if($_GET["Optioncost"]==1) echo "checked";}?> name="Optioncost" value="1" class="accent-blue-500" >
                 0đ - 50,000đ
                 </label>
                 <label class="flex items-center gap-2">
-                <input type="checkbox" name="Optioncost" value="2" class="accent-blue-500">
+                <input type="checkbox" <?php if(isset($_GET["Optioncost"])){if($_GET["Optioncost"]==2) echo "checked";}?> name="Optioncost" value="2" class="accent-blue-500">
                 50,000đ - 100,000đ
                 </label>
                 <label class="flex items-center gap-2">
-                <input type="checkbox" name="Optioncost" value="3" class="accent-blue-500">
+                <input type="checkbox" <?php if(isset($_GET["Optioncost"])){if($_GET["Optioncost"]==3) echo "checked";}?> name="Optioncost" value="3" class="accent-blue-500">
                 100,000đ - 200,000đ
                 </label>
             </div>
@@ -158,13 +161,13 @@ $result=$conn->query($query);
 
             <!-- Lứa tuổi -->
             <div class="mb-6">
-            <h3 class="font-semibold mb-2">LỨA TUỔI</h3>
+            <h3 class="font-semibold mb-2">Nhập lớp</h3>
             <label class="flex items-center gap-2">
-                <input name="age_range_check" type="checkbox" class="accent-blue-500">
-                <input type="number" name="min_age" placeholder="Từ" class="w-1/6 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['min_age'] ?? ''; ?>"> -
-                <input type="number" name="max_age" placeholder="Đến" class="w-1/6 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['max_age'] ?? ''; ?>">
+                
+                <input type="number" name="min_class" placeholder="Từ" class="w-1/6 border rounded p-1 text-sm"
+                    value="<?php echo $_GET['min_class'] ?? ''; ?>"> -
+                <input type="number" name="max_class" placeholder="Đến" class="w-1/6 border rounded p-1 text-sm"
+                    value="<?php echo $_GET['max_class'] ?? ''; ?>">
             </label>
             <label class="flex items-center gap-2 mt-2">
                 Nhập lớp : 
@@ -218,5 +221,34 @@ $result=$conn->query($query);
     </div>
   </div>
   <?php include_once "./components/footer.php";?>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  const classInput = document.querySelector('input[name="class"]');
+  const minClassInput = document.querySelector('input[name="min_class"]');
+  const maxClassInput = document.querySelector('input[name="max_class"]');
+
+  classInput.addEventListener('input', function () {
+    if (this.value !== '') {
+      minClassInput.disabled = true;
+      maxClassInput.disabled = true;
+      minClassInput.value = '';
+      maxClassInput.value = '';
+    } else {
+      minClassInput.disabled = false;
+      maxClassInput.disabled = false;
+    }
+  });
+
+  minClassInput.addEventListener('input', maxClassInput.addEventListener('input', function () {
+    if (minClassInput.value !== '' || maxClassInput.value !== '') {
+      classInput.disabled = true;
+      classInput.value = '';
+    } else {
+      classInput.disabled = false;
+    }
+  }));
+});
+</script>
+
 </body>
 </html>
