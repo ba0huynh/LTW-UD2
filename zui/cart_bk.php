@@ -139,17 +139,16 @@ function formatCurrency(value) {
   }).format(value);
 }
 
-document.querySelectorAll('.total-amount').forEach(span => {
-  const raw = parseFloat(span.dataset.raw);
-  if (!isNaN(raw)) {
-    span.textContent = formatCurrency(raw);
-  }
-});
 
-// const price = parseFloat(parent.querySelector('.item-price').dataset.price);
-// const itemTotalEl = parent.querySelector('.item-total');
-// const itemTotal = price * amount;
-// itemTotalEl.textContent = formatCurrency(itemTotal);
+
+const price = parseFloat(parent.querySelector('.item-price').dataset.price);
+const itemTotalEl = parent.querySelector('.item-total');
+const itemTotal = price * amount;
+
+itemTotalEl.textContent = formatCurrency(itemTotal);
+document.querySelectorAll('.total-amount').forEach(el => {
+  el.textContent = formatCurrency(data.totalPrice);
+});
 
 
 
@@ -192,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // ✅ Cập nhật thành tiền từng item
             const price = parseFloat(parent.querySelector('.item-total').dataset.price);
-            const itemTotal = price / currentQty * amount;
+            const itemTotal = price * amount;
             parent.querySelector('.item-total').textContent = formatCurrency(itemTotal);
             parent.querySelector('.item-total').dataset.price = itemTotal;
             
