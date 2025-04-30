@@ -84,7 +84,10 @@ if(isset($_SESSION["user_id"])){
       ?>
 
       <!-- Sản phẩm -->
-      <div class="flex items-start gap-4 border-b border-gray-200 pb-6 mb-6">
+      <div class="flex items-start gap-4 border-b border-gray-200 pb-6 mb-6 relative group" data-book-id="<?= $row2['bookId'] ?>" data-cart-id="<?= $row2['cartId'] ?>">
+
+
+
         <img
           src="<?php echo $row2['imageURL']; ?>"
           class="w-20 h-28 object-cover rounded-lg"
@@ -105,18 +108,31 @@ if(isset($_SESSION["user_id"])){
           </p>
         </div>
 
-        <div class="flex items-center gap-2" data-book-id="<?php echo $row2['bookId']; ?>" data-cart-id="<?php echo $row2['cartId']; ?>">
-          <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded decrease">−</button>
-          <span class="quantity text-sm text-gray-800"><?php echo $row2['amount']; ?></span>
-          <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded increase">+</button>
+        <div class="flex flex-col items-center gap-1" data-book-id="<?php echo $row2['bookId']; ?>" data-cart-id="<?php echo $row2['cartId']; ?>">
+          <div class="flex items-center gap-2">
+            <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded decrease">−</button>
+            <span class="quantity text-sm text-gray-800"><?php echo $row2['amount']; ?></span>
+            <button type="button" class="px-2 py-1 text-lg font-bold border border-gray-300 rounded increase">+</button>
+          </div>
+
+          <div class=" mt-4 text-red-600 font-semibold text-sm item-total"
+              data-price="<?= $row2['currentPrice'] * $row2['amount']; ?>"
+              data-price-per-item="<?= $row2['currentPrice']; ?>">
+            <?= number_format($row2['currentPrice'] * $row2['amount'], 0, ',', '.'); ?> đ
+          </div>
         </div>
 
 
-        <div class="text-red-600 font-semibold text-sm ml-6 item-total" 
-            data-price="<?= $row2['currentPrice'] * $row2['amount']; ?>"
-            data-price-per-item="<?= $row2['currentPrice']; ?>">
-          <?= number_format($row2['currentPrice'] * $row2['amount'], 0, ',', '.'); ?> đ
+
+        <div>
+          <button type="button"
+                  class=" text-gray-400 hover:text-red-600 transition"
+                  onclick="xoaSanPham(this)">
+            🗑️
+          </button>
+
         </div>
+
 
       </div>
 
@@ -209,7 +225,39 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+function xoaSanPham(button) {
+  const productDiv = button.closest('[data-book-id][data-cart-id]');
+  const bookId = productDiv.dataset.bookId;
+  const cartId = productDiv.dataset.cartId;
 
+  if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) return;
+
+  fetch('../controllers/delete_cart_item.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `book_id=${bookId}&cartId=${cartId}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      // ✅ Xóa phần tử khỏi DOM
+      productDiv.remove();
+
+      // ✅ Cập nhật lại tổng tiền hiển thị
+      document.querySelectorAll('.total-amount').forEach(el => {
+        el.textContent = formatCurrency(data.totalPrice);
+      });
+    } else {
+      alert(data.message || 'Xóa sản phẩm thất bại!');
+    }
+  })
+  .catch(err => {
+    console.error("Lỗi xoá:", err);
+    alert("Có lỗi xảy ra khi xoá sản phẩm.");
+  });
+}
 </script>
 
 <!-- <script>
