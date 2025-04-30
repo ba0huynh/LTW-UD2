@@ -134,8 +134,8 @@ $user_id=$_SESSION["user_id"];
           </div>
           <div class="flex gap-2 mt-4">
             <form method="POST" action="" style="display: inline;">
-              <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-medium ">
-                Mua Lại
+              <button onclick="themVaoGio(<?= $row2['id'] ?>)" style="background-color: #70b0fb;"  class="hover:bg-red-600 text-white px-4 py-2 rounded-xl font-medium ">
+                Mua Lại 🛒
               </button>
             </form>
 
@@ -189,7 +189,36 @@ $user_id=$_SESSION["user_id"];
     });
   </script>
       
+      <script>
+  function themVaoGio(bookId) {
+  fetch('../controllers/add_to_cart.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'book_id=' + bookId
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      // 👉 Update số lượng
+      const cartCountSpan = document.getElementById('cart-count');
+      if (cartCountSpan) {
+        cartCountSpan.innerText = data.count;
+        cartCountSpan.style.display = data.count > 0 ? 'inline-block' : 'none';
+      }
+    } else {
+      alert("❌ " + data.message);
+    }
+  })
+  .catch(err => {
+    console.error("Lỗi khi gửi request:", err);
+    alert("❌ Có lỗi khi thêm vào giỏ hàng.");
+  });
+}
 
+</script>
 
 </body>
 </html>

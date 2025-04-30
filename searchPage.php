@@ -247,6 +247,36 @@ document.addEventListener('DOMContentLoaded', function () {
   }));
 });
 </script>
+<script>
+  function themVaoGio(bookId) {
+  fetch('controllers/add_to_cart.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'book_id=' + bookId
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert(data.message);
+      // 👉 Update số lượng
+      const cartCountSpan = document.getElementById('cart-count');
+      if (cartCountSpan) {
+        cartCountSpan.innerText = data.count;
+        cartCountSpan.style.display = data.count > 0 ? 'inline-block' : 'none';
+      }
+    } else {
+      alert("❌ " + data.message);
+    }
+  })
+  .catch(err => {
+    console.error("Lỗi khi gửi request:", err);
+    alert("❌ Có lỗi khi thêm vào giỏ hàng.");
+  });
+}
+
+</script>
 
 </body>
 </html>
