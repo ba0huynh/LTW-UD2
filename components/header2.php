@@ -94,14 +94,14 @@ ORDER BY hoadon_trangthai.create_at DESC, hoadon.create_at DESC;
     $isOld = false;
 }
                         $icons = [
-  1 => '📬', 2 => '📦', 3 => '🚚',
-  4 => '✅', 5 => '↩️', 6 => '❌'
+  1 => '📦', 2 => '🚚',
+  3 => '✅', 4 => '↩️', 6 => '❌'
 ];
 
 $texts = [
-  1 => 'Đã được nhận', 2 => 'Đang xử lý',
-  3 => 'Đang được giao', 4 => 'Giao hàng thành công',
-  5 => 'Đơn hàng đã trả', 6 => 'Đơn hàng đã bị hủy'
+  1 => 'Đang xử lý',
+  2 => 'Đang được giao', 3 => 'Giao hàng thành công',
+  4 => 'Đơn hàng đã trả', 5 => 'Đơn hàng đã bị hủy'
 ];
 
 $icon = $icons[$status] ?? 'ℹ️';
@@ -142,12 +142,11 @@ $text = $texts[$status] ?? 'Không xác định';
                 </ul>
               </div>
 
-<!-- 1.đã được nhận 📦-->
-<!-- 2.đang xử lí 🛠️-->
-<!-- 3.đang được giao 🚚-->
-<!-- 4.giao hàng thành công ✅-->
-<!-- 5.đơn hàng đã trả ↩️-->
-<!-- 6.đơn hàng đã bị hủy ❌-->
+<!-- 1.đang xử lí 📦(đợi duyệt hoặc hủy)trang duyệt/hủy-->
+<!-- 2.đang được giao (duyệt xong chuyển sang đang xử lí giao hàng hoặc hủy) trang xử lí giao hàng 🚚-->
+<!-- 3.giao hàng thành công ✅ ( giao xong hiện trong danh sách đơn hàng hoàn thành )danh sách đơn hàng hoàn thành-->
+<!-- 4.đơn hàng đã trả ↩️ (các đơn hàng trong 10 ngày đầu được khách ấn trả)trang trả hàng/hủy-->
+<!-- 5.đơn hàng đã bị hủy ❌-->
  
 
 
