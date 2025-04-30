@@ -19,11 +19,12 @@ $user_id = (int)$_SESSION['user_id'];
 $paymentMethod = isset($_POST['payment_method']) ? $conn->real_escape_string($_POST['payment_method']) : '';
 $address_id = isset($_POST['address_id']) ? (int)$_POST['address_id'] : 0;
 
+// Nếu địa chỉ mới
 if ($address_id == 0 && isset($_POST['tennguoinhan'])) {
     $tennguoinhan = $conn->real_escape_string($_POST['tennguoinhan']);
     $sdt = $conn->real_escape_string($_POST['sdt']);
-    $phuong = $conn->real_escape_string($_POST['phuong']);
-    $quan = $conn->real_escape_string($_POST['district']);
+    $phuong = $conn->real_escape_string($_POST['phuong']); // chính xác là 'phuong'
+    $quan = $conn->real_escape_string($_POST['district']); // chính xác là 'district'
     $thanhpho = $conn->real_escape_string($_POST['thanhpho']);
     $diachi = $conn->real_escape_string($_POST['diachi']);
     $macdinh = isset($_POST['macdinh']) && $_POST['macdinh'] == 'true' ? 1 : 0;
@@ -41,7 +42,7 @@ if ($address_id == 0 && isset($_POST['tennguoinhan'])) {
     }
 }
 
-
+// Lấy sản phẩm trong giỏ hàng
 $sql = "
     SELECT cartitems.bookId, cartitems.amount, books.currentPrice 
     FROM cart 
@@ -56,6 +57,7 @@ if ($result->num_rows == 0) {
     exit();
 }
 
+// Tính tổng tiền
 $tongtien = 0;
 $items = [];
 
@@ -72,28 +74,28 @@ while ($row = $result->fetch_assoc()) {
     ];
 }
 
-$address_value = ($address_id > 0) ? $address_id : "NULL";
-
+// Thêm hóa đơn
 $insertInvoice = "
     INSERT INTO hoadon (idUser, id_diachi, totalBill, create_at, ngay_cap_nhat, paymentMethod)
-    VALUES ($user_id, $address_value, $tongtien, NOW(), NOW(), '$paymentMethod')
+    VALUES ($user_id, $address_id, $tongtien, NOW(), NOW(), '$paymentMethod')
 ";
 
-
 if (!$conn->query($insertInvoice)) {
-    die("Lỗi khi tạo hóa đơn: " . $conn->error);
+    echo "Lỗi khi tạo hóa đơn: " . $conn->error;
+    exit();
 }
 
 $hoadon_id = $conn->insert_id;
 
+// Thêm chi tiết hóa đơn
 foreach ($items as $item) {
     $bookId = $item['bookId'];
     $amount = $item['amount'];
     $thanhtien = $item['thanhtien'];
 
     $insertDetail = "
-        INSERT INTO chitiethoadon (idHoadon, idBook, amount)
-        VALUES ($hoadon_id, $bookId, $amount)
+        INSERT INTO chitiethoadon (idHoadon, idBook, amount, thanhtien)
+        VALUES ($hoadon_id, $bookId, $amount, $thanhtien)
     ";
 
     if (!$conn->query($insertDetail)) {
@@ -102,10 +104,10 @@ foreach ($items as $item) {
     }
 }
 
+// Xóa sản phẩm trong giỏ hàng
 $conn->query("
     DELETE FROM cartitems 
     WHERE cartId IN (SELECT idCart FROM cart WHERE idUser = $user_id)
-    AND amount > 0
 ");
 
 echo "Thanh toán thành công!";

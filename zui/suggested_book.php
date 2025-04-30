@@ -31,11 +31,14 @@
       
       <!-- Overlay Icons -->
       <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition duration-300">
-        <!-- Xem chi tiết -->
+        
         <a href="chitiet.php?id=123" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
           <span class="icon text-xl">🔍</span>
         </a>
-        <button onclick="themVaoGio(<?= $row2['id'] ?>)" type="" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+
+        <button onclick="themVaoGio(<?= $row2['id'] ?>)" 
+        type="" 
+        class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
             <span class="icon text-xl">🛒</span>
         </button>
       </div>
@@ -62,7 +65,7 @@
   ?>
 </div>
 <script>
-function themVaoGio(bookId) {
+  function themVaoGio(bookId) {
   fetch('controllers/add_to_cart.php', {
     method: 'POST',
     headers: {
@@ -70,25 +73,28 @@ function themVaoGio(bookId) {
     },
     body: 'book_id=' + bookId
   })
-  .then(res => {
-    console.log("Status:", res.status);
-    return res.text(); // 👉 để xem nội dung gốc
-  })
-  .then(text => {
-    console.log("Response text:", text);
-    try {
-      const data = JSON.parse(text);
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
       alert(data.message);
-    } catch (err) {
-      console.error("Không phải JSON:", err);
-      alert("❌ Server không trả đúng JSON!");
+      // 👉 Update số lượng
+      const cartCountSpan = document.getElementById('cart-count');
+      if (cartCountSpan) {
+        cartCountSpan.innerText = data.count;
+        cartCountSpan.style.display = data.count > 0 ? 'inline-block' : 'none';
+      }
+    } else {
+      alert("❌ " + data.message);
     }
   })
   .catch(err => {
     console.error("Lỗi khi gửi request:", err);
-    alert("❌ Có lỗi khi thêm giỏ hàng.");
+    alert("❌ Có lỗi khi thêm vào giỏ hàng.");
   });
 }
 
 </script>
+
+
+
 

@@ -1,10 +1,9 @@
 <?php
 session_start();
-header('Content-Type: application/json'); // Phản hồi JSON
+header('Content-Type: application/json');
 
-// DEBUG khi dev (xoá khi đưa lên server)
+// Bật debug (gỡ ra khi production)
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Kết nối CSDL
@@ -12,6 +11,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ltw_ud2";
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Kết nối thất bại: ' . $conn->connect_error]);
@@ -33,24 +33,47 @@ if ($book_id <= 0) {
 }
 
 // Lấy hoặc tạo giỏ hàng
-$check_cart = $conn->query("SELECT idCart FROM cart WHERE idUser = $user_id LIMIT 1");
-if ($check_cart->num_rows > 0) {
-    $cart_id = $check_cart->fetch_assoc()['idCart'];
+$cartId = null;
+$resultCart = $conn->query("SELECT idCart FROM cart WHERE idUser = $user_id LIMIT 1");
+
+if ($resultCart && $rowCart = $resultCart->fetch_assoc()) {
+    $cartId = $rowCart['idCart'];
 } else {
     $conn->query("INSERT INTO cart (idUser) VALUES ($user_id)");
-    $cart_id = $conn->insert_id;
+    $cartId = $conn->insert_id;
 }
 
-// Kiểm tra xem sách đã có trong giỏ chưa
-$check_item = $conn->query("SELECT * FROM cartitems WHERE cartId = $cart_id AND bookId = $book_id");
-if ($check_item->num_rows > 0) {
-    // Tăng số lượng nếu đã có
-    $conn->query("UPDATE cartitems SET amount = amount + 1 WHERE cartId = $cart_id AND bookId = $book_id");
+// Thêm hoặc cập nhật sản phẩm vào giỏ
+$checkItem = $conn->query("SELECT * FROM cartitems WHERE cartId = $cartId AND bookId = $book_id");
+if ($checkItem && $checkItem->num_rows > 0) {
+    $conn->query("UPDATE cartitems SET amount = amount + 1 WHERE cartId = $cartId AND bookId = $book_id");
 } else {
-    // Thêm mới nếu chưa có
-    $conn->query("INSERT INTO cartitems (cartId, bookId, amount) VALUES ($cart_id, $book_id, 1)");
+    $conn->query("INSERT INTO cartitems (cartId, bookId, amount) VALUES ($cartId, $book_id, 1)");
 }
 
-// ✅ Trả kết quả về
-echo json_encode(['success' => true, 'message' => 'Đã thêm vào giỏ hàng']);
+// Cập nhật lại tổng tiền trong giỏ
+$conn->query("
+    UPDATE cart
+    SET totalPrice = (
+        SELECT COALESCE(SUM(ci.amount * b.currentPrice), 0)
+        FROM cartitems ci
+        JOIN books b ON ci.bookId = b.id
+        WHERE ci.cartId = $cartId
+    )
+    WHERE idCart = $cartId
+");
+
+// Lấy tổng số lượng sản phẩm trong giỏ
+$totalItems = 0;
+$resultCount = $conn->query("SELECT count(*) as total FROM cartitems WHERE cartId = $cartId");
+if ($resultCount && $rowCount = $resultCount->fetch_assoc()) {
+    $totalItems = intval($rowCount['total']);
+}
+
+// Trả JSON về
+echo json_encode([
+    'success' => true,
+    'message' => 'Đã thêm vào giỏ hàng',
+    'count' => $totalItems
+]);
 ?>

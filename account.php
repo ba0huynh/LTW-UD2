@@ -13,6 +13,47 @@ if($conn->connect_error) {
 ?>
 <?php
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $user_id = $_SESSION['user_id'];
+    $old = $_POST['user_old_password'];
+    $new = $_POST['user_new_password'];
+    $confirm = $_POST['user_confirm_new_password'];
+
+    // Kiểm tra rỗng
+    if (empty($old) || empty($new) || empty($confirm)) {
+        echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
+    } elseif ($new !== $confirm) {
+        echo "<script>alert('Mật khẩu mới và nhập lại không khớp.');</script>";
+    } else {
+        $sql = "SELECT password FROM users WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        if ($user && password_verify($old, $user['password'])) {
+            $hashedNewPassword = password_hash($new, PASSWORD_DEFAULT);
+
+            $update_sql = "UPDATE users SET password = ? WHERE id = ?";
+            $update_stmt = $conn->prepare($update_sql);
+            $update_stmt->bind_param("si", $hashedNewPassword, $user_id);
+
+            if ($update_stmt->execute()) {
+                echo "<script>alert('Cập nhật mật khẩu thành công!'); window.location.href='account.php';</script>";
+            } else {
+                echo "<script>alert('Lỗi khi cập nhật mật khẩu.');</script>";
+            }
+        } else {
+            echo "<script>alert('Mật khẩu hiện tại không đúng.');</script>";
+        }
+    }
+}
+?>
+
+
+<?php
+
 
 
 
@@ -70,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_old_password']))
 
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['user_old_password'])) {
   $user_id = intval($_SESSION['user_id']);
     $fields = [];
     $values = [];
@@ -137,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && !isset($_POST['user_old_password'])) {
     $phone = $_POST['user_telephone'];
     $password = $_POST['user_password'];
 

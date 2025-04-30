@@ -73,10 +73,11 @@ if (isset($_SESSION['user_id'])) {
                      
                     
                     <span class="text-xl">🛒  </span>
-                    <span>Giỏ Hàng</span>
-                    <?php if(!empty($countOfCart)){?>
-                    <span class="absolute -top-1 -right-2 text-xs bg-red-600 text-white rounded-full px-1"><?php echo $countOfCart?></span>
-                    <?php }?>
+                    <span>Giỏ hàng</span>
+                    <span id="cart-count" class="absolute -top-1 -right-2 text-xs bg-red-600 text-white rounded-full px-1">
+                      <?php echo $countOfCart ?? 0 ?>
+                    </span>
+
                 </div>
             </a>
 
@@ -238,5 +239,8 @@ function hideNoti() {
     }
   });
 </script>
+
+
+
 
                         

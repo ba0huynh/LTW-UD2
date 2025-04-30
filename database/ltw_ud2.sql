@@ -541,15 +541,15 @@ CREATE TABLE `subjects` (
 -- Dumping data for table `subjects`
 --
 
-INSERT INTO `subjects` (`id`, `subjectName`, `subjectImage`) VALUES
-(1, 'Toán', NULL),
-(2, 'Ngữ Văn', NULL),
-(3, 'Lịch Sử', NULL),
-(4, 'Địa Lý', NULL),
-(5, 'Vật Lý', NULL),
-(6, 'Sinh Học', NULL),
-(7, 'Hóa Học', NULL),
-(8, 'Tiếng Anh', NULL);
+INSERT INTO `subjects` (`id`, `subjectName`) VALUES
+(1, 'Toán'),
+(2, 'Ngữ Văn'),
+(3, 'Lịch Sử'),
+(4, 'Địa Lý'),
+(5, 'Vật Lý'),
+(6, 'Sinh Học'),
+(7, 'Hóa Học'),
+(8, 'Tiếng Anh');
 
 -- --------------------------------------------------------
 
@@ -652,22 +652,22 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status_user`, `ID_TK`) VALUES
-(1, 'Linh Nguyễn', '0911111234', 'linhnguyen', '123456', 'linh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 16),
-(2, 'Minh Trần', '0911222333', 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 17),
-(3, 'Thảo Lê', '0911333444', 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 18),
-(4, 'Huy Phạm', '0911444555', 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 19),
-(5, 'Lan Hồ', '0911555666', 'lanho', '123456', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 20),
-(6, 'Nam Đặng', '0911666777', 'namdang', '123456', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 21),
-(7, 'Tú Vũ', '0911777888', 'tuvu', '123456', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 22),
-(8, 'Quỳnh Anh', '0911888999', 'quynhanh', '123456', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 23),
-(9, 'Michael Nguyen', '0911999000', 'michaelng', '123456', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 24),
-(10, 'Jessica Trinh', '0912000111', 'jessicatrinh', '123456', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 25),
-(11, 'Tommy Le', '0912111222', 'tommyle', '123456', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 26),
-(12, 'David Hoang', '0912222333', 'davidhoang', '123456', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 27),
-(13, 'Emily Dang', '0912333444', 'emilydang', '123456', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 28),
-(14, 'Chloe Phan', '0912444555', 'chloephan', '123456', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 29),
-(15, 'Anthony Tran', '0912555666', 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 30);
+INSERT INTO `users` (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status_user`) VALUES
+(1, 'Linh Nguyễn', '0911111234', 'linhnguyen', '123456', 'linh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(2, 'Minh Trần', '0911222333', 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(3, 'Thảo Lê', '0911333444', 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(4, 'Huy Phạm', '0911444555', 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(5, 'Lan Hồ', '0911555666', 'lanho', '123456', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(6, 'Nam Đặng', '0911666777', 'namdang', '123456', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(7, 'Tú Vũ', '0911777888', 'tuvu', '123456', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(8, 'Quỳnh Anh', '0911888999', 'quynhanh', '123456', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(9, 'Michael Nguyen', '0911999000', 'michaelng', '123456', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(10, 'Jessica Trinh', '0912000111', 'jessicatrinh', '123456', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(11, 'Tommy Le', '0912111222', 'tommyle', '123456', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(12, 'David Hoang', '0912222333', 'davidhoang', '123456', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(13, 'Emily Dang', '0912333444', 'emilydang', '123456', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(14, 'Chloe Phan', '0912444555', 'chloephan', '123456', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
+(15, 'Anthony Tran', '0912555666', 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1);
 
 --
 -- Indexes for dumped tables

@@ -92,20 +92,26 @@ $user = $result->fetch_assoc();
              <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl changePass hidden ">
               <h2 class="text-xl font-semibold text-gray-800 mb-6">Đổi mật khẩu</h2>
           
-              <form class="space-y-5" action="/LTW_UD2/account.php" method="post">
-                <div>
+              <form class="space-y-5" action="" method="post">
+                <div class="relative">
                   <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu hiện tại <span class="text-red-500">*</span></label>
-                  <input name="user_old_password" type="password" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <input id="currentPassword" name="user_old_password" type="password" placeholder="Mật khẩu hiện tại" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <span onclick="togglePassword('newPassword', this)"
+                  class="absolute top-1/2 right-4 transform -translate-y-1/2 text-blue-600 text-sm cursor-pointer">Hiện</span>
                 </div>
           
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu mới <span class="text-red-500">*</span></label>
-                  <input name="user_new_password" type="password" placeholder="Mật khẩu mới" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <div class="relative">
+                  <label  class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu mới <span class="text-red-500">*</span></label>
+                  <input id="newPassword" name="user_new_password" type="password" placeholder="Mật khẩu mới" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <span onclick="togglePassword('newPassword', this)"
+                  class="absolute top-1/2 right-4 transform -translate-y-1/2 text-blue-600 text-sm cursor-pointer">Hiện</span>
                 </div>
           
-                <div>
+                <div class="relative">
                   <label class="block text-sm font-medium text-gray-700 mb-1">Nhập lại mật khẩu mới <span class="text-red-500">*</span></label>
-                  <input name="user_confirm_new_password" type="password" placeholder="Nhập lại mật khẩu mới" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <input id="confirmNewPassword" name="user_confirm_new_password" type="password" placeholder="Nhập lại mật khẩu mới" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <span onclick="togglePassword('newPassword', this)"
+                  class="absolute top-1/2 right-4 transform -translate-y-1/2 text-blue-600 text-sm cursor-pointer">Hiện</span>
                 </div>
           
                 <div class="pt-4">
@@ -115,4 +121,28 @@ $user = $result->fetch_assoc();
             </div>
         
           </div>
-    </div>
+    </div><script>
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.textContent = "Ẩn";
+  } else {
+    input.type = "password";
+    el.textContent = "Hiện";
+  }
+}
+
+function togglePassword(id, el) {
+  const input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text";
+    el.textContent = "Ẩn";
+  } else {
+    input.type = "password";
+    el.textContent = "Hiện";
+  }
+}
+
+
+</script>
