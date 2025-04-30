@@ -21,7 +21,17 @@ if ($conn->connect_error) {
 }
 session_start();
 
-// Get filter values
+
+
+$currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$itemsPerPage = 10;
+$offset = ($currentPage - 1) * $itemsPerPage;
+$countQuery = "SELECT COUNT(*) AS total FROM books WHERE 1=1";
+$countResult = $conn->query($countQuery);
+$totalRows = $countResult->fetch_assoc()['total'];
+$totalPages = ceil($totalRows / $itemsPerPage);
+
+
 $class = $_GET["class"] ?? null;
 $subject = $_GET["subject"] ?? null;
 $type = $_GET["type"] ?? null;
@@ -78,6 +88,7 @@ if (!empty($sort)) {
         $query .= " ORDER BY books.currentPrice DESC";
     }
 }
+$query .= " LIMIT $offset, $itemsPerPage";
 $result = $conn->query($query);
 $num_rows = $result->num_rows;
 ?>
@@ -216,8 +227,37 @@ $num_rows = $result->num_rows;
         </div>
 
       </main>
+      
     </div>
+
+    <div class="flex justify-center mt-8">
+      <nav class="inline-flex items-center space-x-1 rounded-xl bg-white px-4 py-2 shadow-md border border-gray-200">
+        <!-- Previous -->
+        <?php if ($currentPage > 1): ?>
+          <a href="?page=<?= $currentPage - 1 ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+            «
+          </a>
+        <?php endif; ?>
+
+        <!-- Page Numbers -->
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <a href="?page=<?= $i ?>" class="px-3 py-1 rounded-lg <?= $i == $currentPage ? 'bg-blue-500 text-white font-semibold shadow' : 'text-gray-600 hover:bg-gray-100' ?> transition">
+            <?= $i ?>
+          </a>
+        <?php endfor; ?>
+
+        <!-- Next -->
+        <?php if ($currentPage < $totalPages): ?>
+          <a href="?page=<?= $currentPage + 1 ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+            »
+          </a>
+        <?php endif; ?>
+      </nav>
+    </div>
+    
   </div>
+
+
   <?php include_once "./components/footer.php";?>
   <script>
 document.addEventListener('DOMContentLoaded', function () {
