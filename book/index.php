@@ -36,6 +36,7 @@ if ($bookId == null) {
 </head>
 
 <body>
+<?php include_once "../components/header2.php";?>
 
   <div class="bg-[#fff1f2] gap-6 flex flex-col p-[7%] items-center">
     <div class="flex flex-col sm:flex-row justify-center w-full gap-6">
@@ -127,7 +128,9 @@ if ($bookId == null) {
     <?php
     include_once "../zui/BookReviewsSection.php"
     ?>
+
   </div>
+<?php include_once "../components/footer.php";?>
 
 </body>
 
