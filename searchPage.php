@@ -56,7 +56,7 @@ if ($option == 1) {
 $query = "SELECT books.* FROM books ";
 
 if (!empty($subject)) {
-    $query .= "LEFT JOIN subjects ON books.idSubject = subjects.idSubject WHERE 1=1 ";
+    $query .= "LEFT JOIN subjects ON books.subjectId = subjects.id WHERE 1=1 ";
 } else {
     $query .= "WHERE 1=1 ";
 }
@@ -119,10 +119,19 @@ $num_rows = $result->num_rows;
               <?php } ?>
 
               <div class="accent-blue-500">
-                Từ khóa tìm kiếm : 
-                <?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?> <br>
+                <?php if (!empty($search)): ?>
+                  Từ khóa tìm kiếm : <?= htmlspecialchars($search); ?><br>
+                <?php endif; ?>
                 <input type="hidden" name="search" value="<?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?>">
-                Kết quả tìm kiếm : (<?php echo $num_rows ?? 0; ?>)
+                Kết quả tìm kiếm : (<?php echo $num_rows ?? 0; ?>) <br>
+                <?php if (!empty($subject)): ?>
+                  Môn: <?= htmlspecialchars($subject); ?><br>
+                <?php endif; ?>
+
+                <?php if (!empty($type)): ?>
+                  Thể loại: <?= htmlspecialchars($type); ?><br>
+                <?php endif; ?>
+
               </div>
             </div>
 
