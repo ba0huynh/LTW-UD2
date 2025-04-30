@@ -47,14 +47,107 @@ if (isset($_SESSION['user_id'])) {
               </div>
 
               <!--  -->
-              
+              <div id="notificationPanel" class=" hidden absolute right-50 mt-12 w-80 bg-white border border-gray-200 rounded-xl shadow-lg z-30">
+                <!-- Tiêu đề -->
+                <div class="flex justify-between items-center p-4 border-b border-gray-200">
+                  <h3 class="font-semibold text-gray-800 flex items-center gap-2 text-base">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    Thông báo
+                  </h3>
+                </div>
 
-<!-- 1.đã được nhận -->
-<!-- 2.đang xử lí -->
-<!-- 3.đang được giao -->
-<!-- 4.giao hàng thành công -->
-<!-- 5.đơn hàng đã trả -->
-<!-- 6.đơn hàng đã bị hủy -->
+                <ul class="divide-y divide-gray-200 max-h-72 overflow-y-auto">
+                  <?php
+                  if (!empty($user_id)) {
+                    $query = "
+SELECT 
+  hoadon.idBill,
+  hoadon.statusBill,
+  hoadon.create_at AS thoigianmoi,
+  hoadon_trangthai.trangthai AS trangthai_cu,
+  hoadon_trangthai.create_at AS thoigiancu,
+  books.bookName
+FROM hoadon
+LEFT JOIN hoadon_trangthai ON hoadon_trangthai.idBill = hoadon.idBill
+JOIN chitiethoadon ON chitiethoadon.idHoadon = hoadon.idBill
+JOIN books ON books.id = chitiethoadon.idBook
+WHERE hoadon.idUser = $user_id
+ORDER BY hoadon_trangthai.create_at DESC, hoadon.create_at DESC;
+
+                    ";
+
+
+
+                    $result = $conn->query($query);
+                    if ($result && $result->num_rows > 0) {
+                      while ($row = $result->fetch_assoc()) {
+                        if (!empty($row['trangthai_cu'])) {
+    $status = $row['trangthai_cu']; // trạng thái trong hoadon_trangthai
+    $time = $row['thoigiancu'];
+    $isOld = true;
+} else {
+    $status = $row['statusBill']; // trạng thái hiện tại trong hoadon
+    $time = $row['thoigianmoi'];
+    $isOld = false;
+}
+                        $icons = [
+  1 => '📬', 2 => '📦', 3 => '🚚',
+  4 => '✅', 5 => '↩️', 6 => '❌'
+];
+
+$texts = [
+  1 => 'Đã được nhận', 2 => 'Đang xử lý',
+  3 => 'Đang được giao', 4 => 'Giao hàng thành công',
+  5 => 'Đơn hàng đã trả', 6 => 'Đơn hàng đã bị hủy'
+];
+
+$icon = $icons[$status] ?? 'ℹ️';
+$text = $texts[$status] ?? 'Không xác định';
+                  ?>
+
+                        <li class="px-4 py-3 hover:bg-gray-50 transition-all duration-200">
+                          <div class="flex gap-3 items-start p-3 rounded-xl hover:bg-blue-50 transition duration-200">
+                            <div class="bg-blue-100 text-blue-600 rounded-full p-2 shadow-sm">
+                              <?= $icon ?>
+                            </div>
+
+                            <div class="flex-1 space-y-1">
+                              <div class=" bg-gray-50 px-2 py-1 rounded-md shadow-sm text-gray-700 text-sm inline-block mb-2">
+                                📅 : <?php echo $time ?> 
+                              </div>
+
+                              <!-- Thông báo -->
+                              <p class="text-sm text-gray-700 leading-snug">
+                                <span class="font-semibold text-gray-900">Sản phẩm:</span>
+                                <span class="text-gray-800"><?= htmlspecialchars($row['bookName']) ?></span><br>
+                                <span class="text-gray-500">Tình trạng:</span>
+                                <span class="text-blue-600 font-medium"><?= $text ?></span>
+                              </p>
+                            </div>
+                          </div>
+
+                        </li>
+                  <?php
+                      }
+                    }
+                  } else {
+                  ?>
+                    <li class="px-4 py-3 text-center text-blue-600 hover:text-blue-800">
+                      <a href="/LTW_UD2/account.php">Đăng nhập </a>
+                    </li>
+                  <?php } ?>
+                </ul>
+              </div>
+
+<!-- 1.đã được nhận 📦-->
+<!-- 2.đang xử lí 🛠️-->
+<!-- 3.đang được giao 🚚-->
+<!-- 4.giao hàng thành công ✅-->
+<!-- 5.đơn hàng đã trả ↩️-->
+<!-- 6.đơn hàng đã bị hủy ❌-->
  
 
 
