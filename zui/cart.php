@@ -112,9 +112,12 @@ if(isset($_SESSION["user_id"])){
         </div>
 
 
-        <div class=" text-red-600 font-semibold text-sm ml-6 item-total" data-price="<?php echo $row2['currentPrice']*$row2['amount']; ?>">
-          <?php echo number_format($row2['currentPrice']*$row2['amount'], 0, ',', '.'); ?> đ
+        <div class="text-red-600 font-semibold text-sm ml-6 item-total" 
+            data-price="<?= $row2['currentPrice'] * $row2['amount']; ?>"
+            data-price-per-item="<?= $row2['currentPrice']; ?>">
+          <?= number_format($row2['currentPrice'] * $row2['amount'], 0, ',', '.'); ?> đ
         </div>
+
       </div>
 
       <?php
@@ -139,12 +142,7 @@ function formatCurrency(value) {
   }).format(value);
 }
 
-document.querySelectorAll('.total-amount').forEach(span => {
-  const raw = parseFloat(span.dataset.raw);
-  if (!isNaN(raw)) {
-    span.textContent = formatCurrency(raw);
-  }
-});
+
 
 // const price = parseFloat(parent.querySelector('.item-price').dataset.price);
 // const itemTotalEl = parent.querySelector('.item-total');
@@ -156,6 +154,9 @@ document.querySelectorAll('.total-amount').forEach(span => {
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
+
+
   document.querySelectorAll('.increase, .decrease').forEach((button) => {
     button.addEventListener('click', function () {
       const parent = this.closest('[data-book-id][data-cart-id]');
@@ -191,10 +192,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             // ✅ Cập nhật thành tiền từng item
-            const price = parseFloat(parent.querySelector('.item-total').dataset.price);
-            const itemTotal = price / currentQty * amount;
-            parent.querySelector('.item-total').textContent = formatCurrency(itemTotal);
-            parent.querySelector('.item-total').dataset.price = itemTotal;
+            // ✅ Tìm đúng phần tử .item-total để cập nhật
+            const itemTotalEl = parent.closest('.flex.items-start').querySelector('.item-total');
+            const unitPrice = parseFloat(itemTotalEl.dataset.pricePerItem);
+            const itemTotal = unitPrice * amount;
+
+            itemTotalEl.textContent = formatCurrency(itemTotal);
+            itemTotalEl.dataset.price = itemTotal;
+
             
           } else {
             alert(data.message || "Có lỗi xảy ra");
