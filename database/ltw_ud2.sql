@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 03:34 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 30, 2025 lúc 01:31 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,527 +18,418 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ltw_ud2`
+-- Cơ sở dữ liệu: `ltw_ud2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `books`
+-- Cấu trúc bảng cho bảng `books`
 --
 
 CREATE TABLE `books` (
   `id` int(11) NOT NULL,
   `bookName` varchar(255) NOT NULL,
   `subjectId` int(11) DEFAULT NULL,
-  `classNumber` int(11) NOT NULL,
-  `oldPrice` double DEFAULT 0,
-  `currentPrice` double DEFAULT 0,
+  `classNumber` varchar(50) DEFAULT NULL,
+  `oldPrice` decimal(10,2) DEFAULT NULL,
+  `currentPrice` decimal(10,2) DEFAULT NULL,
   `quantitySold` int(11) DEFAULT 0,
-  `imageURL` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `description` varchar(3000) DEFAULT NULL,
-  `type` varchar(50) DEFAULT NULL
+  `imageURL` varchar(255) DEFAULT NULL,
+  `status_remove` tinyint(1) DEFAULT 0,
+  `status_hidden` tinyint(1) DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `books`
+-- Đang đổ dữ liệu cho bảng `books`
 --
 
-INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `description`, `type`) VALUES
-(1, 'Toán 6 - Giáo Khoa Cơ Bản', 1, 6, 18000, 16000, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(2, 'Ngữ Văn 6 - Giáo Trình', 2, 6, 20000, 18000, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 1, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
-(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, 7, 19000, 17000, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(4, 'Ngữ Văn 7 - Bài Tập', 2, 7, 21000, 19000, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
-(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, 8, 20000, 18000, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
-(6, 'Hóa Học 8 - Bài Tập', 7, 8, 22000, 20000, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
-(7, 'Toán 9 - Ôn Thi vào 10', 1, 9, 25000, 23000, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
-(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, 9, 24000, 22000, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
-(9, 'Tiếng Anh 9 - Ôn Thi', 8, 9, 23000, 21000, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
-(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, 9, 24000, 22000, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(11, 'Vật Lý 9 - Giáo Trình', 5, 9, 22500, 20500, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 1, 'Vật lý lớp 9.', 'Giáo Trình'),
-(12, 'Ngữ Văn 9 - Bài Tập', 2, 9, 22000, 20000, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 'Bài tập văn học lớp 9.', 'Bài Tập'),
-(13, 'Sinh Học 9 - Ôn Thi', 6, 9, 23000, 21500, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
-(14, 'Hóa Học 9 - Ôn Thi', 7, 9, 23500, 21500, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
-(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, 10, 26000, 24000, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(16, 'Ngữ Văn 10 - Bài Giảng', 2, 10, 27000, 25000, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
-(17, 'Toán 11 - Giáo Trình', 1, 11, 28000, 26000, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
-(18, 'Ngữ Văn 11 - Ôn Thi', 2, 11, 28500, 26500, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
-(19, 'Toán 12 - Ôn Thi THPT', 1, 12, 32000, 30000, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 1, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
-(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, 12, 31000, 29000, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
-(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, 12, 30000, 28000, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
-(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, 12, 31000, 29000, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 1, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(23, 'Vật Lý 12 - Giáo Trình', 5, 12, 30000, 28000, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 1, 'Giáo trình Vật lý lớp 12.', 'Giáo Trình'),
-(24, 'Sinh Học 12 - Ôn Thi THPT', 6, 12, 30500, 28500, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
-(25, 'Hóa Học 12 - Ôn Thi THPT', 7, 12, 31000, 29000, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
-(26, 'Ngữ Văn 12 - Bài Tập', 2, 12, 30000, 28000, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 'Bài tập Văn học lớp 12.', 'Bài Tập');
+INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status_remove`, `status_hidden`, `description`, `type`) VALUES
+(1, 'Toán 6 - Giáo Khoa Cơ Bản', 1, '6', 18000.00, 16000.00, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 0, 0, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(2, 'Ngữ Văn 6 - Giáo Trình', 2, '6', 20000.00, 18000.00, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 0, 0, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
+(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 0, 0, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 0, 0, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
+(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 0, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
+(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 0, 0, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
+(7, 'Toán 9 - Ôn Thi vào 10', 1, '9', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 0, 0, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
+(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 0, 0, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
+(9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 0, 0, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
+(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 0, 0, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
+(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 0, 0, 'Vật lý lớp 9.', 'Giáo Trình'),
+(12, 'Ngữ Văn 9 - Bài Tập', 2, '9', 22000.00, 20000.00, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 0, 0, 'Bài tập văn học lớp 9.', 'Bài Tập'),
+(13, 'Sinh Học 9 - Ôn Thi', 6, '9', 23000.00, 21500.00, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 0, 0, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
+(14, 'Hóa Học 9 - Ôn Thi', 7, '9', 23500.00, 21500.00, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 0, 0, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
+(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 0, 0, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 0, 0, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
+(17, 'Toán 11 - Giáo Trình', 1, '11', 28000.00, 26000.00, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 0, 0, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
+(18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 0, 0, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
+(19, 'Toán 12 - Ôn Thi THPT', 1, '12', 32000.00, 30000.00, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 0, 0, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
+(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, '12', 31000.00, 29000.00, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 0, 0, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
+(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, '12', 30000.00, 28000.00, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 0, 0, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
+(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, '12', 31000.00, 29000.00, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 0, 0, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
+(23, 'Vật Lý 12 - Giáo Trình', 5, '12', 30000.00, 28000.00, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 0, 0, 'Giáo trình Vật lý lớp 12.', 'Giáo Trình'),
+(24, 'Sinh Học 12 - Ôn Thi THPT', 6, '12', 30500.00, 28500.00, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 0, 0, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
+(25, 'Hóa Học 12 - Ôn Thi THPT', 7, '12', 31000.00, 29000.00, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 0, 0, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
+(26, 'Ngữ Văn 12 - Bài Tập', 2, '12', 30000.00, 28000.00, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 0, 0, 'Bài tập Văn học lớp 12.', 'Bài Tập');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cart`
+-- Cấu trúc bảng cho bảng `cart`
 --
 
 CREATE TABLE `cart` (
   `idCart` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
-  `totalPrice` int(11) NOT NULL
+  `idUser` int(11) DEFAULT NULL,
+  `totalPrice` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cart`
+-- Đang đổ dữ liệu cho bảng `cart`
 --
 
 INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
-(1, 1, 46000),
-(2, 2, 39000),
-(3, 3, 43000);
+(1, 1, 34000.00),
+(2, 2, 36000.00),
+(3, 3, 957000.00),
+(4, 4, 45000.00),
+(5, 5, 43000.00),
+(6, 6, 40500.00),
+(7, 7, 43000.00),
+(8, 8, 49000.00),
+(9, 9, 52500.00),
+(10, 10, 59000.00),
+(11, 11, 57000.00),
+(12, 12, 56500.00),
+(13, 13, 29000.00),
+(14, 14, 230000.00),
+(15, 15, 240000.00);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cartitems`
+-- Cấu trúc bảng cho bảng `cartitems`
 --
 
 CREATE TABLE `cartitems` (
   `id` int(11) NOT NULL,
-  `bookId` int(11) NOT NULL,
-  `cartId` int(11) NOT NULL,
-  `amount` int(11) DEFAULT 1
+  `bookId` int(11) DEFAULT NULL,
+  `cartId` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cartitems`
+-- Đang đổ dữ liệu cho bảng `cartitems`
 --
 
 INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (1, 1, 1, 1),
 (2, 2, 1, 1),
-(3, 3, 2, 1),
-(4, 4, 2, 1),
-(5, 5, 3, 1),
-(6, 6, 3, 1);
+(3, 2, 2, 1),
+(4, 3, 2, 1),
+(7, 4, 4, 1),
+(8, 5, 4, 1),
+(9, 5, 5, 1),
+(10, 6, 5, 1),
+(11, 6, 6, 1),
+(12, 7, 6, 1),
+(13, 7, 7, 1),
+(14, 8, 7, 1),
+(15, 8, 8, 1),
+(16, 9, 8, 1),
+(17, 9, 9, 1),
+(18, 10, 9, 1),
+(19, 10, 10, 1),
+(20, 11, 10, 1),
+(21, 11, 11, 1),
+(22, 12, 11, 1),
+(23, 12, 12, 1),
+(24, 13, 12, 1),
+(25, 13, 13, 1),
+(26, 14, 13, 1),
+(27, 14, 14, 1),
+(28, 15, 14, 1),
+(29, 15, 15, 1),
+(30, 16, 15, 1),
+(58, 5, 3, 34),
+(59, 3, 3, 14),
+(60, 1, 3, 2),
+(61, 19, 3, 1),
+(62, 17, 3, 1),
+(63, 4, 3, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitiethoadon`
+-- Cấu trúc bảng cho bảng `chitiethoadon`
 --
 
 CREATE TABLE `chitiethoadon` (
-  `idBook` int(11) NOT NULL,
-  `idHoadon` int(11) NOT NULL,
-  `amount` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `idBook` int(11) DEFAULT NULL,
+  `idHoadon` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chitiethoadon`
+-- Đang đổ dữ liệu cho bảng `chitiethoadon`
 --
 
-INSERT INTO `chitiethoadon` (`idBook`, `idHoadon`, `amount`) VALUES
-(3, 2, 1),
-(4, 2, 1),
-(5, 3, 2),
-(8, 5, 1),
-(9, 6, 3),
-(10, 7, 1),
-(11, 8, 2),
-(12, 9, 1),
-(13, 10, 1),
-(14, 10, 1),
-(15, 11, 1),
-(16, 12, 2),
-(17, 13, 1),
-(18, 14, 2),
-(19, 15, 1);
+INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`) VALUES
+(1, 3, 32, 1),
+(2, 4, 32, 1),
+(3, 3, 33, 1),
+(4, 4, 33, 1),
+(5, 3, 34, 1),
+(6, 5, 34, 1),
+(7, 15, 35, 1),
+(8, 17, 35, 1),
+(9, 15, 36, 1),
+(10, 17, 36, 1),
+(11, 22, 37, 1),
+(12, 3, 38, 1),
+(13, 5, 39, 1),
+(14, 3, 39, 1),
+(15, 1, 40, 1),
+(16, 15, 41, 1),
+(17, 3, 42, 1),
+(18, 17, 43, 1),
+(19, 19, 43, 1),
+(20, 3, 44, 1),
+(21, 5, 45, 1),
+(22, 1, 46, 1),
+(23, 3, 47, 1),
+(24, 3, 48, 1),
+(25, 5, 49, 1),
+(26, 5, 50, 1),
+(27, 17, 51, 1),
+(28, 5, 52, 1),
+(29, 5, 53, 1),
+(30, 17, 54, 1),
+(31, 1, 55, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chitietquyen`
+-- Cấu trúc bảng cho bảng `chucnang`
 --
 
-CREATE TABLE `chitietquyen` (
-  `ID_ChiTiet` int(11) NOT NULL,
-  `ID_NhomQuyen` int(11) NOT NULL,
-  `ID_ChucNang` tinyint(255) NOT NULL,
-  `id_quanly` int(11) NOT NULL
+CREATE TABLE `chucnang` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `chitietquyen`
---
-
-INSERT INTO `chitietquyen` (`ID_ChiTiet`, `ID_NhomQuyen`, `ID_ChucNang`, `id_quanly`) VALUES
-(16, 1, 1, 1),
-(17, 1, 1, 3),
-(18, 1, 2, 3),
-(19, 1, 4, 3),
-(20, 1, 3, 3),
-(21, 1, 1, 7),
-(22, 1, 2, 7),
-(23, 1, 3, 7),
-(24, 1, 4, 7),
-(25, 1, 1, 2),
-(26, 1, 2, 2),
-(27, 1, 3, 2),
-(28, 1, 4, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chucnangquyen`
---
-
-CREATE TABLE `chucnangquyen` (
-  `id` int(10) NOT NULL,
-  `chucnang` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `chucnangquyen`
---
-
-INSERT INTO `chucnangquyen` (`id`, `chucnang`) VALUES
-(1, 'Xem'),
-(2, 'Thêm'),
-(3, 'Sửa'),
-(4, 'Xóa');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `hoadon`
+-- Cấu trúc bảng cho bảng `hoadon`
 --
 
 CREATE TABLE `hoadon` (
   `idBill` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL,
-  `receiver` varchar(100) NOT NULL,
-  `phoneNumber` varchar(11) DEFAULT NULL,
-  `totalBill` double DEFAULT 0,
-  `paymentMethod` varchar(250) DEFAULT NULL,
-  `statusBill` int(11) DEFAULT 0,
-  `Date` date NOT NULL DEFAULT current_timestamp()
+  `idUser` int(11) DEFAULT NULL,
+  `nhanvien_id` int(11) DEFAULT NULL,
+  `totalBill` decimal(10,2) DEFAULT NULL,
+  `paymentMethod` varchar(50) DEFAULT NULL,
+  `statusBill` int(11) DEFAULT 2,
+  `ly_do_huy` varchar(50) DEFAULT NULL,
+  `ly_do_tra_hang` varchar(50) DEFAULT NULL,
+  `create_at` datetime DEFAULT current_timestamp(),
+  `ngay_cap_nhat` datetime DEFAULT current_timestamp(),
+  `id_diachi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `hoadon`
+-- Đang đổ dữ liệu cho bảng `hoadon`
 --
 
-INSERT INTO `hoadon` (`idBill`, `idUser`, `receiver`, `phoneNumber`, `totalBill`, `paymentMethod`, `statusBill`, `Date`) VALUES
-(2, 2, 'Minh Trần', '0911222333', 1200000, 'Chuyển khoản ngân hàng', 1, '2024-11-13'),
-(3, 3, 'Thảo Lê', '0911333444', 310000, 'Thanh toán khi nhận hàng', 1, '2024-12-11'),
-(5, 5, 'Lan Hồ', '0911555666', 470000, 'Chuyển khoản ngân hàng', 1, '2025-03-11'),
-(6, 6, 'Nam Đặng', '0911666777', 2300000, 'Thanh toán khi nhận hàng', 1, '2025-02-11'),
-(7, 7, 'Tú Vũ', '0911777888', 180000, 'Thanh toán khi nhận hàng', 1, '2025-03-21'),
-(8, 8, 'Quỳnh Anh', '0911888999', 1290000, 'Chuyển khoản ngân hàng', 1, '2025-03-19'),
-(9, 9, 'Michael Nguyen', '0911999000', 670000, 'Thanh toán khi nhận hàng', 1, '2024-12-23'),
-(10, 10, 'Jessica Trinh', '0912000111', 560000, 'Chuyển khoản ngân hàng', 1, '2025-03-17'),
-(11, 11, 'Tommy Le', '0912111222', 985000, 'Thanh toán khi nhận hàng', 1, '2025-01-29'),
-(12, 12, 'David Hoang', '0912222333', 310000, 'Thanh toán khi nhận hàng', 0, '2025-04-09'),
-(13, 13, 'Emily Dang', '0912333444', 450000, 'Chuyển khoản ngân hàng', 1, '2025-02-10'),
-(14, 14, 'Chloe Phan', '0912444555', 2200000, 'Chuyển khoản ngân hàng', 1, '2025-04-09'),
-(15, 15, 'Anthony Tran', '0912555666', 890000, 'Thanh toán khi nhận hàng', 1, '2025-02-03');
+INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMethod`, `statusBill`, `ly_do_huy`, `ly_do_tra_hang`, `create_at`, `ngay_cap_nhat`, `id_diachi`) VALUES
+(1, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(2, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(3, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(4, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(5, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(6, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(7, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(8, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(9, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(10, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(11, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(12, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(13, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(14, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(15, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(16, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(17, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(18, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(19, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(20, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(21, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(22, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(23, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(24, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(25, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(26, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(27, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(28, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(29, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(30, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(31, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:18:57', '2025-04-29 23:18:57', 3),
+(32, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:19:26', '2025-04-29 23:19:26', 3),
+(33, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:20:51', '2025-04-29 23:20:51', 3),
+(34, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:28:38', '2025-04-29 23:28:38', 3),
+(35, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:29:41', '2025-04-29 23:29:41', 3),
+(36, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:33:46', '2025-04-29 23:33:46', 3),
+(37, 3, NULL, 29000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:34:05', '2025-04-29 23:34:05', 3),
+(38, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:41:54', '2025-04-29 23:41:54', 3),
+(39, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:42:56', '2025-04-29 23:42:56', 3),
+(40, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:43:42', '2025-04-29 23:43:42', 3),
+(41, 3, NULL, 24000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:49:31', '2025-04-29 23:49:31', 3),
+(42, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:51:51', '2025-04-29 23:51:51', 3),
+(43, 3, NULL, 56000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:22:24', '2025-04-30 00:22:24', 3),
+(44, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:24:29', '2025-04-30 00:24:29', 3),
+(45, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:27:13', '2025-04-30 00:27:13', 3),
+(46, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:28:58', '2025-04-30 00:28:58', 3),
+(47, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:29:51', '2025-04-30 00:29:51', 3),
+(48, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:31:29', '2025-04-30 00:31:29', 3),
+(49, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:32:09', '2025-04-30 00:32:09', 3),
+(50, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:35', '2025-04-30 00:35:35', 3),
+(51, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:51', '2025-04-30 00:35:51', 3),
+(52, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:38:18', '2025-04-30 00:38:18', 3),
+(53, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:01', '2025-04-30 00:39:01', 3),
+(54, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:51', '2025-04-30 00:39:51', 3),
+(55, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:41:06', '2025-04-30 00:41:06', 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `hoadonxuat`
+-- Cấu trúc bảng cho bảng `hoadonnhap`
 --
 
-CREATE TABLE `hoadonxuat` (
+CREATE TABLE `hoadonnhap` (
+  `id` int(11) NOT NULL,
+  `giaNhap` decimal(10,2) DEFAULT NULL,
+  `soluong` int(11) DEFAULT NULL,
+  `tongtien` decimal(15,2) DEFAULT NULL,
+  `id_nhanvien` int(11) DEFAULT NULL,
+  `idBook` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `hoadon_trangthai`
+--
+
+CREATE TABLE `hoadon_trangthai` (
   `id` int(11) NOT NULL,
   `idBill` int(11) NOT NULL,
-  `status` int(11) DEFAULT 0,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `id_nhanvien` int(11) DEFAULT NULL,
+  `trangthai` varchar(50) NOT NULL,
+  `ghi_chu` text DEFAULT NULL,
+  `create_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `hoadonxuat`
---
-
-INSERT INTO `hoadonxuat` (`id`, `idBill`, `status`, `create_at`) VALUES
-(13, 5, 0, '2025-04-06 14:52:02'),
-(14, 2, 0, '2025-04-06 14:52:02'),
-(15, 3, 0, '2025-04-06 14:52:02');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imageproduct`
+-- Cấu trúc bảng cho bảng `manage`
 --
 
-CREATE TABLE `imageproduct` (
+CREATE TABLE `manage` (
   `id` int(11) NOT NULL,
-  `idBook` int(11) NOT NULL,
-  `imageURL` varchar(255) NOT NULL
+  `manage_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `imageproduct`
---
-
-INSERT INTO `imageproduct` (`id`, `idBook`, `imageURL`) VALUES
-(1, 1, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(2, 1, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(3, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(4, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(5, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(6, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(7, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(8, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(9, 4, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(10, 4, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(11, 5, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(12, 5, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(13, 6, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(14, 6, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(15, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(16, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(17, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(18, 8, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(19, 9, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(20, 10, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(21, 11, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(22, 11, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(23, 12, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(24, 12, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(25, 13, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(26, 14, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(27, 15, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(28, 16, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(29, 16, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(30, 17, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(31, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(32, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(33, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(34, 19, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(35, 20, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(36, 20, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(37, 21, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(38, 21, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(39, 22, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(40, 23, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(41, 23, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(42, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(43, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(44, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(45, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(46, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(47, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(48, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(49, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(50, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(53, 1, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(54, 1, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(55, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(56, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(57, 2, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(58, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(59, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(60, 3, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(61, 4, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(62, 4, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(63, 5, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(64, 5, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(65, 6, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(66, 6, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(67, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(68, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(69, 7, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(70, 8, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(71, 9, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(72, 10, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(73, 11, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(74, 11, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(75, 12, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(76, 12, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(77, 13, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(78, 14, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(79, 15, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(80, 16, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(81, 16, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(82, 17, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(83, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(84, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(85, 18, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(86, 19, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(87, 20, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(88, 20, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(89, 21, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(90, 21, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(91, 22, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(92, 23, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(93, 23, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(94, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(95, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(96, 24, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(97, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(98, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(99, 25, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(100, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(101, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg'),
-(102, 26, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nhanvien`
---
-
-CREATE TABLE `nhanvien` (
-  `IDNhanVien` int(11) NOT NULL,
-  `TenNhanVien` varchar(255) DEFAULT NULL,
-  `Mail` varchar(255) DEFAULT NULL,
-  `SDT` varchar(15) DEFAULT NULL,
-  `ID_TK` int(11) NOT NULL,
-  `avatar` varchar(255) DEFAULT './avatar/default-avatar.jpg',
-  `status` tinyint(1) NOT NULL DEFAULT 1 CHECK (`status` in (0,1)),
-  `MatKhau` varchar(55) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `ID_NhomQuyen` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nhanvien`
---
-
-INSERT INTO `nhanvien` (`IDNhanVien`, `TenNhanVien`, `Mail`, `SDT`, `ID_TK`, `avatar`, `status`, `MatKhau`, `username`, `ID_NhomQuyen`) VALUES
-(1, 'Nguyễn Văn An', 'a@example.com', '0912345678', 1, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'nguyenvanan', 1),
-(2, 'Trần Thị Bình', 'b@example.com', '0987654321', 2, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'tranthibinh', 2),
-(3, 'Lê Văn Cường', 'c@example.com', '0934567890', 3, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'levancuong', 3),
-(4, 'Phạm Thị Dung', 'd@example.com', '0978123456', 4, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'phamthidung', 4),
-(5, 'Vũ Minh Đức', 'e@example.com', '0901234567', 5, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'vuminhduc', 1),
-(6, 'Đặng Thị Phương', 'f@example.com', '0911122233', 6, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'dangthiphuong', 2),
-(7, 'Ngô Văn Giang', 'g@example.com', '0966123456', 7, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'ngovangiang', 3),
-(8, 'Hoàng Thị Hồng', 'h@example.com', '0922233344', 8, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 0, '123456', 'hoangthihong', 4),
-(9, 'Nguyễn Văn Hòa', 'i@example.com', '0907788990', 9, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'nguyenvanhoa', 1),
-(10, 'Trần Thị Lan', 'j@example.com', '0933555777', 10, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'tranthilan', 2),
-(11, 'Phạm Văn Khánh', 'k@example.com', '0977445566', 11, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 0, '123456', 'phamvankhanh', 3),
-(12, 'Lê Thị Lệ', 'l@example.com', '0955112233', 12, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'lethile', 4),
-(13, 'Đoàn Văn Minh', 'm@example.com', '0988776655', 13, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'doanvanminh', 1),
-(14, 'Bùi Thị Nga', 'n@example.com', '0966332211', 14, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'buithinga', 2),
-(15, 'Võ Minh Nhật', 'o@example.com', '0944225566', 15, 'https://images.icon-icons.com/1378/PNG/512/avatardefault_92824.png', 1, '123456', 'vominhnhat', 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nhomquyen`
---
-
-CREATE TABLE `nhomquyen` (
-  `ID_NhomQuyen` int(11) NOT NULL,
-  `TenNhomQuyen` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nhomquyen`
---
-
-INSERT INTO `nhomquyen` (`ID_NhomQuyen`, `TenNhomQuyen`) VALUES
-(1, 'Admin'),
-(2, 'Người quản lí'),
-(3, 'Nhân viên kho'),
-(4, 'Nhân viên bán hàng'),
-(5, 'Người mua hàng');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quanlihoadon`
---
-
-CREATE TABLE `quanlihoadon` (
-  `idBill` int(11) NOT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `IDNhanVien` int(11) NOT NULL,
-  `status` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quanlihoadon`
---
-
-INSERT INTO `quanlihoadon` (`idBill`, `create_at`, `IDNhanVien`, `status`) VALUES
-(2, '2025-04-06 15:04:37', 8, 0),
-(3, '2025-04-06 15:04:37', 12, 0),
-(5, '2025-04-06 15:04:37', 8, 0),
-(6, '2025-04-06 15:04:37', 12, 0),
-(7, '2025-04-06 15:04:37', 4, 0),
-(8, '2025-04-06 15:04:37', 8, 0),
-(9, '2025-04-06 15:04:38', 12, 0),
-(10, '2025-04-06 17:08:31', 4, 3),
-(11, '2025-04-06 17:08:31', 8, 3),
-(12, '2025-04-06 17:08:31', 12, 2),
-(13, '2025-04-06 17:08:31', 4, 3),
-(14, '2025-04-06 17:08:31', 8, 2),
-(15, '2025-04-06 17:08:31', 12, 3);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `quanly`
---
-
-CREATE TABLE `quanly` (
-  `id` int(11) NOT NULL,
-  `quanly` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `quanly`
---
-
-INSERT INTO `quanly` (`id`, `quanly`) VALUES
-(1, 'Thống kê'),
-(2, 'Quản lý sách'),
-(3, 'Quản lí nhân viên'),
-(4, 'Quản lí người dùng'),
-(5, 'Quản lý nhập hàng'),
-(6, 'Quản lý đơn hàng'),
-(7, 'Quản lý quyền');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `review`
+-- Cấu trúc bảng cho bảng `review`
 --
 
 CREATE TABLE `review` (
   `id` int(11) NOT NULL,
-  `rating` int(11) NOT NULL DEFAULT 1,
-  `review` varchar(255) DEFAULT NULL,
-  `userId` int(11) NOT NULL,
-  `bookId` int(11) NOT NULL
+  `userId` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `review` text DEFAULT NULL,
+  `bookId` int(11) DEFAULT NULL,
+  `create_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `review`
+--
+
+INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`) VALUES
+(1, 1, 5, 'Sách rất hữu ích và dễ hiểu.', 1, '2025-04-29 17:56:11'),
+(2, 1, 4, 'Nội dung phù hợp với chương trình học.', 2, '2025-04-29 17:56:11'),
+(3, 2, 4, 'Trình bày rõ ràng, dễ tiếp thu.', 3, '2025-04-29 17:56:11'),
+(4, 2, 5, 'Giá hợp lý, chất lượng tốt.', 4, '2025-04-29 17:56:11'),
+(5, 3, 3, 'Còn một số lỗi nhỏ, nhưng tạm ổn.', 5, '2025-04-29 17:56:11'),
+(6, 3, 4, 'Rất đáng để mua.', 6, '2025-04-29 17:56:11'),
+(7, 4, 5, 'Giúp mình ôn thi hiệu quả.', 7, '2025-04-29 17:56:11'),
+(8, 4, 4, 'Minh họa sinh động, học dễ vào.', 8, '2025-04-29 17:56:11'),
+(9, 5, 5, 'Giáo viên cũng khuyên dùng sách này.', 9, '2025-04-29 17:56:11'),
+(10, 5, 4, 'Giao hàng nhanh, sách mới.', 10, '2025-04-29 17:56:11'),
+(11, 6, 4, 'Giấy in đẹp, dễ đọc.', 11, '2025-04-29 17:56:11'),
+(12, 6, 3, 'Sách hơi mỏng nhưng nội dung tốt.', 12, '2025-04-29 17:56:11'),
+(13, 7, 5, 'Học xong tiến bộ rõ rệt.', 13, '2025-04-29 17:56:11'),
+(14, 7, 4, 'Nội dung bám sát đề cương.', 14, '2025-04-29 17:56:11'),
+(15, 8, 4, 'Thích hợp để tự học ở nhà.', 15, '2025-04-29 17:56:11'),
+(16, 8, 5, 'Mỗi chương đều được trình bày chi tiết.', 16, '2025-04-29 17:56:11'),
+(17, 9, 3, 'Tạm được, có thể cải thiện hơn.', 17, '2025-04-29 17:56:11'),
+(18, 9, 5, 'Rất đáng giá tiền.', 18, '2025-04-29 17:56:11'),
+(19, 10, 4, 'Có cả bài tập và lý thuyết.', 19, '2025-04-29 17:56:11'),
+(20, 10, 5, 'Sách hay, trình bày dễ hiểu.', 20, '2025-04-29 17:56:11'),
+(21, 11, 5, 'Rất phù hợp với học sinh cấp 2.', 21, '2025-04-29 17:56:11'),
+(22, 11, 4, 'Bố cục khoa học, dễ học.', 22, '2025-04-29 17:56:11'),
+(23, 12, 4, 'Bài tập phong phú.', 23, '2025-04-29 17:56:11'),
+(24, 12, 5, 'Nội dung đầy đủ, chi tiết.', 24, '2025-04-29 17:56:11'),
+(25, 13, 5, 'Giúp mình ôn tập hiệu quả.', 25, '2025-04-29 17:56:11'),
+(26, 13, 4, 'Sách tốt hơn mong đợi.', 26, '2025-04-29 17:56:11'),
+(27, 14, 4, 'Nội dung rõ ràng và dễ hiểu.', 1, '2025-04-29 17:56:11'),
+(28, 14, 3, 'Cần cập nhật thêm vài phần mới.', 2, '2025-04-29 17:56:11'),
+(29, 15, 5, 'Cực kỳ hài lòng với cuốn sách.', 3, '2025-04-29 17:56:11'),
+(30, 15, 4, 'Sẽ giới thiệu cho bạn bè.', 4, '2025-04-29 17:56:11');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `role`
+--
+
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `statusdelivery`
+-- Cấu trúc bảng cho bảng `rolepermissions`
 --
 
-CREATE TABLE `statusdelivery` (
-  `id` int(11) NOT NULL,
-  `idHoadon` int(11) NOT NULL,
-  `status` int(11) DEFAULT 0
+CREATE TABLE `rolepermissions` (
+  `role_id` int(11) NOT NULL,
+  `chucnang_id` int(11) NOT NULL,
+  `manage_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subjects`
+-- Cấu trúc bảng cho bảng `subjects`
 --
 
 CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
-  `subjectName` varchar(100) DEFAULT NULL,
-  `subjectImage` varchar(200) DEFAULT NULL
+  `subjectName` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `subjects`
+-- Đang đổ dữ liệu cho bảng `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `subjectName`) VALUES
@@ -554,142 +445,101 @@ INSERT INTO `subjects` (`id`, `subjectName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taikhoan`
+-- Cấu trúc bảng cho bảng `thongtingiaohang`
 --
 
-CREATE TABLE `taikhoan` (
-  `ID_TK` int(11) NOT NULL,
-  `ID_NhomQuyen` int(11) NOT NULL
+CREATE TABLE `thongtingiaohang` (
+  `id` int(11) NOT NULL,
+  `tennguoinhan` varchar(100) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `diachi` varchar(255) DEFAULT NULL,
+  `thanhpho` varchar(25) DEFAULT NULL,
+  `quan` varchar(25) DEFAULT NULL,
+  `huyen` varchar(25) DEFAULT NULL,
+  `sdt` varchar(20) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `taikhoan`
+-- Đang đổ dữ liệu cho bảng `thongtingiaohang`
 --
 
-INSERT INTO `taikhoan` (`ID_TK`, `ID_NhomQuyen`) VALUES
-(1, 1),
-(11, 1),
-(15, 1),
-(2, 2),
-(3, 2),
-(8, 2),
-(12, 2),
-(4, 3),
-(5, 3),
-(9, 3),
-(13, 3),
-(6, 4),
-(7, 4),
-(10, 4),
-(14, 4),
-(16, 5),
-(17, 5),
-(18, 5),
-(19, 5),
-(20, 5),
-(21, 5),
-(22, 5),
-(23, 5),
-(24, 5),
-(25, 5),
-(26, 5),
-(27, 5),
-(28, 5),
-(29, 5),
-(30, 5);
+INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `thanhpho`, `quan`, `huyen`, `sdt`, `status`) VALUES
+(1, 'Hồ Minh Hùng', 1, '123 Đường Trần Hưng Đạo', 'Hồ Chí Minh', 'Quận 1', 'Phường Bến Thành', '0901000001', 1),
+(2, 'Lê Văn Luyện', 2, '45 Đường Nguyễn Huệ', 'Hồ Chí Minh', 'Quận 1', 'Phường Nguyễn Thái Bình', '0902000002', 1),
+(3, 'Trần Thị Mai', 3, '78 Đường Lý Tự Trọng', 'Hồ Chí Minh', 'Quận 3', 'Phường Võ Thị Sáu', '0903000003', 1),
+(4, 'Nguyễn Hữu Tài', 4, '89 Đường Cách Mạng Tháng 8', 'Hồ Chí Minh', 'Quận 10', 'Phường 13', '0904000004', 1),
+(5, 'Đặng Thanh Tâm', 5, '32 Đường Tô Hiến Thành', 'Hồ Chí Minh', 'Quận 10', 'Phường 15', '0905000005', 1),
+(6, 'Phan Ngọc Trân', 6, '14 Đường 3 Tháng 2', 'Hồ Chí Minh', 'Quận 11', 'Phường 5', '0906000006', 1),
+(7, 'Võ Minh Tùng', 7, '23 Đường Lạc Long Quân', 'Hồ Chí Minh', 'Quận 11', 'Phường 1', '0907000007', 1),
+(8, 'Bùi Thị Hương', 8, '56 Đường Âu Cơ', 'Hồ Chí Minh', 'Tân Phú', 'Phường Phú Thọ Hòa', '0908000008', 1),
+(9, 'Lâm Văn Toàn', 9, '67 Đường Trường Chinh', 'Hồ Chí Minh', 'Tân Bình', 'Phường 14', '0909000009', 1),
+(10, 'Trịnh Thanh Long', 10, '89 Đường Nguyễn Văn Cừ', 'Hồ Chí Minh', 'Quận 5', 'Phường 2', '0910000010', 1),
+(11, 'Ngô Minh Hiếu', 11, '102 Đường Phan Văn Trị', 'Hồ Chí Minh', 'Gò Vấp', 'Phường 7', '0911000011', 1),
+(12, 'Đỗ Thị Lan', 12, '12 Đường Dương Quảng Hàm', 'Hồ Chí Minh', 'Gò Vấp', 'Phường 5', '0912000012', 1),
+(13, 'Hoàng Trung Nghĩa', 13, '21 Đường Nguyễn Kiệm', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 3', '0913000013', 1),
+(14, 'Tô Hoàng Nam', 14, '34 Đường Huỳnh Văn Bánh', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 17', '0914000014', 1),
+(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongtinhoadon`
---
-
-CREATE TABLE `thongtinhoadon` (
-  `idHoadon` int(11) NOT NULL,
-  `shippingAddress` varchar(250) DEFAULT NULL,
-  `orderTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `approvalTime` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `thongtinhoadon`
---
-
-INSERT INTO `thongtinhoadon` (`idHoadon`, `shippingAddress`, `orderTime`, `approvalTime`) VALUES
-(2, '45 Trần Phú, Quận 5, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(3, '78 Nguyễn Huệ, Quận 1, TP.HCM', '2025-04-03 04:10:16', NULL),
-(5, '32 Nguyễn Thái Học, Quận 3, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(6, '67 CMT8, Quận 10, TP.HCM', '2025-04-03 04:10:16', NULL),
-(7, '89 Pasteur, Quận 1, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(8, '56 Hoàng Văn Thụ, Tân Bình, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(9, '11 Tôn Đức Thắng, Quận 1, TP.HCM', '2025-04-03 04:10:16', NULL),
-(10, '4 Lý Thường Kiệt, Quận 10, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(11, '220 Hai Bà Trưng, Quận 3, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(12, '88 Nguyễn Tri Phương, Quận 5, TP.HCM', '2025-04-03 04:10:16', NULL),
-(13, '33 Điện Biên Phủ, Bình Thạnh, TP.HCM', '2025-04-03 04:10:16', NULL),
-(14, '76 Nguyễn Đình Chiểu, Quận 3, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16'),
-(15, '90 Trường Chinh, Tân Phú, TP.HCM', '2025-04-03 04:10:16', '2025-04-03 04:10:16');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `fullName` varchar(100) DEFAULT NULL,
-  `phoneNumber` varchar(11) DEFAULT NULL,
-  `userName` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
+  `userName` varchar(50) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `avatar` varchar(100) DEFAULT './avatar/default-avatar.jpg',
-  `status_user` int(11) DEFAULT 1,
-  `ID_TK` int(11) NOT NULL
+  `avatar` varchar(255) DEFAULT NULL,
+  `status_user` tinyint(1) DEFAULT NULL,
+  `fullName` varchar(100) DEFAULT NULL,
+  `phoneNumber` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
-INSERT INTO `users` (`id`, `fullName`, `phoneNumber`, `userName`, `password`, `email`, `avatar`, `status_user`) VALUES
-(1, 'Linh Nguyễn', '0911111234', 'linhnguyen', '123456', 'linh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(2, 'Minh Trần', '0911222333', 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(3, 'Thảo Lê', '0911333444', 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(4, 'Huy Phạm', '0911444555', 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(5, 'Lan Hồ', '0911555666', 'lanho', '123456', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(6, 'Nam Đặng', '0911666777', 'namdang', '123456', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(7, 'Tú Vũ', '0911777888', 'tuvu', '123456', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(8, 'Quỳnh Anh', '0911888999', 'quynhanh', '123456', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(9, 'Michael Nguyen', '0911999000', 'michaelng', '123456', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(10, 'Jessica Trinh', '0912000111', 'jessicatrinh', '123456', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(11, 'Tommy Le', '0912111222', 'tommyle', '123456', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(12, 'David Hoang', '0912222333', 'davidhoang', '123456', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(13, 'Emily Dang', '0912333444', 'emilydang', '123456', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(14, 'Chloe Phan', '0912444555', 'chloephan', '123456', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1),
-(15, 'Anthony Tran', '0912555666', 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1);
+INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`) VALUES
+(1, NULL, 'linhnguyen', '123456', 'linh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Linh Nguyễn', '0911111234'),
+(2, NULL, 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333'),
+(3, NULL, 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444'),
+(4, NULL, 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555'),
+(5, NULL, 'lanho', '123456', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666'),
+(6, NULL, 'namdang', '123456', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777'),
+(7, NULL, 'tuvu', '123456', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888'),
+(8, NULL, 'quynhanh', '123456', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999'),
+(9, NULL, 'michaelng', '123456', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000'),
+(10, NULL, 'jessicatrinh', '123456', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111'),
+(11, NULL, 'tommyle', '123456', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222'),
+(12, NULL, 'davidhoang', '123456', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333'),
+(13, NULL, 'emilydang', '123456', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444'),
+(14, NULL, 'chloephan', '123456', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555'),
+(15, NULL, 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `books`
+-- Chỉ mục cho bảng `books`
 --
 ALTER TABLE `books`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_books_subject` (`subjectId`);
-ALTER TABLE `books` ADD FULLTEXT KEY `bookName` (`bookName`);
+  ADD KEY `subjectId` (`subjectId`);
 
 --
--- Indexes for table `cart`
+-- Chỉ mục cho bảng `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
-  ADD KEY `fk_cart_users` (`idUser`);
+  ADD KEY `idUser` (`idUser`);
 
 --
--- Indexes for table `cartitems`
+-- Chỉ mục cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
   ADD PRIMARY KEY (`id`),
@@ -697,281 +547,262 @@ ALTER TABLE `cartitems`
   ADD KEY `cartId` (`cartId`);
 
 --
--- Indexes for table `chitiethoadon`
+-- Chỉ mục cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  ADD PRIMARY KEY (`idBook`,`idHoadon`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idBook` (`idBook`),
   ADD KEY `idHoadon` (`idHoadon`);
 
 --
--- Indexes for table `chitietquyen`
+-- Chỉ mục cho bảng `chucnang`
 --
-ALTER TABLE `chitietquyen`
-  ADD PRIMARY KEY (`ID_ChiTiet`),
-  ADD KEY `ID_NhomQuyen` (`ID_NhomQuyen`);
-
---
--- Indexes for table `hoadon`
---
-ALTER TABLE `hoadon`
-  ADD PRIMARY KEY (`idBill`),
-  ADD KEY `idUser` (`idUser`);
-
---
--- Indexes for table `hoadonxuat`
---
-ALTER TABLE `hoadonxuat`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idBill` (`idBill`);
-
---
--- Indexes for table `imageproduct`
---
-ALTER TABLE `imageproduct`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_imageProduct_products` (`idBook`);
-
---
--- Indexes for table `nhanvien`
---
-ALTER TABLE `nhanvien`
-  ADD PRIMARY KEY (`IDNhanVien`),
-  ADD KEY `ID_TK` (`ID_TK`),
-  ADD KEY `fk_nhanvien_nhomquyen` (`ID_NhomQuyen`);
-
---
--- Indexes for table `nhomquyen`
---
-ALTER TABLE `nhomquyen`
-  ADD PRIMARY KEY (`ID_NhomQuyen`);
-
---
--- Indexes for table `quanlihoadon`
---
-ALTER TABLE `quanlihoadon`
-  ADD PRIMARY KEY (`idBill`),
-  ADD KEY `IDNhanVien` (`IDNhanVien`);
-
---
--- Indexes for table `review`
---
-ALTER TABLE `review`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bookId` (`bookId`),
-  ADD KEY `userId` (`userId`);
-
---
--- Indexes for table `statusdelivery`
---
-ALTER TABLE `statusdelivery`
+ALTER TABLE `chucnang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `subjects`
+-- Chỉ mục cho bảng `hoadon`
+--
+ALTER TABLE `hoadon`
+  ADD PRIMARY KEY (`idBill`),
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `nhanvien_id` (`nhanvien_id`),
+  ADD KEY `fk_hoadon_diachi` (`id_diachi`);
+
+--
+-- Chỉ mục cho bảng `hoadonnhap`
+--
+ALTER TABLE `hoadonnhap`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_nhanvien` (`id_nhanvien`),
+  ADD KEY `idBook` (`idBook`);
+
+--
+-- Chỉ mục cho bảng `hoadon_trangthai`
+--
+ALTER TABLE `hoadon_trangthai`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idBill` (`idBill`),
+  ADD KEY `id_nhanvien` (`id_nhanvien`);
+
+--
+-- Chỉ mục cho bảng `manage`
+--
+ALTER TABLE `manage`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userId` (`userId`),
+  ADD KEY `bookId` (`bookId`);
+
+--
+-- Chỉ mục cho bảng `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`role_id`),
+  ADD UNIQUE KEY `role_name` (`role_name`);
+
+--
+-- Chỉ mục cho bảng `rolepermissions`
+--
+ALTER TABLE `rolepermissions`
+  ADD PRIMARY KEY (`role_id`,`chucnang_id`,`manage_id`),
+  ADD KEY `chucnang_id` (`chucnang_id`),
+  ADD KEY `manage_id` (`manage_id`);
+
+--
+-- Chỉ mục cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `taikhoan`
+-- Chỉ mục cho bảng `thongtingiaohang`
 --
-ALTER TABLE `taikhoan`
-  ADD PRIMARY KEY (`ID_TK`),
-  ADD KEY `ID_NhomQuyen` (`ID_NhomQuyen`);
+ALTER TABLE `thongtingiaohang`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `thongtinhoadon`
---
-ALTER TABLE `thongtinhoadon`
-  ADD PRIMARY KEY (`idHoadon`);
-
---
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ID_TK` (`ID_TK`);
+  ADD UNIQUE KEY `username` (`userName`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `userName_2` (`userName`),
+  ADD KEY `role_id` (`role_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `books`
+-- AUTO_INCREMENT cho bảng `books`
 --
 ALTER TABLE `books`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- AUTO_INCREMENT for table `cart`
+-- AUTO_INCREMENT cho bảng `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `cartitems`
+-- AUTO_INCREMENT cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
--- AUTO_INCREMENT for table `chitietquyen`
+-- AUTO_INCREMENT cho bảng `chitiethoadon`
 --
-ALTER TABLE `chitietquyen`
-  MODIFY `ID_ChiTiet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+ALTER TABLE `chitiethoadon`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT for table `hoadon`
+-- AUTO_INCREMENT cho bảng `chucnang`
+--
+ALTER TABLE `chucnang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT for table `hoadonxuat`
+-- AUTO_INCREMENT cho bảng `hoadonnhap`
 --
-ALTER TABLE `hoadonxuat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+ALTER TABLE `hoadonnhap`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `imageproduct`
+-- AUTO_INCREMENT cho bảng `hoadon_trangthai`
 --
-ALTER TABLE `imageproduct`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+ALTER TABLE `hoadon_trangthai`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nhanvien`
+-- AUTO_INCREMENT cho bảng `manage`
 --
-ALTER TABLE `nhanvien`
-  MODIFY `IDNhanVien` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+ALTER TABLE `manage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `nhomquyen`
---
-ALTER TABLE `nhomquyen`
-  MODIFY `ID_NhomQuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `quanlihoadon`
---
-ALTER TABLE `quanlihoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `review`
+-- AUTO_INCREMENT cho bảng `review`
 --
 ALTER TABLE `review`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `statusdelivery`
+-- AUTO_INCREMENT cho bảng `role`
 --
-ALTER TABLE `statusdelivery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `role`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `subjects`
+-- AUTO_INCREMENT cho bảng `subjects`
 --
 ALTER TABLE `subjects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `taikhoan`
+-- AUTO_INCREMENT cho bảng `thongtingiaohang`
 --
-ALTER TABLE `taikhoan`
-  MODIFY `ID_TK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+ALTER TABLE `thongtingiaohang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `cart`
+-- Các ràng buộc cho bảng `books`
+--
+ALTER TABLE `books`
+  ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subjectId`) REFERENCES `subjects` (`id`);
+
+--
+-- Các ràng buộc cho bảng `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `cartitems`
+-- Các ràng buộc cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
-  ADD CONSTRAINT `cartitems_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cartitems_ibfk_2` FOREIGN KEY (`cartId`) REFERENCES `cart` (`idCart`) ON DELETE CASCADE;
+  ADD CONSTRAINT `cartitems_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `cartitems_ibfk_2` FOREIGN KEY (`cartId`) REFERENCES `cart` (`idCart`);
 
 --
--- Constraints for table `chitiethoadon`
+-- Các ràng buộc cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE;
+  ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`);
 
 --
--- Constraints for table `chitietquyen`
---
-ALTER TABLE `chitietquyen`
-  ADD CONSTRAINT `chitietquyen_ibfk_1` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`) ON DELETE CASCADE;
-
---
--- Constraints for table `hoadon`
+-- Các ràng buộc cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
-  ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_hoadon_diachi` FOREIGN KEY (`id_diachi`) REFERENCES `thongtingiaohang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `hoadon_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`nhanvien_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `hoadonxuat`
+-- Các ràng buộc cho bảng `hoadonnhap`
 --
-ALTER TABLE `hoadonxuat`
-  ADD CONSTRAINT `hoadonxuat_ibfk_1` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`);
+ALTER TABLE `hoadonnhap`
+  ADD CONSTRAINT `hoadonnhap_ibfk_1` FOREIGN KEY (`id_nhanvien`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `hoadonnhap_ibfk_2` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`);
 
 --
--- Constraints for table `imageproduct`
+-- Các ràng buộc cho bảng `hoadon_trangthai`
 --
-ALTER TABLE `imageproduct`
-  ADD CONSTRAINT `fk_imageProduct_products` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`) ON DELETE CASCADE;
+ALTER TABLE `hoadon_trangthai`
+  ADD CONSTRAINT `hoadon_trangthai_ibfk_1` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `hoadon_trangthai_ibfk_2` FOREIGN KEY (`id_nhanvien`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `nhanvien`
---
-ALTER TABLE `nhanvien`
-  ADD CONSTRAINT `fk_nhanvien_nhomquyen` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`),
-  ADD CONSTRAINT `nhanvien_ibfk_1` FOREIGN KEY (`ID_TK`) REFERENCES `taikhoan` (`ID_TK`) ON DELETE CASCADE;
-
---
--- Constraints for table `quanlihoadon`
---
-ALTER TABLE `quanlihoadon`
-  ADD CONSTRAINT `quanlihoadon_ibfk_1` FOREIGN KEY (`IDNhanVien`) REFERENCES `nhanvien` (`IDNhanVien`),
-  ADD CONSTRAINT `quanlihoadon_ibfk_2` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`);
-
---
--- Constraints for table `review`
+-- Các ràng buộc cho bảng `review`
 --
 ALTER TABLE `review`
-  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`),
-  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`);
 
 --
--- Constraints for table `taikhoan`
+-- Các ràng buộc cho bảng `rolepermissions`
 --
-ALTER TABLE `taikhoan`
-  ADD CONSTRAINT `taikhoan_ibfk_1` FOREIGN KEY (`ID_NhomQuyen`) REFERENCES `nhomquyen` (`ID_NhomQuyen`) ON DELETE CASCADE;
+ALTER TABLE `rolepermissions`
+  ADD CONSTRAINT `rolepermissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `rolepermissions_ibfk_2` FOREIGN KEY (`chucnang_id`) REFERENCES `chucnang` (`id`),
+  ADD CONSTRAINT `rolepermissions_ibfk_3` FOREIGN KEY (`manage_id`) REFERENCES `manage` (`id`);
 
 --
--- Constraints for table `thongtinhoadon`
+-- Các ràng buộc cho bảng `thongtingiaohang`
 --
-ALTER TABLE `thongtinhoadon`
-  ADD CONSTRAINT `thongtinhoadon_ibfk_1` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE;
+ALTER TABLE `thongtingiaohang`
+  ADD CONSTRAINT `thongtingiaohang_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`ID_TK`) REFERENCES `taikhoan` (`ID_TK`) ON DELETE CASCADE;
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
