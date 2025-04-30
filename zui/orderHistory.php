@@ -120,7 +120,8 @@ $user_id=$_SESSION["user_id"];
           <img src="<?php echo $row2["imageURL"]?>" alt="math" class="w-24 h-24 object-cover rounded border">
           <div>
             <h2 class="font-semibold text-gray-700">Tên : <?php echo $row2["bookName"]?></h2>
-            <p class="text-red-500 font-semibold mt-2">Giá : <?php echo $row2["currentPrice"] ?></p>
+            
+            <p class="text-red-500 font-semibold mt-2">Giá : <?php echo number_format($row2["currentPrice"], 0, ',', '.'); ?> đ  </p>
             <p class="font-semibold mt-2">Số lượng :  <?php echo $row2["amount"]?></p>
           </div>
         </div>
@@ -128,7 +129,8 @@ $user_id=$_SESSION["user_id"];
         <div class="flex flex-col items-end justify-between">
           <div>
             <span class="text-lg font-medium text-gray-700">Thành tiền:</span>
-            <span class="text-xl font-bold text-red-600 k"><?php echo $row2["amount"]*($row2["currentPrice"])?></span>
+            
+            <span class="text-xl font-bold text-red-600 k"><?php echo number_format($row2["amount"]*($row2["currentPrice"]), 0, ',', '.'); ?> đ</span>
           </div>
           <div class="flex gap-2 mt-4">
             <form method="POST" action="" style="display: inline;">
@@ -154,7 +156,8 @@ $user_id=$_SESSION["user_id"];
       <div class="flex flex-col items-start justify-between border-t pt-4 mt-4">
         <div>
           <span class="text-lg font-medium text-gray-700 mr-4">Tổng :</span>
-          <span class="text-xl font-bold text-red-600 "><?php echo $row["totalBill"]?></span>
+          
+          <span class="text-xl font-bold text-red-600 "><?php echo number_format($row["totalBill"], 0, ',', '.'); ?> đ</span>
         </div>
       </div>
     </div>

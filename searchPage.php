@@ -186,10 +186,27 @@ $num_rows = $result->num_rows;
             if($result_books->num_rows>0){
               while($row=$result_books->fetch_assoc()){
             ?>
-            <div class="bg-white rounded-2xl shadow p-2">
-              <img src="<?php echo $row['imageURL'];?>" alt="Book" class="rounded-xl mx-auto mb-2">
-              <h3 class="text-sm font-semibold mb-1"><?php echo $row['bookName'];?></h3>
-              <div class="text-red-600 font-semibold"><?php echo $row['currentPrice'];?>đ <span class="text-xs text-gray-500 line-through"><?php echo $row['oldPrice'];?> đ</span></div>
+            <!-- <div class="bg-white rounded-2xl shadow p-2"> -->
+            <div class=" bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 relative group">
+              <img src="<?php echo $row['imageURL'];?>" alt="Book" class="w-full h-80 object-cover transition duration-300 group-hover:brightness-75">
+
+              <!-- Overlay Icons -->
+              <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                
+                <a href="book?bookId=<?php echo $row["id"]?>" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+                  <span class="icon text-xl">🔍</span>
+                </a>
+
+                <button onclick="themVaoGio(<?= $row['id'] ?>)" 
+                type="" 
+                class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+                  <span class="icon text-xl">🛒</span>
+                </button>
+              </div>
+
+              <h3 class="text-sm font-semibold m-4"><?php echo $row['bookName'];?></h3>
+              <div class="text-red-600 font-semibold m-4"><?php echo number_format($row['currentPrice'], 0, ',', '.'); ?> đ <span class="text-xs text-gray-500 line-through"><?php echo number_format($row['oldPrice'], 0, ',', '.'); ?> đ</span></div>
+              
             </div>
             <?php
               }

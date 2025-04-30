@@ -1,6 +1,5 @@
 <div class="bg-white rounded-2xl shadow-lg p-6 max-w-7xl mx-auto mt-4">
 
-
   <?php
   $sql = "SELECT * FROM subjects";
   $result = $conn->query($sql);
@@ -14,18 +13,17 @@
         continue;
       }
   ?>
-        <div class="w-full px-6 py-4 bg-gradient-to-r from-pink-100 to-yellow-100 rounded-xl shadow flex items-center gap-3 mb-4">
+  <div class="w-full px-6 py-4 bg-gradient-to-r from-pink-100 to-yellow-100 rounded-xl shadow flex items-center gap-3 mb-4">
 
-        <h2 class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-yellow-500 text-transparent bg-clip-text">
-            Môn học: <?php echo htmlspecialchars($row["subjectName"]); ?>
-        </h2>
-        </div>
+    <h2 class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-yellow-500 text-transparent bg-clip-text">
+        Môn học: <?php echo htmlspecialchars($row["subjectName"]); ?>
+    </h2>
+  </div>
 
 
 
-      <!-- Danh sách sách -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
-  <?php while ($row2 = $result2->fetch_assoc()) { ?>
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
+    <?php while ($row2 = $result2->fetch_assoc()) { ?>
     <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 relative group">
       <img src="<?php echo htmlspecialchars($row2["imageURL"]); ?>" alt="Book" class="w-full h-80 object-cover transition duration-300 group-hover:brightness-75">
       
@@ -39,16 +37,15 @@
         <button onclick="themVaoGio(<?= $row2['id'] ?>)" 
         type="" 
         class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
-            <span class="icon text-xl">🛒</span>
+          <span class="icon text-xl">🛒</span>
         </button>
       </div>
-
-
       <div class="p-4">
         <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($row2["bookName"]); ?></h3>
         <div class="flex items-center space-x-2 mt-2">
-          <span class="text-lg font-bold text-red-500"><?php echo htmlspecialchars($row2["currentPrice"]); ?>₫</span>
-          <span class="text-sm text-gray-400 line-through"><?php echo htmlspecialchars($row2["oldPrice"]); ?>₫</span>
+        
+          <span class="text-lg font-bold text-red-500"><?php echo number_format($row2["currentPrice"], 0, ',', '.'); ?> đ</span>
+          <span class="text-sm text-gray-400 line-through"><?php echo number_format($row2["oldPrice"], 0, ',', '.'); ?> đ</span>
           <!-- cái này là gì:')) -->
           <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">-25%</span>
         </div>
@@ -56,14 +53,15 @@
         <p class="text-sm text-gray-500 mt-1">Đã bán 102</p>
       </div>
     </div>
-  <?php } ?>
-</div>
+    <?php } ?>
+  </div>
 
   <?php
     }
   }
   ?>
 </div>
+
 <script>
   function themVaoGio(bookId) {
   fetch('controllers/add_to_cart.php', {
