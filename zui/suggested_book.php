@@ -32,7 +32,7 @@
       <!-- Overlay Icons -->
       <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition duration-300">
         
-        <a href="chitiet.php?id=123" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+        <a href="book?bookId=<?php echo $row2["id"]?>" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
           <span class="icon text-xl">🔍</span>
         </a>
 
