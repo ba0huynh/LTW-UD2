@@ -78,8 +78,8 @@ if (!empty($sort)) {
         $query .= " ORDER BY books.currentPrice DESC";
     }
 }
+
 $result = $conn->query($query);
-$num_rows = $result->num_rows;
 ?>
 
 <body class="bg-gray-100 text-gray-800">
@@ -111,7 +111,7 @@ $num_rows = $result->num_rows;
                 Từ khóa tìm kiếm : 
                 <?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?> <br>
                 <input type="hidden" name="search" value="<?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?>">
-                Kết quả tìm kiếm : (<?php echo $num_rows ?? 0; ?>)
+                Kết quả tìm kiếm : (<?php echo $result->num_rows ?? 0; ?>)
               </div>
             </div>
 
@@ -168,7 +168,7 @@ $num_rows = $result->num_rows;
         <!-- Products Grid -->
         <div class="bg-white rounded-2xl shadow p-4 min-h-full">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500"> <?php if(!empty($search)) echo $search ;?> (<?php echo $num_rows;?> kết quả)</span></h2>
+            <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500"> <?php if(!empty($search)) echo $search ;?> (<?php echo $result->num_rows;?> kết quả)</span></h2>
             <form action="searchPage.php" method="GET" id="filterForm" class="flex items-center gap-2">
               <div class="flex gap-2">
                 <select name="sort" class="border rounded p-1 text-sm " onchange="document.getElementById('filterForm').submit();">
@@ -182,9 +182,9 @@ $num_rows = $result->num_rows;
           <div class="grid grid-cols-4 gap-4">
             <!-- Product Card -->
             <?php
-            $result_books = $conn->query($query);
-            if($result_books->num_rows>0){
-              while($row=$result_books->fetch_assoc()){
+            echo "so luong ".$result->num_rows;
+            if($result->num_rows>0){
+              while($row=$result->fetch_assoc()){
             ?>
             <div class="bg-white rounded-2xl shadow p-2">
               <img src="<?php echo $row['imageURL'];?>" alt="Book" class="rounded-xl mx-auto mb-2">
