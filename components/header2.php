@@ -101,7 +101,7 @@ ORDER BY hoadon_trangthai.create_at DESC, hoadon.create_at DESC;
 $texts = [
   1 => 'Đang xử lý',
   2 => 'Đang được giao', 3 => 'Giao hàng thành công',
-  4 => 'Đơn hàng đã trả', 5 => 'Đơn hàng đã bị hủy'
+  4 => 'Đơn hàng đã hủy'
 ];
 
 $icon = $icons[$status] ?? 'ℹ️';
