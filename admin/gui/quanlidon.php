@@ -547,7 +547,285 @@ document.getElementById('saveStatusBtn').addEventListener('click', function () {
   });
 });
 </script>
+<script>
+const data = {
+  "Đà Nẵng": {
+    "Quận Liên Chiểu": ["Hòa Khánh Bắc", "Hòa Khánh Nam", "Hòa Minh"],
+    "Quận Hải Châu": ["Hải Châu 1", "Hải Châu 2"],
+    "Quận Sơn Trà": ["An Hải Đông", "An Hải Tây"]
+  },
+  "Hà Nội": {
+    "Quận Hoàn Kiếm": ["Phường Hàng Bạc", "Phường Hàng Bông"],
+    "Quận Đống Đa": ["Phường Khâm Thiên", "Phường Văn Chương"]
+  },
+  "Hồ Chí Minh": {
+    "Quận 1": ["Bến Nghé", "Bến Thành"],
+    "Quận 2": ["Thủ Thiêm", "An Khánh"]
+  },
+  "Đồng Nai": {
+    "Biên Hòa": ["An Bình", "Bửu Long"],
+    "Long Thành": ["An Phước", "Bình Sơn"]
+  },
+  "Bình Dương": {
+    "Thành phố Thủ Dầu Một": ["Phường Phú Hòa", "Phường Phú Lợi"],
+    "Thị xã Dĩ An": ["Phường Bình An", "Phường Bình Thắng"]
+  },
+  "Long An": {
+    "Thành phố Tân An": ["Phường 1", "Phường 2"],
+    "Huyện Bến Lức": ["Thị trấn Bến Lức", "Xã Lương Bình"]
+  },
+  "Tiền Giang": {
+    "Thành phố Mỹ Tho": ["Phường 1", "Phường 2"],
+    "Huyện Châu Thành": ["Thị trấn Tân Hiệp", "Xã Tân Hương"]
+  },
+  "Bà Rịa - Vũng Tàu": {
+    "Thành phố Vũng Tàu": ["Phường 1", "Phường 2"],
+    "Huyện Long Điền": ["Thị trấn Long Điền", "Xã An Ngãi"]
+  },
+  "Khánh Hòa": {
+    "Thành phố Nha Trang": ["Phường Vĩnh Hải", "Phường Vĩnh Nguyên"],
+    "Huyện Cam Lâm": ["Thị trấn Cam Đức", "Xã Cam Thành Bắc"]
+  },
+  "Ninh Thuận": {
+    "Thành phố Phan Rang-Tháp Chàm": ["Phường Đô Vinh", "Phường Mỹ Hải"],
+    "Huyện Ninh Hải": ["Thị trấn Khánh Hải", "Xã Nhơn Hải"]
+  },
+  "Ninh Bình": {
+    "Thành phố Ninh Bình": ["Phường Đông Thành", "Phường Nam Thành"],
+    "Huyện Hoa Lư": ["Thị trấn Thiên Tôn", "Xã Ninh Hải"]
+  },
+  "Hà Tĩnh": {
+    "Thành phố Hà Tĩnh": ["Phường Bắc Hà", "Phường Nam Hà"],
+    "Huyện Hương Sơn": ["Thị trấn Phố Châu", "Xã Sơn Tây"]
+  },
+  "Hà Giang": {
+    "Thành phố Hà Giang": ["Phường Trần Phú", "Phường Nguyễn Trãi"],
+    "Huyện Đồng Văn": ["Thị trấn Đồng Văn", "Xã Lũng Cú"]
+  },
+  "Lào Cai": {
+    "Thành phố Lào Cai": ["Phường Bắc Cường", "Phường Nam Cường"],
+    "Huyện Sa Pa": ["Thị trấn Sa Pa", "Xã Tả Phìn"]
+  },
+  "Thái Nguyên": {
+    "Thành phố Thái Nguyên": ["Phường Hoàng Văn Thụ", "Phường Tân Thịnh"],
+    "Huyện Đại Từ": ["Thị trấn Hùng Sơn", "Xã Phú Lạc"]
+  },
+  "An Giang": {
+    "Thành phố An Giang": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bạc Liêu": {
+    "Thành phố Bạc Liêu": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bắc Giang": {
+    "Thành phố Bắc Giang": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bắc Kạn": {
+    "Thành phố Bắc Kạn": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bắc Ninh": {
+    "Thành phố Bắc Ninh": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bến Tre": {
+    "Thành phố Bến Tre": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bình Định": {
+    "Thành phố Bình Định": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bình Phước": {
+    "Thành phố Bình Phước": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Bình Thuận": {
+    "Thành phố Bình Thuận": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Cà Mau": {
+    "Thành phố Cà Mau": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Cao Bằng": {
+    "Thành phố Cao Bằng": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Điện Biên": {
+    "Thành phố Điện Biên": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Đắk Lắk": {
+    "Thành phố Đắk Lắk": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Đắk Nông": {
+    "Thành phố Đắk Nông": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Đồng Tháp": {
+    "Thành phố Đồng Tháp": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Gia Lai": {
+    "Thành phố Gia Lai": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Hà Nam": {
+    "Thành phố Hà Nam": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Hải Dương": {
+    "Thành phố Hải Dương": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Hòa Bình": {
+    "Thành phố Hòa Bình": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Hưng Yên": {
+    "Thành phố Hưng Yên": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Kiên Giang": {
+    "Thành phố Kiên Giang": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Kon Tum": {
+    "Thành phố Kon Tum": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Lai Châu": {
+    "Thành phố Lai Châu": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Lâm Đồng": {
+    "Thành phố Lâm Đồng": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Lạng Sơn": {
+    "Thành phố Lạng Sơn": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Nam Định": {
+    "Thành phố Nam Định": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Nghệ An": {
+    "Thành phố Nghệ An": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Phú Thọ": {
+    "Thành phố Phú Thọ": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Phú Yên": {
+    "Thành phố Phú Yên": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Quảng Bình": {
+    "Thành phố Quảng Bình": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Quảng Nam": {
+    "Thành phố Quảng Nam": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Quảng Ngãi": {
+    "Thành phố Quảng Ngãi": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Quảng Trị": {
+    "Thành phố Quảng Trị": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Sóc Trăng": {
+    "Thành phố Sóc Trăng": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Sơn La": {
+    "Thành phố Sơn La": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Tây Ninh": {
+    "Thành phố Tây Ninh": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Thái Bình": {
+    "Thành phố Thái Bình": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Thanh Hóa": {
+    "Thành phố Thanh Hóa": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Trà Vinh": {
+    "Thành phố Trà Vinh": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Tuyên Quang": {
+    "Thành phố Tuyên Quang": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Vĩnh Long": {
+    "Thành phố Vĩnh Long": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Vĩnh Phúc": {
+    "Thành phố Vĩnh Phúc": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  },
+  "Yên Bái": {
+    "Thành phố Yên Bái": ["Phường 1", "Phường 2"],
+    "Huyện A": ["Xã A1", "Xã A2"]
+  }
+};
 
+  const provinceSelect = document.getElementById("province");
+  const districtSelect = document.getElementById("district");
+  const wardSelect = document.getElementById("ward");
+
+  // Load tỉnh
+  for (let province in data) {
+    provinceSelect.innerHTML += `<option value="${province}">${province}</option>`;
+  }
+
+  // Khi chọn tỉnh
+  provinceSelect.addEventListener("change", function () {
+    const province = this.value;
+    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+    wardSelect.disabled = true;
+
+    if (province && data[province]) {
+      for (let district in data[province]) {
+        districtSelect.innerHTML += `<option value="${district}">${district}</option>`;
+      }
+      districtSelect.disabled = false;
+    } else {
+      districtSelect.disabled = true;
+    }
+  });
+
+  // Khi chọn quận
+  districtSelect.addEventListener("change", function () {
+    const province = provinceSelect.value;
+    const district = this.value;
+    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+
+    if (province && district && data[province][district]) {
+      data[province][district].forEach(ward => {
+        wardSelect.innerHTML += `<option value="${ward}">${ward}</option>`;
+      });
+      wardSelect.disabled = false;
+    } else {
+      wardSelect.disabled = true;
+    }
+  });
+</script>
 
 
 </body>
