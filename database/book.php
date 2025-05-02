@@ -89,14 +89,37 @@ class BooksTable
     public function updateBook($id, $name, $subjectId, $class, $image, $description) {
         global $pdo;
         $query = "UPDATE books SET 
-                bookName = '$name', 
-                subjectId = '$subjectId', 
-                classNumber = '$class', 
-                imageURL = '$image', 
-                description = '$description' 
-              WHERE id = $id";
+                bookName = ?, 
+                subjectId = ?, 
+                classNumber = ?, 
+                imageURL = ?, 
+                description = ?
+                WHERE id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$name, $subjectId, $class, $image, $description, $id]);
+        }
+
+    public function changeActive($id, $isActive) {
+        global $pdo;
+        $query = "UPDATE books SET isActive = ? WHERE id = ?";
         $stmt = $pdo->prepare($query);
-        return $stmt->execute();
+        $success = $stmt->execute([$isActive, $id]);
+        return $success && $stmt->rowCount() > 0;
+    }
+
+    public function addBook($name, $subjectId, $class, $image, $desc) {
+        global $pdo;
+        try {
+            $stmt = $pdo->prepare("INSERT INTO books 
+                          (bookName, subjectId, classNumber, imageURL, description, status, isActive) 
+                          VALUES (?, ?, ?, ?, ?, 1, 0)");
+            $success = $stmt->execute([$name, $subjectId, $class, $image, $desc]);
+        
+            return $success && $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            error_log("Database error in addBook: " . $e->getMessage());
+            return false;
+        }
     }
 
 }

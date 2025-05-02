@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 30, 2025 lúc 01:31 PM
+-- Thời gian đã tạo: Th5 03, 2025 lúc 01:06 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,8 +36,8 @@ CREATE TABLE `books` (
   `currentPrice` decimal(10,2) DEFAULT NULL,
   `quantitySold` int(11) DEFAULT 0,
   `imageURL` varchar(255) DEFAULT NULL,
-  `status_remove` tinyint(1) DEFAULT 0,
-  `status_hidden` tinyint(1) DEFAULT 0,
+  `status` tinyint(1) DEFAULT 0,
+  `isActive` tinyint(1) DEFAULT 0,
   `description` text DEFAULT NULL,
   `type` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -46,33 +46,34 @@ CREATE TABLE `books` (
 -- Đang đổ dữ liệu cho bảng `books`
 --
 
-INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status_remove`, `status_hidden`, `description`, `type`) VALUES
-(1, 'Toán 6 - Giáo Khoa Cơ Bản', 1, '6', 18000.00, 16000.00, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 0, 0, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(2, 'Ngữ Văn 6 - Giáo Trình', 2, '6', 20000.00, 18000.00, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 0, 0, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
-(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 0, 0, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 0, 0, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
-(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 0, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
-(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 0, 0, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
-(7, 'Toán 9 - Ôn Thi vào 10', 1, '9', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 0, 0, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
-(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 0, 0, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
-(9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 0, 0, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
-(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 0, 0, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 0, 0, 'Vật lý lớp 9.', 'Giáo Trình'),
-(12, 'Ngữ Văn 9 - Bài Tập', 2, '9', 22000.00, 20000.00, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 0, 0, 'Bài tập văn học lớp 9.', 'Bài Tập'),
-(13, 'Sinh Học 9 - Ôn Thi', 6, '9', 23000.00, 21500.00, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 0, 0, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
-(14, 'Hóa Học 9 - Ôn Thi', 7, '9', 23500.00, 21500.00, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 0, 0, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
-(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 0, 0, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 0, 0, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
-(17, 'Toán 11 - Giáo Trình', 1, '11', 28000.00, 26000.00, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 0, 0, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
-(18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 0, 0, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
+INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `isActive`, `description`, `type`) VALUES
+(1, 'Toán 6 - Giáo Khoa Cơ Bản', 2, '6', 18000.00, 16000.00, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(2, 'Ngữ Văn 6 - Giáo Trình', 2, '6', 20000.00, 18000.00, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 1, 1, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
+(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
+(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
+(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 1, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
+(7, 'Toán 9 - Ôn Thi vào 10', 1, '9', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
+(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
+(9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
+(10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
+(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 1, 1, 'Vật lý lớp 9.', 'Giáo Trình'),
+(12, 'Ngữ Văn 9 - Bài Tập', 2, '9', 22000.00, 20000.00, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 1, 'Bài tập văn học lớp 9.', 'Bài Tập'),
+(13, 'Sinh Học 9 - Ôn Thi', 6, '9', 23000.00, 21500.00, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 1, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
+(14, 'Hóa Học 9 - Ôn Thi', 7, '9', 23500.00, 21500.00, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 1, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
+(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 1, 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
+(17, 'Toán 11 - Giáo Trình', 1, '11', 28000.00, 26000.00, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 1, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
+(18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
 (19, 'Toán 12 - Ôn Thi THPT', 1, '12', 32000.00, 30000.00, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 0, 0, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
-(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, '12', 31000.00, 29000.00, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 0, 0, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
-(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, '12', 30000.00, 28000.00, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 0, 0, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
-(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, '12', 31000.00, 29000.00, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 0, 0, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(23, 'Vật Lý 12 - Giáo Trình', 5, '12', 30000.00, 28000.00, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 0, 0, 'Giáo trình Vật lý lớp 12.', 'Giáo Trình'),
-(24, 'Sinh Học 12 - Ôn Thi THPT', 6, '12', 30500.00, 28500.00, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 0, 0, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
-(25, 'Hóa Học 12 - Ôn Thi THPT', 7, '12', 31000.00, 29000.00, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 0, 0, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
-(26, 'Ngữ Văn 12 - Bài Tập', 2, '12', 30000.00, 28000.00, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 0, 0, 'Bài tập Văn học lớp 12.', 'Bài Tập');
+(20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, '12', 31000.00, 29000.00, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 1, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
+(21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, '12', 30000.00, 28000.00, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 1, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
+(22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, '12', 31000.00, 29000.00, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 1, 1, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
+(23, 'Vật Lý 12 - Giáo Trình', 5, '12', 30000.00, 28000.00, 130, 'https://thuvienvatly.com/home/images/download_thumb/1dQt09bdxnqCEMpjHYZMfEaghJl8pJOe2.jpg', 1, 1, 'Giáo trình Vật lý lớp 12.', 'Giáo Trình'),
+(24, 'Sinh Học 12 - Ôn Thi THPT', 6, '12', 30500.00, 28500.00, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 1, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
+(25, 'Hóa Học 12 - Ôn Thi THPT', 7, '12', 31000.00, 29000.00, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 1, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
+(26, 'Ngữ Văn 12 - Bài Tập', 2, '12', 30000.00, 28000.00, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 1, 'Bài tập Văn học lớp 12.', 'Bài Tập'),
+(28, 'hóa', 7, '9', NULL, NULL, 0, '/LTW-UD2/images/Products/681433e83bea4_hoahoc-9-hocsinhgioi.jpg', 1, 0, 'học đi chờ chi\r\n', NULL);
 
 -- --------------------------------------------------------
 
@@ -213,6 +214,29 @@ INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `chitietphieunhap`
+--
+
+CREATE TABLE `chitietphieunhap` (
+  `id` int(11) NOT NULL,
+  `idPhieuNhap` int(11) NOT NULL,
+  `idBook` int(11) NOT NULL,
+  `idCungCap` int(11) NOT NULL,
+  `soluong` int(11) NOT NULL,
+  `gianhap` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `chitietphieunhap`
+--
+
+INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `soluong`, `gianhap`) VALUES
+(1, 1, 6, 1, 100, 10000.00),
+(2, 1, 21, 1, 100, 15000.00);
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `chucnang`
 --
 
@@ -310,12 +334,18 @@ INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMe
 
 CREATE TABLE `hoadonnhap` (
   `id` int(11) NOT NULL,
-  `giaNhap` decimal(10,2) DEFAULT NULL,
-  `soluong` int(11) DEFAULT NULL,
   `tongtien` decimal(15,2) DEFAULT NULL,
-  `id_nhanvien` int(11) DEFAULT NULL,
-  `idBook` int(11) DEFAULT NULL
+  `idNguoiNhap` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `hoadonnhap`
+--
+
+INSERT INTO `hoadonnhap` (`id`, `tongtien`, `idNguoiNhap`, `date`, `status`) VALUES
+(1, 2500000.00, 1, '2025-05-03 06:02:16', 1);
 
 -- --------------------------------------------------------
 
@@ -342,6 +372,25 @@ CREATE TABLE `manage` (
   `id` int(11) NOT NULL,
   `manage_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `nhacungcap`
+--
+
+CREATE TABLE `nhacungcap` (
+  `id` int(11) NOT NULL,
+  `name` varchar(156) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhacungcap`
+--
+
+INSERT INTO `nhacungcap` (`id`, `name`) VALUES
+(1, 'Công ty Cổ Phần Sách Mcbooks'),
+(2, 'Công ty Phát Hành Sách Tp.HCM');
 
 -- --------------------------------------------------------
 
@@ -404,6 +453,13 @@ CREATE TABLE `role` (
   `role_id` int(11) NOT NULL,
   `role_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `role`
+--
+
+INSERT INTO `role` (`role_id`, `role_name`) VALUES
+(1, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -504,7 +560,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`) VALUES
-(1, NULL, 'linhnguyen', '123456', 'linh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Linh Nguyễn', '0911111234'),
+(1, 1, 'Admin', '123456', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234'),
 (2, NULL, 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333'),
 (3, NULL, 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444'),
 (4, NULL, 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555'),
@@ -555,6 +611,15 @@ ALTER TABLE `chitiethoadon`
   ADD KEY `idHoadon` (`idHoadon`);
 
 --
+-- Chỉ mục cho bảng `chitietphieunhap`
+--
+ALTER TABLE `chitietphieunhap`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idPhieuNhap` (`idPhieuNhap`),
+  ADD KEY `idBook` (`idBook`),
+  ADD KEY `idCungCap` (`idCungCap`);
+
+--
 -- Chỉ mục cho bảng `chucnang`
 --
 ALTER TABLE `chucnang`
@@ -574,8 +639,7 @@ ALTER TABLE `hoadon`
 --
 ALTER TABLE `hoadonnhap`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_nhanvien` (`id_nhanvien`),
-  ADD KEY `idBook` (`idBook`);
+  ADD KEY `idNguoiNhap` (`idNguoiNhap`);
 
 --
 -- Chỉ mục cho bảng `hoadon_trangthai`
@@ -589,6 +653,12 @@ ALTER TABLE `hoadon_trangthai`
 -- Chỉ mục cho bảng `manage`
 --
 ALTER TABLE `manage`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `nhacungcap`
+--
+ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -645,7 +715,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT cho bảng `cart`
@@ -666,6 +736,12 @@ ALTER TABLE `chitiethoadon`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
+-- AUTO_INCREMENT cho bảng `chitietphieunhap`
+--
+ALTER TABLE `chitietphieunhap`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT cho bảng `chucnang`
 --
 ALTER TABLE `chucnang`
@@ -681,7 +757,7 @@ ALTER TABLE `hoadon`
 -- AUTO_INCREMENT cho bảng `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadon_trangthai`
@@ -696,6 +772,12 @@ ALTER TABLE `manage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT cho bảng `nhacungcap`
+--
+ALTER TABLE `nhacungcap`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT cho bảng `review`
 --
 ALTER TABLE `review`
@@ -705,7 +787,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT cho bảng `role`
 --
 ALTER TABLE `role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `subjects`
@@ -756,6 +838,14 @@ ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`);
 
 --
+-- Các ràng buộc cho bảng `chitietphieunhap`
+--
+ALTER TABLE `chitietphieunhap`
+  ADD CONSTRAINT `fkBook` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`),
+  ADD CONSTRAINT `fkPhieuNhap` FOREIGN KEY (`idPhieuNhap`) REFERENCES `hoadonnhap` (`id`),
+  ADD CONSTRAINT `fkncc` FOREIGN KEY (`idCungCap`) REFERENCES `nhacungcap` (`id`);
+
+--
 -- Các ràng buộc cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
@@ -767,8 +857,7 @@ ALTER TABLE `hoadon`
 -- Các ràng buộc cho bảng `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
-  ADD CONSTRAINT `hoadonnhap_ibfk_1` FOREIGN KEY (`id_nhanvien`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `hoadonnhap_ibfk_2` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`);
+  ADD CONSTRAINT `fkNguoiNhap` FOREIGN KEY (`idNguoiNhap`) REFERENCES `users` (`id`);
 
 --
 -- Các ràng buộc cho bảng `hoadon_trangthai`

@@ -6,6 +6,31 @@
     $product = new BooksTable($pdo);
     $products = $product->getAllBook();
 
+    
+    if (isset($_POST['update-status']) && isset($_POST['id']) && isset($_POST['isActive'])) {
+        $id = $_POST['id'];
+        $isActive = $_POST['isActive'];
+
+        $product = new BooksTable($pdo);
+        $result = $product->changeActive($id, $isActive);
+
+        if ($result) {
+            $message = $isActive == 1 ? "Sản phẩm đã được cập nhật để bán!" : "Sản phẩm đã được ngừng bán!";
+            echo json_encode([
+                'success' => true,
+                'message' => $message,
+                'newStatus' => $isActive 
+            ]);
+        } else {
+            echo json_encode([
+                'success' => false,
+                'message' => "Đã xảy ra lỗi khi cập nhật trạng thái sản phẩm!"
+            ]);
+        }
+        exit();
+    }
+
+
     if (isset($_POST['delete-product'])) {
         $id = $_POST['id'];
         $product->deleteById($id);
@@ -34,6 +59,9 @@
     }
     $sql .= " LIMIT $itemPerPage OFFSET $offset";
     $products = $product->getBooksByCondition($sql);
+    // foreach ($products as $product) {
+    // echo $product['id']; 
+// }
 ?>
 
 
@@ -93,11 +121,8 @@
                         </div>
                     </td>
                     <td>
-                        <?php
-                        // $image = '.' . $product['image'] . "?" . time();
-                        ?>
                         <div>
-                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="55" height="55">
+                        <img src="<?php echo $product['imageURL'] ?>" alt="" width="70" height="70">
                         </div>
                     </td>
                     <td>
@@ -113,7 +138,15 @@
                     <td>
                         <div class="icon">
                             <i class="fa-solid fa-trash delete-icon" data-id="<?php echo $product['id'] ?>"></i>
-                            <i id="openModalBtn" class="fa-regular fa-pen-to-square update-icon"  data-id="<?php echo $product['id'] ?>"></i>
+                            <i class="fa-regular fa-pen-to-square update-icon"  data-id="<?php echo $product['id'] ?>" id="openModalBtn" ></i>
+                            <?php if ($product['isActive'] == 1): ?>
+                                <i class="fa-solid fa-toggle-on check-icon" data-id="<?php echo $product['id'] ?>" style="color:green;" title="Đang bán"></i>
+                            <?php else: ?>
+                                <i class="fa-solid fa-toggle-off check-icon" data-id="<?php echo $product['id'] ?>" style="color:red;" title="Ngừng bán"></i>
+                            <?php endif; ?>
+
+
+
                         </div>
 
                     </td>
@@ -159,7 +192,7 @@
 .table td:nth-child(4) div,
 .table td:nth-child(5) div{
     text-align: center;
-    padding: 25px 25px;
+    padding: 20px 20px;
 }
 .table th:nth-child(3) div,
 .table th:nth-child(6) div,
@@ -178,7 +211,7 @@
     text-align: center;
 }
 .table td:nth-child(8) {
-    padding: 10px 10px 10px 33px;
+    padding: 10px 10px 10px 20px;
 }
 .icon {
     display: flex;
@@ -203,6 +236,12 @@
 .update-icon:hover {
     color: #005f94;
     font-size: 23px;
+}
+.check-icon{
+    font-size: 20px;
+}
+.check-icon:hover{
+    font-size: 25px;
 }
 .sp-pagination {
     display: flex;

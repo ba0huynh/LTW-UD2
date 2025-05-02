@@ -92,9 +92,65 @@ $(document).on('click', '.delete-icon', function () {
     });
 });
 
+$(document).on('click', '.check-icon', function () {
+    const icon = $(this);
+    const id = icon.data('id');
+    const isCurrentlyActive = icon.hasClass('fa-toggle-on');
+    const newStatus = isCurrentlyActive ? 0 : 1;
+
+    const title = newStatus === 1 ? "Bạn muốn cho phép bán sản phẩm này?" : "Bạn muốn ngừng bán sản phẩm này?";
+
+    Swal.fire({
+        title: title,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "./gui/thongtinsanpham.php",
+                data: {
+                    id: id,
+                    isActive: newStatus,
+                    "update-status": true
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response && response.success) {
+                        // Cập nhật trực tiếp icon mà không cần load lại trang
+                        if (newStatus === 1) {
+                            icon.removeClass('fa-toggle-off').addClass('fa-toggle-on');
+                            icon.css('color', 'green');
+                            icon.attr('title', 'Đang bán');
+                        } else {
+                            icon.removeClass('fa-toggle-on').addClass('fa-toggle-off');
+                            icon.css('color', 'red');
+                            icon.attr('title', 'Ngừng bán');
+                        }
+
+                        Swal.fire("Thành công", response.message, "success");
+                    } else {
+                        const errorMsg = response && response.message ? response.message : "Không thể cập nhật trạng thái!";
+                        Swal.fire("Lỗi", errorMsg, "error");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire("Lỗi", "Lỗi kết nối đến server: " + error, "error");
+                }
+            });
+        }
+    });
+});
+//===================================================================================
+
+
+
 $(document).on("click", ".update-icon", function (e) {
     e.preventDefault();
     var id = $(this).data("id");
+    console.log(id);
     $.ajax({
         type: "POST",
         url: "./gui/modalsp.php",
@@ -107,11 +163,11 @@ $(document).on("click", ".update-icon", function (e) {
             $(".modal-content").html(response);
             $("#myModal").css("display", "flex");
 
-            $('#book-name').data('original', $('#book-name').val());
-            $('#subject').data('original', $('#subject').val());
-            $('#class').data('original', $('#class').val());
-            $('#image-url').data('original', $('#image-url').val());
-            $('#description').data('original', $('#description').val());
+            // $('#book-name').data('original', $('#book-name').val());
+            // $('#subject').data('original', $('#subject').val());
+            // $('#class').data('original', $('#class').val());
+            // $('#image-url').data('original', $('#image-url').val());
+            // $('#description').data('original', $('#description').val());
         },
         error: function () {
             alert("Có lỗi xảy ra khi lấy dữ liệu sản phẩm.");
@@ -121,40 +177,6 @@ $(document).on("click", ".update-icon", function (e) {
 $(window).on("click", function (event) {
     if ($(event.target).is("#myModal")) {
         $("#myModal").css("display", "none");
-    }
-});
-
-function checkImageExists(url, callback) {
-    const img = new Image();
-    img.onload = function () {
-        callback(true);
-    };
-    img.onerror = function () {
-        callback(false);
-    };
-    img.src = url;
-}
-
-$(document).on("change", "#image-url", function () {
-    const $input = $(this);
-    const newUrl = $input.val().trim();
-    const oldUrl = $input.data("original") || $input.attr("value");
-
-    if (newUrl !== "") {
-        checkImageExists(newUrl, function (exists) {
-            if (!exists) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Hình ảnh không hợp lệ",
-                    text: "Không tìm thấy ảnh từ đường dẫn bạn nhập.",
-                });
-                $input.val(oldUrl);
-            } else {
-                if (!$input.data("original")) {
-                    $input.data("original", newUrl);
-                }
-            }
-        });
     }
 });
 
@@ -191,78 +213,205 @@ $(document).on("change", "#description", function () {
     }
 });
 
-$(document).on('submit', '#editProductForm', function (e) {
-    e.preventDefault();
 
 
-    if (!hasChanges()) {
-        Swal.fire({
-            icon: "info",
-            title: "Không có thay đổi",
-            text: "Không có thay đổi nào để cập nhật!",
-        });
-        return;
-    }
 
 
-    let formData = new FormData(this);
-
-    Swal.fire({
-        title: "Bạn muốn cập nhật sản phẩm này?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Cập nhật",
-        cancelButtonText: "Hủy bỏ",
-    }).then((result) => {
-        if (result.isConfirmed) {
-
-            $.ajax({
-                type: "POST",
-                url: "./gui/modalsp.php",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    console.log(response);
-                    Swal.fire({
-                        title: "Cập nhật thành công!",
-                        icon: "success",
-                        timer: 1000,
-                        showConfirmButton: false
-                    });
-
-                    $.ajax({
-                        type: "POST",
-                        url: "./gui/sanphan.php",
-                        success: function (response) {
-                            $('.sp-container').html(response);
-                            $('#myModal').css('display', 'none');
-                        }
-                    });
-                },
-                error: function () {
-                    Swal.fire({
-                        title: "Có lỗi xảy ra trong quá trình cập nhật!",
-                        icon: "error",
-                    });
-                }
-            });
-        }
-    });
-});
 
 
-function hasChanges() {
-    let isChanged = false;
 
-    if ($('#book-name').val() !== $('#book-name').data('original')) isChanged = true;
-    if ($('#subject').val() !== $('#subject').data('original')) isChanged = true;
-    if ($('#class').val() !== $('#class').data('original')) isChanged = true;
-    if ($('#image-url').val() !== $('#image-url').data('original')) isChanged = true;
-    if ($('#description').val() !== $('#description').data('original')) isChanged = true;
 
-    return isChanged;
-}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//=============================
+
+
+// $(document).ready(function () {
+//     // Mở modal sửa sản phẩm
+//     $(document).on("click", ".update-icon", function (e) {
+//         e.preventDefault();
+//         const id = $(this).data("id");
+
+//         // Hiển thị loading khi đang tải dữ liệu
+//         $(".modal-content").html('<div class="text-center py-4"><i class="fas fa-spinner fa-spin fa-3x"></i><p>Đang tải dữ liệu...</p></div>');
+//         $("#myModal").css("display", "flex");
+
+//         $.ajax({
+//             type: "POST",
+//             url: "./gui/modalsp.php",
+//             data: {
+//                 id: id,
+//                 "update-product": true
+//             },
+//             dataType: "html",
+//             success: function (response) {
+//                 $(".modal-content").html(response);
+
+//                 // Xử lý sự kiện submit form sau khi tải xong
+//                 $("#editProductForm").submit(function (e) {
+//                     e.preventDefault();
+
+//                     // Validate form
+//                     const name = $('#book-name').val().trim();
+//                     const subject = $('#subject').val();
+//                     const classVal = $('#class').val();
+//                     const description = $('#description').val().trim();
+
+//                     if (!name || !subject || !classVal || !description) {
+//                         Swal.fire({
+//                             icon: "error",
+//                             title: "Lỗi",
+//                             text: "Vui lòng điền đầy đủ thông tin!"
+//                         });
+//                         return;
+//                     }
+
+//                     Swal.fire({
+//                         title: 'Xác nhận cập nhật?',
+//                         text: "Bạn có chắc muốn cập nhật thông tin sách?",
+//                         icon: 'question',
+//                         showCancelButton: true,
+//                         confirmButtonColor: '#3085d6',
+//                         cancelButtonColor: '#d33',
+//                         confirmButtonText: 'Xác nhận',
+//                         cancelButtonText: 'Hủy'
+//                     }).then((result) => {
+//                         if (result.isConfirmed) {
+//                             const formData = new FormData(this);
+
+//                             $.ajax({
+//                                 url: "./gui/modalsp.php",
+//                                 type: "POST",
+//                                 data: formData,
+//                                 processData: false,
+//                                 contentType: false,
+//                                 success: function (response) {
+//                                     try {
+//                                         const data = JSON.parse(response);
+//                                         if (data.success) {
+//                                             Swal.fire({
+//                                                 title: 'Thành công!',
+//                                                 text: 'Cập nhật sách thành công',
+//                                                 icon: 'success'
+//                                             }).then(() => {
+//                                                 location.reload();
+//                                             });
+//                                         } else {
+//                                             throw new Error(data.error || 'Có lỗi xảy ra');
+//                                         }
+//                                     } catch (e) {
+//                                         Swal.fire({
+//                                             title: 'Lỗi!',
+//                                             text: e.message,
+//                                             icon: 'error'
+//                                         });
+//                                     }
+//                                 },
+//                                 error: function (xhr) {
+//                                     Swal.fire({
+//                                         title: 'Lỗi!',
+//                                         text: xhr.responseText || 'Có lỗi khi cập nhật',
+//                                         icon: 'error'
+//                                     });
+//                                 }
+//                             });
+//                         }
+//                     });
+//                 });
+//             },
+//             error: function (xhr) {
+//                 let errorMsg = "Có lỗi xảy ra khi lấy dữ liệu sản phẩm";
+//                 try {
+//                     const response = JSON.parse(xhr.responseText);
+//                     if (response.error) errorMsg = response.error;
+//                 } catch (e) { }
+
+//                 $(".modal-content").html(`
+//                     <div class="error-message text-center py-4">
+//                         <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
+//                         <h4>${errorMsg}</h4>
+//                         <button class="btn btn-secondary mt-3" onclick="$('#myModal').hide()">Đóng</button>
+//                     </div>
+//                 `);
+//             }
+//         });
+//     });
+
+
+//     // Xử lý preview ảnh
+//     $(document).on("change", "#imageFile", function (e) {
+//         const file = this.files[0];
+//         if (file) {
+//             // Kiểm tra kích thước ảnh (tối đa 5MB)
+//             if (file.size > 5 * 1024 * 1024) {
+//                 Swal.fire({
+//                     icon: "error",
+//                     title: "Lỗi",
+//                     text: "Ảnh tải lên không được vượt quá 5MB"
+//                 });
+//                 $(this).val('');
+//                 return;
+//             }
+//             // Kiểm tra loại file
+//             const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+//             if (!validTypes.includes(file.type)) {
+//                 Swal.fire({
+//                     icon: "error",
+//                     title: "Lỗi",
+//                     text: "Chỉ chấp nhận file ảnh (JPEG, PNG, GIF)"
+//                 });
+//                 $(this).val('');
+//                 return;
+//             }
+
+//             // Hiển thị preview
+//             const reader = new FileReader();
+//             reader.onload = function (e) {
+//                 $('#previewImg').attr('src', e.target.result);
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     });
+// });
