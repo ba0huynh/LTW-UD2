@@ -17,7 +17,7 @@
         </div>
 
     
-        <form id="formdangnhap"  action="account.php" method="POST" class="space-y-4 ">
+        <form id="formdangnhap" name="login"  action="" method="POST" class="space-y-4 ">
           <div>
             <label class="block text-sm font-medium text-gray-700">Số điện thoại</label>
             <div class="flex items-center mt-1">
@@ -37,7 +37,7 @@
     
           <button type="submit" class="hover:bg-red-500 hover:text-white transition w-full bg-gray-300 text-gray-600 font-semibold py-2 rounded-lg ">Đăng nhập</button>
         </form>
-        <form id="formdangki" class="space-y-4 hidden" action="/registration" method="post">
+        <form id="formdangki" class="space-y-4 hidden" action="" method="post">
           <div>
             <label class="block text-sm font-medium text-gray-700">Số điện thoại</label>
             <div class="flex items-center mt-1">

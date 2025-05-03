@@ -9,5 +9,5 @@ session_destroy();
 
 <script>
 alert("Tài khoản đã đăng xuất");
-window.location.href = "../"; // chuyển trang bằng JavaScript luôn
+window.location.href = "../"; 
 </script>

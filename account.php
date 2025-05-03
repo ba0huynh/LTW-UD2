@@ -9,15 +9,35 @@ $conn=new mysqli($servername,$username,$password,$dbname);
 if($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 ?>
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST"  && !isset($_POST['login'])) {
+    $phone = $_POST['user_telephone'];
+    $password = $_POST['user_password'];
 
+    $query = "SELECT * FROM users WHERE phoneNumber = '$phone' AND password = '$password'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+      $user = mysqli_fetch_assoc($result);
+        $_SESSION["user_id"] = $user["id"]; // Lưu session
+        header("Location: index.php"); // Redirect sang trang chính
+        exit;
+    } else {
+        $error = "Sai số điện thoại hoặc mật khẩu!";
+    }
+}
+?>
+
+
+
+
+<?php
+/*
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_id = $_SESSION['user_id'];
-    $old = $_POST['user_old_password'];
-    $new = $_POST['user_new_password'];
-    $confirm = $_POST['user_confirm_new_password'];
+    $old = $_POST['user_old_password'] ?? '';
+    $new = $_POST['user_new_password'] ?? '';
+    $confirm = $_POST['user_confirm_new_password'] ?? '';
 
     // Kiểm tra rỗng
     if (empty($old) || empty($new) || empty($confirm)) {
@@ -49,20 +69,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+*/
 ?>
 
 
 <?php
-
-
-
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_old_password'])) {
-  $user_id = intval($_SESSION['user_id']);
-    $old_pass = $_POST['user_old_password'];
-    $new_pass = $_POST['user_new_password'];
-    $confirm_pass = $_POST['user_confirm_new_password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
+    $old_pass = $_POST['user_old_password'] ?? '';
+    $new_pass = $_POST['user_new_password'] ?? '';
+    $confirm_pass = $_POST['user_confirm_new_password'] ?? '';
+    if (empty($old_pass) || empty($new_pass) || empty($confirm_pass) ) {
+        echo "<script>alert('Vui lòng điền đầy đủ thông tin.');  window.history.back();</script>";
+        exit();
+    }
 
     // Lấy mật khẩu từ DB
     $query = "SELECT password FROM users WHERE id = $user_id";
@@ -71,14 +90,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_old_password']))
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $db_password = $row['password'];
-
         // Kiểm tra mật khẩu cũ
         if (!password_verify($old_pass, $db_password)) {
-            echo "<script>alert('Mật khẩu hiện tại không đúng!');</script>";
+            var_dump($user_id, $old_pass, $db_password);
+            echo "<script>alert('Mật khẩu hiện tại không đúng! $old_pass $db_password');  window.history.back();</script>";
+            exit();
+            
         } elseif ($new_pass !== $confirm_pass) {
-            echo "<script>alert('Mật khẩu mới không khớp!');</script>";
+            echo "<script>alert('Mật khẩu mới không khớp!');  window.history.back();</script>";
+            exit();
         } elseif (strlen($new_pass) < 6) {
-            echo "<script>alert('Mật khẩu mới phải có ít nhất 6 ký tự.');</script>";
+            echo "<script>alert('Mật khẩu mới phải có ít nhất 6 ký tự.');  window.history.back();</script>";
+            exit();
         } else {
             // Hash mật khẩu mới
             $new_hashed = password_hash($new_pass, PASSWORD_DEFAULT);
@@ -90,39 +113,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_old_password']))
             if ($stmt) {
                 mysqli_stmt_bind_param($stmt, "si", $new_hashed, $user_id);
                 if (mysqli_stmt_execute($stmt)) {
-                    echo "<script>alert('Đổi mật khẩu thành công!'); window.location.href='/LTW_UD2/account.php';</script>";
+                    echo "<script>alert('Đổi mật khẩu thành công!'); window.history.back();</script>";
+                    exit();
                 } else {
-                    echo "<script>alert('Lỗi khi cập nhật mật khẩu.');</script>";
+                    echo "<script>alert('Lỗi khi cập nhật mật khẩu.');  window.history.back();</script>";
+                    exit();
                 }
                 mysqli_stmt_close($stmt);
             } else {
-                echo "<script>alert('Không thể chuẩn bị câu truy vấn.');</script>";
+                echo "<script>alert('Không thể chuẩn bị câu truy vấn.');  window.history.back();</script>";
+                exit();
             }
         }
-    } else {
-        echo "<script>alert('Không tìm thấy người dùng.');</script>";
-    }
+    } 
 }
 ?>
 
 <?php
-
-
-
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['user_old_password'])) {
-  $user_id = intval($_SESSION['user_id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
     $fields = [];
     $values = [];
     $types = '';
 
-    $userName = trim($_POST['userName']);
-    $fullName = trim($_POST['fullName']);
-    $phoneNumber = trim($_POST['phoneNumber']);
-    $date = trim($_POST['dateOfBirth']);
-    $month = trim($_POST['monthOfBirth']);
-    $year = trim($_POST['yearOfBirth']);
+    $userName = trim($_POST['userName']) ?? '';
+    $fullName = trim($_POST['fullName']) ?? '';
+    $phoneNumber = trim($_POST['phoneNumber']) ?? '';
+    $date = trim($_POST['dateOfBirth']) ?? '';
+    $month = trim($_POST['monthOfBirth']) ?? '';
+    $year = trim($_POST['yearOfBirth']) ?? '';
 
     if (!empty($userName)) {
         $fields[] = "userName = ?";
@@ -160,41 +178,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['user_old_password'])
             mysqli_stmt_bind_param($stmt, $types, ...$values);
 
             if (mysqli_stmt_execute($stmt)) {
-                echo "<script>alert('Cập nhật thông tin thành công!'); window.location.href='/LTW_UD2/account.php';</script>";
+                echo "<script>alert('Cập nhật thông tin thành công!');  </script>";
+                exit();
             } else {
-                echo "<script>alert('Lỗi khi cập nhật: " . mysqli_stmt_error($stmt) . "');</script>";
+                echo "<script>alert('Lỗi khi cập nhật: " . mysqli_stmt_error($stmt) . "');  window.history.back();</script>";
+                exit();
             }
 
             mysqli_stmt_close($stmt);
         } else {
-            echo "<script>alert('Lỗi chuẩn bị truy vấn: " . mysqli_error($conn) . "');</script>";
+            echo "<script>alert('Lỗi chuẩn bị truy vấn: " . mysqli_error($conn) . "');  window.history.back();</script>";
+            exit();
         }
     } else {
-        echo "<script>alert('Không có trường nào để cập nhật.');</script>";
+        echo "<script>alert('Không có trường nào để cập nhật.');  window.history.back();</script>";
+        exit();
     }
 }
 ?>
 
 
-<?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"  && !isset($_POST['user_old_password'])) {
-    $phone = $_POST['user_telephone'];
-    $password = $_POST['user_password'];
-
-    $query = "SELECT * FROM users WHERE phoneNumber = '$phone' AND password = '$password'";
-    $result = mysqli_query($conn, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-      $user = mysqli_fetch_assoc($result);
-        $_SESSION["user_id"] = $user["id"]; // Lưu session
-        header("Location: index.php"); // Redirect sang trang chính
-        exit;
-    } else {
-        $error = "Sai số điện thoại hoặc mật khẩu!";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,7 +226,6 @@ include_once "./components/header2.php";
 if (isset($_SESSION["user_id"])) {
   include_once "./components/changeInforUser.php";
 } else {
-  
    include_once "./components/login2.php";
 }
 include_once "./components/footer.php";

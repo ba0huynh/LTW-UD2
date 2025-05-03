@@ -43,8 +43,10 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
         <div class="flex w-full min-h-screen bg-[#ecedf3]">
 
             <div class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
-                <div class="menu-item admin-nav-btn" page="analytics"> <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
-                    Thống kê </div>
+                <div class="menu-item admin-nav-btn" page="analytics"> 
+                    <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
+                    Thống kê 
+                </div>
                 <h5>QUẢN LÝ THÔNG TIN </h5>
                 <div class="menu-item admin-nav-btn" page="customer"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
                     Quản lý khách hàng &#9662</div>
@@ -65,12 +67,12 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item admin-nav-btn" page="nhaphang">Nhập hàng</div>
                     <div class="submenu-item admin-nav-btn" page="thongtinnhaphang">Thông tin nhập hàng</div>
                 </div>
-                <div class="menu-item admin-nav-btn"> <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
-                    Quản lý đơn hàng &#9662</div>
+                <div class="menu-item admin-nav-btn" page="quanlidon"> 
+                    <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
+                    Quản lý đơn hàng &#9662
+                </div>
                 <div class="submenu">
                     <div page="quanlidon" class="submenu-item admin-nav-btn">Duyệt đơn hàng</div>
-                    <div class="submenu-item" page="giaohang">Giao hàng</div>
-                    <div class="submenu-item" page="donhang">Đơn hàng đã hoàn thành</div>
 
                 </div>
                 <div class="menu-item admin-nav-btn" page="permission"> <img src="./assets/icon/credit-card.svg" class="dark-img" alt="">
@@ -93,25 +95,18 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item">Thông tin chi tiết nhà cung cấp</div>
                 </div>
             </div>
-            <main page="analytics" id="content">
 
+
+            <main page="analytics" id="content">
                 <div id="main-content">
+                
                     <?php include_once './gui/analytics.php' ?>
                 </div>
             </main>
             <main page="quanlidon" id="content">
                 <div id="main-content">
+                    vhkn nm
                     <?php include_once './gui/quanlidon.php' ?>
-                </div>
-            </main>
-            <main page="giaohang" id="content">
-                <div id="main-content">
-                    <?php include_once './gui/giaohang.php' ?>
-                </div>
-            </main>
-            <main page="donhang" id="content">
-                <div id="main-content">
-                    <?php include_once './gui/donhang.php' ?>
                 </div>
             </main>
 

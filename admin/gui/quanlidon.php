@@ -48,7 +48,7 @@ $total_pages = ceil($total_rows / $limit);
             >
             🗓️ Thời gian
             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
         </button>
         <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
@@ -94,7 +94,7 @@ $total_pages = ceil($total_rows / $limit);
 
                     <div class="pt-3">
                         <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-semibold text-sm shadow">
-                        Áp dụng bộ lọc
+                          Áp dụng bộ lọc
                         </button>
                     </div>
 
@@ -288,7 +288,8 @@ $total_pages = ceil($total_rows / $limit);
             <label class="block text-sm font-medium text-gray-700 mb-1">Ghi chú (nếu có):</label>
             <div class="relative">
                 <textarea id="modalNote" rows="3"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"></textarea>
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none">
+                </textarea>
                 <span class="absolute bottom-2 right-3 text-gray-400">✏️ </span>
             </div>
         </div>
@@ -296,7 +297,7 @@ $total_pages = ceil($total_rows / $limit);
         <!-- Nút lưu -->
         <div id="saveStatusBtn" class="pt-4">
             <button type="submit"
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-lg transition shadow-md">
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2.5 rounded-lg transition shadow-md">
                 Lưu thay đổi
             </button>
         </div>

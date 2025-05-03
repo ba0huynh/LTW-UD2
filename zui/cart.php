@@ -39,7 +39,7 @@ if(isset($_SESSION["user_id"])){
 
 
 ?>
-<form action="/LTW_UD2/zui/payment.php" method="post" id="cartForm">
+<form action="payment.php" method="post" id="cartForm">
   <div class="max-w-6xl mx-auto mt-10 flex gap-6">
     <div class="w-full max-w-sm bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
 
@@ -85,9 +85,6 @@ if(isset($_SESSION["user_id"])){
 
       <!-- Sản phẩm -->
       <div class="flex items-start gap-4 border-b border-gray-200 pb-6 mb-6 relative group" data-book-id="<?= $row2['bookId'] ?>" data-cart-id="<?= $row2['cartId'] ?>">
-
-
-
         <img
           src="<?php echo $row2['imageURL']; ?>"
           class="w-20 h-28 object-cover rounded-lg"
@@ -170,9 +167,6 @@ function formatCurrency(value) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-
-
-
   document.querySelectorAll('.increase, .decrease').forEach((button) => {
     button.addEventListener('click', function () {
       const parent = this.closest('[data-book-id][data-cart-id]');

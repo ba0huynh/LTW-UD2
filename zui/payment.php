@@ -50,6 +50,15 @@ if($conn->connect_error) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {},
+    }
+  }
+</script>
+
     <style>
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.95); }
@@ -256,8 +265,8 @@ if($conn->connect_error) {
   </form>
 </div>
 
-<div id="addressPopup" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
-  <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
+<div id="addressPopup" class="  fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
+  <div class=" animate-fade-in max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
     <h2 class="text-lg font-bold text-gray-800 mb-2">Địa Chỉ Của Tôi</h2>
 
     <?php 

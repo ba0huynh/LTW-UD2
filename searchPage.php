@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LTW_UD2</title>
+  <title></title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./css/login.css">
 <link rel="stylesheet" href="./css/header.css">
 </head>
 <?php
-require_once("./database/database.php");
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -43,53 +42,53 @@ $min_cost = $_GET["min_cost"] ?? null;
 $max_cost = $_GET["max_cost"] ?? null;
 
 if ($option == 1) {
-    $min_cost = 0;
-    $max_cost = 50000;
+  $min_cost = 0;
+  $max_cost = 50000;
 } elseif ($option == 2) {
-    $min_cost = 50000;
-    $max_cost = 100000;
+  $min_cost = 50000;
+  $max_cost = 100000;
 } elseif ($option == 3) {
-    $min_cost = 100000;
-    $max_cost = 200000;
+  $min_cost = 100000;
+  $max_cost = 200000;
 }
 
-$query = "SELECT books.* FROM books ";
+$query_result_books = "SELECT books.* FROM books ";
 
 if (!empty($subject)) {
-    $query .= "LEFT JOIN subjects ON books.subjectId = subjects.id WHERE 1=1 ";
+    $query_result_books .= " WHERE books.subjectId = " . (int)$subject;
 } else {
-    $query .= "WHERE 1=1 ";
+    $query_result_books .= "WHERE 1=1 ";  
 }
 
 
 if (!empty($search)) {
     $search = $conn->real_escape_string($search);
-    $query .= " AND bookName LIKE '%$search%' ";
+    $query_result_books .= " AND bookName LIKE '%$search%' ";
 }
 
 if (!empty($type)) {
-    $query .= " AND books.type = " . (int)$type;
+    $query_result_books .= " AND books.type = " . $type;
 }
 if (!empty($min_cost) && !empty($max_cost)) {
-    $query .= " AND books.currentPrice BETWEEN $min_cost AND $max_cost ";
+    $query_result_books .= " AND books.currentPrice BETWEEN $min_cost AND $max_cost ";
 }
 if (!empty($class)) {
-    $query .= " AND books.classNumber = " . (int)$class;
+    $query_result_books .= " AND books.classNumber = " . (int)$class;
 }
 if (!empty($min_class) && !empty($max_class)) {
-    $query .= " AND books.classNumber BETWEEN $min_class AND $max_class ";
+    $query_result_books .= " AND books.classNumber BETWEEN $min_class AND $max_class ";
 }
 
 $sort = $_GET["sort"] ?? null;
 if (!empty($sort)) {
     if ($sort === "asc") {
-        $query .= " ORDER BY books.currentPrice ASC";
+        $query_result_books .= " ORDER BY books.currentPrice ASC";
     } elseif ($sort === "desc") {
-        $query .= " ORDER BY books.currentPrice DESC";
+        $query_result_books .= " ORDER BY books.currentPrice DESC";
     }
 }
-$query .= " LIMIT $offset, $itemsPerPage";
-$result = $conn->query($query);
+$query_result_books .= " LIMIT $offset, $itemsPerPage";
+$result = $conn->query($query_result_books);
 $num_rows = $result->num_rows;
 ?>
 
@@ -102,7 +101,7 @@ $num_rows = $result->num_rows;
     <div class="grid grid-cols-12 gap-6">
       <!-- Sidebar -->
       <form action="searchPage.php" method="GET" class="col-span-3 bg-white rounded-2xl shadow p-4">
-        <aside class="col-span-3 bg-white rounded-2xl shadow p-4">
+        <aside class="bg-white rounded-2xl shadow p-4">
             <h2 class="text-xl font-semibold mb-4">LỌC THEO</h2>
 
             <!-- Danh mục chính -->
@@ -183,14 +182,14 @@ $num_rows = $result->num_rows;
 
       <!-- Main Content -->
       <main class="col-span-9">
-
-
         <!-- Products Grid -->
         <div class="bg-white rounded-2xl shadow p-4 min-h-full">
           <div class="flex justify-between items-center mb-4">
+
             <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500"> <?php if(!empty($search)) echo $search ;?> (<?php echo $num_rows;?> kết quả)</span></h2>
             <form action="searchPage.php" method="GET" id="filterForm" class="flex items-center gap-2">
               <div class="flex gap-2">
+
                 <select name="sort" class="border rounded p-1 text-sm " onchange="document.getElementById('filterForm').submit();">
                   <option>Sắp xếp theo</option>
                   <option value="asc">Giá tăng dần</option>
@@ -198,11 +197,12 @@ $num_rows = $result->num_rows;
                 </select>
               </div>
             </form>
+
           </div>
           <div class="grid grid-cols-4 gap-4">
             <!-- Product Card -->
             <?php
-            $result_books = $conn->query($query);
+            $result_books = $conn->query($query_result_books);
             if($result_books->num_rows>0){
               while($row=$result_books->fetch_assoc()){
             ?>
@@ -241,35 +241,51 @@ $num_rows = $result->num_rows;
 
     <div class="flex justify-center mt-8">
       <nav class="inline-flex items-center space-x-1 rounded-xl bg-white px-4 py-2 shadow-md border border-gray-200">
+
         <!-- Previous -->
         <?php if ($currentPage > 1): ?>
-          <a href="?page=<?= $currentPage - 1 ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+          <?php
+            $params = $_GET;
+            $params['page'] = $currentPage - 1;
+          ?>
+          <a href="?<?= http_build_query($params) ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
             «
           </a>
         <?php endif; ?>
 
         <!-- Page Numbers -->
         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-          <a href="?page=<?= $i ?>" class="px-3 py-1 rounded-lg <?= $i == $currentPage ? 'bg-blue-500 text-white font-semibold shadow' : 'text-gray-600 hover:bg-gray-100' ?> transition">
+          <?php
+            $params = $_GET;
+            $params['page'] = $i;
+          ?>
+          <a href="?<?= http_build_query($params) ?>"
+            class="px-3 py-1 rounded-lg <?= $i == $currentPage ? 'bg-blue-500 text-white font-semibold shadow' : 'text-gray-600 hover:bg-gray-100' ?> transition">
             <?= $i ?>
           </a>
         <?php endfor; ?>
 
         <!-- Next -->
         <?php if ($currentPage < $totalPages): ?>
-          <a href="?page=<?= $currentPage + 1 ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+          <?php
+            $params = $_GET;
+            $params['page'] = $currentPage + 1;
+          ?>
+          <a href="?<?= http_build_query($params) ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
             »
           </a>
         <?php endif; ?>
+
       </nav>
     </div>
+
     
   </div>
 
 
   <?php include_once "./components/footer.php";?>
   <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
   const classInput = document.querySelector('input[name="class"]');
   const minClassInput = document.querySelector('input[name="min_class"]');
   const maxClassInput = document.querySelector('input[name="max_class"]');
