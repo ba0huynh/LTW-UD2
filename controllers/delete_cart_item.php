@@ -1,11 +1,13 @@
 <?php
 session_start();
-header('Content-Type: application/json');
-
 if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Bạn chưa đăng nhập']);
+    echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
     exit;
 }
+?>
+<?php
+session_start();
+header('Content-Type: application/json');
 
 if (!isset($_POST['book_id']) || !isset($_POST['cartId'])) {
     echo json_encode(['success' => false, 'message' => 'Thiếu dữ liệu']);

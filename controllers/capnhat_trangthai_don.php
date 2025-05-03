@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+    exit;
+}
+?>
+<?php
 header('Content-Type: application/json');
 
 $conn = new mysqli("localhost", "root", "", "ltw_ud2");

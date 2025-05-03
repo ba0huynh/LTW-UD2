@@ -201,9 +201,8 @@ document.addEventListener('DOMContentLoaded', function () {
               el.textContent = formatCurrency(data.totalPrice);
             });
 
-            // ✅ Cập nhật thành tiền từng item
-            // ✅ Tìm đúng phần tử .item-total để cập nhật
             const itemTotalEl = parent.closest('.flex.items-start').querySelector('.item-total');
+
             const unitPrice = parseFloat(itemTotalEl.dataset.pricePerItem);
             const itemTotal = unitPrice * amount;
 
@@ -236,10 +235,10 @@ function xoaSanPham(button) {
   .then(res => res.json())
   .then(data => {
     if (data.success) {
-      // ✅ Xóa phần tử khỏi DOM
+      // Xóa phần tử khỏi DOM
       productDiv.remove();
 
-      // ✅ Cập nhật lại tổng tiền hiển thị
+      // Cập nhật lại tổng tiền hiển thị
       document.querySelectorAll('.total-amount').forEach(el => {
         el.textContent = formatCurrency(data.totalPrice);
       });

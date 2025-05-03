@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+    exit;
+}
+?>
+<?php
 $conn = new mysqli("localhost", "root", "", "ltw_ud2");
 if ($conn->connect_error) {
     die(json_encode(["success" => false, "message" => "Kết nối thất bại."]));

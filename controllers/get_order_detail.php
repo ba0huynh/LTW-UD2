@@ -1,4 +1,11 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+    exit;
+}
+?>
+<?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 header('Content-Type: application/json');

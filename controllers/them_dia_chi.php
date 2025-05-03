@@ -1,8 +1,8 @@
 <?php
 session_start(); 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../");
-    exit();
+    echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+    exit;
 }
 
 
