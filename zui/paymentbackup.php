@@ -82,30 +82,27 @@ if($conn->connect_error) {
       </div>
 
       <?php 
+      //if(){}
       $query_delivering = "SELECT * FROM thongTinGiaoHang where id_user=".$_SESSION["user_id"] ." and status=1";//địa chỉ mặc định
       $result = $conn->query($query_delivering);
       if($result->num_rows>0){
         while($row=$result->fetch_assoc()){
       ?>
-      <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+      <div class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
         <div class="flex-1">
-          <span class="font-bold text-gray-900"><span id="submitName"><?php echo $row["tennguoinhan"]?></span></span> 
-          <span class="text-gray-700"> SĐT : <span id="submitSDT"><?php echo $row["sdt"]?></span></span><br>
-          <span id="submitDiachi"><?php echo $row["diachi"]?></span>
-          ,<span id="submitWard"><?php echo $row["huyen"]?></span> , 
-          <span id="submitDistrict"><?php echo $row["quan"]?></span>, 
-          <span id="submitCity"><?php echo $row["thanhpho"]?></span>
+          <span class="font-bold text-gray-900"><?php echo $row["tennguoinhan"]?></span> 
+          <span class="text-gray-700"> SĐT : <?php echo $row["sdt"]?></span><br>
+          <?php echo $row["diachi"]?>
+          , <?php echo $row["huyen"]?>, <?php echo $row["quan"]?>, <?php echo $row["thanhpho"]?>
         </div>
 
         <div class="flex gap-3 items-center mt-2 sm:mt-0">
-          <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">
-              Mặc Định
-          </span>
-          <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thay Đổi</a>
+          <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">Mặc Định</span>
+          <a onclick="toggleAddressPopup()" class="text-blue-600 text-sm font-medium hover:underline">Thay Đổi</a>
         </div>
       </div>
       <?php }}else{?>
-      <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+      <div class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
         <a onclick="toggleAddressPopup()" class="text-blue-600 text-sm font-medium hover:underline">Thêm</a>
       </div>
       <?php }?>
@@ -261,43 +258,27 @@ if($conn->connect_error) {
   </form>
 </div>
 
-<div id="addressPopup" class="animate-fade-in  fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
-  <div class="  max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
+<div id="addressPopup" class="  fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
+  <div class=" animate-fade-in max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
     <h2 class="text-lg font-bold text-gray-800 mb-2">Địa Chỉ Của Tôi</h2>
+
     <?php 
     $query = "SELECT * FROM thongTinGiaoHang where id_user =".$_SESSION["user_id"] ." and status=1";
     $result = $conn->query($query);
     if($result->num_rows>0){
       while($row=$result->fetch_assoc()){
     ?>
-    <div class="parentDiachi flex items-start space-x-3 border-b pb-4">
-      <input type="radio" name="diachi" 
-      value="<?php echo $row['id'] ?>" 
-      class="mt-1 text-red-600" <?php if($row["status"]) echo "checked" ?> />
+    <div class="flex items-start space-x-3 border-b pb-4">
+      <input type="radio" name="diachi" value="<?php echo $row['id'] ?>" class="mt-1 text-red-600" <?php if($row["status"]) echo "checked" ?> />
       
       <div class="flex-1 space-y-1">
         <div class="flex justify-between items-center">
-          <span class="showTenNguoiNhan font-semibold text-gray-800">
-            <?php echo $row["tennguoinhan"]?>
-          </span>
-          <a onclick="openEdit(this)" class="text-blue-600 text-sm hover:underline cursor-pointer"
-          data-id="<?php echo $row["id_user"]?>"
-          data-name="<?php echo $row["tennguoinhan"]?>"
-          data-phone="<?php echo $row["sdt"]?>"
-          data-address="<?php echo $row["diachi"]?>"
-          data-city="<?php echo $row["thanhpho"]?>"
-          data-district="<?php echo $row["quan"]?>"
-          data-ward="<?php echo $row["huyen"]?>"
-          >
-            Cập nhật
-          </a>
+          <span class="font-semibold text-gray-800"><?php echo $row["tennguoinhan"]?></span>
+          <a href="#" class="text-blue-600 text-sm hover:underline">Cập nhật</a>
         </div>
-        <div class="showSDT text-sm text-gray-700">
-          SDT : <?php echo $row["sdt"]?>
-        </div>
+        <div class="text-sm text-gray-700">SDT : <?php echo $row["sdt"]?></div>
         <div class="text-sm text-gray-600">
-          <span><?php echo $row["diachi"]?></span>
-        
+        <?php echo $row["diachi"]?>
         <br><?php echo $row["huyen"]?>,<?php echo $row["quan"]?>, TP. <?php echo $row["thanhpho"]?>
         </div>
         <?php if ($row["status"]==1){?>
@@ -317,8 +298,7 @@ if($conn->connect_error) {
     <div class="flex justify-end gap-4 mt-6">
       <button type="button" onclick="toggleAddressPopup()" class="px-5 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition">Hủy</button>
       <button 
-      onclick="showAddressChecked()"
-      class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition font-semibold">
+      type="submit" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition font-semibold">
         Xác nhận
       </button>
     </div>
@@ -332,7 +312,6 @@ if($conn->connect_error) {
 
     <!-- Họ tên + SĐT -->
     <div class="grid grid-cols-2 gap-4">
-      
       <input type="text" id="tennguoinhan" placeholder="Họ và tên" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
       <input type="text" id="sdt" placeholder="Số điện thoại" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
     </div>
@@ -364,199 +343,19 @@ if($conn->connect_error) {
 
 
 
-
+    <!-- Checkbox mặc định -->
+    <label class="flex items-center gap-2 mt-2 text-sm text-gray-600">
+      <input type="checkbox" id="macdinh" class="accent-red-500" />
+      Đặt làm địa chỉ mặc định
+    </label>
 
     <!-- Nút hành động -->
     <div class="flex justify-end gap-3 mt-6">
-      <button onclick="toggleBack()" class="px-4 py-2 text-gray-600 border rounded hover:bg-gray-100">Trở Lại</button>
-      <button onclick="showNewAddress()" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700">Hoàn thành</button>
+      <button onclick="toggleNewAddress()" class="px-4 py-2 text-gray-600 border rounded hover:bg-gray-100">Trở Lại</button>
+      <button class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700">Hoàn thành</button>
     </div>
   </div>
 </div>
-
-<!-- Popup -->
-<div id="updateDiachi" class="fixed inset-0 bg-black bg-opacity-30 hidden flex items-center justify-center z-50">
-  <div class="bg-white max-w-md w-full mx-4 p-6 rounded-2xl shadow-md space-y-4 animate-fade-in relative">
-    <h2 class="text-xl font-semibold text-gray-800">Cập nhật địa chỉ</h2>
-
-    <!-- Họ tên và số điện thoại -->
-    <div class="grid grid-cols-2 gap-4">
-      <!-- Họ và tên -->
-      <div class="relative">
-      <input type="hidden" id="edit_id" />
-        <input type="text" id="edit_name" value=""
-              class="peer w-full border border-gray-300 rounded-md pt-5 px-3 pb-2 text-sm text-gray-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Họ và tên" />
-        <label for="edit_name"
-              class="absolute left-3 -top-2.5 bg-white px-1 text-gray-500 text-xs transition-all
-                      peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-gray-500">
-          Họ và tên
-        </label>
-      </div>
-
-      <!-- Số điện thoại -->
-      <div class="relative">
-        <input type="text" id="edit_phone" value=""
-              class="peer w-full border border-gray-300 rounded-md pt-5 px-3 pb-2 text-sm text-gray-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Số điện thoại" />
-        <label for="edit_phone"
-              class="absolute left-3 -top-2.5 bg-white px-1 text-gray-500 text-xs transition-all
-                      peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-gray-500">
-          Số điện thoại
-        </label>
-      </div>
-    </div>
-
-
-    <div class="grid grid-cols-3 gap-4">
-      <input type="hidden" id="edit_city_bk" />
-      <input type="hidden" id="edit_district_bk" />
-      <input type="hidden" id="edit_ward_bk" />
-      <select name="province" id="edit_city" class="px-4 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500">
-        <option value="">Chọn Tỉnh/Thành phố</option>
-      </select>
-      <select name="district" id="edit_district" class="px-4 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500" disabled>
-        <option value="">Chọn Quận/Huyện</option>
-      </select>
-      <select name="ward" id="edit_ward" class="px-4 py-2 border rounded-md text-gray-700 focus:ring-2 focus:ring-blue-500" disabled>
-        <option value="">Chọn Phường/Xã</option>
-      </select>
-    </div>
-
-    <input type="text" id="edit_address" placeholder="Địa chỉ cụ thể" class="w-full rounded border border-gray-300 text-gray-700 px-6 py-2" value="" />
-
-    <!-- Bản đồ -->
-    <div class="w-full h-48 rounded-lg overflow-hidden">
-      <iframe
-        src="https://www.google.com/maps?q=506%2F49%2F60C%2C%20L%C3%A1c%20Long%20Qu%C3%A2n%2C%20TP.%20HCM&output=embed"
-        class="w-full h-full border-0"
-        allowfullscreen=""
-        loading="lazy">
-      </iframe>
-    </div>
-
-    <!-- Mặc định -->
-    <div class="flex items-center space-x-2">
-      <input type="checkbox" id="default" />
-      <label for="default" class="text-sm text-gray-700">Đặt làm địa chỉ mặc định</label>
-    </div>
-
-    <!-- Nút -->
-    <div class="flex justify-between pt-4">
-      <button onclick="togglePopup()" class="px-4 py-2 text-gray-600 border rounded hover:bg-gray-100">Trở Lại</button>
-      <button  class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-      onclick="saveAddress()">
-        Hoàn thành
-      </button>
-    </div>
-  </div>
-</div>
-
-<script>
-  function openEdit(element) {
-    const popup = document.getElementById("updateDiachi");
-    popup.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("new-address-form").classList.add("hidden");
-
-    const id = element.dataset.id;
-    const name = element.dataset.name;
-    const phone = element.dataset.phone;
-    const address = element.dataset.address;
-    const city = element.dataset.city;
-    const district = element.dataset.district;
-    const ward = element.dataset.ward;
-
-    document.getElementById("edit_id").value = id;
-    document.getElementById("edit_name").value = name;
-    document.getElementById("edit_phone").value = phone;
-    document.getElementById("edit_address").value = address;
-
-    // document.getElementById("edit_cit_bk").value = city;
-    // document.getElementById("edit_ward_bk").value = ward;
-    // document.getElementById("edit_district_bk").value = district;
-
-    // Reset dropdowns
-    const citySelect = document.getElementById("edit_city");
-    const districtSelect = document.getElementById("edit_district");
-    const wardSelect = document.getElementById("edit_ward");
-
-    citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
-    for (let p in data) {
-      citySelect.innerHTML += `<option value="${p}">${p}</option>`;
-    }
-
-    citySelect.value = city;
-    districtSelect.disabled = false;
-    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
-    for (let d in data[city]) {
-      districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
-    }
-
-    districtSelect.value = district;
-    wardSelect.disabled = false;
-    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
-    data[city][district].forEach(w => {
-      wardSelect.innerHTML += `<option value="${w}">${w}</option>`;
-    });
-
-    wardSelect.value = ward;
-
-    popup.classList.remove("hidden");
-  }
-
-
-  function saveAddress() {
-    const id = document.getElementById("edit_id").value;
-    const name = document.getElementById("edit_name").value;
-    const phone = document.getElementById("edit_phone").value;
-    const address = document.getElementById("edit_address").value;
-    const city = document.getElementById("edit_city").value ?? document.getElementById("edit_city_bk").value;
-    const district = document.getElementById("edit_district").value ?? document.getElementById("edit_district_bk").value;
-    const ward = document.getElementById("edit_ward").value ?? document.getElementById("edit_ward_bk").value;
-
-    fetch('../controllers/update_dia_chi.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id,
-        name,
-        phone,
-        address,
-        city,
-        district,
-        ward
-      })
-    })
-    .then(res => res.json())
-    .then(result => {
-      if (result.success) {
-        alert('Cập nhật thành công!');
-        document.getElementById("updateDiachi").classList.add("hidden");
-        location.reload(); // hoặc cập nhật giao diện bằng JS
-      } else {
-        alert('Cập nhật thất bại: ' + result.message);
-      }
-    })
-    .catch(err => {
-      alert('Lỗi khi gửi yêu cầu: ' + err);
-    });
-  }
-</script>
-<script>
-  function togglePopup() {
-    const popup = document.getElementById("updateDiachi");
-    popup.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("new-address-form").classList.add("hidden");
-  }
-</script>
-
-
 
 <script>
 // function submitAddress() {
@@ -582,7 +381,7 @@ if($conn->connect_error) {
 //   .then(result => {
 //     if (result.success) {
 //       alert("Thêm địa chỉ thành công!");
-//       toggleBack(); // Ẩn form nếu bạn có hàm này
+//       toggleNewAddress(); // Ẩn form nếu bạn có hàm này
 //     } else {
 //       alert("Thêm thất bại: " + result.message);
 //     }
@@ -599,8 +398,6 @@ if($conn->connect_error) {
   function toggleAddressForm() {
     const form = document.getElementById("new-address-form");
     form.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("updateDiachi").classList.add("hidden");
   }
 </script>
 <script>
@@ -610,81 +407,119 @@ if($conn->connect_error) {
   }
 </script>
 <script>
-  function toggleBack() {
+  function toggleNewAddress() {
+    document.getElementById("new-address-form").classList.add("hidden");
+    document.getElementById("addressPopup").classList.remove("hidden");
+  }
+</script>
+<script>
+  async function xacNhanThanhToan() {
+    const selected = document.querySelector('input[name="diachi"]:checked');
+    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    const tennguoinhan = document.getElementById("tennguoinhan")?.value;
+    const sdt = document.getElementById("sdt")?.value;
+    const diachi = document.getElementById("diachi")?.value;
+    
+    const ward = document.getElementById("ward")?.value;
+    const district = document.getElementById("district")?.value;
+    const province = document.getElementById("province")?.value;
+    const macdinh = document.getElementById("macdinh")?.checked;
+
+    if (!selected && (!tennguoinhan || !sdt || !diachi || !ward || !district || !province)) {
+      alert("Vui lòng chọn hoặc nhập địa chỉ giao hàng.");
+      return;
+    }
+
+    if (!selectedPayment) {
+      alert("Vui lòng chọn phương thức thanh toán.");
+      return;
+    }
+
+    let addressId = null;
+
+    // Nếu không chọn địa chỉ cũ → người dùng đang nhập mới
+    if (!selected) {
+      const newAddress = {
+        tennguoinhan,
+        sdt,
+        phuong: ward,
+        district,
+        thanhpho: province,
+        diachi,
+        macdinh
+      };
+
+      try {
+        const res = await fetch("../controllers/them_dia_chi.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newAddress)
+        });
+
+        const result = await res.json();
+        if (!result.success) {
+          alert("Không thể thêm địa chỉ mới: " + result.message);
+          return;
+        }
+
+        addressId = result.address_id;
+      } catch (err) {
+        alert("Lỗi khi thêm địa chỉ mới.");
+        return;
+      }
+
+    } else {
+      // Nếu người dùng chọn địa chỉ cũ
+      addressId = selected.value;
+    }
+
+    // Gửi request thanh toán
+    const paymentMethod = selectedPayment.value;
+    fetch("../controllers/thanhtoan.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `address_id=${addressId}&payment_method=${encodeURIComponent(paymentMethod)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data.includes("Thanh toán thành công")) {
+        alert("Thanh toán thành công!");
+        window.location.href = "/LTW_UD2/zui/responseOrder.php";
+      } else {
+        alert("Đã xảy ra lỗi khi thanh toán: " + data);
+      }
+    })
+    .catch(error => {
+      console.error("Lỗi khi thanh toán:", error);
+      alert("Thanh toán thất bại!");
+    });
+  }
+</script>
+
+<script>
+  function toggleAddressForm() {
+    const form = document.getElementById("new-address-form");
+    form.classList.toggle("hidden");
+  }
+</script>
+<script>
+  function toggleAddressPopup() {
+    const popup = document.getElementById("addressPopup");
+    popup.classList.toggle("hidden");
+  }
+</script>
+<script>
+  function toggleNewAddress() {
     document.getElementById("new-address-form").classList.add("hidden");
     document.getElementById("addressPopup").classList.remove("hidden");
   }
 </script>
 
-<script>
-function showNewAddress() {
-  const ten = document.getElementById("tennguoinhan").value.trim();
-  const sdt = document.getElementById("sdt").value.trim();
-  const diachi = document.getElementById("diachi").value.trim();
-  const ward = document.getElementById("ward").value.trim();
-  const district = document.getElementById("district").value.trim();
-  const province = document.getElementById("province").value.trim();
 
-  // Kiểm tra rỗng
-  if (!ten || !sdt || !diachi || !ward || !district || !province) {
-    alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
-    return;
-  }
-
-  // Kiểm tra số điện thoại: bắt đầu bằng 0 và có 10 chữ số
-  const phoneRegex = /^0\d{9}$/;
-  if (!phoneRegex.test(sdt)) {
-    alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 số bắt đầu bằng 0.");
-    return;
-  }
-
-  // Gán thông tin lên phần hiển thị
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = ward;
-  document.getElementById("submitDistrict").innerText = district;
-  document.getElementById("submitCity").innerText = province;
-
-  // Ẩn form
-  document.getElementById("new-address-form").classList.add("hidden");
-}
-</script>
-
-
-
-<script>
-function showAddressChecked() {
-  const selected = document.querySelector('input[name="diachi"]:checked');
-  if (!selected) {
-    alert("Vui lòng chọn một địa chỉ!");
-    return;
-  }
-
-  const parent = selected.closest(".parentDiachi");
-  const ten = parent.querySelector(".showTenNguoiNhan")?.innerText.trim() || "";
-  const sdtFull = parent.querySelector(".showSDT")?.innerText.trim() || "";
-  const sdt = sdtFull.replace("SDT : ", "").trim();
-
-  const diachiElement = parent.querySelector(".text-sm.text-gray-600");
-  const spans = diachiElement.querySelectorAll("span");
-  const diachi = spans[0]?.innerText.trim() || "";
-
-  const addressLine = diachiElement.innerText.split("\n")[1]?.trim();
-  const [huyen = "", quan = "", thanhpho = ""] = addressLine?.replace("TP. ", "").split(",") || [];
-
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = huyen.trim();
-  document.getElementById("submitDistrict").innerText = quan.trim();
-  document.getElementById("submitCity").innerText = thanhpho.trim();
-
-  document.getElementById("addressPopup").classList.add("hidden");
-}
-
-
-</script>
 
 </body>
 

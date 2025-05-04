@@ -1,8 +1,8 @@
 <?php 
 session_start();
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../");
-    exit();
+  header("Location: ../");
+  exit();
 }
 $servername="localhost";
 $username="root";
@@ -123,7 +123,7 @@ if(isset($_SESSION["user_id"])){
 
         <div>
           <button type="button"
-                  class=" text-gray-400 hover:text-red-600 transition"
+                  class=" text-gray-400 hover:text-red-600 transition cursor-pointer"
                   onclick="xoaSanPham(this)">
             🗑️
           </button>

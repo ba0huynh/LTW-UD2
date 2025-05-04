@@ -81,7 +81,8 @@
 
               <input value="<?php echo $user["fullName"] ?>" 
               name="fullName" type="text" placeholder="Nhập tên" 
-              class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" 
+              />
             </div>
       
             <div class="mb-4">
