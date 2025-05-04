@@ -22,14 +22,13 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $tennguoinhan = $conn->real_escape_string($data["tennguoinhan"]);
 $sdt = $conn->real_escape_string($data["sdt"]);
-$phuong = $conn->real_escape_string($data["phuong"]);
+$ward = $conn->real_escape_string($data["ward"]);
 $district = $conn->real_escape_string($data["quan"]);
 $thanhpho = $conn->real_escape_string($data["thanhpho"]);
 $diachi = $conn->real_escape_string($data["diachi"]);
-$macdinh = $data["macdinh"] ? 1 : 0;
 
-$sql = "INSERT INTO thongTinGiaoHang (tennguoinhan, sdt, phuong, quan, thanhpho, diachi, status)
-        VALUES ('$tennguoinhan', '$sdt', '$phuong', '$district', '$thanhpho', '$diachi', $macdinh)";
+$sql = "INSERT INTO thongTinGiaoHang (tennguoinhan, sdt, phuong, quan, thanhpho, diachi)
+        VALUES ('$tennguoinhan', '$sdt', '$phuong', '$district', '$thanhpho', '$diachi')";
 
 if ($conn->query($sql) === TRUE) {
   echo json_encode(["success" => true]);

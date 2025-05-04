@@ -84,17 +84,22 @@ if($conn->connect_error) {
       <?php 
       $query_delivering = "SELECT * FROM thongTinGiaoHang where id_user=".$_SESSION["user_id"] ." and status=1";//địa chỉ mặc định
       $result = $conn->query($query_delivering);
+      echo $query_delivering;
       if($result->num_rows>0){
         while($row=$result->fetch_assoc()){
       ?>
       <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
         <div class="flex-1">
+
+          <input type="hidden" name="submitId_Diachi">
+          
           <span class="font-bold text-gray-900"><span id="submitName"><?php echo $row["tennguoinhan"]?></span></span> 
           <span class="text-gray-700"> SĐT : <span id="submitSDT"><?php echo $row["sdt"]?></span></span><br>
           <span id="submitDiachi"><?php echo $row["diachi"]?></span>
           ,<span id="submitWard"><?php echo $row["huyen"]?></span> , 
           <span id="submitDistrict"><?php echo $row["quan"]?></span>, 
           <span id="submitCity"><?php echo $row["thanhpho"]?></span>
+          <input type="hidden" id="macdinh" value="<?php echo $row["status"]?>">
         </div>
 
         <div class="flex gap-3 items-center mt-2 sm:mt-0">
@@ -288,6 +293,7 @@ if($conn->connect_error) {
           data-city="<?php echo $row["thanhpho"]?>"
           data-district="<?php echo $row["quan"]?>"
           data-ward="<?php echo $row["huyen"]?>"
+          data-status="<?php echo $row["status"]?>"
           >
             Cập nhật
           </a>
@@ -353,19 +359,7 @@ if($conn->connect_error) {
 
     <!-- Địa chỉ cụ thể -->
     <input type="text" id="diachi" placeholder="Địa chỉ cụ thể" class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500" />
-
-    <!-- Thêm vị trí -->
-    <button disabled class="flex items-center justify-center gap-2 w-full border rounded-md py-2 text-gray-400 bg-gray-50">
-      <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Thêm vị trí
-    </button>
-
-
-
-
-
+    
     <!-- Nút hành động -->
     <div class="flex justify-end gap-3 mt-6">
       <button onclick="toggleBack()" class="px-4 py-2 text-gray-600 border rounded hover:bg-gray-100">Trở Lại</button>
@@ -439,7 +433,7 @@ if($conn->connect_error) {
 
     <!-- Mặc định -->
     <div class="flex items-center space-x-2">
-      <input type="checkbox" id="default" />
+      <input type="checkbox" id="edit_status" value="" />
       <label for="default" class="text-sm text-gray-700">Đặt làm địa chỉ mặc định</label>
     </div>
 
@@ -453,241 +447,6 @@ if($conn->connect_error) {
     </div>
   </div>
 </div>
-
-<script>
-  function openEdit(element) {
-    const popup = document.getElementById("updateDiachi");
-    popup.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("new-address-form").classList.add("hidden");
-
-    const id = element.dataset.id;
-    const name = element.dataset.name;
-    const phone = element.dataset.phone;
-    const address = element.dataset.address;
-    const city = element.dataset.city;
-    const district = element.dataset.district;
-    const ward = element.dataset.ward;
-
-    document.getElementById("edit_id").value = id;
-    document.getElementById("edit_name").value = name;
-    document.getElementById("edit_phone").value = phone;
-    document.getElementById("edit_address").value = address;
-
-    // document.getElementById("edit_cit_bk").value = city;
-    // document.getElementById("edit_ward_bk").value = ward;
-    // document.getElementById("edit_district_bk").value = district;
-
-    // Reset dropdowns
-    const citySelect = document.getElementById("edit_city");
-    const districtSelect = document.getElementById("edit_district");
-    const wardSelect = document.getElementById("edit_ward");
-
-    citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
-    for (let p in data) {
-      citySelect.innerHTML += `<option value="${p}">${p}</option>`;
-    }
-
-    citySelect.value = city;
-    districtSelect.disabled = false;
-    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
-    for (let d in data[city]) {
-      districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
-    }
-
-    districtSelect.value = district;
-    wardSelect.disabled = false;
-    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
-    data[city][district].forEach(w => {
-      wardSelect.innerHTML += `<option value="${w}">${w}</option>`;
-    });
-
-    wardSelect.value = ward;
-
-    popup.classList.remove("hidden");
-  }
-
-
-  function saveAddress() {
-    const id = document.getElementById("edit_id").value;
-    const name = document.getElementById("edit_name").value;
-    const phone = document.getElementById("edit_phone").value;
-    const address = document.getElementById("edit_address").value;
-    const city = document.getElementById("edit_city").value ?? document.getElementById("edit_city_bk").value;
-    const district = document.getElementById("edit_district").value ?? document.getElementById("edit_district_bk").value;
-    const ward = document.getElementById("edit_ward").value ?? document.getElementById("edit_ward_bk").value;
-
-    fetch('../controllers/update_dia_chi.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id,
-        name,
-        phone,
-        address,
-        city,
-        district,
-        ward
-      })
-    })
-    .then(res => res.json())
-    .then(result => {
-      if (result.success) {
-        alert('Cập nhật thành công!');
-        document.getElementById("updateDiachi").classList.add("hidden");
-        location.reload(); // hoặc cập nhật giao diện bằng JS
-      } else {
-        alert('Cập nhật thất bại: ' + result.message);
-      }
-    })
-    .catch(err => {
-      alert('Lỗi khi gửi yêu cầu: ' + err);
-    });
-  }
-</script>
-<script>
-  function togglePopup() {
-    const popup = document.getElementById("updateDiachi");
-    popup.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("new-address-form").classList.add("hidden");
-  }
-</script>
-
-
-
-<script>
-// function submitAddress() {
-//   const data = {
-//     tennguoinhan: document.getElementById("tennguoinhan").value,
-//     sdt: document.getElementById("sdt").value,
-//     phuong: document.getElementById("ward").value,
-//     district: document.getElementById("district").value,
-//     thanhpho: document.getElementById("province").value,
-
-//     diachi: document.getElementById("diachi").value,
-//     macdinh: document.getElementById("macdinh").checked
-//   };
-
-//   fetch("../controllers/them_dia_chi.php", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(data)
-//   })
-//   .then(res => res.json())
-//   .then(result => {
-//     if (result.success) {
-//       alert("Thêm địa chỉ thành công!");
-//       toggleBack(); // Ẩn form nếu bạn có hàm này
-//     } else {
-//       alert("Thêm thất bại: " + result.message);
-//     }
-//   })
-//   .catch(err => {
-//     alert("Lỗi kết nối server.");
-//     console.error(err);
-//   });
-// }
-</script>
-
-
-<script>
-  function toggleAddressForm() {
-    const form = document.getElementById("new-address-form");
-    form.classList.toggle("hidden");
-    document.getElementById("addressPopup").classList.toggle("hidden");
-    document.getElementById("updateDiachi").classList.add("hidden");
-  }
-</script>
-<script>
-  function toggleAddressPopup() {
-    const popup = document.getElementById("addressPopup");
-    popup.classList.toggle("hidden");
-  }
-</script>
-<script>
-  function toggleBack() {
-    document.getElementById("new-address-form").classList.add("hidden");
-    document.getElementById("addressPopup").classList.remove("hidden");
-  }
-</script>
-
-<script>
-function showNewAddress() {
-  const ten = document.getElementById("tennguoinhan").value.trim();
-  const sdt = document.getElementById("sdt").value.trim();
-  const diachi = document.getElementById("diachi").value.trim();
-  const ward = document.getElementById("ward").value.trim();
-  const district = document.getElementById("district").value.trim();
-  const province = document.getElementById("province").value.trim();
-
-  // Kiểm tra rỗng
-  if (!ten || !sdt || !diachi || !ward || !district || !province) {
-    alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
-    return;
-  }
-
-  // Kiểm tra số điện thoại: bắt đầu bằng 0 và có 10 chữ số
-  const phoneRegex = /^0\d{9}$/;
-  if (!phoneRegex.test(sdt)) {
-    alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 số bắt đầu bằng 0.");
-    return;
-  }
-
-  // Gán thông tin lên phần hiển thị
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = ward;
-  document.getElementById("submitDistrict").innerText = district;
-  document.getElementById("submitCity").innerText = province;
-
-  // Ẩn form
-  document.getElementById("new-address-form").classList.add("hidden");
-}
-</script>
-
-
-
-<script>
-function showAddressChecked() {
-  const selected = document.querySelector('input[name="diachi"]:checked');
-  if (!selected) {
-    alert("Vui lòng chọn một địa chỉ!");
-    return;
-  }
-
-  const parent = selected.closest(".parentDiachi");
-  const ten = parent.querySelector(".showTenNguoiNhan")?.innerText.trim() || "";
-  const sdtFull = parent.querySelector(".showSDT")?.innerText.trim() || "";
-  const sdt = sdtFull.replace("SDT : ", "").trim();
-
-  const diachiElement = parent.querySelector(".text-sm.text-gray-600");
-  const spans = diachiElement.querySelectorAll("span");
-  const diachi = spans[0]?.innerText.trim() || "";
-
-  const addressLine = diachiElement.innerText.split("\n")[1]?.trim();
-  const [huyen = "", quan = "", thanhpho = ""] = addressLine?.replace("TP. ", "").split(",") || [];
-
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = huyen.trim();
-  document.getElementById("submitDistrict").innerText = quan.trim();
-  document.getElementById("submitCity").innerText = thanhpho.trim();
-
-  document.getElementById("addressPopup").classList.add("hidden");
-}
-
-
-</script>
-
-</body>
-
 <script>
   const data = {
     "Đà Nẵng": {
@@ -967,5 +726,400 @@ function showAddressChecked() {
     }
   });
 </script>
+<script>
+  function openEdit(element) {
+    const popup = document.getElementById("updateDiachi");
+    popup.classList.toggle("hidden");
+    document.getElementById("addressPopup").classList.toggle("hidden");
+    document.getElementById("new-address-form").classList.add("hidden");
+
+    const id = element.dataset.id;
+    const name = element.dataset.name;
+    const phone = element.dataset.phone;
+    const address = element.dataset.address;
+    const city = element.dataset.city;
+    const district = element.dataset.district;
+    const ward = element.dataset.ward;
+    const status = element.dataset.status;
+
+
+    document.getElementById("edit_id").value = id;
+    document.getElementById("edit_name").value = name;
+    document.getElementById("edit_phone").value = phone;
+    document.getElementById("edit_address").value = address;
+    document.getElementById("edit_status").value = status;
+    if(status == 1) {
+      document.getElementById("edit_status").checked = true;
+    } else {
+      document.getElementById("edit_status").checked = false;
+    }
+
+    document.getElementById("edit_city_bk").value = city;
+    document.getElementById("edit_ward_bk").value = ward;
+    document.getElementById("edit_district_bk").value = district;
+
+    // Reset dropdowns
+    const citySelect = document.getElementById("edit_city");
+    const districtSelect = document.getElementById("edit_district");
+    const wardSelect = document.getElementById("edit_ward");
+
+    citySelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
+    for (let p in data) {
+      citySelect.innerHTML += `<option value="${p}">${p}</option>`;
+    }
+
+    citySelect.value = city;
+    districtSelect.disabled = false;
+    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+    for (let d in data[city]) {
+      districtSelect.innerHTML += `<option value="${d}">${d}</option>`;
+    }
+
+    districtSelect.value = district;
+    wardSelect.disabled = false;
+    wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+    
+    if (data[city] && data[city][district]) {
+      data[city][district].forEach(w => {
+        wardSelect.innerHTML += `<option value="${w}">${w}</option>`;
+      });
+      wardSelect.disabled = false;
+    } else {
+      console.warn("Không tìm thấy dữ liệu phường cho:", city, district);
+      wardSelect.disabled = true;
+    }
+
+
+    wardSelect.value = ward;
+
+    popup.classList.remove("hidden");
+  }
+
+
+  function saveAddress() {
+    const status = document.getElementById("edit_status").checked ? 1 : 0;
+    const id = document.getElementById("edit_id").value;
+    const name = document.getElementById("edit_name").value;
+    const phone = document.getElementById("edit_phone").value;
+    const address = document.getElementById("edit_address").value;
+    const city = document.getElementById("edit_city").value || document.getElementById("edit_city_bk").value;
+    const district = document.getElementById("edit_district").value || document.getElementById("edit_district_bk").value;
+    const ward = document.getElementById("edit_ward").value || document.getElementById("edit_ward_bk").value;
+
+    console.log(id, name, phone, address, city, district,"ward", ward);
+    fetch('../controllers/update_dia_chi.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id,
+        name,
+        phone,
+        address,
+        city,
+        district,
+        ward,
+        status
+      })
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.success) {
+        alert('Cập nhật thành công!');
+        document.getElementById("updateDiachi").classList.add("hidden");
+        location.reload(); // hoặc cập nhật giao diện bằng JS
+      } else {
+        alert('Cập nhật thất bại: ' + result.message);
+      }
+    })
+    .catch(err => {
+      alert('Lỗi khi gửi yêu cầu: ' + err);
+    });
+  }
+</script>
+<script>
+  function togglePopup() {
+    const popup = document.getElementById("updateDiachi");
+    popup.classList.toggle("hidden");
+    document.getElementById("addressPopup").classList.toggle("hidden");
+    document.getElementById("new-address-form").classList.add("hidden");
+  }
+</script>
+
+
+
+<script>
+// function submitAddress() {
+//   const data = {
+//     tennguoinhan: document.getElementById("tennguoinhan").value,
+//     sdt: document.getElementById("sdt").value,
+//     phuong: document.getElementById("ward").value,
+//     district: document.getElementById("district").value,
+//     thanhpho: document.getElementById("province").value,
+
+//     diachi: document.getElementById("diachi").value,
+//     macdinh: document.getElementById("macdinh").checked
+//   };
+
+//   fetch("../controllers/them_dia_chi.php", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(data)
+//   })
+//   .then(res => res.json())
+//   .then(result => {
+//     if (result.success) {
+//       alert("Thêm địa chỉ thành công!");
+//       toggleBack(); // Ẩn form nếu bạn có hàm này
+//     } else {
+//       alert("Thêm thất bại: " + result.message);
+//     }
+//   })
+//   .catch(err => {
+//     alert("Lỗi kết nối server.");
+//     console.error(err);
+//   });
+// }
+</script>
+
+
+<script>
+  function toggleAddressForm() {
+    const form = document.getElementById("new-address-form");
+    form.classList.toggle("hidden");
+    document.getElementById("addressPopup").classList.toggle("hidden");
+    document.getElementById("updateDiachi").classList.add("hidden");
+  }
+</script>
+<script>
+  function toggleAddressPopup() {
+    const popup = document.getElementById("addressPopup");
+    popup.classList.toggle("hidden");
+  }
+</script>
+<script>
+  function toggleBack() {
+    document.getElementById("new-address-form").classList.add("hidden");
+    document.getElementById("addressPopup").classList.remove("hidden");
+  }
+</script>
+
+<script>
+// function addNewAddress() {
+//   const ten = document.getElementById("tennguoinhan").value.trim();
+//   const sdt = document.getElementById("sdt").value.trim();
+//   const diachi = document.getElementById("diachi").value.trim();
+//   const ward = document.getElementById("ward").value.trim();
+//   const district = document.getElementById("district").value.trim();
+//   const province = document.getElementById("province").value.trim();
+
+//   if (!ten || !sdt || !diachi || !ward || !district || !province) {
+//     alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
+//     return;
+//   }
+
+//   const phoneRegex = /^0\d{9}$/;
+//   if (!phoneRegex.test(sdt)) {
+//     alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 số bắt đầu bằng 0.");
+//     return;
+//   }
+
+
+//   const data = {
+//     tennguoinhan: ten,
+//     sdt,
+//     diachi,
+//     thanhpho: province,
+//     district,
+//     ward
+//   };
+
+//   fetch("../controllers/them_dia_chi.php", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json"
+//     },
+//     body: JSON.stringify(data)
+//   })
+//   .then(res => res.json())
+//   .then(result => {
+//     if (result.success) {
+//       alert("Thêm địa chỉ thành công!");
+//       location.reload();
+//     } else {
+//       alert("Thêm thất bại: " + result.message);
+//     }
+//   })
+//   .catch(err => {
+//     alert("Lỗi kết nối server.");
+//     console.error(err);
+//   });
+//   document.getElementById("submitName").innerText = ten;
+//   document.getElementById("submitSDT").innerText = sdt;
+//   document.getElementById("submitDiachi").innerText = diachi;
+//   document.getElementById("submitWard").innerText = ward;
+//   document.getElementById("submitDistrict").innerText = district;
+//   document.getElementById("submitCity").innerText = province;
+//   document.getElementById("new-address-form").classList.add("hidden");
+// }
+function showNewAddress() {
+  const ten = document.getElementById("tennguoinhan").value.trim();
+  const sdt = document.getElementById("sdt").value.trim();
+  const diachi = document.getElementById("diachi").value.trim();
+  const ward = document.getElementById("ward").value.trim();
+  const district = document.getElementById("district").value.trim();
+  const province = document.getElementById("province").value.trim();
+
+  if (!ten || !sdt || !diachi || !ward || !district || !province) {
+    alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
+    return;
+  }
+
+  const phoneRegex = /^0\d{9}$/;
+  if (!phoneRegex.test(sdt)) {
+    alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 số bắt đầu bằng 0.");
+    return;
+  }
+
+
+  document.getElementById("submitName").innerText = ten;
+  document.getElementById("submitSDT").innerText = sdt;
+  document.getElementById("submitDiachi").innerText = diachi;
+  document.getElementById("submitWard").innerText = ward;
+  document.getElementById("submitDistrict").innerText = district;
+  document.getElementById("submitCity").innerText = province;
+  document.getElementById("new-address-form").classList.add("hidden");
+}
+</script>
+
+
+
+
+<script>
+function showAddressChecked() {
+  const selected = document.querySelector('input[name="diachi"]:checked');
+  if (!selected) {
+    alert("Vui lòng chọn một địa chỉ!");
+    return;
+  }
+
+  const parent = selected.closest(".parentDiachi");
+  const ten = parent.querySelector(".showTenNguoiNhan")?.innerText.trim() || "";
+  const sdtFull = parent.querySelector(".showSDT")?.innerText.trim() || "";
+  const sdt = sdtFull.replace("SDT : ", "").trim();
+  const diachiElement = parent.querySelector(".text-sm.text-gray-600");
+  const spans = diachiElement.querySelectorAll("span");
+  const diachi = spans[0]?.innerText.trim() || "";
+
+  const addressLine = diachiElement.innerText.split("\n")[1]?.trim();
+  const [huyen = "", quan = "", thanhpho = ""] = addressLine?.replace("TP. ", "").split(",") || [];
+
+  document.getElementById("submitName").innerText = ten;
+  document.getElementById("submitSDT").innerText = sdt;
+  document.getElementById("submitDiachi").innerText = diachi;
+  document.getElementById("submitWard").innerText = huyen.trim();
+  document.getElementById("submitDistrict").innerText = quan.trim();
+  document.getElementById("submitCity").innerText = thanhpho.trim();
+
+  document.getElementById("addressPopup").classList.add("hidden");
+}
+
+
+</script>
+
+<script>
+  async function xacNhanThanhToan() {
+    const tennguoinhan = document.getElementById("submitName").innerText.trim();
+    const sdt = document.getElementById("submitSDT").innerText.trim();
+    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    // const diachi = document.getElementById("diachi")?.value;
+    const diachi=document.getElementById("submitDiachi").innerText.trim();
+    const ward = document.getElementById("submitWard").innerText.trim();
+    const district = document.getElementById("submitDistrict").innerText.trim();
+    const province = document.getElementById("submitCity").innerText.trim();
+    const macdinh = document.getElementById("macdinh").value || 0;
+    const selected = document.getElementById("submitId_Diachi").value || 0;
+
+    if (!tennguoinhan || !sdt || !diachi || !ward || !district || !province) {
+      alert("Vui lòng nhập địa chỉ giao hàng.");
+      return;
+    }
+    if (!tennguoinhan ) {
+      alert("Vui lòng nhập tên người nhân.");
+      return;
+    }
+
+    let addressId = null;
+
+    // Nếu không chọn địa chỉ cũ → người dùng đang nhập mới
+    if (!selected) {
+      const newAddress = {
+        tennguoinhan,
+        sdt,
+        phuong: ward,
+        district,
+        thanhpho: province,
+        diachi,
+        macdinh
+      };
+
+      try {
+        const res = await fetch("../controllers/them_dia_chi.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newAddress)
+        });
+
+        const result = await res.json();
+        if (!result.success) {
+          alert("Không thể thêm địa chỉ mới: " + result.message);
+          return;
+        }
+
+        addressId = result.address_id;
+      } catch (err) {
+        alert("Lỗi khi thêm địa chỉ mới.");
+        return;
+      }
+
+    } else {
+      // Nếu người dùng chọn địa chỉ cũ
+      addressId = selected.value;
+    }
+
+    // Gửi request thanh toán
+    const paymentMethod = selectedPayment.value;
+    fetch("../controllers/thanhtoan.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: `address_id=${addressId}&payment_method=${encodeURIComponent(paymentMethod)}`
+    })
+    .then(response => response.text())
+    .then(data => {
+      if (data.includes("Thanh toán thành công")) {
+        alert("Thanh toán thành công!");
+        window.location.href = "/LTW_UD2/zui/responseOrder.php";
+      } else {
+        alert("Đã xảy ra lỗi khi thanh toán: " + data);
+      }
+    })
+    .catch(error => {
+      console.error("Lỗi khi thanh toán:", error);
+      alert("Thanh toán thất bại!");
+    });
+  }
+</script>
+
+
+</body>
+
+
 
 </html>

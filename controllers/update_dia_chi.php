@@ -27,7 +27,7 @@ $address = $conn->real_escape_string($data['address']);
 $city = $conn->real_escape_string($data['city']);
 $district = $conn->real_escape_string($data['district']);
 $ward = $conn->real_escape_string($data['ward']);
-
+$status = $conn->real_escape_string($data['status']);
 
 if (!$phone ) {
     echo json_encode(['success' => false, 'message' => 'Nhập số điện thoại']);
@@ -37,15 +37,15 @@ if (!$name ) {
     echo json_encode(['success' => false, 'message' => 'Nhập tên người nhận']);
     exit;
 }
-if (!$id || !$name || !$phone || !$address || !$city || !$district || !$ward) {
-    echo json_encode(['success' => false, 'message' => 'Thiếu thông tin giao hàng']);
+if (!$city || !$district || !$ward) {
+    echo json_encode(['success' => false, 'message' => 'Thiếu thông tin giao hàng $city, $district, $ward']);
     exit;
 }
 
 // Cập nhật thông tin
 $sql = "UPDATE thongTinGiaoHang 
         SET tennguoinhan='$name', sdt='$phone', diachi='$address', 
-            thanhpho='$city', quan='$district', huyen='$ward' 
+            thanhpho='$city', quan='$district', huyen='$ward',status='$status' 
         WHERE id_user = " . $_SESSION['user_id'] . " AND id = '$id'";
 
 if ($conn->query($sql) === TRUE) {
