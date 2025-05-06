@@ -20,6 +20,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/LTW-UD2/admin/assets/css/layout.css">
+
 </head>
 
 <body>
@@ -43,9 +44,9 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
         <div class="flex w-full min-h-screen bg-[#ecedf3]">
 
             <div class="w-1/5 min-w-[250px] bg-[#1a2536] text-[rgb(204,200,200)] flex flex-col">
-                <div class="menu-item admin-nav-btn" page="analytics"> 
+                <div class="menu-item admin-nav-btn" page="analytics">
                     <img src="./assets/icon/chart-line.svg" class="dark-img" alt="">
-                    Thống kê 
+                    Thống kê
                 </div>
                 <h5>QUẢN LÝ THÔNG TIN </h5>
                 <div class="menu-item admin-nav-btn" page="customer"> <img src="./assets/icon/users.svg" class="dark-img" alt="">
@@ -67,7 +68,7 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                     <div class="submenu-item admin-nav-btn" page="nhaphang">Nhập hàng</div>
                     <div class="submenu-item admin-nav-btn" page="thongtinnhaphang">Thông tin nhập hàng</div>
                 </div>
-                <div class="menu-item admin-nav-btn" page="quanlidon"> 
+                <div class="menu-item admin-nav-btn" page="quanlidon">
                     <img src="./assets/icon/cart-shopping.svg" class="dark-img" alt="">
                     Quản lý đơn hàng &#9662
                 </div>
@@ -96,71 +97,62 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 </div>
             </div>
 
-
-            <main page="analytics" id="content">
+            <div page="analytics" >
                 <div id="main-content">
-                
                     <?php include_once './gui/analytics.php' ?>
                 </div>
-            </main>
-            <main page="quanlidon" id="content">
+            </div>
+            <div page="quanlidon" >
                 <div id="main-content">
-                    vhkn nm
                     <?php include_once './gui/quanlidon.php' ?>
                 </div>
-            </main>
-
-            <main page="customer" id="content">
+            </div>
+            <div page="customer"    >
                 <div id="main-content">
-                    <?php  include_once './gui/thongTinKhachHang.php' ?>
+                    <?php include_once './gui/thongTinKhachHang.php' ?>
                 </div>
-            </main>
-            <main page="employee" id="content">
-
+            </div>
+            <div page="employee" >
                 <div id="main-content">
                     nhan vien
                 </div>
-            </main>
-            <main page="thongtinsanpham" id="content">
+            </div>
+            <div page="thongtinsanpham" >
                 <div id="main-content">
                     <?php require_once "sanphan.php" ?>
                 </div>
-            </main>
-            <main page="themsac" id="content">
+            </div>
+            <div page="themsac" >
                 <div id="main-content">
                     <?php require_once "themsanpham.php" ?>
                 </div>
-            </main>
-            <main page="nhaphang" id="content">
+            </div>
+            <div page="nhaphang" >
                 <div id="main-content">
                     nhập hàng
                 </div>
-            </main>
-            <main page="thongtinnhaphang" id="content">
+            </div>
+            <div page="thongtinnhaphang" >
                 <div id="main-content">
                     thông tin phiếu nhập
                 </div>
-            </main>
-            <main page="permission" id="content">
+            </div>
+            <div page="permission" >
                 <div id="main-content">
-                    <?php
-                    include './components/role_permissions.php';
-                    include './components/create_roles.php'
-                    ?>
+                    <?php include './components/role_permissions.php'; ?>
                 </div>
-            </main>
+            </div>
         </div>
     </div>
 
-<div id="myModal" class="modal" style="display: none;">
-  <div class="modal-content">
-  </div>
-</div>
+    <div id="myModal" class="modal" style="display: none;">
+        <div class="modal-content">
+        </div>
+    </div>
 
 
     <script>
         function closeSidebar() {
-
             let element = document.getElementById("sidebar");
             if (element.style.display === "none") {
                 element.style.display = "flex";
@@ -169,30 +161,30 @@ if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
                 document.getElementById("Fahahahasa").style.color = "rgb(254, 225, 225)";
                 document.getElementById("closeSidebar").style.float = "right";
                 document.getElementById("bars").classList.add("dark-img");
-                document.getElementById("content").style.width = "80%";
+                document.querySelectorAll(".content").forEach((content) => {
+                    content.style.width = "80%";
+                });
                 document.getElementById("content-container").style.justifyContent = "left";
-
-
             } else {
-
                 element.style.display = "none";
                 document.getElementById("header-left").style.backgroundColor = "white";
                 document.getElementById("Fahahahasa").style.float = "right";
                 document.getElementById("closeSidebar").style.float = "left";
                 document.getElementById("bars").classList.remove("dark-img");
-                document.getElementById("content").style.width = "100%";
+                document.querySelectorAll(".content").forEach((content) => {
+                    content.style.width = "100%";
+                });
                 document.getElementById("Fahahahasa").style.color = "#080e18";
                 document.getElementById("content-container").style.justifyContent = "center";
                 openContent();
-
-
             }
         }
 
         function openContent() {
-            document.getElementById("content").style.width = "100%";
+            document.querySelectorAll(".content").forEach((content) => {
+                content.style.width = "100%";
+            });
         }
-
 
         document.addEventListener("DOMContentLoaded", function() {
             const menuItems = document.querySelectorAll(".menu-item");

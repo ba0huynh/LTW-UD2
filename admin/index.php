@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require_once("../database/database.php");
 require_once("../database/user.php");
@@ -25,31 +25,26 @@ $allUsers = $userTable->getAllUser();
 <html lang="en">
 
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="assets/css/layout.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-  <script type="module" src="../javascript/admin/index.js"> </script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="assets/script/product.js"></script>
-  <!-- <script src="assets/script/script.js"></script> -->
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 </head>
 
-<body class="p-0">
+<body>
 
-<?php 
-// echo $_SESSION['admin'] ?>
-  <?php
-  
-  include_once "gui/layout.php" ?>
-  <?php 
-    // include_once "gui/adminLoginPopup.php";
-  
-     ?>;
+  <div class="flex flex-row h-screen bg-gray-200">
+
+    <?php
+    include_once "./gui/sidebar.php"
+    ?>
+
+  </div>
+
 </body>
-</html>
 
+
+</html>

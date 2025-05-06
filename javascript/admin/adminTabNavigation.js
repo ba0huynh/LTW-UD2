@@ -1,6 +1,6 @@
-const Btn = document.querySelectorAll(".admin-nav-btn");
-const views = document.querySelectorAll("main");
 export function AdminTabNavigation() {
+  const Btn = document.querySelectorAll(".admin-nav-btn");
+  const views = document.querySelectorAll("main");
   
   views.forEach((view) => {
     view.style.display = "none";
@@ -12,6 +12,7 @@ export function AdminTabNavigation() {
   });
   Btn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      console.log("hi");
       views.forEach((view) => {
         view.style.display = "none";
       });
