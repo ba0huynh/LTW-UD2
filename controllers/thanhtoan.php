@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 $user_id = (int)$_SESSION['user_id'];
 $paymentMethod = isset($_POST['payment_method']) ? $conn->real_escape_string($_POST['payment_method']) : '';
 $address_id = isset($_POST['address_id']) ? (int)$_POST['address_id'] : 0;
-
+/*
 if ($address_id == 0 && isset($_POST['tennguoinhan'])) {
     $tennguoinhan = $conn->real_escape_string($_POST['tennguoinhan']);
     $sdt = $conn->real_escape_string($_POST['sdt']);
@@ -40,7 +40,7 @@ if ($address_id == 0 && isset($_POST['tennguoinhan'])) {
         exit();
     }
 }
-
+*/
 
 $sql = "
     SELECT cartitems.bookId, cartitems.amount, books.currentPrice 
@@ -92,8 +92,8 @@ foreach ($items as $item) {
     $thanhtien = $item['thanhtien'];
 
     $insertDetail = "
-        INSERT INTO chitiethoadon (idHoadon, idBook, amount)
-        VALUES ($hoadon_id, $bookId, $amount)
+        INSERT INTO chitiethoadon (idHoadon, idBook, amount,pricePerItem)
+        VALUES ($hoadon_id, $bookId, $amount, $thanhtien/$amount)
     ";
 
     if (!$conn->query($insertDetail)) {

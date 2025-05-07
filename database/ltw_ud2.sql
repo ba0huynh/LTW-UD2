@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 03, 2025 lúc 01:06 AM
+-- Thời gian đã tạo: Th5 07, 2025 lúc 07:32 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.0.30
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,7 +48,6 @@ CREATE TABLE `books` (
 
 INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `isActive`, `description`, `type`) VALUES
 (1, 'Toán 6 - Giáo Khoa Cơ Bản', 2, '6', 18000.00, 16000.00, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(2, 'Ngữ Văn 6 - Giáo Trình', 2, '6', 20000.00, 18000.00, 80, 'https://tailieugiaovien.com.vn/storage/uploads/images/posts/banner/van-6-ct-1684467741.png', 1, 1, 'Giáo trình Ngữ văn lớp 6.', 'Giáo Trình'),
 (3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
 (4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
 (5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
@@ -127,8 +126,6 @@ CREATE TABLE `cartitems` (
 
 INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (1, 1, 1, 1),
-(2, 2, 1, 1),
-(3, 2, 2, 1),
 (4, 3, 2, 1),
 (7, 4, 4, 1),
 (8, 5, 4, 1),
@@ -171,45 +168,46 @@ CREATE TABLE `chitiethoadon` (
   `id` int(11) NOT NULL,
   `idBook` int(11) DEFAULT NULL,
   `idHoadon` int(11) DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL
+  `amount` int(11) DEFAULT NULL,
+  `pricePerItem` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `chitiethoadon`
 --
 
-INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`) VALUES
-(1, 3, 32, 1),
-(2, 4, 32, 1),
-(3, 3, 33, 1),
-(4, 4, 33, 1),
-(5, 3, 34, 1),
-(6, 5, 34, 1),
-(7, 15, 35, 1),
-(8, 17, 35, 1),
-(9, 15, 36, 1),
-(10, 17, 36, 1),
-(11, 22, 37, 1),
-(12, 3, 38, 1),
-(13, 5, 39, 1),
-(14, 3, 39, 1),
-(15, 1, 40, 1),
-(16, 15, 41, 1),
-(17, 3, 42, 1),
-(18, 17, 43, 1),
-(19, 19, 43, 1),
-(20, 3, 44, 1),
-(21, 5, 45, 1),
-(22, 1, 46, 1),
-(23, 3, 47, 1),
-(24, 3, 48, 1),
-(25, 5, 49, 1),
-(26, 5, 50, 1),
-(27, 17, 51, 1),
-(28, 5, 52, 1),
-(29, 5, 53, 1),
-(30, 17, 54, 1),
-(31, 1, 55, 1);
+INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`, `pricePerItem`) VALUES
+(1, 3, 32, 1, 17000),
+(2, 4, 32, 1, 19000),
+(3, 3, 33, 1, 17000),
+(4, 4, 33, 1, 19000),
+(5, 3, 34, 1, 17000),
+(6, 5, 34, 1, 18000),
+(7, 15, 35, 1, 24000),
+(8, 17, 35, 1, 26000),
+(9, 15, 36, 1, 24000),
+(10, 17, 36, 1, 26000),
+(11, 22, 37, 1, 29000),
+(12, 3, 38, 1, 17000),
+(13, 5, 39, 1, 18000),
+(14, 3, 39, 1, 17000),
+(15, 1, 40, 1, 16000),
+(16, 15, 41, 1, 24000),
+(17, 3, 42, 1, 17000),
+(18, 17, 43, 1, 26000),
+(19, 19, 43, 1, 30000),
+(20, 3, 44, 1, 17000),
+(21, 5, 45, 1, 18000),
+(22, 1, 46, 1, 16000),
+(23, 3, 47, 1, 17000),
+(24, 3, 48, 1, 17000),
+(25, 5, 49, 1, 18000),
+(26, 5, 50, 1, 18000),
+(27, 17, 51, 1, 26000),
+(28, 5, 52, 1, 18000),
+(29, 5, 53, 1, 18000),
+(30, 17, 54, 1, 26000),
+(31, 1, 55, 1, 16000);
 
 -- --------------------------------------------------------
 
@@ -413,7 +411,6 @@ CREATE TABLE `review` (
 
 INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`) VALUES
 (1, 1, 5, 'Sách rất hữu ích và dễ hiểu.', 1, '2025-04-29 17:56:11'),
-(2, 1, 4, 'Nội dung phù hợp với chương trình học.', 2, '2025-04-29 17:56:11'),
 (3, 2, 4, 'Trình bày rõ ràng, dễ tiếp thu.', 3, '2025-04-29 17:56:11'),
 (4, 2, 5, 'Giá hợp lý, chất lượng tốt.', 4, '2025-04-29 17:56:11'),
 (5, 3, 3, 'Còn một số lỗi nhỏ, nhưng tạm ổn.', 5, '2025-04-29 17:56:11'),
@@ -439,7 +436,6 @@ INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`)
 (25, 13, 5, 'Giúp mình ôn tập hiệu quả.', 25, '2025-04-29 17:56:11'),
 (26, 13, 4, 'Sách tốt hơn mong đợi.', 26, '2025-04-29 17:56:11'),
 (27, 14, 4, 'Nội dung rõ ràng và dễ hiểu.', 1, '2025-04-29 17:56:11'),
-(28, 14, 3, 'Cần cập nhật thêm vài phần mới.', 2, '2025-04-29 17:56:11'),
 (29, 15, 5, 'Cực kỳ hài lòng với cuốn sách.', 3, '2025-04-29 17:56:11'),
 (30, 15, 4, 'Sẽ giới thiệu cho bạn bè.', 4, '2025-04-29 17:56:11');
 
@@ -560,21 +556,21 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`) VALUES
-(1, 1, 'Admin', '123456', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234'),
-(2, NULL, 'minhtran', '123456', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333'),
-(3, NULL, 'thaole', '123456', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444'),
-(4, NULL, 'huypham', '123456', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555'),
-(5, NULL, 'lanho', '123456', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666'),
-(6, NULL, 'namdang', '123456', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777'),
-(7, NULL, 'tuvu', '123456', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888'),
-(8, NULL, 'quynhanh', '123456', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999'),
-(9, NULL, 'michaelng', '123456', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000'),
-(10, NULL, 'jessicatrinh', '123456', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111'),
-(11, NULL, 'tommyle', '123456', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222'),
-(12, NULL, 'davidhoang', '123456', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333'),
-(13, NULL, 'emilydang', '123456', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444'),
-(14, NULL, 'chloephan', '123456', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555'),
-(15, NULL, 'anthonytran', '123456', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666');
+(1, 1, 'Admin', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234'),
+(2, NULL, 'minhtran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333'),
+(3, NULL, 'thaole', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444'),
+(4, NULL, 'huypham', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555'),
+(5, NULL, 'lanho', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666'),
+(6, NULL, 'namdang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777'),
+(7, NULL, 'tuvu', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888'),
+(8, NULL, 'quynhanh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999'),
+(9, NULL, 'michaelng', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000'),
+(10, NULL, 'jessicatrinh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111'),
+(11, NULL, 'tommyle', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222'),
+(12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333'),
+(13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444'),
+(14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555'),
+(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666');
 
 --
 -- Chỉ mục cho các bảng đã đổ
