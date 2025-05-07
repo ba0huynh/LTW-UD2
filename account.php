@@ -1,12 +1,12 @@
-<?php 
+<?php
 session_start();
 
-$servername="localhost";
-$username="root";
-$password="";
-$dbname="ltw_ud2";
-$conn=new mysqli($servername,$username,$password,$dbname);
-if($conn->connect_error) {
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ltw_ud2";
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
@@ -15,11 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"  && !isset($_POST['login'])) {
     $phone = $_POST['user_telephone'];
     $password = $_POST['user_password'];
 
-    $query = "SELECT * FROM users WHERE phoneNumber = '$phone' AND password = '$password'";
+    $query = "SELECT * FROM users WHERE phoneNumber = '$phone'";
     $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-      $user = mysqli_fetch_assoc($result);
+    if ($result && mysqli_num_rows($result) > 0 && password_verify($password, $user['password'])) {
         $_SESSION["user_id"] = $user["id"]; // Lưu session
         header("Location: index.php"); // Redirect sang trang chính
         exit;
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     $old_pass = $_POST['user_old_password'] ?? '';
     $new_pass = $_POST['user_new_password'] ?? '';
     $confirm_pass = $_POST['user_confirm_new_password'] ?? '';
-    if (empty($old_pass) || empty($new_pass) || empty($confirm_pass) ) {
+    if (empty($old_pass) || empty($new_pass) || empty($confirm_pass)) {
         echo "<script>alert('Vui lòng điền đầy đủ thông tin.');  window.history.back();</script>";
         exit();
     }
@@ -95,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
             var_dump($user_id, $old_pass, $db_password);
             echo "<script>alert('Mật khẩu hiện tại không đúng! $old_pass $db_password');  window.history.back();</script>";
             exit();
-            
         } elseif ($new_pass !== $confirm_pass) {
             echo "<script>alert('Mật khẩu mới không khớp!');  window.history.back();</script>";
             exit();
@@ -125,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
                 exit();
             }
         }
-    } 
+    }
 }
 ?>
 
@@ -170,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
 
     if (count($fields) > 0) {
         $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
-        $types .= 'i'; 
+        $types .= 'i';
         $values[] = $user_id;
 
         $stmt = mysqli_prepare($conn, $sql);
@@ -201,11 +200,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
@@ -219,31 +219,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
     <!-- Tailwindcss -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
+
 <body>
 
-<?php
-include_once "./components/header2.php";
-if (isset($_SESSION["user_id"])) {
-  include_once "./components/changeInforUser.php";
-} else {
-   include_once "./components/login2.php";
-}
-include_once "./components/footer.php";
-?>
-<script>
+    <?php
+    include_once "./components/header2.php";
+    if (isset($_SESSION["user_id"])) {
+        include_once "./components/changeInforUser.php";
+    } else {
+        include_once "./components/login2.php";
+    }
+    include_once "./components/footer.php";
+    ?>
+    <script>
+        function showForm(formClass) {
+            const mainForm = document.querySelector('.mainForm');
+            const changePass = document.querySelector('.changePass');
 
-      function showForm(formClass) {
-        const mainForm = document.querySelector('.mainForm');
-        const changePass = document.querySelector('.changePass');
-    
-        if (formClass === 'mainForm') {
-          mainForm.classList.remove('hidden');
-          changePass.classList.add('hidden');
-        } else if (formClass === 'changePass') {
-          changePass.classList.remove('hidden');
-          mainForm.classList.add('hidden');
+            if (formClass === 'mainForm') {
+                mainForm.classList.remove('hidden');
+                changePass.classList.add('hidden');
+            } else if (formClass === 'changePass') {
+                changePass.classList.remove('hidden');
+                mainForm.classList.add('hidden');
+            }
         }
-      }
     </script>
 </body>
+
 </html>
