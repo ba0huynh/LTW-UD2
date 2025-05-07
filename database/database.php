@@ -1,6 +1,6 @@
 <?php
 
-$dsn = "mysql:host=localhost;port=3307;dbname=ltw_ud2";
+$dsn = "mysql:host=localhost;port=3306;dbname=ltw_ud2";
 $dbUsername = "root";
 $dbPassword = "";
 try {
