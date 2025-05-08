@@ -168,8 +168,8 @@ $total_pages = ceil($total_rows / $limit);
                 WHERE 1=1 
 
                 ";
-                if(isset($_GET['search']) && $_GET['province'] != '') {
-                    $province = $_GET['province'];
+                if(isset($_GET['search']) && $_GET['search'] != '') {
+                    $search = $_GET['search'];
                     $sql .= " AND users.phoneNumber LIKE '%$search%' ";
                 }
                 if(isset($_GET['province']) && $_GET['province'] != '') {
