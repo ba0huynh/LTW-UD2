@@ -31,8 +31,8 @@ $user_id=$_SESSION["user_id"];
     echo "khogn co";
   }
   ?>
-  <div class="bg-gray-50 p-4">
-    <div class="max-w-4xl mx-auto mb-4">
+  <div class="bg-gray-50 p-4 min-h-screen">
+    <div class="max-w-4xl mx-auto mb-4 min-h-screen">
     <?php $currentStatus = isset($_GET['status']) ? (int)$_GET['status'] : null;?>
 
       <div class="flex justify-between border-b">
