@@ -26,60 +26,33 @@
     </div>
 
     <button type="submit"
+            name="login_submit"
             class="hover:bg-red-500 hover:text-white transition w-full bg-gray-300 text-gray-600 font-semibold py-2 rounded-lg">
       Đăng nhập
     </button>
-    <?php
-// Kết nối đến database
-$conn = new mysqli("localhost", "root", "", "ltw_ud2");
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-
-session_start(); // Bắt đầu session
-
-// Lấy thông tin đăng nhập từ form
-$phone = $_POST['user_telephone'] ?? '';
-$password = $_POST['user_password'] ?? '';
-
-// Kiểm tra số điện thoại và mật khẩu không rỗng
-if (empty($phone) || empty($password)) {
-    echo "Số điện thoại và mật khẩu không được để trống.";
-    exit;
-}
-
-// Kiểm tra xem số điện thoại có tồn tại trong cơ sở dữ liệu không
-$query = $conn->prepare("SELECT id, password FROM users WHERE phoneNumber = ?");
-$query->bind_param("s", $phone);
-$query->execute();
-$query->store_result();
-
-// Nếu số điện thoại tồn tại
-if ($query->num_rows > 0) {
-    $query->bind_result($user_id, $hashedPassword);
-    $query->fetch();
     
-    // Kiểm tra mật khẩu
-    if (password_verify($password, $hashedPassword)) {
-        // Đăng nhập thành công, lưu thông tin vào session
-        $_SESSION['user_id'] = $user_id; // Lưu user_id vào session
-        echo "Đăng nhập thành công!";
-        // Chuyển hướng đến trang chính hoặc trang nào đó
-        header("Location: index.php");
-        exit;
+    <?php
+      if (isset($_POST['login_submit'])) {
+    $phone = $_POST['user_telephone'];
+    $password = $_POST['user_password'];
+
+    $query = "SELECT * FROM users WHERE phoneNumber = '$phone'";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        if (password_verify($password, $user['password'])) {
+            $_SESSION["user_id"] = $user["id"];
+            header("Location: index.php");
+            exit;
+        } else {
+            echo "<script>alert('Sai mật khẩu!');</script>";
+        }
     } else {
-        // Mật khẩu không chính xác
-        echo "Mật khẩu không chính xác.";
+        echo "<script>alert('Sai số điện thoại!');</script>";
     }
-} else {
-    // Số điện thoại không tồn tại
-    echo "Số điện thoại không tồn tại.";
 }
-
-$query->close();
-$conn->close();
 ?>
-
   </form>
   <form id="formdangki" onsubmit="return validateRegisterForm(event)" class="space-y-4 hidden" action="" method="post">
     <div>
@@ -108,6 +81,7 @@ $conn->close();
       </div>
     </div>
     <button type="submit"
+            name="submit_register"
             class="hover:bg-red-500 hover:text-white transition w-full bg-gray-300 text-gray-600 font-semibold py-2 rounded-lg">
       Đăng ký
     </button>
@@ -118,14 +92,10 @@ $conn = new mysqli("localhost", "root", "", "ltw_ud2");
 if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
-
+if (isset($_POST['submit_register'])){
 $phone = $_POST['newuser_telephone'] ?? '';
 $password = $_POST['user_password'] ?? '';
-
-// Mã hóa mật khẩu
 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-// Kiểm tra xem số điện thoại đã tồn tại chưa
 $check = $conn->prepare("SELECT id FROM users WHERE phoneNumber = ?");
 $check->bind_param("s", $phone);
 $check->execute();
@@ -140,4 +110,5 @@ $stmt->bind_param("sss", $phone, $hashedPassword, $fullName);
 $stmt->execute();
 $stmt->close();
 $conn->close();
+}
 ?>

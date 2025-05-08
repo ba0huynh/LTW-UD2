@@ -19,11 +19,11 @@ if (isset($_SESSION['user_id'])) {
 ?>
 <div class="relative mx-auto w-full flex justify-between py-2 px-[10%] bg-white shadow-sm">
   <div class="flex items-center gap-2">
-    <a href="/LTW_UD2"><img src="/LTW_UD2/images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
+    <a href="/LTW-UD2"><img src="./images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
   </div>
-  <img src="/LTW_UD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
+  <img src="/LTW-UD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
   <div class="flex-1 max-w-2xl mx-4">
-    <form action="/LTW_UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
+    <form action="/LTW-UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
       <input type="text" name="search" placeholder="Tìm kiếm" class="flex-1 px-4 py-2 outline-none text-sm" required />
       <button type="submit" class="bg-[#D10024] px-4 text-white m-2 rounded">
         🔍
@@ -137,7 +137,7 @@ if (isset($_SESSION['user_id'])) {
           } else {
             ?>
             <li class="px-4 py-3 text-center text-blue-600 hover:text-blue-800">
-              <a href="/LTW_UD2/account.php">Đăng nhập </a>
+              <a href="/LTW-UD2/account.php">Đăng nhập </a>
             </li>
           <?php } ?>
         </ul>
@@ -151,7 +151,7 @@ if (isset($_SESSION['user_id'])) {
 
     </div>
     <!-- Giỏ hàng -->
-    <a href="/LTW_UD2/zui/cart.php">
+    <a href="/LTW-UD2/zui/cart.php">
 
       <div class="relative flex flex-col items-center">
         <span class="text-xl">🛒 </span>
@@ -211,6 +211,7 @@ if (isset($_SESSION['user_id'])) {
   const registerTab = document.getElementById('registerTab');
   const formLogin = document.getElementById('formdangnhap');
   const formRegister = document.getElementById('formdangki');
+  console.log(loginTab.classList);
 
   if (tab === 'login') {
     loginTab.classList.add('text-red-600', 'font-semibold', 'border-red-600');
@@ -288,6 +289,7 @@ function validateRegisterForm(event) {
   return true;
 }
 
+
   function closeLoginModal() {
     document.getElementById('loginModal').classList.remove('show');
   }
@@ -308,12 +310,13 @@ function validateRegisterForm(event) {
   }
 </script>
 
+
     <!-- Quốc kỳ -->
     <div id="vietNam">
       <img src="./images/forHeader/vietNam.png" alt="">
 
     </div>
-    <a href="/LTW_UD2/components/logout.php"
+    <a href="./components/logout.php"
       class="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:text-white" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
