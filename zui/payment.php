@@ -2041,8 +2041,10 @@ function showAddressChecked() {
   document.getElementById("submitCity").innerText = thanhpho.trim();
 
   document.getElementById("addressPopup").classList.add("hidden");
-  document.getElementById("showAddressInfor").classList.toggle("hidden");
-  document.getElementById("add-address").classList.toggle("hidden");
+  if(document.getElementById("add-address") && !document.getElementById("add-address").classList.contains('hidden'))
+    document.getElementById("showAddressInfor").classList.toggle("hidden");
+
+  if(document.getElementById("add-address")) document.getElementById("add-address").classList.toggle("hidden");
 
 }
 

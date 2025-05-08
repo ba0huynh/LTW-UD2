@@ -34,7 +34,7 @@
             <span class="icon text-xl">🔍</span>
           </a>
           <button onclick="themVaoGio(<?= $row2['id'] ?>)" type="button" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
-            <span class="icon text-xl">🛒</span>
+            <span class="cursor-pointer icon text-xl">🛒</span>
           </button>
         </div>
 
