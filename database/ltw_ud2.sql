@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 07, 2025 lúc 07:32 PM
+-- Thời gian đã tạo: Th5 08, 2025 lúc 04:02 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -91,12 +91,12 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
-(1, 1, 34000.00),
+(1, 1, 23000.00),
 (2, 2, 36000.00),
 (3, 3, 957000.00),
 (4, 4, 45000.00),
 (5, 5, 43000.00),
-(6, 6, 40500.00),
+(6, 6, 41000.00),
 (7, 7, 43000.00),
 (8, 8, 49000.00),
 (9, 9, 52500.00),
@@ -125,14 +125,11 @@ CREATE TABLE `cartitems` (
 --
 
 INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
-(1, 1, 1, 1),
 (4, 3, 2, 1),
 (7, 4, 4, 1),
 (8, 5, 4, 1),
 (9, 5, 5, 1),
 (10, 6, 5, 1),
-(11, 6, 6, 1),
-(12, 7, 6, 1),
 (13, 7, 7, 1),
 (14, 8, 7, 1),
 (15, 8, 8, 1),
@@ -156,7 +153,10 @@ INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (60, 1, 3, 2),
 (61, 19, 3, 1),
 (62, 17, 3, 1),
-(63, 4, 3, 1);
+(63, 4, 3, 1),
+(68, 7, 6, 1),
+(69, 5, 6, 1),
+(91, 7, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -171,43 +171,6 @@ CREATE TABLE `chitiethoadon` (
   `amount` int(11) DEFAULT NULL,
   `pricePerItem` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `chitiethoadon`
---
-
-INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`, `pricePerItem`) VALUES
-(1, 3, 32, 1, 17000),
-(2, 4, 32, 1, 19000),
-(3, 3, 33, 1, 17000),
-(4, 4, 33, 1, 19000),
-(5, 3, 34, 1, 17000),
-(6, 5, 34, 1, 18000),
-(7, 15, 35, 1, 24000),
-(8, 17, 35, 1, 26000),
-(9, 15, 36, 1, 24000),
-(10, 17, 36, 1, 26000),
-(11, 22, 37, 1, 29000),
-(12, 3, 38, 1, 17000),
-(13, 5, 39, 1, 18000),
-(14, 3, 39, 1, 17000),
-(15, 1, 40, 1, 16000),
-(16, 15, 41, 1, 24000),
-(17, 3, 42, 1, 17000),
-(18, 17, 43, 1, 26000),
-(19, 19, 43, 1, 30000),
-(20, 3, 44, 1, 17000),
-(21, 5, 45, 1, 18000),
-(22, 1, 46, 1, 16000),
-(23, 3, 47, 1, 17000),
-(24, 3, 48, 1, 17000),
-(25, 5, 49, 1, 18000),
-(26, 5, 50, 1, 18000),
-(27, 17, 51, 1, 26000),
-(28, 5, 52, 1, 18000),
-(29, 5, 53, 1, 18000),
-(30, 17, 54, 1, 26000),
-(31, 1, 55, 1, 16000);
 
 -- --------------------------------------------------------
 
@@ -262,67 +225,6 @@ CREATE TABLE `hoadon` (
   `ngay_cap_nhat` datetime DEFAULT current_timestamp(),
   `id_diachi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `hoadon`
---
-
-INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMethod`, `statusBill`, `ly_do_huy`, `ly_do_tra_hang`, `create_at`, `ngay_cap_nhat`, `id_diachi`) VALUES
-(1, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(2, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(3, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(4, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(5, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(6, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(7, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(8, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(9, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(10, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(11, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(12, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(13, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(14, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(15, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(16, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(17, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(18, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(19, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(20, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(21, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(22, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(23, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(24, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(25, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(26, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(27, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(28, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(29, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(30, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(31, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:18:57', '2025-04-29 23:18:57', 3),
-(32, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:19:26', '2025-04-29 23:19:26', 3),
-(33, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:20:51', '2025-04-29 23:20:51', 3),
-(34, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:28:38', '2025-04-29 23:28:38', 3),
-(35, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:29:41', '2025-04-29 23:29:41', 3),
-(36, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:33:46', '2025-04-29 23:33:46', 3),
-(37, 3, NULL, 29000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:34:05', '2025-04-29 23:34:05', 3),
-(38, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:41:54', '2025-04-29 23:41:54', 3),
-(39, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:42:56', '2025-04-29 23:42:56', 3),
-(40, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:43:42', '2025-04-29 23:43:42', 3),
-(41, 3, NULL, 24000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:49:31', '2025-04-29 23:49:31', 3),
-(42, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:51:51', '2025-04-29 23:51:51', 3),
-(43, 3, NULL, 56000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:22:24', '2025-04-30 00:22:24', 3),
-(44, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:24:29', '2025-04-30 00:24:29', 3),
-(45, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:27:13', '2025-04-30 00:27:13', 3),
-(46, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:28:58', '2025-04-30 00:28:58', 3),
-(47, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:29:51', '2025-04-30 00:29:51', 3),
-(48, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:31:29', '2025-04-30 00:31:29', 3),
-(49, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:32:09', '2025-04-30 00:32:09', 3),
-(50, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:35', '2025-04-30 00:35:35', 3),
-(51, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:51', '2025-04-30 00:35:51', 3),
-(52, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:38:18', '2025-04-30 00:38:18', 3),
-(53, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:01', '2025-04-30 00:39:01', 3),
-(54, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:51', '2025-04-30 00:39:51', 3),
-(55, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:41:06', '2025-04-30 00:41:06', 3);
 
 -- --------------------------------------------------------
 
@@ -522,7 +424,7 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (3, 'Trần Thị Mai', 3, '78 Đường Lý Tự Trọng', 'Hồ Chí Minh', 'Quận 3', 'Phường Võ Thị Sáu', '0903000003', 1),
 (4, 'Nguyễn Hữu Tài', 4, '89 Đường Cách Mạng Tháng 8', 'Hồ Chí Minh', 'Quận 10', 'Phường 13', '0904000004', 1),
 (5, 'Đặng Thanh Tâm', 5, '32 Đường Tô Hiến Thành', 'Hồ Chí Minh', 'Quận 10', 'Phường 15', '0905000005', 1),
-(6, 'Phan Ngọc Trân', 6, '14 Đường 3 Tháng 2', 'Hồ Chí Minh', 'Quận 11', 'Phường 5', '0906000006', 1),
+(6, 'bkvdnsd', 6, '14 Đường 3 Tháng 2', 'Đồng Nai', 'Quận 5', 'Phường 5', '0906000006', 0),
 (7, 'Võ Minh Tùng', 7, '23 Đường Lạc Long Quân', 'Hồ Chí Minh', 'Quận 11', 'Phường 1', '0907000007', 1),
 (8, 'Bùi Thị Hương', 8, '56 Đường Âu Cơ', 'Hồ Chí Minh', 'Tân Phú', 'Phường Phú Thọ Hòa', '0908000008', 1),
 (9, 'Lâm Văn Toàn', 9, '67 Đường Trường Chinh', 'Hồ Chí Minh', 'Tân Bình', 'Phường 14', '0909000009', 1),
@@ -531,7 +433,10 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (12, 'Đỗ Thị Lan', 12, '12 Đường Dương Quảng Hàm', 'Hồ Chí Minh', 'Gò Vấp', 'Phường 5', '0912000012', 1),
 (13, 'Hoàng Trung Nghĩa', 13, '21 Đường Nguyễn Kiệm', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 3', '0913000013', 1),
 (14, 'Tô Hoàng Nam', 14, '34 Đường Huỳnh Văn Bánh', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 17', '0914000014', 1),
-(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1);
+(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1),
+(16, 'Đây là tên mới :Đ', NULL, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0),
+(17, 'Đây là tên mới :Đ', 1, 'fjkwlfkwle', 'Hà Nội', 'Quận Cầu Giấy', 'Phường Dịch Vọng Hậu', '0793472637', 0),
+(18, 'Đây là tên mớiii', 1, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0);
 
 -- --------------------------------------------------------
 
@@ -723,13 +628,13 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT cho bảng `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT cho bảng `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT cho bảng `chitietphieunhap`
@@ -747,7 +652,7 @@ ALTER TABLE `chucnang`
 -- AUTO_INCREMENT cho bảng `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT cho bảng `hoadonnhap`
@@ -795,7 +700,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT cho bảng `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT cho bảng `users`

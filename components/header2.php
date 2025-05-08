@@ -19,7 +19,7 @@ if (isset($_SESSION['user_id'])) {
 ?>
 <div class="relative mx-auto w-full flex justify-between py-2 px-[10%] bg-white shadow-sm">
   <div class="flex items-center gap-2">
-    <a href="/LTW-UD2"><img src="./images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
+    <a href="/LTW-UD2"><img src="/LTW-UD2/images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
   </div>
   <img src="/LTW-UD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
   <div class="flex-1 max-w-2xl mx-4">
@@ -151,6 +151,9 @@ if (isset($_SESSION['user_id'])) {
 
     </div>
     <!-- Giỏ hàng -->
+    <?php
+    if(isset($_SESSION['user_id'])){
+    ?>
     <a href="/LTW-UD2/zui/cart.php">
 
       <div class="relative flex flex-col items-center">
@@ -162,21 +165,35 @@ if (isset($_SESSION['user_id'])) {
 
       </div>
     </a>
+    <?php }?>
 
     <!-- Tài khoản -->
     <div class="flex flex-col items-center cursor-pointer">
-      <span class="text-xl"><a href="javascript:void(0)" onclick="openLoginModal()">👤</a></span>
+    <?php if(isset($_SESSION["user_id"])){
+    ?>
+      <span class="text-xl"><a href="/LTW-UD2/zui/account.php" class="cursor-pointer">
+        👤</a>
+      </span>
+      <a href="/LTW-UD2/account.php" class="cursor-pointer text-gray-600 hover:text-gray-800 transition duration-200">Tài khoản</a>
+    <?php
+    }else{?>
+      <span class="text-xl">
+        <a href="javascript:void(0)" 
+        onclick="openLoginModal()">👤</a>
+      </span>
       <a href="javascript:void(0)" onclick="openLoginModal()">Tài khoản</a>
+    <?php
+    }?>
     </div>
     <!-- Modal -->
-<div id="loginModal"
-  class="fixed inset-0 flex  justify-center items-center z-50 opacity-0 pointer-events-none transition-opacity duration-300 bg-black bg-opacity-0"
-  onclick="handleBackdropClick(event)">
-  <div id="modalContent"
-    class="bg-white bg-opacity-95 p-6 rounded-xl w-[400px]   relative shadow-xl transform translate-y-[-20px] transition-transform duration-300">
-    <div id="loginFormContent">Đang tải...</div>
-  </div>
-</div>
+    <div id="loginModal"
+      class="fixed inset-0 flex  justify-center items-center z-50 opacity-0 pointer-events-none transition-opacity duration-300 bg-black bg-opacity-0"
+      onclick="handleBackdropClick(event)">
+      <div id="modalContent"
+        class="bg-white bg-opacity-95 p-6 rounded-xl w-[400px]   relative shadow-xl transform translate-y-[-20px] transition-transform duration-300">
+        <div id="loginFormContent">Đang tải...</div>
+      </div>
+    </div>
 
 <style>
   #loginModal.show {
@@ -313,9 +330,13 @@ function validateRegisterForm(event) {
 
     <!-- Quốc kỳ -->
     <div id="vietNam">
-      <img src="./images/forHeader/vietNam.png" alt="">
+      <img src="/LTW-UD2/images/forHeader/vietNam.png" alt="">
 
     </div>
+    <?php
+    if (isset($_SESSION['user_id'])) {
+    
+    ?>
     <a href="./components/logout.php"
       class="inline-flex items-center justify-center gap-2 px-6 py-2 rounded-lg bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-in-out">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:text-white" fill="none" viewBox="0 0 24 24"
@@ -324,6 +345,9 @@ function validateRegisterForm(event) {
           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
       </svg>
     </a>
+    <?php
+    }
+    ?>
   </div>
 
 
@@ -347,7 +371,7 @@ function validateRegisterForm(event) {
       <!-- NỘI DUNG CHI TIẾT -->
       <div class="flex-1 p-6">
         <div class="flex items-center gap-2 mb-4">
-          <img src="./images/forHeader/menuBook.png" alt="" class="w-5 h-5">
+          <img src="/LTW-UD2/images/forHeader/menuBook.png" alt="" class="w-5 h-5">
           <span class="font-bold text-sm uppercase">Sách trong nước</span>
         </div>
 
@@ -390,7 +414,7 @@ function validateRegisterForm(event) {
     <div style="width: 100%;">
       <div>
         <div>
-          <img src="./images/forHeader/menuBook.png" alt="">
+          <img src="/LTW-UD2/images/forHeader/menuBook.png" alt="">
         </div>
         SÁCH TRONG NƯỚC
       </div>
