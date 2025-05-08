@@ -20,11 +20,11 @@ if ($conn->connect_error) {
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$limit = 2;
+$limit = 10;
 $offset = ($page - 1) * $limit;
 
-$count_sql_search = "SELECT COUNT(*) AS total FROM hoadon,users WHERE  hoadon.statusBill=1 and hoadon.idUser=users.id and fullName LIKE '%$search%'";
-$count_sql="SELECT COUNT(*) AS total FROM hoadon,users WHERE hoadon.statusBill=1 and hoadon.idUser=users.id ";
+$count_sql_search = "SELECT COUNT(*) AS total FROM hoadon,users WHERE hoadon.idUser=users.id and phoneNumber LIKE '%$search%'";
+$count_sql="SELECT COUNT(*) AS total FROM hoadon,users WHERE hoadon.idUser=users.id ";
 $show=empty($search)?$count_sql:$count_sql_search;
 $count_result = $conn->query($show);
 $total_rows = $count_result ->fetch_assoc()['total'];
@@ -192,6 +192,7 @@ $total_pages = ceil($total_rows / $limit);
                     $madon = $_GET['madon'];
                     $sql .= " AND hoadon.idBill = $madon ";
                 }
+                $sql .= " LIMIT $offset, $limit";
 
                 $result = $conn->query($sql);
                 $texts = [
@@ -300,13 +301,24 @@ $total_pages = ceil($total_rows / $limit);
           </table>
         </div>
         <div class="flex justify-center mt-6">
+        <?php
+        ?>
         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
             <div class="mx-1">
-                <a href="?search=<?= urlencode($search) ?>&page=<?= $i ?>">
+                <?php
+                $params = $_GET;
+                $params['page'] = $i;
+                ?>
+                <a href="?<?= http_build_query($params) ?>">
                     <button class="bg-blue-600 text-white rounded-full w-8 h-8 text-sm font-bold <?= $i === $page ? 'bg-blue-800' : '' ?>">
                         <?= $i ?>
                     </button>
                 </a>
+                <!-- <form method="GET" action="">
+                    <button type="submit" class="bg-blue-600 text-white rounded-full w-8 h-8 text-sm font-bold <?= $i === $page ? 'bg-blue-800' : '' ?>">
+                        <?= $i ?>
+                    </button>
+                </form> -->
             </div>
         <?php endfor; ?>
         </div>
