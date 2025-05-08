@@ -18,7 +18,7 @@
     </h2>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
+  <div class="grid [grid-template-columns:repeat(4,minmax(0,1fr))_32px] gap-6 px-4 pb-8">
     
     <?php 
     $count_books = $result2->num_rows;

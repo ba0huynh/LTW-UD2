@@ -171,7 +171,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="flex flex-col items-center cursor-pointer">
     <?php if(isset($_SESSION["user_id"])){
     ?>
-      <span class="text-xl"><a href="/LTW-UD2/zui/account.php" class="cursor-pointer">
+      <span class="text-xl"><a href="/LTW-UD2/account.php" class="cursor-pointer">
         👤</a>
       </span>
       <a href="/LTW-UD2/account.php" class="cursor-pointer text-gray-600 hover:text-gray-800 transition duration-200">Tài khoản</a>
