@@ -31,6 +31,10 @@ $user_id=$_SESSION["user_id"];
     echo "khogn co";
   }
   ?>
+  <!--  1 => 'Đang xử lý',
+        2 => 'Đang được giao',
+        3 => 'Giao hàng thành công',
+        4 => 'Đơn hàng đã hủy' -->
   <div class="bg-gray-50 p-4 ">
     <div class="max-w-4xl mx-auto mb-4 ">
     <?php $currentStatus = isset($_GET['status']) ? (int)$_GET['status'] : null;?>
@@ -39,20 +43,17 @@ $user_id=$_SESSION["user_id"];
         <a href="orderHistory.php" class="tab-button px-4 py-2 <?php if (!$currentStatus) echo 'text-red-500 font-semibold'; ?>">
           Tất cả
         </a>
-        <a href="orderHistory.php?status=2" class="tab-button px-4 py-2 <?php if ($currentStatus == 2) echo 'text-red-500 font-semibold'; ?>">
+        <a href="orderHistory.php?status=1" class="tab-button px-4 py-2 <?php if ($currentStatus == 1) echo 'text-red-500 font-semibold'; ?>">
           Đang chờ xác nhận
         </a>
-        <a href="orderHistory.php?status=3" class="tab-button px-4 py-2 <?php if ($currentStatus == 3) echo 'text-red-500 font-semibold'; ?>">
+        <a href="orderHistory.php?status=2" class="tab-button px-4 py-2 <?php if ($currentStatus == 2) echo 'text-red-500 font-semibold'; ?>">
           Chờ giao hàng
         </a>
-        <a href="orderHistory.php?status=4" class="tab-button px-4 py-2 <?php if ($currentStatus == 4) echo 'text-red-500 font-semibold'; ?>">
+        <a href="orderHistory.php?status=3" class="tab-button px-4 py-2 <?php if ($currentStatus == 3) echo 'text-red-500 font-semibold'; ?>">
           Hoàn thành
         </a>
-        <a href="orderHistory.php?status=6" class="tab-button px-4 py-2 <?php if ($currentStatus == 6) echo 'text-red-500 font-semibold'; ?>">
+        <a href="orderHistory.php?status=4" class="tab-button px-4 py-2 <?php if ($currentStatus == 4) echo 'text-red-500 font-semibold'; ?>">
           Đã huỷ
-        </a>
-        <a href="orderHistory.php?status=5" class="tab-button px-4 py-2 <?php if ($currentStatus == 5) echo 'text-red-500 font-semibold'; ?>">
-          Trả hàng/Hoàn tiền
         </a>
       </div>
 
@@ -83,7 +84,7 @@ $user_id=$_SESSION["user_id"];
 
       <div class="flex justify-between items-center  mb-4">
         <div class="flex items-center gap-3">
-          <a href="/" class="border border-gray-300 text-base px-3 py-1 rounded hover:bg-gray-100 inline-block">
+          <a href="/LTW-UD2" class="border border-gray-300 text-base px-3 py-1 rounded hover:bg-gray-100 inline-block">
             🏪 Xem Shop
           </a>
 

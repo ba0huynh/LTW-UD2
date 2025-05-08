@@ -192,12 +192,17 @@ $total_pages = ceil($total_rows / $limit);
                     $madon = $_GET['madon'];
                     $sql .= " AND hoadon.idBill = $madon ";
                 }
+                if(isset($_GET['status']) && $_GET['status'] != '') {
+                    $status = $_GET['status'];
+                    $sql .= " AND hoadon.statusBill = $status ";
+                }
                 $sql .= " LIMIT $offset, $limit";
 
                 $result = $conn->query($sql);
                 $texts = [
                   1 => 'Đang xử lý',
-                  2 => 'Đang được giao', 3 => 'Giao hàng thành công',
+                  2 => 'Đang được giao', 
+                  3 => 'Giao hàng thành công',
                   4 => 'Đơn hàng đã hủy'
                 ];
                 while ($row = $result->fetch_assoc()) { 
