@@ -71,6 +71,9 @@ $user_id=$_SESSION["user_id"];
     from hoadon
     where hoadon.idUser=
     ".$_SESSION["user_id"];
+    if ($currentStatus) {
+        $query .= " AND hoadon.statusBill = $currentStatus";
+      }
     $result=mysqli_query($conn,$query);
     if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
@@ -114,7 +117,6 @@ $user_id=$_SESSION["user_id"];
       $result2=mysqli_query($conn,$query2);
       if ($result2->num_rows > 0) {
         while ($row2 = $result2->fetch_assoc()) {
-          echo $currentStatus;
       ?>
       <div class="flex justify-between  pb-4 mb-4 border-t pt-4 mt-4">
         <div class="flex items-start gap-4">
