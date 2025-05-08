@@ -110,7 +110,23 @@ if($conn->connect_error) {
       </div>
       <?php }}else{?>
       <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
-        <a onclick="toggleAddressPopup()" class="text-blue-600 text-sm font-medium hover:underline">Thêm</a>
+        <div class="flex-1">
+          <input type="hidden" id="submitId_Diachi" value="">
+          <span class="font-bold text-gray-900"><span id="submitName"></span></span> 
+          <span class="text-gray-700"> SĐT : <span id="submitSDT"></span></span><br>
+          <span id="submitDiachi"></span>
+          ,<span id="submitWard"></span> , 
+          <span id="submitDistrict"></span>, 
+          <span id="submitCity"></span>
+          <input type="hidden" id="macdinh" name="macdinh" value="">
+        </div>
+        <div class="flex gap-3 items-center mt-2 sm:mt-0">
+          <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">
+              Mặc Định
+          </span>
+
+          <a onclick="toggleAddressPopup()" class="text-blue-600 text-sm font-medium hover:underline">Thêm</a>
+        </div>
       </div>
       <?php }?>
     </div>
@@ -269,7 +285,7 @@ if($conn->connect_error) {
   <div class="  max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
     <h2 class="text-lg font-bold text-gray-800 mb-2">Địa Chỉ Của Tôi</h2>
     <?php 
-    $query = "SELECT * FROM thongTinGiaoHang where id_user =".$_SESSION["user_id"] ." and status=1";
+    $query = "SELECT * FROM thongTinGiaoHang where id_user =".$_SESSION["user_id"] ." ";
     $result = $conn->query($query);
     if($result->num_rows>0){
       while($row=$result->fetch_assoc()){
@@ -2032,7 +2048,7 @@ function showAddressChecked() {
     const ward = document.getElementById("submitWard").innerText.trim();
     const district = document.getElementById("submitDistrict").innerText.trim();
     const province = document.getElementById("submitCity").innerText.trim();
-    const macdinh = document.getElementById("macdinh").value || 0;
+    // const macdinh = document.getElementById("macdinh").value || 0;
     const selected = document.getElementById("submitId_Diachi").value || 0;
 
     if (!tennguoinhan || !sdt || !diachi || !ward || !district || !province) {
@@ -2054,7 +2070,7 @@ function showAddressChecked() {
         district,
         thanhpho: province,
         diachi,
-        macdinh
+        //macdinh
       };
 
       try {

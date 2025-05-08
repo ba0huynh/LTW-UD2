@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = new mysqli("localhost", "root", "", "ltw_ud2");
 if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
@@ -32,8 +33,13 @@ $total_pages = ceil($total_rows / $limit);
 </head>
 <body>
 
+<main class="flex flex-row">
+        <?php include_once './gui/sidebar.php' ?>
+        <div class="flex items-center w-full h-screen justify-center">
+            <div class="bg-white shadow-lg border border-gray-300 rounded-lg overflow-y-scroll p-6 h-[90%] w-[90%]">
 
-<div class="w-full bg-white p-6 rounded-2xl mt-10">
+
+<div class="w-full bg-white p-6 rounded-2xl ">
     <h2 class="text-2xl font-semibold mb-6 text-gray-800">Quản lí dơn hàng</h2>
 
     <div class="flex justify-between items-center mb-4">
@@ -111,7 +117,6 @@ $total_pages = ceil($total_rows / $limit);
             <th  class="px-6 py-4 text-left">Ngày đặt</th>
             <th  class="px-6 py-4 text-left">Tên khách hàng</th>
             <th class="px-6 py-4 text-left">Số điện thoại</th>
-            <th class="px-6 py-4 text-left">Địa chỉ</th>
             <th class="px-6 py-4 text-left">Tổng hóa đơn</th>
             <th class="px-6 py-4 text-center">Trạng thái</th>
             <th class="px-6 py-4 text-center">Chức năng</th>
@@ -154,11 +159,7 @@ $total_pages = ceil($total_rows / $limit);
                 <td class="px-6 py-4"><?= htmlspecialchars($row['fullName']) ?></td>
                 <td class="px-6 py-4"><?= htmlspecialchars($row['phoneNumber']) ?></td>
 
-                <td class="px-6 py-4"><?= htmlspecialchars($row['diachi']) ?> 
-                <?= htmlspecialchars($row['quan']) ?>
-                <?= htmlspecialchars($row['huyen']) ?>
-                <?= htmlspecialchars($row['thanhpho']) ?>
-                </td>
+
                 <td class="px-6 py-4 text-blue-600 font-semibold"><?= number_format($row['totalBill'], 0, ',', '.') ?>đ</td>
                 <td class="px-6 py-4 text-center">
                     <form method="POST" style="display:inline;" action="../../controllers/duyetsanpham.php" >
@@ -361,6 +362,8 @@ $total_pages = ceil($total_rows / $limit);
         </div>
     </div>
 </div>
+</div></div>
+          </main>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.btn-huy').forEach(button => {

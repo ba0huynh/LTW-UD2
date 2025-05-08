@@ -27,7 +27,7 @@ if($conn->connect_error) {
 <body>
 <?php include_once "../components/header2.php";?>
 
-<div class="bg-white mt-4  flex flex-col items-center justify-center font-sans">
+<div class="bg-white mt-4  flex flex-col items-center justify-center font-sans min-h-screen">
 
 <!-- Background dots -->
 <div class=" bg-gradient-to-br from-white to-white">

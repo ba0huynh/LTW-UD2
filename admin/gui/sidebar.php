@@ -35,13 +35,19 @@ if ($adminID == null) {
             <i class="fas fa-box"></i> <span>Quản lí sản phẩm</span>
         </div>
         <div class="submenu">
-            <div class="submenu-item">Danh sách sản phẩm</div>
+            <a href="./sanphan.php">
+
+                <div class="submenu-item">Danh sách sản phẩm</div>
+            </a>
             <div class="submenu-item">Thêm sản phẩm</div>
             <div class="submenu-item">Nhập sản phẩm</div>
         </div>
-        <div class="menu-item">
-            <i class="fas fa-shopping-cart"></i> <span>Quản lý đơn hàng</span>
-        </div>
+        <a href="./quanlidon.php">
+
+            <div class="menu-item">
+                <i class="fas fa-shopping-cart"></i> <span>Quản lý đơn hàng</span>
+            </div>
+        </a>
         <div class="submenu">
             <div class="submenu-item">Danh sách đơn hàng</div>
             <div class="submenu-item">Thêm đơn hàng</div>
