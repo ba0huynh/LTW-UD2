@@ -40,10 +40,9 @@ if(isset($_SESSION["user_id"])){
 
 ?>
 <form action="payment.php" method="post" id="cartForm">
-  <div class="max-w-6xl mx-auto mt-10 flex gap-6">
-    <div class="w-full max-w-sm bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
-
-      <div class="flex justify-between text-gray-500 mb-2">
+  <div class="  max-w-6xl mx-auto mt-10 flex gap-6">
+    <div class=" w-full max-w-sm bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
+      <div class=" flex justify-between text-gray-500 mb-2">
         <span>Thành tiền</span>
         <span class="total-amount">
           <?php echo number_format($row["totalPrice"], 0, ',', '.'); ?> đ

@@ -18,7 +18,7 @@
     </h2>
   </div>
 
-  <div class="grid [grid-template-columns:repeat(4,minmax(0,1fr))_32px] gap-6 px-4 pb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 pb-8">
     
     <?php 
     $count_books = $result2->num_rows;
@@ -43,9 +43,22 @@
           <div class="flex items-center space-x-2 mt-2">
             <span class="text-lg font-bold text-red-500"><?php echo number_format($row2["currentPrice"], 0, ',', '.'); ?> đ</span>
             <span class="text-sm text-gray-400 line-through"><?php echo number_format($row2["oldPrice"], 0, ',', '.'); ?> đ</span>
-            <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">-25%</span>
+
           </div>
-          <p class="text-sm text-gray-500 mt-1">Đã bán 102</p>
+          <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
+              <?php
+              $old = (float)$row2["oldPrice"];
+              $current = (float)$row2["currentPrice"];
+
+              $discount = ($old > 0) ? number_format((1 - $current / $old) * 100, 3) : 0;
+
+              ?>
+
+              <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
+                  -<?= $discount ?>%
+              </span>
+    </span>
+
         </div>
       </div>
     <?php }} ?>
