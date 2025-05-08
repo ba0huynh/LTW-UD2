@@ -85,4 +85,33 @@ LIMIT 5;
             return false; // Return false if login fails
         }
     }
+    public function getCustomerSalesByDateRange($fromDate, $toDate) 
+    {
+        global $pdo;
+        $query = "
+            SELECT 
+                u.id,
+                u.fullName,
+                u.email,
+                COUNT(DISTINCT h.idBill) as order_count,
+                SUM(h.totalBill) as total_spent
+            FROM 
+                users u
+            JOIN 
+                hoadon h ON u.id = h.idUser
+            WHERE 
+                h.create_at BETWEEN :fromDate AND :toDate
+                AND h.statusBill IN (1, 4) -- only completed orders
+            GROUP BY 
+                u.id, u.fullName, u.email
+            ORDER BY 
+                total_spent DESC";
+                
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':fromDate', $fromDate);
+        $stmt->bindParam(':toDate', $toDate);
+        $stmt->execute();
+        
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
