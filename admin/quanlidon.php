@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const idText = document.getElementById('modalOrderId').textContent;
     const idBill = idText.replace('#MD', '');
     const statusText = document.getElementById('modalStatus').value;
-    const note = document.querySelector('#updateModal textarea').value;
+    //const note = document.querySelector('#updateModal textarea').value;
 
 
     const statusMap = {
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
       body: JSON.stringify({
         idBill: idBill,
         statusBill: status,
-        note: note
+        //note: note
       })
     })
     .then(res => res.json())

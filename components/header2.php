@@ -32,7 +32,7 @@ if (isset($_SESSION['user_id'])) {
 
   </div>
   <div class="flex items-center gap-4 text-sm text-gray-600">
-    <!-- Thông báo -->
+
 
     <div class="flex flex-col items-center">
       <div onclick="toggleNoti()" class="cursor-pointer text-center">
@@ -40,21 +40,18 @@ if (isset($_SESSION['user_id'])) {
         <span>Thông Báo</span>
       </div>
 
-      <!--  -->
+
       <div id="notificationPanel"
         class=" hidden absolute right-50 mt-12 w-80 bg-white border border-gray-200 rounded-xl shadow-lg z-30">
-        <!-- Tiêu đề -->
+
         <div class="flex justify-between items-center p-4 border-b border-gray-200">
           <h3 class="font-semibold text-gray-800 flex items-center gap-2 text-base">
-            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            Thông báo
+            🔔
+          
           </h3>
         </div>
 
-        <ul class="divide-y divide-gray-200 max-h-72 overflow-y-auto">
+        <ul class="divide-y divide-gray-200 max-h-72 overflow-y-scroll">
           <?php
           if (!empty($user_id)) {
             $query = "
@@ -100,7 +97,7 @@ if (isset($_SESSION['user_id'])) {
                   1 => 'Đang xử lý',
                   2 => 'Đang được giao',
                   3 => 'Giao hàng thành công',
-                  4 => 'Đơn hàng đã hủy'
+                  4 => 'Đơn hàng bị hủy'
                 ];
                 $text = $texts[$status] ?? '❌';
                 $icon = $icons[$status] ?? '❌';
@@ -142,12 +139,6 @@ if (isset($_SESSION['user_id'])) {
           <?php } ?>
         </ul>
       </div>
-
-      <!-- 1.đang xử lí 📦(đợi duyệt hoặc hủy)trang duyệt/hủy-->
-      <!-- 2.đang được giao (duyệt xong chuyển sang đang xử lí giao hàng hoặc hủy) trang xử lí giao hàng 🚚-->
-      <!-- 3.giao hàng thành công ✅ ( giao xong hiện trong danh sách đơn hàng hoàn thành )danh sách đơn hàng hoàn thành-->
-      <!-- 4.đơn hàng đã trả ↩️ (các đơn hàng trong 10 ngày đầu được khách ấn trả)trang trả hàng/hủy-->
-      <!-- 5.đơn hàng đã bị hủy ❌-->
 
     </div>
     <!-- Giỏ hàng -->

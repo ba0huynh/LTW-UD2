@@ -18,9 +18,11 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $idBill = intval($data['idBill']);
 $status = intval($data['statusBill']);
-$note = $conn->real_escape_string($data['note']);
+//$note = $conn->real_escape_string($data['note']);
 
-$update = "UPDATE hoadon SET statusBill = $status, ly_do_huy = '$note' WHERE idBill = $idBill";
+//$update = "UPDATE hoadon SET statusBill = $status, ly_do_huy = '$note' WHERE idBill = $idBill";
+$update = "UPDATE hoadon SET statusBill = $status  WHERE idBill = $idBill";
+
 if ($conn->query($update)) {
     echo json_encode(['success' => true, 'message' => "Đã cập nhật đơn hàng #MD$idBill"]);
 } else {

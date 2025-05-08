@@ -18,8 +18,8 @@
     </h2>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-3 md:px-4 pb-4 sm:pb-6 md:pb-8">
-    
+  <!-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 px-2 sm:px-3 md:px-4 pb-4 sm:pb-6 md:pb-8"> -->
+  <div class="grid [grid-template-columns:repeat(4,minmax(0,1fr))_32px] gap-6 px-4 pb-8">
     <?php 
     $count_books = $result2->num_rows;
     if ($count_books > 0) {
@@ -64,11 +64,9 @@
     <?php }} ?>
     
     <?php if ($count_books>=4){?>
-    <!-- "Xem thêm" button - responsive -->
     <a href="searchPage.php?subject=<?= $row['id'] ?>"
        class="bg-white transition duration-300 rounded-lg sm:rounded-xl flex flex-col justify-center items-center text-[#0081c2] hover:text-blue-700 p-3 sm:p-4 md:p-6 text-xs sm:text-sm font-medium group">
       <div class="flex flex-col items-center gap-1 sm:gap-2 transform group-hover:scale-105 transition">
-        <span class="text-sm sm:text-base md:text-lg">Xem thêm</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>

@@ -53,7 +53,7 @@ $user_id=$_SESSION["user_id"];
           Hoàn thành
         </a>
         <a href="orderHistory.php?status=4" class="tab-button px-4 py-2 <?php if ($currentStatus == 4) echo 'text-red-500 font-semibold'; ?>">
-          Đã huỷ
+          Đơn bị hủy
         </a>
       </div>
 
@@ -142,27 +142,52 @@ $user_id=$_SESSION["user_id"];
               </button>
             </form>
 
-            <?php if($row["statusBill"]==6){?>
-            <form action="/order/huyDonHang" method="POST">
-              <input type="hidden"  name="IDHoaDonXuat" value="{{../IDHoaDonXuat}}">
 
-              <button type="submit" class="text-gray-800 border border-gray-300 px-6 py-2 rounded-lg hover:bg-gray-100 transition">
-                Hủy
-              </button>
-            </form>
-            <?php }?>
           </div>
         </div>
       </div>
 
       <?php }}?>
-      <div class="flex flex-col items-start justify-between border-t pt-4 mt-4">
+      <?php
+      $choPhepHuy = false;
+      if ($row["statusBill"] == 2) {
+          $createTime = strtotime($row["create_at"]);
+          $now = time();
+          $diffHours = ($now - $createTime) / 3600;
+          if ($diffHours <= 4) {
+              $choPhepHuy = true;
+          }
+      } elseif ($row["statusBill"] == 1) {
+          $choPhepHuy = true;
+      }
+      ?>
+
+      <div class="flex items-center justify-between border-t pt-4 mt-4">
+        <!-- Tổng tiền -->
         <div>
           <span class="text-lg font-medium text-gray-700 mr-4">Tổng :</span>
-          
-          <span class="text-xl font-bold text-red-600 "><?php echo number_format($row["totalBill"], 0, ',', '.'); ?> đ</span>
+          <span class="text-xl font-bold text-red-600">
+            <?= number_format($row["totalBill"], 0, ',', '.'); ?> đ
+          </span>
         </div>
+
+        <!-- Nút hủy -->
+        <!-- <?php if ($choPhepHuy): ?>
+          <form action="../controllers/huydon.php" method="POST">
+            <input type="hidden" name="IDHoaDonXuat" value="<?= htmlspecialchars($row['idBill']) ?>">
+            <button type="submit"
+              class="inline-flex items-center gap-2 px-5 py-2 text-sm font-semibold text-red-600 bg-red-50 border border-red-300 rounded-xl shadow-sm hover:bg-red-100 hover:text-red-700 transition-all duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Hủy đơn
+            </button>
+          </form>
+        <?php endif; ?> -->
       </div>
+
+
     </div>
   </div>
 
