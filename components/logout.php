@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_GET["user_id"])){
-    header("Location: /LTW_UD2/");
+    header("Location: /LTW-UD2/");
 }
 session_unset(); 
 session_destroy();
