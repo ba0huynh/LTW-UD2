@@ -109,9 +109,11 @@ if($conn->connect_error) {
         </div>
       </div>
       <?php }}else{?>
-      <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+      <div id="showAddressInfor" class="hidden flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
         <div class="flex-1">
+
           <input type="hidden" id="submitId_Diachi" value="">
+          
           <span class="font-bold text-gray-900"><span id="submitName"></span></span> 
           <span class="text-gray-700"> SĐT : <span id="submitSDT"></span></span><br>
           <span id="submitDiachi"></span>
@@ -120,12 +122,18 @@ if($conn->connect_error) {
           <span id="submitCity"></span>
           <input type="hidden" id="macdinh" name="macdinh" value="">
         </div>
-        <div class="flex gap-3 items-center mt-2 sm:mt-0">
+
+        <div  class="flex gap-3 items-center mt-2 sm:mt-0">
           <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">
               Mặc Định
           </span>
+          <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thay Đổi</a>
+        </div>
+      </div>
 
-          <a onclick="toggleAddressPopup()" class="text-blue-600 text-sm font-medium hover:underline">Thêm</a>
+      <div id="add-address"  class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+        <div>
+          <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thêm</a>
         </div>
       </div>
       <?php }?>
@@ -281,8 +289,8 @@ if($conn->connect_error) {
   </form>
 </div>
 
-<div id="addressPopup" class="animate-fade-in  fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
-  <div class="  max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
+<div id="addressPopup" class="  fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 hidden transition duration-300 ease-out">
+  <div class="animate-fade-in max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-4 font-sans">
     <h2 class="text-lg font-bold text-gray-800 mb-2">Địa Chỉ Của Tôi</h2>
     <?php 
     $query = "SELECT * FROM thongTinGiaoHang where id_user =".$_SESSION["user_id"] ." ";
@@ -334,7 +342,6 @@ if($conn->connect_error) {
       <span class="text-xl">＋</span> Thêm Địa Chỉ Mới
     </button>
 
-    <!-- Hủy và Xác nhận -->
     <div class="flex justify-end gap-4 mt-6">
       <button type="button" onclick="toggleAddressPopup()" class="px-5 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition">Hủy</button>
       <button 
@@ -1999,6 +2006,7 @@ function showNewAddress() {
   document.getElementById("submitWard").innerText = ward;
   document.getElementById("submitDistrict").innerText = district;
   document.getElementById("submitCity").innerText = province;
+  document.getElementById("submitId_Diachi").value = "0"; // Đặt ID địa chỉ là 0 cho địa chỉ mới
   document.getElementById("new-address-form").classList.add("hidden");
 }
 </script>
@@ -2033,6 +2041,9 @@ function showAddressChecked() {
   document.getElementById("submitCity").innerText = thanhpho.trim();
 
   document.getElementById("addressPopup").classList.add("hidden");
+  document.getElementById("showAddressInfor").classList.toggle("hidden");
+  document.getElementById("add-address").classList.toggle("hidden");
+
 }
 
 
@@ -2042,35 +2053,36 @@ function showAddressChecked() {
   async function xacNhanThanhToan() {
     const tennguoinhan = document.getElementById("submitName").innerText.trim();
     const sdt = document.getElementById("submitSDT").innerText.trim();
-    const selectedPayment = document.querySelector('input[name="payment"]:checked');
-    // const diachi = document.getElementById("diachi")?.value;
-    const diachi=document.getElementById("submitDiachi").innerText.trim();
+    const diachi = document.getElementById("submitDiachi").innerText.trim();
     const ward = document.getElementById("submitWard").innerText.trim();
     const district = document.getElementById("submitDistrict").innerText.trim();
     const province = document.getElementById("submitCity").innerText.trim();
-    // const macdinh = document.getElementById("macdinh").value || 0;
-    const selected = document.getElementById("submitId_Diachi").value || 0;
+    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    const selected = document.getElementById("submitId_Diachi").value; 
 
     if (!tennguoinhan || !sdt || !diachi || !ward || !district || !province) {
-      alert("Vui lòng nhập địa chỉ giao hàng.");
+      alert("Vui lòng điền đầy đủ thông tin địa chỉ và người nhận.");
       return;
     }
-    if (!tennguoinhan ) {
-      alert("Vui lòng nhập tên người nhân.");
+
+    if (!selectedPayment) {
+      alert("Vui lòng chọn phương thức thanh toán.");
       return;
     }
+    console.log("selected:", selected);
+    console.log("tennguoinhan:", tennguoinhan);
+    console.log("sdt:", sdt);
 
     let addressId = null;
 
-    if (!selected) {
+    if (!selected || selected === "0") {
       const newAddress = {
         tennguoinhan,
         sdt,
-        phuong: ward,
-        district,
+        ward,
+        quan: district,  // dùng key "quan" đúng với PHP
         thanhpho: province,
-        diachi,
-        //macdinh
+        diachi
       };
 
       try {
@@ -2083,35 +2095,43 @@ function showAddressChecked() {
         });
 
         const result = await res.json();
+
         if (!result.success) {
           alert("Không thể thêm địa chỉ mới: " + result.message);
           return;
         }
 
+        if (!result.address_id) {
+          alert("Thêm địa chỉ thành công nhưng thiếu ID trả về.");
+          return;
+        }
+
         addressId = result.address_id;
+
       } catch (err) {
+        console.error(err);
         alert("Lỗi khi thêm địa chỉ mới.");
         return;
       }
 
     } else {
-      // Nếu người dùng chọn địa chỉ cũ
-      addressId = selected.value;
+      addressId = selected;
     }
 
     const paymentMethod = selectedPayment.value;
+
     fetch("../controllers/thanhtoan.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: `address_id=${addressId}&payment_method=${encodeURIComponent(paymentMethod)}`
+      body: `address_id=${encodeURIComponent(addressId)}&payment_method=${encodeURIComponent(paymentMethod)}`
     })
     .then(response => response.text())
     .then(data => {
       if (data.includes("Thanh toán thành công")) {
         alert("Thanh toán thành công!");
-        window.location.href = "/LTW_UD2/zui/responseOrder.php";
+        window.location.href = "/LTW-UD2/zui/responseOrder.php";
       } else {
         alert("Đã xảy ra lỗi khi thanh toán: " + data);
       }
@@ -2122,6 +2142,7 @@ function showAddressChecked() {
     });
   }
 </script>
+
 
 
 </body>
