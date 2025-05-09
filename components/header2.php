@@ -412,7 +412,7 @@ function validateRegisterForm(event) {
           tablinks.forEach(tab => {
             tab.addEventListener("mouseenter", function () {
               const Class = this.dataset.id;
-              fetch(`contentMenu.php/?Class=${Class}`).
+              fetch(`/LTW-UD2/contentMenu.php/?Class=${Class}`).
                 then(response => response.text()).
                 then(data => {
                   contentMenu.innerHTML = data;
