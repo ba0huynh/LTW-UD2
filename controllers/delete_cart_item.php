@@ -23,18 +23,17 @@ if ($conn->connect_error) {
     exit;
 }
 
-// Xoá sản phẩm khỏi cartitems
 $stmt = $conn->prepare("DELETE FROM cartitems WHERE bookId = ? AND cartId = ?");
 $stmt->bind_param("ii", $bookId, $cartId);
 
 if ($stmt->execute()) {
-    // ✅ Sau khi xoá, tính lại tổng tiền trong giỏ
+
     $res = $conn->query("SELECT SUM(currentPrice * amount) as total FROM cartitems JOIN books ON cartitems.bookId = books.id WHERE cartitems.cartId = $cartId");
     $total = 0;
     if ($row = $res->fetch_assoc()) {
         $total = $row['total'] ?? 0;
 
-        // Cập nhật lại tổng tiền trong bảng `cart`
+        
         $conn->query("UPDATE cart SET totalPrice = $total WHERE idCart = $cartId");
     }
 

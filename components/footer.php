@@ -4,8 +4,8 @@
 
       <!-- Logo & Description -->
       <div class="space-y-4">
-        <img src="./images/login/image1.jpg" alt="Logo" class="w-20">
-        <img src="./images/login/logo-bo-cong-thuong-da-thong-bao1.webp" alt="Đã thông báo" class="w-28 mt-4">
+        <img src="/LTW-UD2/images/login/image1.jpg" alt="Logo" class="w-20">
+        <img src="/LTW-UD2/images/login/logo-bo-cong-thuong-da-thong-bao1.webp" alt="Đã thông báo" class="w-28 mt-4">
         <div class="flex gap-3 text-2xl text-gray-500 mt-4">
           <i class='bx bxl-facebook-circle hover:text-blue-600'></i>
           <i class='bx bxl-instagram-alt hover:text-pink-500'></i>
@@ -47,12 +47,12 @@
 
     <!-- Payments -->
     <div class="mt-12 border-t pt-6 flex flex-wrap justify-center items-center gap-6">
-      <img src="./images/login/logo_lex.webp" class="h-10">
-      <img src="./images/login/Logo_ninjavan.webp" class="h-10">
-      <img src="./images/login/vnpost1.webp" class="h-10">
-      <img src="./images/login/vnpay_logo.webp" class="h-10">
-      <img src="./images/login/shopeepay_logo.webp" class="h-10">
-      <img src="./images/login/momopay.webp" class="h-10 w-auto">
+      <img src="/LTW-UD2/images/login/logo_lex.webp" class="h-10">
+      <img src="/LTW-UD2/images/login/Logo_ninjavan.webp" class="h-10">
+      <img src="/LTW-UD2/images/login/vnpost1.webp" class="h-10">
+      <img src="/LTW-UD2/images/login/vnpay_logo.webp" class="h-10">
+      <img src="/LTW-UD2/images/login/shopeepay_logo.webp" class="h-10">
+      <img src="/LTW-UD2/images/login/momopay.webp" class="h-10 w-auto">
     </div>
 
     <p class="text-center text-sm text-gray-400 mt-6 pb-6">© 2025 Fahahasa. All rights reserved.</p>

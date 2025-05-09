@@ -42,7 +42,7 @@ if($conn->connect_error) {
                     if ($result2->num_rows > 0) {
                         // Cart has items
                         ?>
-                        <form action="payment.php" method="post" id="cartForm">
+                        <form  id="cartForm">
                             <div class="flex flex-col lg:flex-row gap-6 max-w-7xl mx-auto">
                                 <!-- Cart Items Section -->
                                 <div class="lg:w-2/3 w-full bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
@@ -164,7 +164,7 @@ if($conn->connect_error) {
                                         </div>
                                         
                                         <div class="mt-6 space-y-3">
-                                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium rounded-xl shadow-sm hover:shadow-md transform transition-all duration-200 ease-in-out hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+                                            <button id="submitCartBtn" type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium rounded-xl shadow-sm hover:shadow-md transform transition-all duration-200 ease-in-out hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
                                                 <i class="fas fa-credit-card"></i>
                                                 Thanh toán ngay
                                             </button>
@@ -229,7 +229,27 @@ if($conn->connect_error) {
     </div>
 
     <?php include_once "../components/footer.php"; ?>
-    
+    <script>
+    document.getElementById('cartForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        let hasItem = false;
+        const quantities = document.querySelectorAll('.quantity');
+
+        quantities.forEach(span => {
+            const amount = parseInt(span.textContent.trim());
+            if (amount > 0) hasItem = true;
+        });
+
+        if (!hasItem) {
+            alert("Không có sản phẩm nào trong giỏ hàng.");
+            return;
+        }
+        const form = e.target;
+        const formData = new FormData(form);
+        window.location.href = "payment.php"
+    });
+    </script>
+
     <script>
         function formatCurrency(value) {
             return new Intl.NumberFormat('vi-VN', {
