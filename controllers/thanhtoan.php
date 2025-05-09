@@ -119,5 +119,5 @@ $total_row = $total_result->fetch_assoc();
 $total = $total_row['total'] ?? 0;
 
 $conn->query("UPDATE cart SET totalPrice = $total WHERE idUser = $user_id");
-
+echo "Thanh toán thành công";
 ?>
