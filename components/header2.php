@@ -31,11 +31,21 @@ if (isset($_SESSION['user_id'])) {
 }
 
 ?>
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+</style>
 <div class="relative mx-auto w-full flex justify-between py-2 px-[10%] bg-white shadow-sm">
   <div class="flex items-center gap-2">
     <a href="/LTW-UD2"><img src="/LTW-UD2/images/forHeader/logo.jpg" alt="Logo" class="h-12"></a>
   </div>
-  <img src="/LTW-UD2/images/menulogo.png" alt="" class=" h-10" id="menuTrigger">
+  <img src="/LTW-UD2/images/forHeader/menucontent.png" alt="" class=" h-10 animate-fade-in shadow-lg cursor-pointer" id="menuTrigger">
   <div class="flex-1 max-w-2xl mx-4">
     <form action="/LTW-UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
       <input type="text" name="search" placeholder="Tìm kiếm" class="flex-1 px-4 py-2 outline-none text-sm" required />
@@ -356,14 +366,12 @@ function validateRegisterForm(event) {
   </div>
 
 
-  <!-- MENU CONTENT -->
   <div id="menuContent"
-    class="menuContent hidden absolute top-full left-10 bg-white shadow-lg z-50 w-[90vw] rounded-xl overflow-hidden ">
+    class="menuContent animate-fade-in hidden absolute top-full left-10 bg-white shadow-lg z-50 w-[90vw] rounded-xl overflow-hidden ">
 
     <div class="flex min-h-[300px]">
 
-      <!-- SIDEBAR: Danh sách lớp -->
-      <div class="w-60 bg-white border-r">
+      <div class="w-60 bg-white border-r border-gray-200 shadow-lg">
         <?php for ($i = 6; $i < 13; $i++) { ?>
           <div
             class="tablinks px-4 py-3 hover:bg-gray-100 cursor-pointer text-sm font-medium border-l-4 border-transparent hover:border-pink-500 transition-all"
@@ -371,9 +379,24 @@ function validateRegisterForm(event) {
             Lớp <?php echo $i ?>
           </div>
         <?php } ?>
+        <script>
+          document.querySelectorAll(".tablinks").forEach(tab => {
+            tab.addEventListener("mouseenter", function () {
+              let Class = this.dataset.id;
+              openTab(this, Class);
+            })
+          })
+          function openTab(tab, Class) {
+
+            const Tablinks = document.querySelectorAll(".tablinks");
+            for (let i = 0; i < Tablinks.length; i++) {
+              Tablinks[i].className = Tablinks[i].className.replace(" onTab", "");
+            }
+            tab.classList.add("onTab");
+          }
+        </script>
       </div>
 
-      <!-- NỘI DUNG CHI TIẾT -->
       <div class="flex-1 p-6">
         <div class="flex items-center gap-2 mb-4">
           <img src="/LTW-UD2/images/forHeader/menuBook.png" alt="" class="w-5 h-5">
@@ -381,67 +404,26 @@ function validateRegisterForm(event) {
         </div>
 
         <div class="detailMenu grid grid-cols-2 gap-6 text-sm text-gray-700">
-
+          <!-- div*3 -->
         </div>
+        <script>
+          const detailMenu = document.querySelector(".detailMenu");
+          const tablinks = document.querySelectorAll(".tablinks");
+          tablinks.forEach(tab => {
+            tab.addEventListener("mouseenter", function () {
+              const Class = this.dataset.id;
+              fetch(`contentMenu.php/?Class=${Class}`).
+                then(response => response.text()).
+                then(data => {
+                  detailMenu.innerHTML = data;
+                })
+            })
+          })
+        </script>
       </div>
     </div>
   </div>
 
-  <div id="menuContent" class="menuContent hidden absolute top-full left-0  bg-white shadow-lg z-50">
-    <div class="sideBarMenu">
-      <?php
-      for ($i = 6; $i < 13; $i++) {
-        ?>
-        <div class="tablinks " data-id="<?php echo $i; ?>">
-          Lớp <?php echo $i ?>
-        </div>
-        <?php
-      }
-      ?>
-      <script>
-        document.querySelectorAll(".tablinks").forEach(tab => {
-          tab.addEventListener("mouseenter", function () {
-            let Class = this.dataset.id;
-            openTab(this, Class);
-          })
-        })
-        function openTab(tab, Class) {
-
-          const Tablinks = document.querySelectorAll(".tablinks");
-          for (let i = 0; i < Tablinks.length; i++) {
-            Tablinks[i].className = Tablinks[i].className.replace(" onTab", "");
-          }
-          tab.classList.add("onTab");
-        }
-      </script>
-    </div>
-    <div class="line"></div>
-    <div style="width: 100%;">
-      <div>
-        <div>
-          <img src="/LTW-UD2/images/forHeader/menuBook.png" alt="">
-        </div>
-        SÁCH TRONG NƯỚC
-      </div>
-      <div class="detailMenu">
-        <!-- div*3 -->
-      </div>
-      <script>
-        const detailMenu = document.querySelector(".detailMenu");
-        const tablinks = document.querySelectorAll(".tablinks");
-        tablinks.forEach(tab => {
-          tab.addEventListener("mouseenter", function () {
-            const Class = this.dataset.id;
-            fetch(`contentMenu.php/?Class=${Class}`).
-              then(response => response.text()).
-              then(data => {
-                detailMenu.innerHTML = data;
-              })
-          })
-        })
-      </script>
-    </div>
-  </div>
 </div>
 </div>
 
@@ -454,7 +436,6 @@ function validateRegisterForm(event) {
     menuContent.classList.toggle('hidden');
   });
 
-  // Nếu bạn muốn ấn ra ngoài để ẩn luôn menu:
   document.addEventListener('click', (e) => {
     if (!menuTrigger.contains(e.target) && !menuContent.contains(e.target)) {
       menuContent.classList.add('hidden');
@@ -483,7 +464,6 @@ function validateRegisterForm(event) {
     notiPanel.classList.toggle('hidden');
   }
 
-  // Nếu bạn muốn click ra ngoài sẽ tự ẩn panel:
   document.addEventListener('click', function (e) {
     const trigger = e.target.closest('[onclick="toggleNoti()"]');
     if (!trigger && !notiPanel.contains(e.target)) {

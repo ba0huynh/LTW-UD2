@@ -254,7 +254,7 @@ if($conn->connect_error) {
 
                     if (action === 'increase') {
                         currentQty++;
-                    } else if (currentQty > 1) {
+                    } else if (currentQty >= 1) {
                         currentQty--;
                     }
 
@@ -269,7 +269,7 @@ if($conn->connect_error) {
                     .then(res => res.json())
                     .then(data => {
                         if (data.success) {
-                            // Update cart total
+                            
                             document.querySelectorAll('.total-amount').forEach(el => {
                                 el.textContent = formatCurrency(data.totalPrice);
                             });

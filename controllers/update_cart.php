@@ -24,7 +24,7 @@ $user_id = $_SESSION['user_id'];
 $book_id = intval($_POST['book_id'] ?? 0);
 $new_amount = intval($_POST['amount'] ?? 0);
 
-if ($book_id <= 0 || $new_amount < 1) {
+if ($book_id <= 0 ) {
     echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
     exit;
 }

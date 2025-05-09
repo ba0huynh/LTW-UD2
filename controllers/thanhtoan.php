@@ -108,5 +108,16 @@ $conn->query("
     AND amount > 0
 ");
 
-echo "Thanh toán thành công!";
+
+$total_result = $conn->query("
+    SELECT SUM(amount * currentPrice) AS total FROM cartitems
+    JOIN cart ON cartitems.cartId = cart.idCart
+    JOIN books ON cartitems.bookId = books.id
+    where cart.idUser = $user_id");
+
+$total_row = $total_result->fetch_assoc();
+$total = $total_row['total'] ?? 0;
+
+$conn->query("UPDATE cart SET totalPrice = $total WHERE idUser = $user_id");
+echo "Thanh toán thành công";
 ?>
