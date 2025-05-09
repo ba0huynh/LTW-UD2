@@ -798,3 +798,27 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+CREATE TABLE `nhanvien` (
+  `id` int NOT NULL,
+  `vai_tro` varchar(100) DEFAULT NULL,
+  `ten_nhan_vien` varchar(100) DEFAULT NULL,
+  `ngay_tao` date DEFAULT NULL,
+  `ngay_chinh_sua` date DEFAULT NULL,
+  `muc_luong` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhanvien`
+--
+
+INSERT INTO `nhanvien` (`id`, `vai_tro`, `ten_nhan_vien`, `ngay_tao`, `ngay_chinh_sua`, `muc_luong`) VALUES
+(2, 'Nhân viên bán hàng', 'Trần Thị B', '2024-01-15', '2024-03-01', 8000000.00),
+(3, 'Kế toán', 'Lê Văn Cường', '2024-02-01', '2024-02-20', 12000000.00),
+(4, 'Bảo vệ', 'Phạm Văn Dũng', '2024-01-10', '2024-04-01', 6000000.00),
+(5, 'Tạp vụ', 'Nguyễn Thị Tuyết', '2024-03-01', '2025-05-09', 5000000.00),
+(6, 'Quản lý', 'Đỗ Thị Phương', '2024-02-10', '2025-05-09', 16000000.00),
+(7, 'Nhân viên kho', 'Bùi Văn Nghĩa', '2024-01-20', '2025-05-09', 9000000.00),
+(8, 'Thủ kho', 'Trần Văn Hoàng', '2024-01-05', '2025-05-09', 10000000.00),
+(9, 'Lễ tân', 'Lê Thị Lan', '2024-02-15', '2025-05-09', 7500000.00),
+(10, 'IT support', 'Ngô Văn Hiếu', '2024-01-30', '2025-05-09', 13000000.00),
+(11, 'IT support', 'Lê Hoàng Phúc', '2025-05-09', '2025-05-09', 15000000.00);
