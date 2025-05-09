@@ -62,7 +62,7 @@ $monthlyRevenue = $hoadonTable->getlast6Monthstotal();
 
 // Calculate growth rate
 $currentMonth = $monthlyRevenue[0]['total_bill'] ?? 0;
-$previousMonth = $monthlyRevenue[1]['total_bill'] ?? 1; // avoid division by zero
+$previousMonth = $monthlyRevenue[1]['total_bill'] ?? 0; // avoid division by zero
 $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previousMonth) * 100 : 0;
 ?>
 
@@ -72,7 +72,9 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thống kê kinh doanh</title>
-    
+         <?php 
+    // echo json_encode($customerSales);
+    ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -155,6 +157,7 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
         <div class="flex-1 p-3 sm:p-4 md:p-6 h-screen overflow-auto">
             <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-3 sm:p-4 md:p-6 w-full max-w-full">
                 <!-- Date Range Selector -->
+             
                 <div class="mb-4 md:mb-6">
                     <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-4 flex items-center">
                         <i class="fas fa-chart-line mr-2 text-blue-600"></i>

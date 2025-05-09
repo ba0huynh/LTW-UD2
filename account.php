@@ -1,207 +1,195 @@
 <?php
 session_start();
+require_once "./database/database.php";
+require_once "./database/user.php";
 
+// Initialize database connection and user table
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ltw_ud2";
 $conn = new mysqli($servername, $username, $password, $dbname);
+
+// Create user table instance for improved security
+$userTable = new UsersTable();
+
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['login'])) {
-    $phone = $_POST['user_telephone'];
-    $password = $_POST['user_password'];
 
-    $query = "SELECT * FROM users WHERE phoneNumber = '$phone'";
-    $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($result);
+// Initialize message variables
+$successMessage = "";
+$errorMessage = "";
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        if (password_verify($password, $user['password'])) {
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: index.php");
-            exit;
-        } else {
-            echo "<script>alert('Sai mật khẩu!');</script>";
-        }
+// Handle Login Form Submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+    $phone = trim($_POST['user_telephone'] ?? '');
+    $password = $_POST['user_password'] ?? '';
+
+    // Input validation
+    if (empty($phone) || empty($password)) {
+        $errorMessage = "Vui lòng nhập số điện thoại và mật khẩu.";
     } else {
-        echo "<script>alert('Sai số điện thoại!');</script>";
-    }
-}
-?>
-
-
-
-
-
-<?php
-/*
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $old = $_POST['user_old_password'] ?? '';
-    $new = $_POST['user_new_password'] ?? '';
-    $confirm = $_POST['user_confirm_new_password'] ?? '';
-
-    // Kiểm tra rỗng
-    if (empty($old) || empty($new) || empty($confirm)) {
-        echo "<script>alert('Vui lòng điền đầy đủ thông tin.');</script>";
-    } elseif ($new !== $confirm) {
-        echo "<script>alert('Mật khẩu mới và nhập lại không khớp.');</script>";
-    } else {
-        $sql = "SELECT password FROM users WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $user_id);
+        // Use prepared statement to prevent SQL injection
+        $query = "SELECT * FROM users WHERE phoneNumber = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $phone);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
+        $stmt->close();
 
-        if ($user && password_verify($old, $user['password'])) {
-            $hashedNewPassword = password_hash($new, PASSWORD_DEFAULT);
-
-            $update_sql = "UPDATE users SET password = ? WHERE id = ?";
-            $update_stmt = $conn->prepare($update_sql);
-            $update_stmt->bind_param("si", $hashedNewPassword, $user_id);
-
-            if ($update_stmt->execute()) {
-                echo "<script>alert('Cập nhật mật khẩu thành công!'); window.location.href='account.php';</script>";
+        if ($result && $result->num_rows > 0) {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION["user_id"] = $user["id"];
+                header("Location: index.php");
+                exit;
             } else {
-                echo "<script>alert('Lỗi khi cập nhật mật khẩu.');</script>";
+                $errorMessage = "Sai mật khẩu! Vui lòng kiểm tra lại.";
             }
         } else {
-            echo "<script>alert('Mật khẩu hiện tại không đúng.');</script>";
+            $errorMessage = "Không tìm thấy tài khoản với số điện thoại này.";
         }
     }
 }
-*/
-?>
 
+// Get user details if logged in
+$user = null;
+$user_id = $_SESSION["user_id"] ?? null;
 
-<?php
+if ($user_id) {
+    // Use prepared statements for all database queries
+    $sql = "SELECT * FROM users WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    $stmt->close();
+    
+    // Parse birthday
+    $birthDate = null;
+    $birthDay = '';
+    $birthMonth = '';
+    $birthYear = '';
+    
+    if (!empty($user["dateOfBirth"])) {
+        $birthDate = new DateTime($user["dateOfBirth"]);
+        $birthDay = $birthDate->format('d');
+        $birthMonth = $birthDate->format('m');
+        $birthYear = $birthDate->format('Y');
+    }
+}
+
+// Handle Password Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     $old_pass = $_POST['user_old_password'] ?? '';
     $new_pass = $_POST['user_new_password'] ?? '';
     $confirm_pass = $_POST['user_confirm_new_password'] ?? '';
+    
+    // Input validation
     if (empty($old_pass) || empty($new_pass) || empty($confirm_pass)) {
-        echo "<script>alert('Vui lòng điền đầy đủ thông tin.');  window.history.back();</script>";
-        exit();
-    }
-
-    // Lấy mật khẩu từ DB
-    $query = "SELECT password FROM users WHERE id = $user_id";
-    $result = mysqli_query($conn, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $db_password = $row['password'];
-        // Kiểm tra mật khẩu cũ
-        if (!password_verify($old_pass, $db_password)) {
-            var_dump($user_id, $old_pass, $db_password);
-            echo "<script>alert('Mật khẩu hiện tại không đúng! $old_pass $db_password');  window.history.back();</script>";
-            exit();
-        } elseif ($new_pass !== $confirm_pass) {
-            echo "<script>alert('Mật khẩu mới không khớp!');  window.history.back();</script>";
-            exit();
-        } elseif (strlen($new_pass) < 6) {
-            echo "<script>alert('Mật khẩu mới phải có ít nhất 6 ký tự.');  window.history.back();</script>";
-            exit();
-        } else {
-            // Hash mật khẩu mới
-            $new_hashed = password_hash($new_pass, PASSWORD_DEFAULT);
-
-            // Update vào DB
-            $update_sql = "UPDATE users SET password = ? WHERE id = ?";
-            $stmt = mysqli_prepare($conn, $update_sql);
-
-            if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "si", $new_hashed, $user_id);
-                if (mysqli_stmt_execute($stmt)) {
-                    echo "<script>alert('Đổi mật khẩu thành công!'); window.history.back();</script>";
-                    exit();
-                } else {
-                    echo "<script>alert('Lỗi khi cập nhật mật khẩu.');  window.history.back();</script>";
-                    exit();
-                }
-                mysqli_stmt_close($stmt);
-            } else {
-                echo "<script>alert('Không thể chuẩn bị câu truy vấn.');  window.history.back();</script>";
-                exit();
-            }
-        }
-    }
-}
-?>
-
-<?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
-    $fields = [];
-    $values = [];
-    $types = '';
-
-    $userName = trim($_POST['userName']) ?? '';
-    $fullName = trim($_POST['fullName']) ?? '';
-    $phoneNumber = trim($_POST['phoneNumber']) ?? '';
-    $date = trim($_POST['dateOfBirth']) ?? '';
-    $month = trim($_POST['monthOfBirth']) ?? '';
-    $year = trim($_POST['yearOfBirth']) ?? '';
-
-    if (!empty($userName)) {
-        $fields[] = "userName = ?";
-        $values[] = $userName;
-        $types .= 's';
-    }
-
-    if (!empty($fullName)) {
-        $fields[] = "fullName = ?";
-        $values[] = $fullName;
-        $types .= 's';
-    }
-
-    if (!empty($phoneNumber)) {
-        $fields[] = "phoneNumber = ?";
-        $values[] = $phoneNumber;
-        $types .= 's';
-    }
-
-    if (!empty($date) && !empty($month) && !empty($year)) {
-        // Format date: YYYY-MM-DD
-        $dob = sprintf("%04d-%02d-%02d", intval($year), intval($month), intval($date));
-        $fields[] = "dateOfBirth = ?";
-        $values[] = $dob;
-        $types .= 's';
-    }
-
-    if (count($fields) > 0) {
-        $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE id = ?";
-        $types .= 'i';
-        $values[] = $user_id;
-
-        $stmt = mysqli_prepare($conn, $sql);
-        if ($stmt) {
-            mysqli_stmt_bind_param($stmt, $types, ...$values);
-
-            if (mysqli_stmt_execute($stmt)) {
-                echo "<script>alert('Cập nhật thông tin thành công!');  </script>";
-                exit();
-            } else {
-                echo "<script>alert('Lỗi khi cập nhật: " . mysqli_stmt_error($stmt) . "');  window.history.back();</script>";
-                exit();
-            }
-
-            mysqli_stmt_close($stmt);
-        } else {
-            echo "<script>alert('Lỗi chuẩn bị truy vấn: " . mysqli_error($conn) . "');  window.history.back();</script>";
-            exit();
-        }
+        $errorMessage = "Vui lòng điền đầy đủ thông tin mật khẩu.";
+    } elseif ($new_pass !== $confirm_pass) {
+        $errorMessage = "Mật khẩu mới không khớp với xác nhận.";
+    } elseif (strlen($new_pass) < 6) {
+        $errorMessage = "Mật khẩu mới phải có ít nhất 6 ký tự.";
     } else {
-        echo "<script>alert('Không có trường nào để cập nhật.');  window.history.back();</script>";
-        exit();
+        // Use the improved user class for password verification and update
+        if ($userTable->verifyUserPassword($user_id, $old_pass)) {
+            if ($userTable->updateUserPassword($user_id, $new_pass)) {
+                $successMessage = "Đổi mật khẩu thành công!";
+            } else {
+                $errorMessage = "Lỗi khi cập nhật mật khẩu. Vui lòng thử lại.";
+            }
+        } else {
+            $errorMessage = "Mật khẩu hiện tại không đúng!";
+        }
+    }
+}
+
+// Handle Profile Update
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
+    // Create an array to store user data for updating
+    $userData = [];
+    
+    // Validate and sanitize input
+    $userName = trim($_POST['userName'] ?? '');
+    if (!empty($userName)) {
+        $userData['userName'] = $userName;
+    }
+    
+    $fullName = trim($_POST['fullName'] ?? '');
+    if (!empty($fullName)) {
+        $userData['fullName'] = $fullName;
+    }
+    
+    $phoneNumber = trim($_POST['phoneNumber'] ?? '');
+    if (!empty($phoneNumber)) {
+        // Basic phone number format validation
+        if (preg_match('/^[0-9]{9,15}$/', $phoneNumber)) {
+            $userData['phoneNumber'] = $phoneNumber;
+        } else {
+            $errorMessage = "Số điện thoại không hợp lệ.";
+        }
+    }
+    
+    $email = trim($_POST['email'] ?? '');
+    if (!empty($email)) {
+        // Email validation
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $userData['email'] = $email;
+        } else {
+            $errorMessage = "Email không hợp lệ.";
+        }
+    }
+    
+    // Birth date handling
+    $date = trim($_POST['dateOfBirth'] ?? '');
+    $month = trim($_POST['monthOfBirth'] ?? '');
+    $year = trim($_POST['yearOfBirth'] ?? '');
+    
+    if (!empty($date) && !empty($month) && !empty($year)) {
+        // Validate date
+        if (checkdate((int)$month, (int)$date, (int)$year)) {
+            // Format date: YYYY-MM-DD
+            $dob = sprintf("%04d-%02d-%02d", intval($year), intval($month), intval($date));
+            $userData['dateOfBirth'] = $dob;
+        } else {
+            $errorMessage = "Ngày sinh không hợp lệ.";
+        }
+    }
+    
+    // Only update if there's no error and we have data
+    if (empty($errorMessage) && !empty($userData)) {
+        if ($userTable->updateUserProfile($user_id, $userData)) {
+            $successMessage = "Cập nhật thông tin thành công!";
+            
+            // Reload user data to show updated information
+            $sql = "SELECT * FROM users WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
+            $stmt->close();
+            
+            // Update birthday variables
+            if (!empty($user["dateOfBirth"])) {
+                $birthDate = new DateTime($user["dateOfBirth"]);
+                $birthDay = $birthDate->format('d');
+                $birthMonth = $birthDate->format('m');
+                $birthYear = $birthDate->format('Y');
+            }
+        } else {
+            $errorMessage = "Lỗi khi cập nhật thông tin. Vui lòng thử lại.";
+        }
+    } elseif (empty($userData) && empty($errorMessage)) {
+        $errorMessage = "Không có thông tin nào được cập nhật.";
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -209,34 +197,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tài Khoản</title>
 
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-
     <!-- Tailwindcss -->
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
+    <?php include_once "./components/header2.php"; ?>
 
+    <!-- Notification Messages -->
+    <?php if (!empty($errorMessage)): ?>
+    <div id="errorAlert" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-auto my-4 max-w-6xl" role="alert">
+        <strong class="font-bold">Lỗi! </strong>
+        <span class="block sm:inline"><?php echo htmlspecialchars($errorMessage); ?></span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg onclick="document.getElementById('errorAlert').style.display = 'none'" class="fill-current h-6 w-6 text-red-500 cursor-pointer" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+            </svg>
+        </span>
+    </div>
+    <?php endif; ?>
+
+    <?php if (!empty($successMessage)): ?>
+    <div id="successAlert" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mx-auto my-4 max-w-6xl" role="alert">
+        <strong class="font-bold">Thành công! </strong>
+        <span class="block sm:inline"><?php echo htmlspecialchars($successMessage); ?></span>
+        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+            <svg onclick="document.getElementById('successAlert').style.display = 'none'" class="fill-current h-6 w-6 text-green-500 cursor-pointer" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <title>Close</title>
+                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
+            </svg>
+        </span>
+    </div>
+    <?php endif; ?>
+
+    <!-- Main Content -->
     <?php
-    include_once "./components/header2.php";
     if (isset($_SESSION["user_id"])) {
         include_once "./components/changeInforUser.php";
     } else {
         include_once "./components/login2.php";
     }
-    include_once "./components/footer.php";
     ?>
+
+    <?php include_once "./components/footer.php"; ?>
+    
+    <!-- JavaScript -->
     <script>
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function() {
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlert = document.getElementById('successAlert');
+            
+            if (errorAlert) {
+                errorAlert.style.display = 'none';
+            }
+            
+            if (successAlert) {
+                successAlert.style.display = 'none';
+            }
+        }, 5000);
+        
+        // Form toggle functionality
         function showForm(formClass) {
             const mainForm = document.querySelector('.mainForm');
             const changePass = document.querySelector('.changePass');
@@ -249,6 +278,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
                 mainForm.classList.add('hidden');
             }
         }
+        
+        // Form validation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Profile form validation
+            const profileForm = document.querySelector('.profile-form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    const userName = document.querySelector('input[name="userName"]')?.value.trim();
+                    const fullName = document.querySelector('input[name="fullName"]')?.value.trim();
+                    
+                    if (!userName || !fullName) {
+                        e.preventDefault();
+                        alert('Vui lòng nhập đầy đủ tên đăng nhập và họ tên');
+                        return false;
+                    }
+                });
+            }
+            
+            // Password form validation
+            const passwordForm = document.querySelector('form:has(input[name="user_old_password"])');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', function(e) {
+                    const oldPass = document.getElementById('currentPassword')?.value.trim();
+                    const newPass = document.getElementById('newPassword')?.value.trim();
+                    const confirmPass = document.getElementById('confirmNewPassword')?.value.trim();
+                    
+                    if (!oldPass || !newPass || !confirmPass) {
+                        e.preventDefault();
+                        alert('Vui lòng nhập đầy đủ thông tin mật khẩu');
+                        return false;
+                    }
+                    
+                    if (newPass !== confirmPass) {
+                        e.preventDefault();
+                        alert('Mật khẩu mới và xác nhận không khớp');
+                        return false;
+                    }
+                    
+                    if (newPass.length < 6) {
+                        e.preventDefault();
+                        alert('Mật khẩu mới phải có ít nhất 6 ký tự');
+                        return false;
+                    }
+                });
+            }
+        });
     </script>
 </body>
 
