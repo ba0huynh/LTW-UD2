@@ -35,10 +35,10 @@
         <!-- Đơn hàng -->
         <div class="pt-4 border-t border-gray-200">
           <div class="space-y-2">
-            <a href="./zui/cart.php" class="block bg-gray-50 hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm transition">
+            <a href="./zui/cart.php" class="text-sm text-pink-500 block bg-gray-50 hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm transition">
               Đơn hàng của tôi
             </a>
-            <a href="./zui/orderHistory.php" class="block bg-gray-50 hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm transition">
+            <a href="./zui/orderHistory.php" class="text-sm text-pink-500 block bg-gray-50 hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-sm transition">
               Lịch sử đơn hàng
             </a>
           </div>
@@ -71,9 +71,9 @@
       ?>
     </div>
         
-    <div class="mainForm">
+    <div class="mainForm bg-white  rounded-2xl shadow-lg w-full max-w-2xl">
       <form action="" method="post" class="profile-form">
-        <div class="bg-white rounded-2xl shadow-md p-8">
+        <div class="bg-white rounded-2xl  p-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Hồ sơ cá nhân</h2>
       
             <div class="mb-4">
@@ -110,21 +110,21 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
       
-            <div class="mb-6">
+            <!-- <div class="mb-6">
               <label class="block text-gray-700 font-medium mb-1">
                 Ngày sinh
               </label>
               <div class="grid grid-cols-3 gap-4 mt-2">
-                <input value="<?php echo $birthDay; ?>" name="dateOfBirth" type="text" placeholder="DD" maxlength="2" 
+                <input value="<?php //echo $birthDay; ?>" name="dateOfBirth" type="text" placeholder="DD" maxlength="2" 
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 
-                <input value="<?php echo $birthMonth; ?>" name="monthOfBirth" type="text" placeholder="MM" maxlength="2" 
+                <input value="<?php //echo $birthMonth; ?>" name="monthOfBirth" type="text" placeholder="MM" maxlength="2" 
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 
-                <input value="<?php echo $birthYear; ?>" name="yearOfBirth" type="text" placeholder="YYYY" maxlength="4" 
+                <input value="<?php //echo $birthYear; ?>" name="yearOfBirth" type="text" placeholder="YYYY" maxlength="4" 
                 class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
               </div>
-            </div>
+            </div> -->
 
             <div class="mb-6">
               <label class="block text-gray-700 font-medium mb-1">
