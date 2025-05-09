@@ -27,7 +27,6 @@ $itemsPerPage = 10;
 $offset = ($currentPage - 1) * $itemsPerPage;
 
 
-
 $class = $_GET["class"] ?? null;
 $subject = $_GET["subject"] ?? null;
 $type = $_GET["type"] ?? null;
