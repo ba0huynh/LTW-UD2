@@ -1,5 +1,6 @@
 <?php
 require_once "../database/database.php";
+session_start();
 require_once "../database/subject.php";
 require_once "../database/book.php";
 $bookId = $_GET["bookId"];

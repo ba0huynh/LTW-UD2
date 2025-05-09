@@ -1,5 +1,20 @@
 <?php
+// Check if session is not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Create database connection if it doesn't exist
+if (!isset($conn)) {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "ltw_ud2";
+    $conn = new mysqli($servername, $username, $password, $dbname, 3306);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+}
 
 if (isset($_SESSION['user_id'])) {
   $user_id = $_SESSION['user_id'];
@@ -9,12 +24,11 @@ if (isset($_SESSION['user_id'])) {
     FROM cart 
     JOIN cartitems ON cartitems.cartId = cart.idCart 
     WHERE cart.idUser = $user_id
-  ";
+  ";  
 
   $result = $conn->query($query_count_cart);
   $countOfCart = $result->fetch_assoc()['total'];
 }
-
 
 ?>
 <div class="relative mx-auto w-full flex justify-between py-2 px-[10%] bg-white shadow-sm">
