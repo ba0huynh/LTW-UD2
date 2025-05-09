@@ -25,10 +25,7 @@ session_start();
 $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $itemsPerPage = 10;
 $offset = ($currentPage - 1) * $itemsPerPage;
-$countQuery = "SELECT COUNT(*) AS total FROM books WHERE 1=1";
-$countResult = $conn->query($countQuery);
-$totalRows = $countResult->fetch_assoc()['total'];
-$totalPages = ceil($totalRows / $itemsPerPage);
+
 
 
 $class = $_GET["class"] ?? null;
@@ -52,42 +49,58 @@ if ($option == 1) {
   $max_cost = 200000;
 }
 
+$countQuery = "SELECT COUNT(*) AS total FROM books ";
 $query_result_books = "SELECT books.* FROM books ";
 
 if (!empty($subject)) {
     $query_result_books .= " WHERE books.subjectId = " . (int)$subject;
+    $countQuery .= " WHERE books.subjectId = " . (int)$subject;
 } else {
     $query_result_books .= "WHERE 1=1 ";  
+    $countQuery .= "WHERE 1=1 ";
 }
 
 
 if (!empty($search)) {
     $search = $conn->real_escape_string($search);
     $query_result_books .= " AND bookName LIKE '%$search%' ";
+    $countQuery .= " AND bookName LIKE '%$search%' ";
 }
 
 if (!empty($type)) {
-    $query_result_books .= " AND books.type = " . $type;
+    $query_result_books .= " AND books.type = '" . $type."' ";
+    $countQuery .= " AND books.type = '" . $type. "' ";
 }
 if (!empty($min_cost) && !empty($max_cost)) {
     $query_result_books .= " AND books.currentPrice BETWEEN $min_cost AND $max_cost ";
+    $countQuery .= " AND books.currentPrice BETWEEN $min_cost AND $max_cost ";
 }
 if (!empty($class)) {
     $query_result_books .= " AND books.classNumber = " . (int)$class;
+    $countQuery .= " AND books.classNumber = " . (int)$class;
 }
 if (!empty($min_class) && !empty($max_class)) {
     $query_result_books .= " AND books.classNumber BETWEEN $min_class AND $max_class ";
+    $countQuery .= " AND books.classNumber BETWEEN $min_class AND $max_class ";
 }
 
 $sort = $_GET["sort"] ?? null;
 if (!empty($sort)) {
     if ($sort === "asc") {
         $query_result_books .= " ORDER BY books.currentPrice ASC";
+        $countQuery .= " ORDER BY books.currentPrice ASC";
     } elseif ($sort === "desc") {
         $query_result_books .= " ORDER BY books.currentPrice DESC";
+        $countQuery .= " ORDER BY books.currentPrice DESC";
     }
 }
+
+$countResult = $conn->query($countQuery);
+$totalRows = $countResult->fetch_assoc()['total'];
+
+$totalPages = ceil($totalRows / $itemsPerPage);
 $query_result_books .= " LIMIT $offset, $itemsPerPage";
+
 $result = $conn->query($query_result_books);
 $num_rows = $result->num_rows;
 ?>
