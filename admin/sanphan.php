@@ -8,6 +8,9 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/script/product.js"></script>
     
 </head>
 <body>
@@ -32,7 +35,7 @@ session_start();
         </div>
     </div>
     <div class="table-container">
-        <?php require_once "./gui/thongtinsanpham.php" ?>
+        <?php require_once "./thongtinsanpham.php" ?>
     </div>
 
 

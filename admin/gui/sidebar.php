@@ -41,12 +41,10 @@ if ($adminID == null) {
             <i class="fas fa-box"></i> <span>Quản lí sản phẩm</span>
         </div>
         <div class="submenu">
-            <a href="./sanphan.php">
-
-                <div class="submenu-item">Danh sách sản phẩm</div>
-            </a>
-            <div class="submenu-item">Thêm sản phẩm</div>
-            <div class="submenu-item">Nhập sản phẩm</div>
+            <a href="./sanphan.php">            <div class="submenu-item">Danh sách sản phẩm</div></a>
+            <a href="./themSanPham.php">        <div class="submenu-item">Thêm sản phẩm</div></a>
+            <a href="./thongTinPhieuNhap.php">  <div class="submenu-item">Danh sách phiếu nhập</div></a>
+            <a href="">  <div class="submenu-item">Thêm phiếu nhập</div></a>
         </div>
         <a href="./quanlidon.php">
 

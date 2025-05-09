@@ -1,17 +1,72 @@
 <?php
-require_once __DIR__ . "/../../database/database.php";
-require_once __DIR__ . "/../../database/book.php";
+require_once("../database/database.php");
+require_once("../database/book.php");
+
 
 $product = new BooksTable($pdo);
 
-// Khởi tạo biến mặc định
 $id = $img = $name = $sId = $subject = $class = $price = $description = '';
 $subjects = $product->getAllSubject();
 
-// Nếu là yêu cầu mở modal cập nhật
+
+
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['name'])) {
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit-form'])) {
+// echo "<script>console.log('ok nè');</script>";
+
+//     try {
+//         if (empty($_POST['id']) || empty($_POST['name']) || empty($_POST['subject']) || empty($_POST['class']) || empty($_POST['description'])) {
+//             throw new Exception('Vui lòng điền đầy đủ thông tin bắt buộc');
+//         }
+
+//         $dbImagePath = $_POST['image']; 
+        
+//         if (isset($_FILES['imageFile']) && $_FILES['imageFile']['error'] === UPLOAD_ERR_OK) {
+//             $imageTmpName = $_FILES['imageFile']['tmp_name'];
+//             $imageName = uniqid() . '_' . basename($_FILES['imageFile']['name']);
+//             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/LTW-UD2/images/Products/';
+//             $imagePath = $uploadDir . $imageName;
+
+//             if (!move_uploaded_file($imageTmpName, $imagePath)) {
+//                 throw new Exception('Lỗi khi tải ảnh lên');
+//             }
+
+//             $dbImagePath = '/LTW-UD2/images/Products/' . $imageName;
+            
+//             if (!empty($_POST['image']) && file_exists($_SERVER['DOCUMENT_ROOT'] . $_POST['image'])) {
+//                 unlink($_SERVER['DOCUMENT_ROOT'] . $_POST['image']);
+//             }
+//         }
+// echo "<script>console.log('Bắt đầu updateBook')</script>";
+//         $result = $product->updateBook(
+//             $_POST['id'],
+//             $_POST['name'],
+//             $_POST['subject'],
+//             $_POST['class'],
+//             $dbImagePath,
+//             $_POST['description']
+//         );
+// echo "<script>console.log('Kết quả trả về từ updateBook: " . json_encode($result) . "');</script>";
+
+//         if ($result) {
+//             echo '<script>alert("Cập nhật thông tin sách thành công!");</script>';
+//         } else {
+//             throw new Exception('Có lỗi khi cập nhật thông tin sách');
+//         }
+//         exit;
+
+//     } catch (Exception $e) {
+//         echo '<script>alert("'.$e->getMessage().'"); window.history.back();</script>';
+//         exit;
+//     }
+// }
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-product'])) {
     if (!isset($_POST['id'])) {
-        die(json_encode(['error' => 'Thiếu ID sản phẩm']));
+        die('<script>alert("Thiếu ID sản phẩm"); window.history.back();</script>');
     }
     $id = $_POST['id'];
     $products = $product->getBookById($id);
@@ -25,60 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update-product'])) {
     $subjects = $product->getAllSubject();
 }
 
-// Nếu là submit form cập nhật
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update-product'])) {
-    try {
-        // Kiểm tra nếu có upload ảnh mới
-        if (isset($_FILES['imageFile']) && $_FILES['imageFile']['error'] === UPLOAD_ERR_OK) {
-            $imageTmpName = $_FILES['imageFile']['tmp_name'];
-            $imageName = uniqid() . '_' . basename($_FILES['imageFile']['name']);
-            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/LTW-UD2/images/Products/';
-            $imagePath = $uploadDir . $imageName;
-
-            if (!move_uploaded_file($imageTmpName, $imagePath)) {
-                throw new Exception('Lỗi khi tải ảnh lên');
-            }
-
-            $dbImagePath = '/LTW-UD2/images/Products/' . $imageName;
-        } else {
-            // Không có ảnh mới => dùng ảnh cũ
-            $dbImagePath = $_POST['image'];
-        }
-
-        // Cập nhật sách
-        $result = $product->updateBook(
-            $_POST['id'],
-            $_POST['name'],
-            $_POST['subject'],
-            $_POST['class'],
-            $dbImagePath,
-            $_POST['description']
-        );
-
-        if ($result) {
-            echo "<script>alert('Cập nhật thông tin sách thành công!'); window.location.href = 'your_redirect_page.php';</script>";
-        } else {
-            echo "<script>alert('Có lỗi khi cập nhật thông tin sách!'); window.location.href = 'your_redirect_page.php';</script>";
-        }
-        exit;
-
-    } catch (Exception $e) {
-        header('HTTP/1.1 500 Internal Server Error');
-        echo $e->getMessage();
-        exit;
-    }
-}
 ?>
 
-
-
 <h3>Cập nhật thông tin sách</h3>
-<form id="editProductForm" method="POST" enctype="multipart/form-data">
+<form id="editProductForm" method="POST" enctype="multipart/form-data" name="submit-form">
     <input type="hidden" name="id" value="<?php echo $id; ?>">
-    <!-- <br> -->
-    
+    <input type="hidden" name="submit-form" value="20">
+
     <div class="leftForm">
-        <img id="previewImg" src="<?php echo $img ?>" alt="" width="95%" height="auto">
+        <img id="BookImg" src="<?php echo $img ?>" alt="" width="95%" height="auto">
         <label for="imageFile" class="custom-file-upload">📁 Duyệt ảnh</label>
         <input type="file" id="imageFile" name="imageFile" accept="image/*" style="display: none;">
         <input type="hidden" name="image" id="imagePath" value="<?php echo $img ?>">
@@ -90,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update-product'])) {
                 <label for="book-name">Tên sách:</label>
                 <input type="text" id="book-name" name="name" value="<?php echo $name ?>" required>
                 <label for="price">Giá:</label>
-                <input type="text" id="price" name="price" value="<?php echo $price ?>" readonly>
+                <input type="text" id="price" name="price" value="<?php echo number_format($price, 0, ',', '.') . 'đ' ?>" readonly>
             </div>
 
             <div class="rightForm-right">
@@ -98,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update-product'])) {
                 <select id="subject" name="subject" required>
                     <option value="">-- Chọn môn học --</option>
                     <?php foreach ($subjects as $sub): ?>
-                        <option value="<?php echo $sub['id']; ?>" <?php if ($sub['subjectName'] == $subject) echo 'selected'; ?>>
+                        <option value="<?php echo $sub['id']; ?>" <?php if ($sub['id'] == $sId) echo 'selected'; ?>>
                             <?php echo $sub['subjectName']; ?>
                         </option>
                     <?php endforeach; ?>
@@ -127,44 +137,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update-product'])) {
     <button type="submit">Lưu thay đổi</button>
 </form>
 
-
 <script>
 $(document).ready(function() {
-    $('#imageFile').change(function(e) {
+    $('#imageFile').change(function() {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                $('#previewImg').attr('src', e.target.result).show();
+                $('#BookImg').attr('src', e.target.result).show();
+                // location.reload();
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // Xử lý submit form cập nhật
     $('#editProductForm').submit(function(e) {
         e.preventDefault();
 
-        const imageFile = $('#imageFile')[0].files[0];
-        const imageOld = $('#imagePath').val();
-        let error = '';
-
-        if (!imageFile && !imageOld) {
-            error = 'Vui lòng chọn ảnh sách';
-        }
-
-        if (error) {
-            Swal.fire({
-                title: 'Lỗi!',
-                text: error,
-                icon: 'error'
-            });
-            return;
-        }
-
         Swal.fire({
             title: 'Xác nhận cập nhật sách?',
-            text: "Bạn có chắc muốn cập nhật sách?",
+            text: "Bạn có chắc muốn cập nhật thông tin sách?",
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -174,34 +166,37 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 const formData = new FormData(this);
+                // formData.append('submit-form', '20');
+                
+                let dataPreview = '';
+                for (let [key, value] of formData.entries()) {
+                    dataPreview += `${key}: ${value}\n`;
+                }
+                console.log(dataPreview);
+
+
 
                 $.ajax({
-                    url: window.location.href,
+                    url: './handleEditProduct.php',
                     type: 'POST',
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function() {
+                    success: function(response) {
                         Swal.fire({
                             title: 'Thành công!',
-                            text: 'Đã cập nhật thành công',
+                            text: 'Đã cập nhật thông tin sách thành công',
                             icon: 'success'
                         }).then(() => {
-                            if (imageFile) {
-                                const reader = new FileReader();
-                                reader.onload = function(e) {
-                                    $('#previewImg').attr('src', e.target.result).show();
-                                };
-                                reader.readAsDataURL(imageFile);
-                            }
-
-                            $('#myModal').hide();
+                            $("#myModal").css("display", "none");
+                            location.reload();
+                            // $('.sp-concon').html(response);
                         });
                     },
                     error: function(xhr) {
                         Swal.fire({
                             title: 'Lỗi!',
-                            text: xhr.responseText || 'Có lỗi xảy ra',
+                            text: xhr.responseText || 'Có lỗi xảy ra khi cập nhật',
                             icon: 'error'
                         });
                     }
@@ -211,6 +206,8 @@ $(document).ready(function() {
     });
 });
 </script>
+
+
 
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
