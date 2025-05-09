@@ -22,11 +22,27 @@ $status = intval($data['statusBill']);
 
 //$update = "UPDATE hoadon SET statusBill = $status, ly_do_huy = '$note' WHERE idBill = $idBill";
 $update = "UPDATE hoadon SET statusBill = $status  WHERE idBill = $idBill";
+$insertHoadon_trangthai = "INSERT INTO hoadon_trangthai (idBill, trangthai) VALUES ($idBill, $status)";
+
 
 if ($conn->query($update)) {
-    echo json_encode(['success' => true, 'message' => "Đã cập nhật đơn hàng #MD$idBill"]);
+    if ($conn->query($insertHoadon_trangthai)) {
+        echo json_encode([
+            "success" => true,
+            "message" => "Đã cập nhật đơn hàng #MD$idBill",
+            "redirect" => "../admin/gui/quanlidon.php"
+        ]);
+    } else {
+        echo json_encode([
+            "success" => false,
+            "message" => "Đã cập nhật đơn hàng #MD$idBill, nhưng không ghi được lịch sử trạng thái."
+        ]);
+    }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Lỗi khi cập nhật']);
+    echo json_encode([
+        "success" => false,
+        "message" => "Lỗi khi cập nhật."
+    ]);
 }
 $conn->close();
 ?>
