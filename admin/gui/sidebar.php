@@ -31,6 +31,12 @@ if ($adminID == null) {
             <div class="submenu-item">Danh sách nhân viên</div>
             <div class="submenu-item">Thêm nhân viên</div>
         </div>
+        <a href="./review.php">
+
+            <div class="menu-item">
+                <i class="fas fa-star"></i> <span>Đánh giá</span>
+            </div>
+        </a>
         <div class="menu-item">
             <i class="fas fa-box"></i> <span>Quản lí sản phẩm</span>
         </div>
