@@ -28,8 +28,8 @@ if ($adminID == null) {
             <i class="fas fa-user-tie"></i> <span>Quản lý nhân viên</span>
         </div>
         <div class="submenu">
-            <div class="submenu-item">Danh sách nhân viên</div>
-            <div class="submenu-item">Thêm nhân viên</div>
+            <a href="../components/nhanvien.php">         <div class="submenu-item">Danh sách nhân viên</div></a>
+            <a href="../components/add_nhanvien.php">            <div class="submenu-item">Thêm nhân viên</div></a>
         </div>
         <a href="./review.php">
 
