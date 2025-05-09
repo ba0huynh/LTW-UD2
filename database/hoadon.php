@@ -43,7 +43,7 @@ public function getCompletedOrdersCount()
     global $pdo;
     $query = "SELECT COUNT(*) as completed_count 
               FROM hoadon 
-              WHERE statusBill IN (3, 4) AND ly_do_huy IS NOT NULL";
+              WHERE statusBill IN (3, 4)";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
