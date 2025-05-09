@@ -61,8 +61,8 @@ $avgOrderValue = $completedOrders > 0 ? $totalRevenue / $completedOrders : 0;
 $monthlyRevenue = $hoadonTable->getlast6Monthstotal();
 
 // Calculate growth rate
-$currentMonth = $monthlyRevenue[0]['total_bill'] ?? 0;
-$previousMonth = $monthlyRevenue[1]['total_bill'] ?? 0; // avoid division by zero
+$currentMonth = $monthlyRevenue[count($monthlyRevenue)-1]['total_bill'] ?? 0;
+$previousMonth = $monthlyRevenue[count($monthlyRevenue)-2]['total_bill'] ?? 0; // avoid division by zero
 $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previousMonth) * 100 : 0;
 ?>
 

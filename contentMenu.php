@@ -47,7 +47,7 @@ if ($subject_results->num_rows > 0) {
 <div class="subject-menu space-y-6 animate-fadeIn">
     <div class="flex items-center justify-between mb-6 border-b border-gray-200 pb-3">
         <h2 class="flex items-center text-2xl font-bold text-gray-800">
-            <span class="inline-block w-8 h-8 flex items-center justify-center bg-pink-600 text-white rounded-full mr-3 text-sm">
+            <span class="inline-block text-center pt-[6px] w-8 h-8 flex items-center justify-center bg-pink-600 text-white rounded-full mr-3 text-sm">
                 <?= $class ?>
             </span>
             Tài liệu lớp <?= $class ?>
