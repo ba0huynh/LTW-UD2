@@ -369,7 +369,7 @@ function validateRegisterForm(event) {
   <div id="menuContent"
     class="menuContent animate-fade-in hidden absolute top-full left-10 bg-white shadow-lg z-50 w-[90vw] rounded-xl overflow-hidden ">
 
-    <div class="flex min-h-[300px]">
+    <div class="flex w-[90vw] min-h-[300px]">
 
       <div class="w-60 bg-white border-r border-gray-200 shadow-lg">
         <?php for ($i = 6; $i < 13; $i++) { ?>
@@ -471,3 +471,7 @@ function validateRegisterForm(event) {
     }
   });
 </script>
+
+
+
+
