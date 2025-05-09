@@ -4,7 +4,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: './gui/thongtinsanpham.php',
+            url: './thongtinsanpham.php',
             data: {
                 valueSearch: keyword
             },
@@ -23,7 +23,7 @@ $(document).ready(function () {
 function loadProducts(page = 1, search = "") {
     $.ajax({
         type: 'POST',
-        url: './gui/thongtinsanpham.php',
+        url: './thongtinsanpham.php',
         data: {
             valueSearch: search,
             currentPage: page
@@ -69,7 +69,7 @@ $(document).on('click', '.delete-icon', function () {
             });
             $.ajax({
                 type: "POST",
-                url: "./gui/thongtinsanpham.php",
+                url: "./thongtinsanpham.php",
                 data: {
                     id: id,
                     "delete-product": true,
@@ -79,10 +79,11 @@ $(document).on('click', '.delete-icon', function () {
                     console.log(response);
                     $.ajax({
                         type: "POST",
-                        url: "./gui/sanphan.php",
+                        url: "./sanphan.php",
                         dataType: "html",
                         success: function (response) {
-                            $('.sp-container').html(response);
+                            $('.sp-concon').html(response);
+                            location.reload();
                         },
                     });
 
@@ -110,7 +111,7 @@ $(document).on('click', '.check-icon', function () {
         if (result.isConfirmed) {
             $.ajax({
                 type: "POST",
-                url: "./gui/thongtinsanpham.php",
+                url: "./thongtinsanpham.php",
                 data: {
                     id: id,
                     isActive: newStatus,
@@ -153,7 +154,7 @@ $(document).on("click", ".update-icon", function (e) {
     console.log(id);
     $.ajax({
         type: "POST",
-        url: "./gui/modalsp.php",
+        url: "./modalsp.php",
         data: {
             id: id,
             "update-product": true,
@@ -249,169 +250,3 @@ $(document).on("change", "#description", function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//=============================
-
-
-// $(document).ready(function () {
-//     // Mở modal sửa sản phẩm
-//     $(document).on("click", ".update-icon", function (e) {
-//         e.preventDefault();
-//         const id = $(this).data("id");
-
-//         // Hiển thị loading khi đang tải dữ liệu
-//         $(".modal-content").html('<div class="text-center py-4"><i class="fas fa-spinner fa-spin fa-3x"></i><p>Đang tải dữ liệu...</p></div>');
-//         $("#myModal").css("display", "flex");
-
-//         $.ajax({
-//             type: "POST",
-//             url: "./gui/modalsp.php",
-//             data: {
-//                 id: id,
-//                 "update-product": true
-//             },
-//             dataType: "html",
-//             success: function (response) {
-//                 $(".modal-content").html(response);
-
-//                 // Xử lý sự kiện submit form sau khi tải xong
-//                 $("#editProductForm").submit(function (e) {
-//                     e.preventDefault();
-
-//                     // Validate form
-//                     const name = $('#book-name').val().trim();
-//                     const subject = $('#subject').val();
-//                     const classVal = $('#class').val();
-//                     const description = $('#description').val().trim();
-
-//                     if (!name || !subject || !classVal || !description) {
-//                         Swal.fire({
-//                             icon: "error",
-//                             title: "Lỗi",
-//                             text: "Vui lòng điền đầy đủ thông tin!"
-//                         });
-//                         return;
-//                     }
-
-//                     Swal.fire({
-//                         title: 'Xác nhận cập nhật?',
-//                         text: "Bạn có chắc muốn cập nhật thông tin sách?",
-//                         icon: 'question',
-//                         showCancelButton: true,
-//                         confirmButtonColor: '#3085d6',
-//                         cancelButtonColor: '#d33',
-//                         confirmButtonText: 'Xác nhận',
-//                         cancelButtonText: 'Hủy'
-//                     }).then((result) => {
-//                         if (result.isConfirmed) {
-//                             const formData = new FormData(this);
-
-//                             $.ajax({
-//                                 url: "./gui/modalsp.php",
-//                                 type: "POST",
-//                                 data: formData,
-//                                 processData: false,
-//                                 contentType: false,
-//                                 success: function (response) {
-//                                     try {
-//                                         const data = JSON.parse(response);
-//                                         if (data.success) {
-//                                             Swal.fire({
-//                                                 title: 'Thành công!',
-//                                                 text: 'Cập nhật sách thành công',
-//                                                 icon: 'success'
-//                                             }).then(() => {
-//                                                 location.reload();
-//                                             });
-//                                         } else {
-//                                             throw new Error(data.error || 'Có lỗi xảy ra');
-//                                         }
-//                                     } catch (e) {
-//                                         Swal.fire({
-//                                             title: 'Lỗi!',
-//                                             text: e.message,
-//                                             icon: 'error'
-//                                         });
-//                                     }
-//                                 },
-//                                 error: function (xhr) {
-//                                     Swal.fire({
-//                                         title: 'Lỗi!',
-//                                         text: xhr.responseText || 'Có lỗi khi cập nhật',
-//                                         icon: 'error'
-//                                     });
-//                                 }
-//                             });
-//                         }
-//                     });
-//                 });
-//             },
-//             error: function (xhr) {
-//                 let errorMsg = "Có lỗi xảy ra khi lấy dữ liệu sản phẩm";
-//                 try {
-//                     const response = JSON.parse(xhr.responseText);
-//                     if (response.error) errorMsg = response.error;
-//                 } catch (e) { }
-
-//                 $(".modal-content").html(`
-//                     <div class="error-message text-center py-4">
-//                         <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
-//                         <h4>${errorMsg}</h4>
-//                         <button class="btn btn-secondary mt-3" onclick="$('#myModal').hide()">Đóng</button>
-//                     </div>
-//                 `);
-//             }
-//         });
-//     });
-
-
-//     // Xử lý preview ảnh
-//     $(document).on("change", "#imageFile", function (e) {
-//         const file = this.files[0];
-//         if (file) {
-//             // Kiểm tra kích thước ảnh (tối đa 5MB)
-//             if (file.size > 5 * 1024 * 1024) {
-//                 Swal.fire({
-//                     icon: "error",
-//                     title: "Lỗi",
-//                     text: "Ảnh tải lên không được vượt quá 5MB"
-//                 });
-//                 $(this).val('');
-//                 return;
-//             }
-//             // Kiểm tra loại file
-//             const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-//             if (!validTypes.includes(file.type)) {
-//                 Swal.fire({
-//                     icon: "error",
-//                     title: "Lỗi",
-//                     text: "Chỉ chấp nhận file ảnh (JPEG, PNG, GIF)"
-//                 });
-//                 $(this).val('');
-//                 return;
-//             }
-
-//             // Hiển thị preview
-//             const reader = new FileReader();
-//             reader.onload = function (e) {
-//                 $('#previewImg').attr('src', e.target.result);
-//             };
-//             reader.readAsDataURL(file);
-//         }
-//     });
-// });

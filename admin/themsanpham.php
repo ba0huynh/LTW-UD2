@@ -1,7 +1,9 @@
 <?php
-// Bỏ qua output buffering phức tạp
-require_once __DIR__ . "/../../database/database.php";
-require_once __DIR__ . "/../../database/book.php";
+session_start();
+require_once("../database/database.php");
+require_once("../database/book.php");
+
+
 
 $product = new BooksTable($pdo);
 $subjects = $product->getAllSubject();
@@ -38,6 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/script/product.js"></script>
+    
+</head>
+<body>
+<main class="flex flex-row">
+        <?php include_once './gui/sidebar.php' ?>
+        <div class="flex items-center w-full h-screen justify-center">
+            <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-[80%]">
+
 
 <form id="addProductForm" enctype="multipart/form-data">
     <br>
@@ -87,6 +108,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Thêm sách</button>
     </div>
 </form>
+
+</div>
+
+        </div>
+
+    </main>
+
+</body>
 
 <script>
 $(document).ready(function() {

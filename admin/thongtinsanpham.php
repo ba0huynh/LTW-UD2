@@ -1,7 +1,8 @@
 <?php
 
-    require_once __DIR__ . "/../../database/database.php";
-    require_once __DIR__ . "/../../database/book.php";
+require_once("../database/database.php");
+require_once("../database/book.php");
+
 
     $product = new BooksTable($pdo);
     $products = $product->getAllBook();
@@ -37,7 +38,7 @@
         exit();
     }
 
-    $itemPerPage = 3;
+    $itemPerPage = 4;
     $currentPage = isset($_POST['currentPage']) ? (int)$_POST['currentPage'] : 1;
     $search = isset($_POST['valueSearch']) ? $_POST['valueSearch'] : "";
 
@@ -63,7 +64,8 @@
     // echo $product['id']; 
 // }
 ?>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -117,7 +119,7 @@
                     </td>
                     <td>
                         <div>
-                        <?php echo $product['currentPrice'].$vnd; ?>
+                        <?php echo number_format($product['currentPrice'], 0, ',', '.') . 'đ';?>
                         </div>
                     </td>
                     <td>
@@ -170,8 +172,14 @@
         </ul>
     </div>
 <?php endif; ?>
+<div id="myModal" class="modal" style="display: none;">
+        <div class="modal-content">
+        </div>
+    </div>
 
 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 .table-responsive{
     width: 100% !important;

@@ -91,7 +91,7 @@ if (isset($_SESSION['user_id'])) {
             JOIN chitiethoadon ON chitiethoadon.idHoadon = hoadon.idBill
             JOIN books ON books.id = chitiethoadon.idBook
             WHERE hoadon.idUser = $user_id
-            ORDER BY hoadon_trangthai.create_at DESC, hoadon.create_at DESC;
+            ORDER BY hoadon.create_at DESC , hoadon_trangthai.create_at DESC;
 
             ";
 
