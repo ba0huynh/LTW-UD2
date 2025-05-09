@@ -38,4 +38,16 @@ public function getlast6Monthstotal()
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
+public function getCompletedOrdersCount()
+{
+    global $pdo;
+    $query = "SELECT COUNT(*) as completed_count 
+              FROM hoadon 
+              WHERE statusBill IN (3, 4) AND ly_do_huy IS NOT NULL";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $result['completed_count'];
+}
+
 }

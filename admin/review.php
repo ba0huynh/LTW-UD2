@@ -62,11 +62,11 @@ $stats = $reviewTable->getReviewStatistics();
 </head>
 
 <body class="bg-gray-100">
-    <main class="flex flex-row">
+    <main class="flex flex-row h-screen">
         <?php include_once './gui/sidebar.php' ?>
-        <div class="flex flex-col w-full min-h-screen">
-            <div class="p-6">
-                <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-full">
+        <div class="flex flex-col w-full h-screen">
+            <div class="h-screen">
+                <div class="bg-white shadow-lg overflow-y-scroll h-screen border border-gray-300 rounded-lg p-6 w-full">
                     <div class="review-container">
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="title text-2xl font-semibold text-gray-800">Quản lý đánh giá</h2>
