@@ -371,7 +371,7 @@ function validateRegisterForm(event) {
 
     <div class="flex w-[90vw] min-h-[300px]">
 
-      <div class="w-60 bg-white border-r border-gray-200 shadow-lg">
+      <div class="min-w-60 bg-white border-r border-gray-200 shadow-lg">
         <?php for ($i = 6; $i < 13; $i++) { ?>
           <div
             class="tablinks px-4 py-3 hover:bg-gray-100 cursor-pointer text-sm font-medium border-l-4 border-transparent hover:border-pink-500 transition-all"
@@ -397,17 +397,17 @@ function validateRegisterForm(event) {
         </script>
       </div>
 
-      <div class="flex-1 p-6">
+      <div class="flex-1 p-6 overflow-y-scroll">
         <div class="flex items-center gap-2 mb-4">
           <img src="/LTW-UD2/images/forHeader/menuBook.png" alt="" class="w-5 h-5">
           <span class="font-bold text-sm uppercase">Sách trong nước</span>
         </div>
 
-        <div class="detailMenu grid grid-cols-2 gap-6 text-sm text-gray-700">
+        <div class="contentMenu gap-6 text-sm text-gray-700">
           <!-- div*3 -->
         </div>
         <script>
-          const detailMenu = document.querySelector(".detailMenu");
+          const contentMenu = document.querySelector(".contentMenu");
           const tablinks = document.querySelectorAll(".tablinks");
           tablinks.forEach(tab => {
             tab.addEventListener("mouseenter", function () {
@@ -415,7 +415,7 @@ function validateRegisterForm(event) {
               fetch(`contentMenu.php/?Class=${Class}`).
                 then(response => response.text()).
                 then(data => {
-                  detailMenu.innerHTML = data;
+                  contentMenu.innerHTML = data;
                 })
             })
           })
