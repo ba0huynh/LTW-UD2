@@ -25,14 +25,20 @@ if ($adminID == null) {
             <i class="fas fa-users"></i> <span>Quản lý khách hàng</span>
         </div>
         <div class="submenu">
-            <a href="./thongTinKhachHang.php">         <div class="submenu-item">Danh sách khách </div></a>
+            <a href="./thongTinKhachHang.php">
+                <div class="submenu-item">Danh sách khách </div>
+            </a>
         </div>
         <div class="menu-item">
             <i class="fas fa-user-tie"></i> <span>Quản lý nhân viên</span>
         </div>
         <div class="submenu">
-            <a href="./nhanvien.php">         <div class="submenu-item">Danh sách nhân viên</div></a>
-            <a href="./add_nhanvien.php">            <div class="submenu-item">Thêm nhân viên</div></a>
+            <a href="./nhanvien.php">
+                <div class="submenu-item">Danh sách nhân viên</div>
+            </a>
+            <a href="./add_nhanvien.php">
+                <div class="submenu-item">Thêm nhân viên</div>
+            </a>
         </div>
         <a href="./review.php">
 
@@ -48,6 +54,7 @@ if ($adminID == null) {
             <a href="./themSanPham.php">        <div class="submenu-item">Thêm sản phẩm</div></a>
             <a href="./thongTinPhieuNhap.php">  <div class="submenu-item">Danh sách phiếu nhập</div></a>
             <a href="./nhapSanPham.php">  <div class="submenu-item">Thêm phiếu nhập</div></a>
+
         </div>
         <a href="./quanlidon.php">
 
@@ -58,6 +65,17 @@ if ($adminID == null) {
         <div class="submenu">
             <div class="submenu-item">Danh sách đơn hàng</div>
             <div class="submenu-item">Thêm đơn hàng</div>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-plug"></i> <span>Quản lý Quyền</span>
+        </div>
+        <div class="submenu">
+            <a href="./xemquyen.php">
+                <div class="submenu-item">Xem quyền</div>
+            </a>
+            <a href="./themquyen.php">
+                <div class="submenu-item">Thêm quyền</div>
+            </a>
         </div>
     </div>
 

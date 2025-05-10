@@ -25,11 +25,6 @@ $user_id=$_SESSION["user_id"];
 </head>
   <body >
   <?php include_once "../components/header2.php";
-  if(isset($_SESSION["user_id"])){
-    echo $_SESSION["user_id"]."day laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-  }else{
-    echo "khogn co";
-  }
   ?>
   <!--  1 => 'Đang xử lý',
         2 => 'Đang được giao',
