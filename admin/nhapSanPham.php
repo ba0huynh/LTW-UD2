@@ -1,5 +1,8 @@
-<?php
+<?php 
 session_start();
+?>
+
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -141,125 +144,23 @@ if (isset($_GET['delete'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quản lý nhập hàng</title>
     <meta charset="UTF-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 800px;
-            background: white;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .flex-container {
-            display: flex;
-            gap: 20px; 
-        }
-        
-        .flex-container .form-group {
-            flex: 1;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        input:disabled {
-            background-color: #e9ecef;
-        }
-
-        .btn {
-            width: 30%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .inButton {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .inButton:hover {
-            background-color: #0056b3;
-        }
-
-        .button-red {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .button-red:hover {
-            background-color: #a71d2a;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f1f1f1;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-        .but-Contain {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .book-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý nhập hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
 </head>
 <body>
+
+<main class="flex flex-row">
+        <?php include_once './gui/sidebar.php' ?>
+        <div class="flex items-center w-full h-screen justify-center" style="max-height: 100vh; overflow-y: scroll; padding-top:90px !important;">
+            <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-[80%]" style="padding: 0;">
+
 <div class="container">
-    <h2>Nhập Phiếu Nhập</h2>
+    <h2>Nhập Phiếu Nhập</h2><br>
     <form method="POST" action="" enctype="multipart/form-data">
         <div class="flex-container">
             <div class="form-group">
@@ -386,9 +287,126 @@ if (isset($_GET['delete'])) {
         </div>
     </form>
 </div>
+
+          </div>
+            </div>
+</main>
 </body>
 </html>
 
 <?php
 $conn->close();
 ?>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 800px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: xx-large;
+
+        }
+        .flex-container {
+            display: flex;
+            gap: 20px; 
+        }
+        
+        .flex-container .form-group {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:disabled {
+            background-color: #e9ecef;
+        }
+
+        .btn {
+            width: 30%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .inButton {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .inButton:hover {
+            background-color: #0056b3;
+        }
+
+        .button-red {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .button-red:hover {
+            background-color: #a71d2a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f1f1f1;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        .but-Contain {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .book-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+    </style>
