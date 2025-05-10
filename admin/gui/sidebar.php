@@ -24,6 +24,9 @@ if ($adminID == null) {
         <div class="menu-item">
             <i class="fas fa-users"></i> <span>Quản lý khách hàng</span>
         </div>
+        <div class="submenu">
+            <a href="./thongTinKhachHang.php">         <div class="submenu-item">Danh sách khách </div></a>
+        </div>
         <div class="menu-item">
             <i class="fas fa-user-tie"></i> <span>Quản lý nhân viên</span>
         </div>
