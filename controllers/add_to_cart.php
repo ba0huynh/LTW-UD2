@@ -32,7 +32,6 @@ if ($book_id <= 0) {
     exit;
 }
 
-// Lấy hoặc tạo giỏ hàng
 $cartId = null;
 $resultCart = $conn->query("SELECT idCart FROM cart WHERE idUser = $user_id LIMIT 1");
 
@@ -43,7 +42,6 @@ if ($resultCart && $rowCart = $resultCart->fetch_assoc()) {
     $cartId = $conn->insert_id;
 }
 
-// Thêm hoặc cập nhật sản phẩm vào giỏ
 $checkItem = $conn->query("SELECT * FROM cartitems WHERE cartId = $cartId AND bookId = $book_id");
 if ($checkItem && $checkItem->num_rows > 0) {
     $conn->query("UPDATE cartitems SET amount = amount + 1 WHERE cartId = $cartId AND bookId = $book_id");

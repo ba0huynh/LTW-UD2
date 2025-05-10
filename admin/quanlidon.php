@@ -872,9 +872,21 @@ foreach ($status_types as $status_type) {
       document.getElementById("modalWard").textContent = button.dataset.ward;
       document.getElementById("modalAddress").textContent = button.dataset.address;
       document.getElementById("modalCity").textContent = button.dataset.city;
+      document.getElementById("saveStatusBtn").dataset.id = button.dataset.id;
+      
 
       const select = document.getElementById("modalStatus");
       select.value = button.dataset.status;
+
+
+      if (parseInt(button.dataset.status) === 3 && parseInt(button.dataset.status) === 4) {
+        select.disabled = true;
+        select.classList.add("opacity-50", "cursor-not-allowed"); 
+      } else {
+        select.disabled = false;
+        select.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+
 
       document.getElementById("updateModal").classList.remove("hidden");
     }
@@ -883,7 +895,7 @@ foreach ($status_types as $status_type) {
       document.getElementById("updateModal").classList.add("hidden");
     }
 
-    document.getElementById('saveStatusBtn').addEventListener('click', function() {
+    document.getElementById('saveStatusBtn').addEventListener('click',async function() {
       const idText = document.getElementById('modalOrderId').textContent;
       const idBill = idText.replace('#MD', '');
       const status = document.getElementById('modalStatus').value;
@@ -893,20 +905,27 @@ foreach ($status_types as $status_type) {
       btn.innerHTML = '<svg class="inline-block animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Đang cập nhật...';
       btn.disabled = true;
       let products=[];
-      fetch("../controllers/get_order_detail.php", {
+      try {
+        const res = await fetch("../controllers/get_order_detail.php", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
           body: "id=" + btn.dataset.id
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          products = data.products; 
-        }
-      });
+        });
 
+        const data = await res.json();
+
+        if (data.success) {
+          products = data.products;
+          console.log("✅ Sản phẩm đã lấy về:", products);
+        } else {
+          alert("Không lấy được sản phẩm!");
+          return;
+        }
+      } catch (err) {
+        console.error("Lỗi khi lấy sản phẩm:", err);
+      }
       fetch('../controllers/capnhat_trangthai_don.php', {
           method: 'POST',
           headers: {

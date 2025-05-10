@@ -1,5 +1,6 @@
 <?php
 session_start(); 
+header('Content-Type: application/json');
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
     exit;
@@ -63,6 +64,23 @@ while ($row = $result->fetch_assoc()) {
     $bookId = (int)$row['bookId'];
     $amount = (int)$row['amount'];
     $price = (float)$row['currentPrice'];
+    $stockCheck = $conn->query("SELECT quantitySold FROM books WHERE id = $bookId");
+    if ($stockCheck && $stockCheck->num_rows > 0) {
+        $stock = (int)$stockCheck->fetch_assoc()['quantitySold'];
+        if ($amount > $stock) {
+            echo json_encode([
+                'success' => false,
+                'message' => "❌ Sản phẩm ID $bookId chỉ còn $stock cuốn, không đủ để mua $amount cuốn."
+            ]);
+            exit;
+        }
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => "❌ Không tìm thấy thông tin sản phẩm ID $bookId."
+        ]);
+        exit;
+    }
     $thanhtien = $amount * $price;
     $tongtien += $thanhtien;
     $items[] = [
@@ -71,6 +89,7 @@ while ($row = $result->fetch_assoc()) {
         'thanhtien' => $thanhtien
     ];
 }
+
 
 $address_value = ($address_id > 0) ? $address_id : "NULL";
 
@@ -119,5 +138,11 @@ $total_row = $total_result->fetch_assoc();
 $total = $total_row['total'] ?? 0;
 
 $conn->query("UPDATE cart SET totalPrice = $total WHERE idUser = $user_id");
-echo "Thanh toán thành công";
+//echo "Thanh toán thành công";
+
+echo json_encode([
+    'success' => true,
+    'message' => "Thanh toán thành công"
+]);
+exit();
 ?>

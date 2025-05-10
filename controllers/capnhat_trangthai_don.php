@@ -28,6 +28,7 @@ $products = $data['products'] ?? [];
 //$note = $conn->real_escape_string($data['note']);
 
 //$update = "UPDATE hoadon SET statusBill = $status, ly_do_huy = '$note' WHERE idBill = $idBill";
+
 if ($status === 3 && !empty($products)) {
     foreach ($products as $product) {
         $bookId = intval($product['id']);
@@ -35,7 +36,13 @@ if ($status === 3 && !empty($products)) {
         $conn->query("UPDATE books SET quantitySold = quantitySold - $quantity WHERE id = $bookId");
     }
 }
-
+foreach ($products as $product) {
+    $bookId = intval($product['id']);
+    $quantity = intval($product['quantity']);
+    if($quantity==0){
+        $conn->query("UPDATE books SET isActive = 0 WHERE id = $bookId");
+    }
+}
 $update_amount = "";
 $update = "UPDATE hoadon SET statusBill = $status  WHERE idBill = $idBill";
 $insertHoadon_trangthai = "INSERT INTO hoadon_trangthai (idBill, trangthai) VALUES ($idBill, $status)";

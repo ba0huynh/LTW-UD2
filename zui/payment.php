@@ -443,7 +443,6 @@ if($conn->connect_error) {
 
     <input type="text" id="edit_address" placeholder="Địa chỉ cụ thể" class="w-full rounded border border-gray-300 text-gray-700 px-6 py-2" value="" />
 
-    <!-- Bản đồ -->
     <div class="w-full h-48 rounded-lg overflow-hidden">
       <iframe
         src="https://www.google.com/maps?q=506%2F49%2F60C%2C%20L%C3%A1c%20Long%20Qu%C3%A2n%2C%20TP.%20HCM&output=embed"
@@ -1703,12 +1702,10 @@ if($conn->connect_error) {
   const districtSelect = document.getElementById("district");
   const wardSelect = document.getElementById("ward");
 
-  // Load tỉnh
   for (let province in data) {
     provinceSelect.innerHTML += `<option value="${province}">${province}</option>`;
   }
 
-  // Khi chọn tỉnh
   provinceSelect.addEventListener("change", function () {
     const province = this.value;
     districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
@@ -1725,7 +1722,6 @@ if($conn->connect_error) {
     }
   });
 
-  // Khi chọn quận
   districtSelect.addEventListener("change", function () {
     const province = provinceSelect.value;
     const district = this.value;
@@ -1843,7 +1839,7 @@ if($conn->connect_error) {
       if (result.success) {
         alert('Cập nhật thành công!');
         document.getElementById("updateDiachi").classList.add("hidden");
-        location.reload(); // hoặc cập nhật giao diện bằng JS
+        location.reload(); 
       } else {
         alert('Cập nhật thất bại: ' + result.message);
       }
@@ -1861,9 +1857,6 @@ if($conn->connect_error) {
     document.getElementById("new-address-form").classList.add("hidden");
   }
 </script>
-
-
-
 <script>
 // function submitAddress() {
 //   const data = {
@@ -2129,13 +2122,13 @@ function showAddressChecked() {
       },
       body: `address_id=${encodeURIComponent(addressId)}&payment_method=${encodeURIComponent(paymentMethod)}`
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
-      if (data.includes("Thanh toán thành công")) {
-        alert("Thanh toán thành công!");
+      if (data.success) {
+        alert(data.message);
         window.location.href = "/LTW-UD2/zui/responseOrder.php";
       } else {
-        alert("Đã xảy ra lỗi khi thanh toán: " + data);
+        alert(data.message);
       }
     })
     .catch(error => {
@@ -2144,11 +2137,5 @@ function showAddressChecked() {
     });
   }
 </script>
-
-
-
 </body>
-
-
-
 </html>

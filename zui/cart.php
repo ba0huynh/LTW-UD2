@@ -325,7 +325,6 @@ if($conn->connect_error) {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    // Remove product from DOM with animation
                     productDiv.style.opacity = '0';
                     productDiv.style.transform = 'translateX(20px)';
                     productDiv.style.transition = 'all 0.3s ease-out';
@@ -333,14 +332,12 @@ if($conn->connect_error) {
                     setTimeout(() => {
                         productDiv.remove();
                         
-                        // Check if cart is empty after removing item
                         const remainingItems = document.querySelectorAll('[data-book-id][data-cart-id]');
                         if (remainingItems.length === 0) {
-                            location.reload(); // Reload to show empty cart message
+                            location.reload();
                         }
                     }, 300);
 
-                    // Update cart totals
                     document.querySelectorAll('.total-amount').forEach(el => {
                         el.textContent = formatCurrency(data.totalPrice);
                     });

@@ -28,7 +28,6 @@
       <div class="bg-gray-50 rounded-lg sm:rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 relative group">
         <img src="<?php echo htmlspecialchars($row2["imageURL"]); ?>" alt="Book" class="w-full h-48 sm:h-60 md:h-72 object-cover transition duration-300 group-hover:brightness-75">
         
-        <!-- Overlay Icons -->
         <div class="absolute inset-0 flex items-center justify-center gap-3 sm:gap-4 opacity-0 group-hover:opacity-100 transition duration-300">
           <a href="book?bookId=<?php echo $row2["id"]?>" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
             <span class="icon text-base sm:text-lg md:text-xl">🔍</span>
@@ -57,8 +56,10 @@
               <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
                   -<?= $discount ?>%
               </span>
-    </span>
-
+          </span>
+          <span class="ml-2 inline-block bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm">
+            Còn lại: <?= $row2["quantitySold"] ?> cuốn
+          </span>
         </div>
       </div>
     <?php }} ?>
@@ -95,7 +96,6 @@
   .then(data => {
     if (data.success) {
       alert(data.message);
-      // 👉 Update số lượng
       const cartCountSpan = document.getElementById('cart-count');
       if (cartCountSpan) {
         cartCountSpan.innerText = data.count;
