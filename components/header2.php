@@ -356,9 +356,11 @@ if (isset($_POST['login_submit'])) {
         $user = $result->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION["user_id"] = $user["id"];
-            header("Location: index.php");
+            echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
             exit;
         } else {
             echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
