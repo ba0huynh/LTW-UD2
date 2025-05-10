@@ -1,804 +1,597 @@
 <?php
+// filepath: c:\xampp\htdocs\LTW-UD2\admin\nhanvien.php
 session_start();
-// Database connection
-$conn = new mysqli("localhost", "root", "", "ltw_ud2");
-if ($conn->connect_error) die("Kết nối thất bại: " . $conn->connect_error);
+require_once("../database/database.php");
+require_once("../database/user.php");
+require_once("../database/role.php");
 
-// Process edit (POST)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'edit') {
-    $id = $_POST['id'];
-    $vai_tro = $_POST['vai_tro'];
-    $ten = $_POST['ten_nhan_vien'];
-    $luong = $_POST['muc_luong'];
-    $ngay = date('Y-m-d');
+// Initialize
+$roleManager = new RoleManager();
+$userTable = new UsersTable();
 
-    $stmt = $conn->prepare("UPDATE NhanVien SET vai_tro=?, ten_nhan_vien=?, muc_luong=?, ngay_chinh_sua=? WHERE id=?");
-    $stmt->bind_param("ssdsi", $vai_tro, $ten, $luong, $ngay, $id);
+// Get user information
+$user = null;
+if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
+    $user = $userTable->getUserDetailsById($_SESSION["user"]);
+    if ($user == null) {
+        unset($_SESSION["user"]);
+    }
+}
+
+// Get all roles for selection
+$roles = $roleManager->getAllRoles();
+
+// Handle search functionality
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$selectedRole = isset($_GET['role_id']) ? intval($_GET['role_id']) : 0;
+
+// Handle role change if form submitted
+$success = false;
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'change_role') {
+    $userId = intval($_POST['user_id']);
+    $roleId = !empty($_POST['role_id']) ? intval($_POST['role_id']) : null;
     
-    if ($stmt->execute()) {
-        echo "success";
+    // Update user's role
+    $result = $userTable->updateUserRole($userId, $roleId);
+    if ($result) {
+        $success = true;
     } else {
-        echo "error: " . $stmt->error;
+        $error = 'Có lỗi xảy ra khi cập nhật vai trò';
     }
-    exit;
 }
 
-// Process delete (GET)
-if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
-    if ($conn->query("DELETE FROM NhanVien WHERE id = $id")) {
-        echo "success";
-    } else {
-        echo "error: " . $conn->error;
-    }
-    exit;
-}
+// Get all employees (users with role_id)
+$currentPage = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$perPage = 10;
+$offset = ($currentPage - 1) * $perPage;
 
-// Get employee data
-$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
-$search_condition = '';
-if (!empty($search)) {
-    $search_condition = " WHERE ten_nhan_vien LIKE '%$search%' OR vai_tro LIKE '%$search%'";
-}
-
-$result = $conn->query("SELECT * FROM NhanVien$search_condition ORDER BY id DESC");
+// Get employees based on filters
+$employees = $userTable->getEmployees($searchTerm, $selectedRole, $perPage, $offset);
+$totalEmployees = $userTable->countEmployees($searchTerm, $selectedRole);
+$totalPages = ceil($totalEmployees / $perPage);
 ?>
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý nhân viên</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+        .stats-card {
+            transition: all 0.3s ease;
         }
-        
-        .employee-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 8px;
-            overflow: hidden;
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        
-        .employee-table th {
-            background-color: #0d507c;
-            color: #ffffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            padding: 1rem;
-            letter-spacing: 0.05em;
-            text-align: left;
-        }
-        
-        .employee-table tbody tr:hover {
-            background-color: rgba(13, 80, 124, 0.05);
-        }
-        
-        .employee-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: middle;
-        }
-        
-        .employee-table tr:last-child td {
-            border-bottom: none;
-        }
-        
         .badge {
-            padding: 0.35em 0.65em;
-            font-size: 0.75em;
-            font-weight: 700;
-            border-radius: 0.25rem;
-            display: inline-block;
-            text-align: center;
-            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1;
         }
-        
         .badge-blue {
             background-color: #ebf5ff;
             color: #0d507c;
         }
-        
         .badge-green {
-            background-color: #ecfdf5;
+            background-color: #d1fae5;
             color: #047857;
         }
-        
         .badge-purple {
             background-color: #f5f3ff;
             color: #6d28d9;
         }
-        
-        .badge-orange {
-            background-color: #fff7ed;
-            color: #c2410c;
+        .badge-amber {
+            background-color: #fef3c7;
+            color: #b45309;
         }
-        
-        .badge-red {
-            background-color: #fef2f2;
-            color: #b91c1c;
-        }
-        
         .badge-gray {
             background-color: #f3f4f6;
             color: #374151;
         }
-        
-        .btn {
-            padding: 0.5rem 0.75rem;
-            font-weight: 500;
-            border-radius: 0.375rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            transition: all 0.15s ease;
-            cursor: pointer;
+        .table-hover tr:hover {
+            background-color: #f9fafb;
         }
-        
-        .btn-blue {
-            background-color: #0d507c;
-            color: white;
-        }
-        
-        .btn-blue:hover {
-            background-color: #0c4366;
-        }
-        
-        .btn-red {
-            background-color: #ef4444;
-            color: white;
-        }
-        
-        .btn-red:hover {
-            background-color: #dc2626;
-        }
-        
-        .btn-gray {
-            background-color: #e5e7eb;
-            color: #374151;
-        }
-        
-        .btn-gray:hover {
-            background-color: #d1d5db;
-        }
-        
         /* Modal animation */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
         @keyframes slideIn {
             from { transform: translateY(-20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-        
         .animate-fade {
             animation: fadeIn 0.3s ease forwards;
         }
-        
         .animate-slide {
             animation: slideIn 0.3s ease forwards;
         }
-        
-        /* Search bar styling */
-        .search-container {
-            position: relative;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-        }
-        
-        .search-input {
-            padding: 0.625rem 0.75rem 0.625rem 2.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            width: 100%;
-            transition: border-color 0.15s ease;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #0d507c;
-            box-shadow: 0 0 0 3px rgba(13, 80, 124, 0.1);
-        }
-        
-        /* Custom tooltip */
-        .tooltip {
-            position: relative;
-        }
-        
-        .tooltip:before {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 0.25rem 0.5rem;
-            background-color: #1f2937;
-            color: white;
-            font-size: 0.75rem;
-            border-radius: 0.25rem;
-            white-space: nowrap;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.2s ease, visibility 0.2s ease;
-            z-index: 10;
-        }
-        
-        .tooltip:hover:before {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Page title */
-        .page-title {
-            position: relative;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .page-title:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            height: 3px;
-            width: 50px;
-            background-color: #0d507c;
-        }
-        
-        /* Responsive fixes */
-        @media (max-width: 768px) {
-            .employee-table td, .employee-table th {
-                padding: 0.75rem 0.5rem;
-            }
-            
-            .employee-table th:nth-child(3), 
-            .employee-table td:nth-child(3),
-            .employee-table th:nth-child(4), 
-            .employee-table td:nth-child(4) {
-                display: none;
-            }
-            
-            .btn {
-                padding: 0.375rem 0.5rem;
-                font-size: 0.75rem;
-            }
-        }
     </style>
 </head>
-<body>
-    <main class="flex flex-row min-h-screen bg-gray-50">
-        <!-- Include Sidebar -->
-        <?php include_once './gui/sidebar.php' ?>
+
+<body class="bg-gray-100">
+    <main class="flex flex-col md:flex-row min-h-screen">
+        <!-- Mobile sidebar toggle button -->
+        <div class="md:hidden p-4 bg-white border-b">
+            <button id="mobileSidebarToggle" class="text-gray-500 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
         
-        <!-- Main Content Area -->
-        <div class="flex-1 h-screen overflow-y-scroll p-4 md:p-6 lg:p-8">
-            <div class="max-w-6xl mx-auto">
-                <!-- Header Section -->
-                <div class="mb-6">
-                    <h1 class="text-2xl font-bold text-gray-800 page-title">Quản lý nhân viên</h1>
-                    <p class="text-gray-600 mt-2">Xem, thêm, sửa và quản lý thông tin nhân viên</p>
+        <!-- Sidebar - hidden on mobile by default -->
+        <div id="sidebar" class="hidden md:block md:w-64 bg-white shadow-md">
+            <?php include_once './gui/sidebar.php' ?>
+        </div>
+        
+        <div class="flex-1 p-3 sm:p-4 md:p-6 h-screen overflow-auto">
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <i class="fas fa-user-tie mr-2 text-blue-600"></i>
+                            Quản lý nhân viên
+                        </h1>
+                        <p class="text-gray-600 mt-1">
+                            Xem và quản lý thông tin nhân viên hệ thống
+                        </p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <a href="themnhanvien.php" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Thêm nhân viên mới
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <?php if ($success): ?>
+            <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-green-700">
+                            Cập nhật vai trò nhân viên thành công!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <?php if ($error): ?>
+            <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle text-red-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-700">
+                            <?php echo $error; ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <!-- Stats Overview Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="stats-card bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Tổng nhân viên</p>
+                            <p class="text-2xl font-semibold text-gray-800"><?php echo $totalEmployees; ?></p>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-blue-100 text-blue-500">
+                            <i class="fas fa-users text-xl"></i>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Tools Section -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5 mb-6">
-                    <div class="flex flex-wrap items-center justify-between gap-4">
-                        <!-- Search -->
-                        <div class="search-container w-full md:w-auto md:min-w-[300px]">
-                            <span class="search-icon">
-                                <i class="fas fa-search"></i>
-                            </span>
+                <div class="stats-card bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Số vai trò quản lý</p>
+                            <?php 
+                            // Count admin roles (you might need to adjust this logic)
+                            $adminCount = 0;
+                            foreach ($employees as $emp) {
+                                if ($emp['role_id'] == 1) {
+                                    $adminCount++;
+                                }
+                            }
+                            ?>
+                            <p class="text-2xl font-semibold text-gray-800"><?php echo $adminCount; ?></p>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-green-100 text-green-500">
+                            <i class="fas fa-user-shield text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-card bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Vai trò hệ thống</p>
+                            <p class="text-2xl font-semibold text-gray-800"><?php echo count($roles); ?></p>
+                        </div>
+                        <div class="flex items-center justify-center w-12 h-12 rounded-full bg-purple-100 text-purple-500">
+                            <i class="fas fa-user-tag text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter and Search Section -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+                <form action="" method="GET" class="flex flex-col md:flex-row md:items-end space-y-3 md:space-y-0 md:space-x-3">
+                    <div class="flex-1">
+                        <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Tìm kiếm</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
                             <input 
                                 type="text" 
-                                id="searchInput" 
-                                placeholder="Tìm kiếm theo tên hoặc vai trò..." 
-                                class="search-input"
+                                name="search" 
+                                id="search" 
+                                class="focus:ring-blue-500 outline-transparent focus:border-blue-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md" 
+                                placeholder="Tìm theo tên, email..."
+                                value="<?php echo htmlspecialchars($searchTerm); ?>"
                             >
                         </div>
-                        
-                        <!-- Add Button -->
-                        <button class="btn btn-blue" onclick="openAddPopup()">
-                            <i class="fas fa-plus mr-2"></i>
-                            Thêm nhân viên mới
+                    </div>
+                    
+                    <div>
+                        <label for="role_filter" class="block text-sm font-medium text-gray-700 mb-1">Vai trò</label>
+                        <select 
+                            id="role_filter" 
+                            name="role_id" 
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                        >
+                            <option value="0">Tất cả vai trò</option>
+                            <?php foreach($roles as $role): ?>
+                                <option value="<?php echo $role['role_id']; ?>" <?php echo ($selectedRole == $role['role_id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($role['role_name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <button type="submit" class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fas fa-filter mr-2"></i>
+                            Lọc
                         </button>
                     </div>
-                </div>
-                
-                <!-- Table Section -->
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="employee-table">
-                            <thead>
+                </form>
+            </div>
+
+            <!-- Employee Table -->
+            <div class="bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden mb-6">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 table-hover">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-id-badge mr-1"></i> ID
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-user mr-1"></i> Người dùng
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-at mr-1"></i> Email
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-user-tag mr-1"></i> Vai trò
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-toggle-on mr-1"></i> Trạng thái
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <i class="fas fa-cogs mr-1"></i> Thao tác
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php if (empty($employees)): ?>
                                 <tr>
-                                    <th><i class="fas fa-user-tag mr-2"></i>Vai trò</th>
-                                    <th><i class="fas fa-user mr-2"></i>Tên nhân viên</th>
-                                    <th><i class="fas fa-calendar-plus mr-2"></i>Ngày tạo</th>
-                                    <th><i class="fas fa-calendar-check mr-2"></i>Ngày chỉnh sửa</th>
-                                    <th><i class="fas fa-money-bill-wave mr-2"></i>Mức lương</th>
-                                    <th><i class="fas fa-cogs mr-2"></i>Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody id="employeeTableBody">
-                                <?php 
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()): 
-                                        // Assign badge color based on role
-                                        $badge_class = 'badge-gray';
-                                        switch(strtolower($row["vai_tro"])) {
-                                            case 'quản lý': $badge_class = 'badge-blue'; break;
-                                            case 'nhân viên bán hàng': $badge_class = 'badge-green'; break;
-                                            case 'kế toán': $badge_class = 'badge-purple'; break;
-                                            case 'nhân viên kho': 
-                                            case 'thủ kho': $badge_class = 'badge-orange'; break;
-                                            case 'it support': $badge_class = 'badge-red'; break;
-                                        }
-                                ?>
-                                <tr id="row-<?= $row['id'] ?>">
-                                    <td>
-                                        <span class="badge <?= $badge_class ?>">
-                                            <?= htmlspecialchars($row["vai_tro"]) ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div class="font-medium text-gray-800">
-                                            <?= htmlspecialchars($row["ten_nhan_vien"]) ?>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-sm text-gray-600">
-                                            <?= date('d/m/Y', strtotime($row["ngay_tao"])) ?>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="text-sm text-gray-600">
-                                            <?= date('d/m/Y', strtotime($row["ngay_chinh_sua"])) ?>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="font-medium text-gray-900">
-                                            <?= number_format($row["muc_luong"], 0, ',', '.') ?> ₫
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="flex space-x-2">
-                                            <button 
-                                                class="btn btn-blue tooltip" 
-                                                data-tooltip="Chỉnh sửa"
-                                                onclick='openEditPopup(<?= json_encode($row) ?>)'
-                                            >
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <button 
-                                                class="btn btn-red tooltip" 
-                                                data-tooltip="Xóa"
-                                                onclick='deleteNhanVien(<?= $row["id"] ?>)'
-                                            >
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php 
-                                    endwhile; 
-                                } else {
-                                ?>
-                                <tr>
-                                    <td colspan="6" class="text-center py-8 text-gray-500">
+                                    <td colspan="6" class="px-6 py-12 text-center">
                                         <div class="flex flex-col items-center">
-                                            <i class="fas fa-user-slash text-4xl mb-3 text-gray-300"></i>
-                                            <p>Không tìm thấy nhân viên nào</p>
+                                            <i class="fas fa-user-slash text-4xl text-gray-300 mb-3"></i>
+                                            <p class="text-gray-500">Không tìm thấy nhân viên nào</p>
+                                            <?php if (!empty($searchTerm) || $selectedRole > 0): ?>
+                                                <a href="nhanvien.php" class="mt-2 text-blue-500 hover:underline">
+                                                    <i class="fas fa-undo mr-1"></i> Xóa bộ lọc
+                                                </a>
+                                            <?php endif; ?>
                                         </div>
                                     </td>
                                 </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
+                            <?php else: ?>
+                                <?php foreach ($employees as $employee): ?>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?php echo $employee['id']; ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10 rounded-full overflow-hidden">
+                                                    <?php if (!empty($employee['avatar'])): ?>
+                                                        <img src="<?php echo htmlspecialchars($employee['avatar']); ?>" alt="Avatar" class="h-10 w-10 rounded-full object-cover">
+                                                    <?php else: ?>
+                                                        <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                                            <span class="text-sm font-medium text-blue-600">
+                                                                <?php echo strtoupper(substr($employee['userName'], 0, 1)); ?>
+                                                            </span>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <?php echo htmlspecialchars($employee['userName']); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">
+                                                <?php echo htmlspecialchars($employee['email']); ?>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <?php
+                                            $roleBadgeClass = 'badge-gray';
+                                            $roleName = 'Chưa phân vai trò';
+                                            
+                                            if (!empty($employee['role_id'])) {
+                                                foreach ($roles as $role) {
+                                                    if ($role['role_id'] == $employee['role_id']) {
+                                                        $roleName = $role['role_name'];
+                                                        
+                                                        // Assign badge class based on role
+                                                        switch ($employee['role_id']) {
+                                                            case 1: 
+                                                                $roleBadgeClass = 'badge-blue'; 
+                                                                break;
+                                                            case 2: 
+                                                                $roleBadgeClass = 'badge-green'; 
+                                                                break;
+                                                            case 3: 
+                                                                $roleBadgeClass = 'badge-amber'; 
+                                                                break;
+                                                            default: 
+                                                                $roleBadgeClass = 'badge-purple';
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <span class="badge <?php echo $roleBadgeClass; ?>">
+                                                <?php echo htmlspecialchars($roleName); ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <?php if (isset($employee['status_user']) && $employee['status_user'] == 1): ?>
+                                                <span class="badge badge-green">
+                                                    <i class="fas fa-check-circle mr-1"></i> Hoạt động
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="badge bg-red-100 text-red-800">
+                                                    <i class="fas fa-ban mr-1"></i> Đã khóa
+                                                </span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                            <button onclick="openChangeRoleModal(<?php echo $employee['id']; ?>, '<?php echo htmlspecialchars($employee['userName']); ?>', <?php echo $employee['role_id'] ?? 'null'; ?>)" class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="fas fa-user-tag"></i> Đổi vai trò
+                                            </button>
+                                            <a href="xemnhanvien.php?id=<?php echo $employee['id']; ?>" class="text-gray-600 hover:text-gray-900">
+                                                <i class="fas fa-eye"></i> Chi tiết
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <?php if ($totalPages > 1): ?>
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Hiển thị <span class="font-medium"><?php echo count($employees); ?></span> trong số 
+                                <span class="font-medium"><?php echo $totalEmployees; ?></span> nhân viên
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <!-- Previous Page -->
+                                <?php if ($currentPage > 1): ?>
+                                    <a href="?page=<?php echo ($currentPage - 1); ?>&search=<?php echo urlencode($searchTerm); ?>&role_id=<?php echo $selectedRole; ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                <?php endif; ?>
+                                
+                                <!-- Page Numbers -->
+                                <?php 
+                                $startPage = max(1, $currentPage - 2);
+                                $endPage = min($totalPages, $startPage + 4);
+                                
+                                if ($startPage > 1) {
+                                    echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                }
+                                
+                                for ($i = $startPage; $i <= $endPage; $i++): 
+                                ?>
+                                    <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($searchTerm); ?>&role_id=<?php echo $selectedRole; ?>" 
+                                       class="relative inline-flex items-center px-4 py-2 border border-gray-300 <?php echo ($i == $currentPage) ? 'bg-blue-50 text-blue-600' : 'bg-white text-gray-700'; ?> text-sm font-medium hover:bg-gray-50">
+                                        <?php echo $i; ?>
+                                    </a>
+                                <?php 
+                                endfor;
+                                
+                                if ($endPage < $totalPages) {
+                                    echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                }
+                                ?>
+                                
+                                <!-- Next Page -->
+                                <?php if ($currentPage < $totalPages): ?>
+                                    <a href="?page=<?php echo ($currentPage + 1); ?>&search=<?php echo urlencode($searchTerm); ?>&role_id=<?php echo $selectedRole; ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                <?php else: ?>
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-100 text-sm font-medium text-gray-400 cursor-not-allowed">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                <?php endif; ?>
+                            </nav>
+                        </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
         </div>
     </main>
 
-    <!-- Popup overlay -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden animate-fade"></div>
-
-    <!-- Edit Popup -->
-    <div id="editPopup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-2xl z-50 w-full max-w-md hidden animate-slide">
+    <!-- Change Role Modal -->
+    <div id="overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 z-40 hidden animate-fade"></div>
+    
+    <div id="changeRoleModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-2xl z-50 w-full max-w-md hidden animate-slide">
         <div class="p-5 border-b border-gray-200">
             <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-gray-800">Chỉnh sửa thông tin nhân viên</h3>
-                <button onclick="closePopup()" class="text-gray-400 hover:text-gray-600">
+                <h3 class="text-lg font-bold text-gray-800" id="modalTitle">Đổi vai trò nhân viên</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
         
-        <form id="editForm" class="p-5">
-            <input type="hidden" name="id" id="edit-id">
-            <input type="hidden" name="action" value="edit">
+        <form id="changeRoleForm" method="POST" action="" class="p-5">
+            <input type="hidden" name="action" value="change_role">
+            <input type="hidden" name="user_id" id="user_id" value="">
             
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="edit-vai-tro">
-                    Vai trò
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="employee_name">
+                    Nhân viên
                 </label>
-                <select 
-                    name="vai_tro" 
-                    id="edit-vai-tro"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                    <option value="Quản lý">Quản lý</option>
-                    <option value="Nhân viên bán hàng">Nhân viên bán hàng</option>
-                    <option value="Kế toán">Kế toán</option>
-                    <option value="Bảo vệ">Bảo vệ</option>
-                    <option value="Tạp vụ">Tạp vụ</option>
-                    <option value="Nhân viên kho">Nhân viên kho</option>
-                    <option value="Thủ kho">Thủ kho</option>
-                    <option value="Lễ tân">Lễ tân</option>
-                    <option value="IT support">IT support</option>
-                </select>
-            </div>
-            
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="edit-ten">
-                    Tên nhân viên
-                </label>
-                <input 
-                    type="text" 
-                    name="ten_nhan_vien" 
-                    id="edit-ten"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                >
+                <div class="border border-gray-300 rounded-md px-3 py-2 bg-gray-50 text-gray-700" id="employee_name">
+                    <!-- Filled by JavaScript -->
+                </div>
             </div>
             
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="edit-luong">
-                    Mức lương (VNĐ)
+                <label class="block text-gray-700 text-sm font-medium mb-2" for="role_id">
+                    Vai trò
                 </label>
-                <input 
-                    type="number" 
-                    name="muc_luong" 
-                    id="edit-luong"
+                <select 
+                    name="role_id" 
+                    id="role_id"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    min="0"
-                    step="100000"
                     required
                 >
+                    <option value="">-- Chọn vai trò --</option>
+                    <?php foreach($roles as $role): ?>
+                        <option value="<?php echo $role['role_id']; ?>">
+                            <?php echo htmlspecialchars($role['role_name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <p class="mt-1 text-sm text-gray-500">
+                    Chọn vai trò để gán cho nhân viên này
+                </p>
             </div>
             
             <div class="flex justify-end space-x-3">
                 <button 
                     type="button" 
-                    onclick="closePopup()" 
-                    class="btn btn-gray"
+                    onclick="closeModal()" 
+                    class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                     Hủy
                 </button>
                 <button 
                     type="submit" 
-                    class="btn btn-blue"
+                    class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
-                    <i class="fas fa-save mr-2"></i>
-                    Lưu thay đổi
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Add Employee Popup -->
-    <div id="addPopup" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-2xl z-50 w-full max-w-md hidden animate-slide">
-        <div class="p-5 border-b border-gray-200">
-            <div class="flex justify-between items-center">
-                <h3 class="text-lg font-bold text-gray-800">Thêm nhân viên mới</h3>
-                <button onclick="closePopup()" class="text-gray-400 hover:text-gray-600">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        
-        <form id="addForm" class="p-5">
-            <input type="hidden" name="action" value="add">
-            
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="add-vai-tro">
-                    Vai trò
-                </label>
-                <select 
-                    name="vai_tro" 
-                    id="add-vai-tro"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                    <option value="Quản lý">Quản lý</option>
-                    <option value="Nhân viên bán hàng">Nhân viên bán hàng</option>
-                    <option value="Kế toán">Kế toán</option>
-                    <option value="Bảo vệ">Bảo vệ</option>
-                    <option value="Tạp vụ">Tạp vụ</option>
-                    <option value="Nhân viên kho">Nhân viên kho</option>
-                    <option value="Thủ kho">Thủ kho</option>
-                    <option value="Lễ tân">Lễ tân</option>
-                    <option value="IT support">IT support</option>
-                </select>
-            </div>
-            
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="add-ten">
-                    Tên nhân viên
-                </label>
-                <input 
-                    type="text" 
-                    name="ten_nhan_vien" 
-                    id="add-ten"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                >
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-medium mb-2" for="add-luong">
-                    Mức lương (VNĐ)
-                </label>
-                <input 
-                    type="number" 
-                    name="muc_luong" 
-                    id="add-luong"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    min="0"
-                    step="100000"
-                    required
-                >
-            </div>
-            
-            <div class="flex justify-end space-x-3">
-                <button 
-                    type="button" 
-                    onclick="closePopup()" 
-                    class="btn btn-gray"
-                >
-                    Hủy
-                </button>
-                <button 
-                    type="submit" 
-                    class="btn btn-blue"
-                >
-                    <i class="fas fa-plus mr-2"></i>
-                    Thêm nhân viên
+                    <i class="fas fa-save mr-1"></i>
+                    Cập nhật vai trò
                 </button>
             </div>
         </form>
     </div>
 
     <script>
-        // Open edit popup
-        function openEditPopup(data) {
-            document.getElementById("edit-id").value = data.id;
-            document.getElementById("edit-vai-tro").value = data.vai_tro;
-            document.getElementById("edit-ten").value = data.ten_nhan_vien;
-            document.getElementById("edit-luong").value = data.muc_luong;
+        // Mobile sidebar toggle
+        document.getElementById('mobileSidebarToggle')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        });
+
+        // Handle responsiveness on window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth >= 768) { // md breakpoint
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        });
+        
+        // Change role modal functions
+        function openChangeRoleModal(userId, userName, roleId) {
+            document.getElementById("user_id").value = userId;
+            document.getElementById("employee_name").textContent = userName;
+            
+            const roleSelect = document.getElementById("role_id");
+            if (roleId) {
+                roleSelect.value = roleId;
+            } else {
+                roleSelect.value = "";
+            }
             
             document.getElementById("overlay").style.display = "block";
-            document.getElementById("editPopup").style.display = "block";
+            document.getElementById("changeRoleModal").style.display = "block";
         }
         
-        // Open add popup
-        function openAddPopup() {
-            // Reset form
-            document.getElementById("addForm").reset();
-            
-            document.getElementById("overlay").style.display = "block";
-            document.getElementById("addPopup").style.display = "block";
-        }
-        
-        // Close all popups
-        function closePopup() {
+        function closeModal() {
             document.getElementById("overlay").style.display = "none";
-            document.getElementById("editPopup").style.display = "none";
-            document.getElementById("addPopup").style.display = "none";
+            document.getElementById("changeRoleModal").style.display = "none";
         }
         
-        // Handle edit form submission
-        document.getElementById("editForm").onsubmit = function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            
-            $.ajax({
-                url: "nhanvien.php",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.includes("success")) {
-                        Swal.fire({
-                            title: 'Thành công!',
-                            text: 'Cập nhật thông tin nhân viên thành công',
-                            icon: 'success',
-                            confirmButtonText: 'Đóng'
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Lỗi!',
-                            text: 'Đã xảy ra lỗi: ' + response,
-                            icon: 'error',
-                            confirmButtonText: 'Đóng'
-                        });
-                    }
-                },
-                error: function() {
-                    Swal.fire({
-                        title: 'Lỗi!',
-                        text: 'Đã xảy ra lỗi khi gửi yêu cầu',
-                        icon: 'error',
-                        confirmButtonText: 'Đóng'
-                    });
-                }
-            });
-        };
-        
-        // Add employee form handler
-        document.getElementById("addForm").onsubmit = function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
-            
-            $.ajax({
-                url: "them_nhanvien.php", // Create this file to handle adding employees
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.includes("success")) {
-                        Swal.fire({
-                            title: 'Thành công!',
-                            text: 'Thêm nhân viên mới thành công',
-                            icon: 'success',
-                            confirmButtonText: 'Đóng'
-                        }).then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            title: 'Lỗi!',
-                            text: 'Đã xảy ra lỗi: ' + response,
-                            icon: 'error',
-                            confirmButtonText: 'Đóng'
-                        });
-                    }
-                },
-                error: function() {
-                    Swal.fire({
-                        title: 'Lỗi!',
-                        text: 'Đã xảy ra lỗi khi gửi yêu cầu',
-                        icon: 'error',
-                        confirmButtonText: 'Đóng'
-                    });
-                }
-            });
-        };
-        
-        // Delete employee
-        function deleteNhanVien(id) {
-            Swal.fire({
-                title: 'Xác nhận xóa?',
-                text: "Bạn không thể hoàn tác hành động này!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Xóa',
-                cancelButtonText: 'Hủy'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: "nhanvien.php?delete=" + id,
-                        type: "GET",
-                        success: function(response) {
-                            if (response.includes("success")) {
-                                Swal.fire(
-                                    'Đã xóa!',
-                                    'Nhân viên đã được xóa thành công.',
-                                    'success'
-                                );
-                                document.getElementById("row-" + id).remove();
-                            } else {
-                                Swal.fire(
-                                    'Lỗi!',
-                                    'Đã xảy ra lỗi: ' + response,
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function() {
-                            Swal.fire(
-                                'Lỗi!',
-                                'Đã xảy ra lỗi khi gửi yêu cầu.',
-                                'error'
-                            );
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('keyup', function() {
-            const searchTerm = this.value.toLowerCase();
-            filterEmployees(searchTerm);
-        });
-        
-        function filterEmployees(searchTerm) {
-            const rows = document.querySelectorAll('#employeeTableBody tr');
-            
-            rows.forEach(row => {
-                const roleContent = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                const nameContent = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                
-                if (roleContent.includes(searchTerm) || nameContent.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-            
-            // Show "no results" message if needed
-            const visibleRows = document.querySelectorAll('#employeeTableBody tr[style=""]').length;
-            const noResultsRow = document.getElementById('noResultsRow');
-            
-            if (visibleRows === 0) {
-                if (!noResultsRow) {
-                    const tbody = document.getElementById('employeeTableBody');
-                    const newRow = document.createElement('tr');
-                    newRow.id = 'noResultsRow';
-                    newRow.innerHTML = `
-                        <td colspan="6" class="text-center py-8 text-gray-500">
-                            <div class="flex flex-col items-center">
-                                <i class="fas fa-search text-4xl mb-3 text-gray-300"></i>
-                                <p>Không tìm thấy kết quả phù hợp</p>
-                            </div>
-                        </td>
-                    `;
-                    tbody.appendChild(newRow);
-                }
-            } else if (noResultsRow) {
-                noResultsRow.remove();
-            }
-        }
-        
-        // Close popups when clicking outside
-        document.getElementById("overlay").addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePopup();
-            }
-        });
-        
-        // Close popups with ESC key
+        // Close modal on escape key
         document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                closePopup();
+            if (e.key === 'Escape') {
+                closeModal();
             }
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('overlay').addEventListener('click', function() {
+            closeModal();
         });
     </script>
 </body>

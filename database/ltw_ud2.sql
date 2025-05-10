@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2025 at 03:52 AM
+-- Generation Time: May 10, 2025 at 03:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,24 +47,24 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `isActive`, `description`, `type`) VALUES
-(1, 'Toán 6 - Giáo Khoa Cơ Bản', 2, '6', 18000.00, 16000.00, 120, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 1, 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 110, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 1, 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 1, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
-(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 1, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
-(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, 'https://bizweb.dktcdn.net/thumb/grande/100/386/441/products/9786040013613-1554883055.jpg?v=1593164899427', 1, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
-(7, 'Toán 9 - Ôn Thi vào 10', 1, '9', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
+(1, 'Toán 6 - Giáo Khoa Cơ Bản', 2, '6', 18000.00, 16000.00, 166, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 0, 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 133, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 0, 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 0, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
+(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
+(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, '/LTW-UD2/images/Products/681d4a736e040_hoahoc-8-baitap.jpg', 0, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
+(7, 'Toán 9 - Ôn Thi vào 10', 1, '10', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 0, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
 (8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
 (9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
 (10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, 'https://metaisach.com/wp-content/uploads/2019/01/sach-giao-khoa-vat-li-lop-9.jpg', 1, 1, 'Vật lý lớp 9.', 'Giáo Trình'),
+(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, '/LTW-UD2/images/Products/681d6ab95cc65_681d4ce5e4212_vatlii9-giaokhoa.jpg', 1, 1, 'Vật lý lớp 9.', 'Giáo Trình'),
 (12, 'Ngữ Văn 9 - Bài Tập', 2, '9', 22000.00, 20000.00, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 1, 'Bài tập văn học lớp 9.', 'Bài Tập'),
 (13, 'Sinh Học 9 - Ôn Thi', 6, '9', 23000.00, 21500.00, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 1, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
 (14, 'Hóa Học 9 - Ôn Thi', 7, '9', 23500.00, 21500.00, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 1, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
 (15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
-(16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, 'https://bizweb.dktcdn.net/thumb/grande/100/362/945/products/41913655.jpg?v=1568985169303', 1, 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
+(16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, '/LTW-UD2/images/Products/681d6ad687211_681d209832b76_nguvan-9-onthivaolop10.jpg', 1, 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
 (17, 'Toán 11 - Giáo Trình', 1, '11', 28000.00, 26000.00, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 1, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
 (18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
-(19, 'Toán 12 - Ôn Thi THPT', 1, '12', 32000.00, 30000.00, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 0, 0, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
+(19, 'Toán 12 - Ôn Thi THPT', 1, '12', 32000.00, 30000.00, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 1, 1, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
 (20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, '12', 31000.00, 29000.00, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 1, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
 (21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, '12', 30000.00, 28000.00, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 1, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
 (22, 'Toán 12 - Giáo Khoa Cơ Bản', 1, '12', 31000.00, 29000.00, 140, 'https://toanmath.com/wp-content/uploads/2016/12/sach-giao-khoa-giai-tich-12-co-ban.png', 1, 1, 'Toán lớp 12 cơ bản.', 'Giáo Khoa Cơ Bản'),
@@ -72,7 +72,8 @@ INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `
 (24, 'Sinh Học 12 - Ôn Thi THPT', 6, '12', 30500.00, 28500.00, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 1, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
 (25, 'Hóa Học 12 - Ôn Thi THPT', 7, '12', 31000.00, 29000.00, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 1, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
 (26, 'Ngữ Văn 12 - Bài Tập', 2, '12', 30000.00, 28000.00, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 1, 'Bài tập Văn học lớp 12.', 'Bài Tập'),
-(28, 'hóa', 7, '9', NULL, NULL, 0, '/LTW-UD2/images/Products/681433e83bea4_hoahoc-9-hocsinhgioi.jpg', 1, 0, 'học đi chờ chi\r\n', NULL);
+(30, 'Sách giáo khoa Vật lý lớp 9', 5, '9', NULL, NULL, 0, '/LTW-UD2/images/Products/681d4ce5e4212_vatlii9-giaokhoa.jpg', 1, 0, 'Không thể không mua', NULL),
+(31, 'hóa học 9 - bồi dưỡng xuất sắc', 7, '2', NULL, NULL, 0, '/LTW-UD2/images/Products/681e0f83667b5_hoahoc-9-hocsinhgioi.jpg', 1, 0, 'nai xừ.', NULL);
 
 -- --------------------------------------------------------
 
@@ -91,12 +92,12 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
-(1, 1, 23000.00),
+(1, 1, 0.00),
 (2, 2, 36000.00),
-(3, 3, 644000.00),
+(3, 3, 957000.00),
 (4, 4, 45000.00),
 (5, 5, 43000.00),
-(6, 6, 41000.00),
+(6, 6, 40500.00),
 (7, 7, 43000.00),
 (8, 8, 49000.00),
 (9, 9, 52500.00),
@@ -105,8 +106,7 @@ INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
 (12, 12, 56500.00),
 (13, 13, 29000.00),
 (14, 14, 230000.00),
-(15, 15, 0.00),
-(16, 16, 0.00);
+(15, 15, 240000.00);
 
 -- --------------------------------------------------------
 
@@ -131,6 +131,8 @@ INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (8, 5, 4, 1),
 (9, 5, 5, 1),
 (10, 6, 5, 1),
+(11, 6, 6, 1),
+(12, 7, 6, 1),
 (13, 7, 7, 1),
 (14, 8, 7, 1),
 (15, 8, 8, 1),
@@ -147,10 +149,14 @@ INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (26, 14, 13, 1),
 (27, 14, 14, 1),
 (28, 15, 14, 1),
-(68, 7, 6, 1),
-(69, 5, 6, 1),
-(91, 7, 1, 1),
-(92, 7, 3, 28);
+(29, 15, 15, 1),
+(30, 16, 15, 1),
+(58, 5, 3, 34),
+(59, 3, 3, 14),
+(60, 1, 3, 2),
+(61, 19, 3, 1),
+(62, 17, 3, 1),
+(63, 4, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -171,15 +177,38 @@ CREATE TABLE `chitiethoadon` (
 --
 
 INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`, `pricePerItem`) VALUES
-(60, 5, 77, 12, 18000),
-(61, 3, 77, 14, 17000),
-(62, 1, 77, 2, 16000),
-(63, 19, 77, 1, 30000),
-(64, 17, 77, 1, 26000),
-(65, 4, 77, 1, 19000),
-(66, 15, 78, 1, 24000),
-(67, 16, 78, 1, 25000),
-(68, 7, 79, 5, 23000);
+(1, 3, 32, 1, 17000),
+(2, 4, 32, 1, 19000),
+(3, 3, 33, 1, 17000),
+(4, 4, 33, 1, 19000),
+(5, 3, 34, 1, 17000),
+(6, 5, 34, 1, 18000),
+(7, 15, 35, 1, 24000),
+(8, 17, 35, 1, 26000),
+(9, 15, 36, 1, 24000),
+(10, 17, 36, 1, 26000),
+(11, 22, 37, 1, 29000),
+(12, 3, 38, 1, 17000),
+(13, 5, 39, 1, 18000),
+(14, 3, 39, 1, 17000),
+(15, 1, 40, 1, 16000),
+(16, 15, 41, 1, 24000),
+(17, 3, 42, 1, 17000),
+(18, 17, 43, 1, 26000),
+(19, 19, 43, 1, 30000),
+(20, 3, 44, 1, 17000),
+(21, 5, 45, 1, 18000),
+(22, 1, 46, 1, 16000),
+(23, 3, 47, 1, 17000),
+(24, 3, 48, 1, 17000),
+(25, 5, 49, 1, 18000),
+(26, 5, 50, 1, 18000),
+(27, 17, 51, 1, 26000),
+(28, 5, 52, 1, 18000),
+(29, 5, 53, 1, 18000),
+(30, 17, 54, 1, 26000),
+(31, 1, 55, 1, 16000),
+(32, 1, 56, 132, 16000);
 
 -- --------------------------------------------------------
 
@@ -193,16 +222,22 @@ CREATE TABLE `chitietphieunhap` (
   `idBook` int(11) NOT NULL,
   `idCungCap` int(11) NOT NULL,
   `soluong` int(11) NOT NULL,
-  `gianhap` decimal(10,2) NOT NULL
+  `gianhap` decimal(10,2) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `loinhuan` int(11) DEFAULT 10
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `chitietphieunhap`
 --
 
-INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `soluong`, `gianhap`) VALUES
-(1, 1, 6, 1, 100, 10000.00),
-(2, 1, 21, 1, 100, 15000.00);
+INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `soluong`, `gianhap`, `status`, `loinhuan`) VALUES
+(1, 1, 6, 1, 100, 10000.00, 1, 10),
+(2, 1, 21, 1, 100, 15000.00, 1, 10),
+(4, 1, 25, 1, 34, 20000.00, 1, 10),
+(5, 8, 1, 1, 23, 309000.00, 1, 10),
+(6, 8, 1, 1, 23, 309000.00, 1, 10),
+(7, 9, 3, 1, 23, 309000.00, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -214,6 +249,18 @@ CREATE TABLE `chucnang` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chucnang`
+--
+
+INSERT INTO `chucnang` (`id`, `name`) VALUES
+(5, 'Quản lí khách hàng'),
+(6, 'Thống kê'),
+(7, 'Quản lý sản phẩm'),
+(8, 'Quản lý nhân viên'),
+(9, 'Đánh giá'),
+(10, 'Quản lý đơn hàng');
 
 -- --------------------------------------------------------
 
@@ -240,9 +287,62 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMethod`, `statusBill`, `ly_do_huy`, `ly_do_tra_hang`, `create_at`, `ngay_cap_nhat`, `id_diachi`) VALUES
-(77, 3, NULL, 561000.00, 'Chuyen khoan', 3, NULL, NULL, '2025-05-10 08:38:38', '2025-05-10 08:38:38', 3),
-(78, 15, NULL, 49000.00, 'Tien mat', 3, NULL, NULL, '2025-04-09 08:41:39', '2025-05-10 08:41:39', 15),
-(79, 16, NULL, 115000.00, 'Tien mat', 3, NULL, NULL, '2025-03-21 08:46:40', '2025-05-10 08:46:40', 19);
+(1, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(2, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(3, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(4, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(5, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(6, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(7, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(8, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(9, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(10, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(11, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(12, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(13, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(14, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(15, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(16, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(17, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(18, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(19, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(20, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(21, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(22, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(23, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(24, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(25, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(26, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(27, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(28, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(29, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(30, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
+(31, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:18:57', '2025-04-29 23:18:57', 3),
+(32, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:19:26', '2025-04-29 23:19:26', 3),
+(33, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:20:51', '2025-04-29 23:20:51', 3),
+(34, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:28:38', '2025-04-29 23:28:38', 3),
+(35, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:29:41', '2025-04-29 23:29:41', 3),
+(36, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:33:46', '2025-04-29 23:33:46', 3),
+(37, 3, NULL, 29000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:34:05', '2025-04-29 23:34:05', 3),
+(38, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:41:54', '2025-04-29 23:41:54', 3),
+(39, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:42:56', '2025-04-29 23:42:56', 3),
+(40, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:43:42', '2025-04-29 23:43:42', 3),
+(41, 3, NULL, 24000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:49:31', '2025-04-29 23:49:31', 3),
+(42, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:51:51', '2025-04-29 23:51:51', 3),
+(43, 3, NULL, 56000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:22:24', '2025-04-30 00:22:24', 3),
+(44, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:24:29', '2025-04-30 00:24:29', 3),
+(45, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:27:13', '2025-04-30 00:27:13', 3),
+(46, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:28:58', '2025-04-30 00:28:58', 3),
+(47, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:29:51', '2025-04-30 00:29:51', 3),
+(48, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:31:29', '2025-04-30 00:31:29', 3),
+(49, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:32:09', '2025-04-30 00:32:09', 3),
+(50, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:35', '2025-04-30 00:35:35', 3),
+(51, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:51', '2025-04-30 00:35:51', 3),
+(52, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:38:18', '2025-04-30 00:38:18', 3),
+(53, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:01', '2025-04-30 00:39:01', 3),
+(54, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:51', '2025-04-30 00:39:51', 3),
+(55, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:41:06', '2025-04-30 00:41:06', 3),
+(56, 1, NULL, 2112000.00, 'Tien mat', 2, NULL, NULL, '2025-05-09 21:34:16', '2025-05-09 21:34:16', 1);
 
 -- --------------------------------------------------------
 
@@ -255,7 +355,7 @@ CREATE TABLE `hoadonnhap` (
   `tongtien` decimal(15,2) DEFAULT NULL,
   `idNguoiNhap` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `status` tinyint(1) NOT NULL
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -263,7 +363,15 @@ CREATE TABLE `hoadonnhap` (
 --
 
 INSERT INTO `hoadonnhap` (`id`, `tongtien`, `idNguoiNhap`, `date`, `status`) VALUES
-(1, 2500000.00, 1, '2025-05-03 06:02:16', 1);
+(1, 2500000.00, 1, '2025-05-03 06:02:16', 1),
+(2, 5000000.00, 4, '2025-05-08 04:50:22', 1),
+(3, 40000000.00, 2, '2025-05-08 04:50:22', 1),
+(4, 4000000.00, 3, '2025-05-09 05:00:34', 1),
+(5, 3500000.00, 1, '2025-05-09 05:00:51', 1),
+(6, 700000.00, 2, '2025-05-09 05:01:05', 1),
+(7, 2500000.00, 1, '2025-05-09 05:54:19', 1),
+(8, 14214000.00, 1, '2025-05-09 00:00:00', 1),
+(9, 7107000.00, 1, '2025-05-10 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -280,16 +388,6 @@ CREATE TABLE `hoadon_trangthai` (
   `create_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `hoadon_trangthai`
---
-
-INSERT INTO `hoadon_trangthai` (`id`, `idBill`, `id_nhanvien`, `trangthai`, `ghi_chu`, `create_at`) VALUES
-(1, 77, NULL, '3', NULL, '2025-05-10 08:39:48'),
-(2, 77, NULL, '3', NULL, '2025-05-10 08:42:04'),
-(3, 78, NULL, '3', NULL, '2025-05-10 08:43:07'),
-(4, 79, NULL, '3', NULL, '2025-05-10 08:47:03');
-
 -- --------------------------------------------------------
 
 --
@@ -300,6 +398,16 @@ CREATE TABLE `manage` (
   `id` int(11) NOT NULL,
   `manage_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `manage`
+--
+
+INSERT INTO `manage` (`id`, `manage_name`) VALUES
+(1, 'Xem'),
+(2, 'Thêm'),
+(3, 'Sửa'),
+(4, 'Xóa');
 
 -- --------------------------------------------------------
 
@@ -319,38 +427,6 @@ CREATE TABLE `nhacungcap` (
 INSERT INTO `nhacungcap` (`id`, `name`) VALUES
 (1, 'Công ty Cổ Phần Sách Mcbooks'),
 (2, 'Công ty Phát Hành Sách Tp.HCM');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `nhanvien`
---
-
-CREATE TABLE `nhanvien` (
-  `id` int(11) NOT NULL,
-  `vai_tro` varchar(100) DEFAULT NULL,
-  `ten_nhan_vien` varchar(100) DEFAULT NULL,
-  `ngay_tao` date DEFAULT NULL,
-  `ngay_chinh_sua` date DEFAULT NULL,
-  `muc_luong` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `nhanvien`
---
-
-INSERT INTO `nhanvien` (`id`, `vai_tro`, `ten_nhan_vien`, `ngay_tao`, `ngay_chinh_sua`, `muc_luong`) VALUES
-(2, 'Nhân viên bán hàng', 'Trần Thị B', '2024-01-15', '2024-03-01', 8000000.00),
-(3, 'Kế toán', 'Lê Văn Cường', '2024-02-01', '2024-02-20', 12000000.00),
-(4, 'Bảo vệ', 'Phạm Văn Dũng', '2024-01-10', '2024-04-01', 6000000.00),
-(5, 'Tạp vụ', 'Nguyễn Thị Tuyết', '2024-03-01', '2025-05-09', 5000000.00),
-(6, 'Quản lý', 'Đỗ Thị Phương', '2024-02-10', '2025-05-09', 16000000.00),
-(7, 'Nhân viên kho', 'Bùi Văn Nghĩa', '2024-01-20', '2025-05-09', 9000000.00),
-(8, 'Thủ kho', 'Trần Văn Hoàng', '2024-01-05', '2025-05-09', 10000000.00),
-(9, 'Lễ tân', 'Lê Thị Lan', '2024-02-15', '2025-05-09', 7500000.00),
-(10, 'IT support', 'Ngô Văn Hiếu', '2024-01-30', '2025-05-09', 13000000.00),
-(11, 'IT support', 'Lê Hoàng Phúc', '2025-05-09', '2025-05-09', 15000000.00),
-(0, 'Bảo vệ', 'Huynh Bao', '2025-05-10', '2025-05-10', 10000000.00);
 
 -- --------------------------------------------------------
 
@@ -404,32 +480,73 @@ INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Table structure for table `rolepermissions`
 --
 
-CREATE TABLE `role` (
+CREATE TABLE `rolepermissions` (
+  `id` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  `chucnang_id` int(11) NOT NULL,
+  `manage_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rolepermissions`
+--
+
+INSERT INTO `rolepermissions` (`id`, `roleId`, `chucnang_id`, `manage_id`) VALUES
+(51, 1, 5, 1),
+(52, 1, 5, 2),
+(53, 1, 5, 3),
+(54, 1, 5, 4),
+(55, 1, 6, 1),
+(56, 1, 6, 2),
+(57, 1, 6, 3),
+(58, 1, 6, 4),
+(59, 1, 7, 1),
+(60, 1, 7, 2),
+(61, 1, 7, 3),
+(62, 1, 7, 4),
+(63, 1, 8, 1),
+(64, 1, 8, 2),
+(65, 1, 8, 3),
+(66, 1, 8, 4),
+(67, 1, 9, 1),
+(68, 1, 9, 2),
+(69, 1, 9, 3),
+(70, 1, 9, 4),
+(71, 1, 10, 1),
+(72, 1, 10, 2),
+(73, 1, 10, 3),
+(74, 1, 10, 4),
+(75, 2, 9, 1),
+(76, 2, 9, 2),
+(77, 2, 9, 3),
+(78, 2, 9, 4),
+(79, 2, 10, 1),
+(80, 2, 10, 2),
+(81, 2, 10, 3),
+(82, 2, 10, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL,
   `role_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `role`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `role` (`role_id`, `role_name`) VALUES
-(1, 'Admin');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rolepermissions`
---
-
-CREATE TABLE `rolepermissions` (
-  `role_id` int(11) NOT NULL,
-  `chucnang_id` int(11) NOT NULL,
-  `manage_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'Admin'),
+(2, 'Nhân viên bán hàng'),
+(3, 'Quản lý kho');
 
 -- --------------------------------------------------------
 
@@ -484,7 +601,7 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (3, 'Trần Thị Mai', 3, '78 Đường Lý Tự Trọng', 'Hồ Chí Minh', 'Quận 3', 'Phường Võ Thị Sáu', '0903000003', 1),
 (4, 'Nguyễn Hữu Tài', 4, '89 Đường Cách Mạng Tháng 8', 'Hồ Chí Minh', 'Quận 10', 'Phường 13', '0904000004', 1),
 (5, 'Đặng Thanh Tâm', 5, '32 Đường Tô Hiến Thành', 'Hồ Chí Minh', 'Quận 10', 'Phường 15', '0905000005', 1),
-(6, 'bkvdnsd', 6, '14 Đường 3 Tháng 2', 'Đồng Nai', 'Quận 5', 'Phường 5', '0906000006', 0),
+(6, 'Phan Ngọc Trân', 6, '14 Đường 3 Tháng 2', 'Hồ Chí Minh', 'Quận 11', 'Phường 5', '0906000006', 1),
 (7, 'Võ Minh Tùng', 7, '23 Đường Lạc Long Quân', 'Hồ Chí Minh', 'Quận 11', 'Phường 1', '0907000007', 1),
 (8, 'Bùi Thị Hương', 8, '56 Đường Âu Cơ', 'Hồ Chí Minh', 'Tân Phú', 'Phường Phú Thọ Hòa', '0908000008', 1),
 (9, 'Lâm Văn Toàn', 9, '67 Đường Trường Chinh', 'Hồ Chí Minh', 'Tân Bình', 'Phường 14', '0909000009', 1),
@@ -493,11 +610,7 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (12, 'Đỗ Thị Lan', 12, '12 Đường Dương Quảng Hàm', 'Hồ Chí Minh', 'Gò Vấp', 'Phường 5', '0912000012', 1),
 (13, 'Hoàng Trung Nghĩa', 13, '21 Đường Nguyễn Kiệm', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 3', '0913000013', 1),
 (14, 'Tô Hoàng Nam', 14, '34 Đường Huỳnh Văn Bánh', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 17', '0914000014', 1),
-(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1),
-(16, 'Đây là tên mới :Đ', NULL, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0),
-(17, 'Đây là tên mới :Đ', 1, 'fjkwlfkwle', 'Hà Nội', 'Quận Cầu Giấy', 'Phường Dịch Vọng Hậu', '0793472637', 0),
-(18, 'Đây là tên mớiii', 1, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0),
-(19, 'bao', 16, '324 rhc', 'Hà Tĩnh', 'Thành phố Hà Tĩnh', 'Phường Bắc Hà', '0776929182', 0);
+(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1);
 
 -- --------------------------------------------------------
 
@@ -514,30 +627,30 @@ CREATE TABLE `users` (
   `avatar` varchar(255) DEFAULT NULL,
   `status_user` tinyint(1) DEFAULT NULL,
   `fullName` varchar(100) DEFAULT NULL,
-  `phoneNumber` varchar(20) DEFAULT NULL
+  `phoneNumber` varchar(20) DEFAULT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`) VALUES
-(1, 1, 'Admin', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234'),
-(2, NULL, 'minhtran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333'),
-(3, NULL, 'thaole', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444'),
-(4, NULL, 'huypham', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555'),
-(5, NULL, 'lanho', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666'),
-(6, NULL, 'namdang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777'),
-(7, NULL, 'tuvu', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888'),
-(8, NULL, 'quynhanh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999'),
-(9, NULL, 'michaelng', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000'),
-(10, NULL, 'jessicatrinh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111'),
-(11, NULL, 'tommyle', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222'),
-(12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333'),
-(13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444'),
-(14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555'),
-(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666'),
-(16, NULL, NULL, '$2y$10$e6L.ZbXgnPKc51sa6vZ2lOtuD/8qZnFHKqJWFywORWqxA6ukr742a', NULL, NULL, NULL, 'New user', '0776929128');
+INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`, `created_at`) VALUES
+(1, 1, 'Admin', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234', '2025-05-10'),
+(2, 2, 'minhtran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333', '2025-05-10'),
+(3, 1, 'thaole', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444', '2025-05-10'),
+(4, 2, 'huypham', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555', '2025-05-10'),
+(5, 3, 'lanho', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666', '2025-05-10'),
+(6, 3, 'namdang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777', '2025-05-10'),
+(7, 2, 'tuvu', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888', '2025-05-10'),
+(8, NULL, 'quynhanh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999', '2025-05-10'),
+(9, NULL, 'michaelng', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000', '2025-05-10'),
+(10, NULL, 'jessicatrinh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111', '2025-05-10'),
+(11, NULL, 'tommyle', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222', '2025-05-10'),
+(12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333', '2025-05-10'),
+(13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444', '2025-05-10'),
+(14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555', '2025-05-10'),
+(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666', '2025-05-10');
 
 --
 -- Indexes for dumped tables
@@ -633,19 +746,17 @@ ALTER TABLE `review`
   ADD KEY `bookId` (`bookId`);
 
 --
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`role_id`),
-  ADD UNIQUE KEY `role_name` (`role_name`);
-
---
 -- Indexes for table `rolepermissions`
 --
 ALTER TABLE `rolepermissions`
-  ADD PRIMARY KEY (`role_id`,`chucnang_id`,`manage_id`),
-  ADD KEY `chucnang_id` (`chucnang_id`),
-  ADD KEY `manage_id` (`manage_id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`),
+  ADD UNIQUE KEY `role_name` (`role_name`);
 
 --
 -- Indexes for table `subjects`
@@ -678,61 +789,61 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `chucnang`
 --
 ALTER TABLE `chucnang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `hoadon_trangthai`
 --
 ALTER TABLE `hoadon_trangthai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `manage`
 --
 ALTER TABLE `manage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `nhacungcap`
@@ -747,10 +858,16 @@ ALTER TABLE `review`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `role`
+-- AUTO_INCREMENT for table `rolepermissions`
 --
-ALTER TABLE `role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `rolepermissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -762,13 +879,13 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
@@ -837,14 +954,6 @@ ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`);
 
 --
--- Constraints for table `rolepermissions`
---
-ALTER TABLE `rolepermissions`
-  ADD CONSTRAINT `rolepermissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
-  ADD CONSTRAINT `rolepermissions_ibfk_2` FOREIGN KEY (`chucnang_id`) REFERENCES `chucnang` (`id`),
-  ADD CONSTRAINT `rolepermissions_ibfk_3` FOREIGN KEY (`manage_id`) REFERENCES `manage` (`id`);
-
---
 -- Constraints for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
@@ -854,7 +963,7 @@ ALTER TABLE `thongtingiaohang`
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

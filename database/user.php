@@ -14,6 +14,150 @@ class UsersTable
         return $result;
     }
     
+    
+public function searchNonEmployeeUsers($searchTerm = '', $searchType = 'all')
+{
+    global $pdo;
+    
+    $params = [];
+    
+    if ($searchType === 'id' && is_numeric($searchTerm)) {
+        $query = "SELECT * FROM users WHERE role_id IS NULL AND id = ?";
+        $params[] = intval($searchTerm);
+    } else {
+        $query = "SELECT * FROM users WHERE role_id IS NULL";
+        
+        if (!empty($searchTerm)) {
+            switch ($searchType) {
+                case 'username':
+                    $query .= " AND userName LIKE ?";
+                    $params[] = "%$searchTerm%";
+                    break;
+                case 'email':
+                    $query .= " AND email LIKE ?";
+                    $params[] = "%$searchTerm%";
+                    break;
+                default: // 'all' or any other value
+                    $query .= " AND (userName LIKE ? OR email LIKE ?)";
+                    $params[] = "%$searchTerm%";
+                    $params[] = "%$searchTerm%";
+            }
+        }
+    }
+    
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Count total non-employee users matching search criteria
+ * @param string $searchTerm Search term for filtering
+ * @param string $searchType Type of search: 'all', 'id', 'username', or 'email'
+ * @return int Number of matching users
+ */
+public function countNonEmployeeUsers($searchTerm = '', $searchType = 'all')
+{
+    global $pdo;
+    
+    $params = [];
+    
+    if ($searchType === 'id' && is_numeric($searchTerm)) {
+        $query = "SELECT COUNT(*) as total FROM users WHERE role_id IS NULL AND id = ?";
+        $params[] = intval($searchTerm);
+    } else {
+        $query = "SELECT COUNT(*) as total FROM users WHERE role_id IS NULL";
+        
+        if (!empty($searchTerm)) {
+            switch ($searchType) {
+                case 'username':
+                    $query .= " AND userName LIKE ?";
+                    $params[] = "%$searchTerm%";
+                    break;
+                case 'email':
+                    $query .= " AND email LIKE ?";
+                    $params[] = "%$searchTerm%";
+                    break;
+                default: // 'all' or any other value
+                    $query .= " AND (userName LIKE ? OR email LIKE ?)";
+                    $params[] = "%$searchTerm%";
+                    $params[] = "%$searchTerm%";
+            }
+        }
+    }
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return (int)$result['total'];
+}
+    
+public function getEmployees($search = '', $roleId = 0, $limit = 10, $offset = 0)
+{
+    global $pdo;
+    
+    $query = "SELECT * FROM users WHERE role_id IS NOT NULL";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+public function countEmployees($search = '', $roleId = 0)
+{
+    global $pdo;
+    
+    $query = "SELECT COUNT(*) as total FROM users WHERE role_id IS NOT NULL";
+    $params = [];
+    
+    if (!empty($search)) {
+        $query .= " AND (userName LIKE ? OR email LIKE ? OR fullName LIKE ?)";
+        $searchParam = "%$search%";
+        $params[] = $searchParam;
+        $params[] = $searchParam; 
+        $params[] = $searchParam;
+    }
+    
+    if ($roleId > 0) {
+        $query .= " AND role_id = ?";
+        $params[] = $roleId;
+    }
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return (int)$result['total'];
+}
+
+public function updateUserRole($userId, $roleId)
+{
+    global $pdo;
+    
+    try {
+        $query = "UPDATE users SET role_id = :roleId WHERE id = :userId";
+        $stmt = $pdo->prepare($query);
+        
+        // Allow null values to remove employee status (convert to customer)
+        if ($roleId === null) {
+            $stmt->bindValue(':roleId', null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindParam(':roleId', $roleId, PDO::PARAM_INT);
+        }
+        
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        // Log error if needed
+        error_log("Error updating user role: " . $e->getMessage());
+        return false;
+    }
+}
+    
     public function getUserDetailsById($userId)
     {
         global $pdo;
