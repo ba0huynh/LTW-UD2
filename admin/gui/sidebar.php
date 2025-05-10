@@ -47,7 +47,7 @@ if ($adminID == null) {
             <a href="./sanphan.php">            <div class="submenu-item">Danh sách sản phẩm</div></a>
             <a href="./themSanPham.php">        <div class="submenu-item">Thêm sản phẩm</div></a>
             <a href="./thongTinPhieuNhap.php">  <div class="submenu-item">Danh sách phiếu nhập</div></a>
-            <a href="">  <div class="submenu-item">Thêm phiếu nhập</div></a>
+            <a href="./nhapSanPham.php">  <div class="submenu-item">Thêm phiếu nhập</div></a>
         </div>
         <a href="./quanlidon.php">
 
