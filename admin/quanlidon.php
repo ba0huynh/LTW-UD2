@@ -5,7 +5,6 @@ if ($conn->connect_error) {
   die("Kết nối thất bại: " . $conn->connect_error);
 }
 
-// Get filter parameters
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $status = isset($_GET['status']) ? (int)$_GET['status'] : 0;
@@ -13,44 +12,34 @@ $filter_type = isset($_GET['filter_type']) ? $_GET['filter_type'] : '';
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Initialize params arrays for prepared statements
 $count_params = [];
 $count_types = "";
 
-// Build the SQL query with appropriate filters - join with thongTinGiaoHang for consistency
 $count_sql = "SELECT COUNT(*) AS total FROM hoadon 
               JOIN users ON hoadon.idUser = users.id
               JOIN thongTinGiaoHang AS gh ON hoadon.id_diachi = gh.id 
               WHERE 1=1";
 
-// Search filter (by phone number)
 if (!empty($search)) {
   $count_sql .= " AND users.phoneNumber LIKE ?";
   $count_params[] = "%$search%";
   $count_types .= "s";
 }
 
-// Status filters - first check filter_type, then status parameter if no filter_type is set
 if ($filter_type === 'verification') {
-  // Pending orders
   $count_sql .= " AND hoadon.statusBill = 1";
 } elseif ($filter_type === 'delivering') {
-  // Orders being delivered
   $count_sql .= " AND hoadon.statusBill = 2";
 } elseif ($filter_type === 'completed') {
-  // Completed orders
   $count_sql .= " AND hoadon.statusBill = 3";
 } elseif ($filter_type === 'cancelled') {
-  // Cancelled orders
   $count_sql .= " AND hoadon.statusBill = 4";
 } elseif (!empty($status)) {
-  // Manual status selection (from advanced filter)
   $count_sql .= " AND hoadon.statusBill = ?";
   $count_params[] = $status;
   $count_types .= "i";
 }
 
-// Additional filters from advanced search form
 if (isset($_GET['province']) && $_GET['province'] != '') {
   $count_sql .= " AND gh.thanhpho = ?";
   $count_params[] = $_GET['province'];
@@ -184,7 +173,7 @@ foreach ($status_types as $status_type) {
   <main class="flex flex-row">
     <?php include_once './gui/sidebar.php' ?>
     <div class="flex items-center w-full h-screen justify-center">
-      <div class="bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden p-6 h-[90%] w-[90%]">
+      <div class="bg-white shadow-lg border border-gray-200 rounded-lg overflow-hidden p-6 h-[90%] w-[90%] " style="overflow-y: scroll;">
         <div class="w-full bg-white rounded-2xl">
           <header class="mb-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Quản lý đơn hàng</h2>

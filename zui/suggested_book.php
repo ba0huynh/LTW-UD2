@@ -5,7 +5,7 @@
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-      $sql2 = "SELECT * FROM books WHERE subjectId = " . intval($row["id"]) . " LIMIT 4";
+      $sql2 = "SELECT * FROM books WHERE subjectId = " . intval($row["id"]) . " and books.isActive=1 and books.status = 1 LIMIT 4";
       $result2 = $conn->query($sql2);
 
       if ($result2->num_rows === 0) {

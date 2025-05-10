@@ -55,8 +55,8 @@ if (!empty($subject)) {
     $query_result_books .= " WHERE books.subjectId = " . (int)$subject;
     $countQuery .= " WHERE books.subjectId = " . (int)$subject;
 } else {
-    $query_result_books .= "WHERE 1=1 ";  
-    $countQuery .= "WHERE 1=1 ";
+    $query_result_books .= "WHERE books.isActive=1 and books.status = 1  ";  
+    $countQuery .= "WHERE  books.isActive=1 and books.status = 1 ";
 }
 
 
@@ -163,29 +163,29 @@ $num_rows = $result->num_rows;
                 100,000đ - 200,000đ
                 </label>
               </div>
-              <div class="mt-4">
+              <!-- <div class="mt-4">
                 <input name="min_cost" type="number" placeholder="0" class="w-1/4 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['min_cost'] ?? ''; ?>"> - 
+                    value="<?php //echo $_GET['min_cost'] ?? ''; ?>"> - 
                 <input name="max_cost" type="number" placeholder="0" class="w-1/4 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['max_cost'] ?? ''; ?>">
-              </div>
+                    value="<?php //echo $_GET['max_cost'] ?? ''; ?>">
+              </div> -->
             </div>
 
             <!-- Lứa tuổi -->
-            <div class="mb-6">
+            <!-- <div class="mb-6">
               <h3 class="font-semibold mb-2">Nhập lớp</h3>
               <label class="flex items-center gap-2">
                 
                 <input type="number" name="min_class" placeholder="Từ" class="w-1/6 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['min_class'] ?? ''; ?>"> -
+                    value="<?php //echo $_GET['min_class'] ?? ''; ?>"> -
                 <input type="number" name="max_class" placeholder="Đến" class="w-1/6 border rounded p-1 text-sm"
-                    value="<?php echo $_GET['max_class'] ?? ''; ?>">
+                    value="<?php //echo $_GET['max_class'] ?? ''; ?>">
               </label>
               <label class="flex items-center gap-2 mt-2">
                 Nhập lớp : 
-                <input type="text" name="class" value="<?php echo $_GET['class'] ?? ''; ?>" class="w-1/6 border rounded p-1 text-sm">
+                <input type="text" name="class" value="<?php //echo $_GET['class'] ?? ''; ?>" class="w-1/6 border rounded p-1 text-sm">
               </label>
-            </div>
+            </div> -->
 
             <button type="submit" class="bg-[#D10024] px-4 text-white m-2 rounded">Tìm kiếm</button>
         </aside>
@@ -252,6 +252,10 @@ $num_rows = $result->num_rows;
     </div>
 
     <div class="flex justify-center mt-8">
+      <?php
+      if($totalPages > 1) {
+
+      ?>
       <nav class="inline-flex items-center space-x-1 rounded-xl bg-white px-4 py-2 shadow-md border border-gray-200">
 
         <!-- Previous -->
@@ -289,6 +293,7 @@ $num_rows = $result->num_rows;
         <?php endif; ?>
 
       </nav>
+      <?php }?>
     </div>
 
     
