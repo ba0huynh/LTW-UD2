@@ -1,3 +1,11 @@
+
+<?php 
+session_start();
+?>
+
+
+
+
 <?php
 // Database connection configuration
 $servername = "localhost";
@@ -101,25 +109,156 @@ $total_pages = ceil($total_customers / $limit);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Quản lý khách hàng</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/script/product.js"></script>
+
+</head>
+<body>
+    <main class="flex flex-row">
+        <?php include_once './gui/sidebar.php' ?>
+        <div class="flex  w-full h-screen justify-center" style="max-height: 100vh; overflow-y: scroll; padding-top:30px;">
+            <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-[80%]" style="padding: 0 !important; ">
+<div class="kh-container">
+    <h2 class="kh-title">Thông tin khách hàng</h2>
+
+    <!-- Form to add new customer -->
+    <div class="kh-form-container">
+        <h3>Thêm khách hàng mới</h3>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="kh-form-group">
+                <label for="fullName">Họ và tên</label>
+                <input type="text" name="fullName" id="fullName" required>
+            </div>
+            <div class="kh-form-group">
+                <label for="phoneNumber">Số điện thoại</label>
+                <input type="text" name="phoneNumber" id="phoneNumber" required>
+            </div>
+            <div class="kh-form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div class="kh-form-group">
+                <label for="avatar">Avatar</label>
+                <input type="file" name="avatar" id="avatar" accept="image/*">
+            </div>
+            <div class="kh-form-group">
+                <label for="status_user">Tình trạng</label>
+                <select name="status_user" id="status_user" required>
+                    <option value="1">Đang hoạt động</option>
+                    <option value="0">Ngừng hoạt động</option>
+                </select>
+            </div>
+            <button type="submit" name="add_customer" class="kh-btn">Thêm khách hàng</button>
+        </form>
+    </div>
+
+    <!-- Filter and search -->
+    <div class="kh-filter-container">
+        <div class="kh-display-control">
+            <label class="kh-label" for="kh-show-number">Hiển thị</label>
+            <input type="number" class="kh-input-number kh-show-number" id="kh-show-number" value="<?php echo $limit; ?>" min="1" onchange="updateLimit()">
+            <span class="kh-label">dòng</span>
+        </div>
+        <div class="kh-search-box">
+            <label class="kh-label" for="kh-search-input">Tìm kiếm</label>
+            <input type="text" class="kh-input-text kh-search-input" id="kh-search-input" value="<?php echo htmlspecialchars($search); ?>" onkeyup="if(event.keyCode==13) searchCustomers()">
+        </div>
+    </div>
+
+    <!-- Customer table -->
+    <table class="kh-table">
+        <thead>
+            <tr>
+                <th class="kh-th">Tên</th>
+                <th class="kh-th">Số điện thoại</th>
+                <th class="kh-th">Avatar</th>
+                <th class="kh-th">Tình trạng</th>
+                <th class="kh-th">Hành động</th>
+            </tr>
+        </thead>
+        <tbody class="kh-tbody">
+            <?php if (empty($customers)): ?>
+                <tr class="kh-empty-row">
+                    <td colspan="5">Không tìm thấy khách hàng</td>
+                </tr>
+            <?php else: ?>
+                <?php foreach ($customers as $customer): ?>
+                    <tr class="kh-tr">
+                        <td class="kh-td"><?php echo htmlspecialchars($customer['fullName']); ?></td>
+                        <td class="kh-td"><?php echo htmlspecialchars($customer['phoneNumber']); ?></td>
+                        <td class="kh-td">
+                            <img class="kh-avatar-img" src="<?php echo htmlspecialchars($customer['avatar']); ?>" alt="Avatar">
+                        </td>
+                        <td class="kh-td"><?php echo $customer['status_user'] ? 'Đang hoạt động' : 'Ngừng hoạt động'; ?></td>
+                        <td class="kh-td">
+                            <a href="edit_customer.php?id=<?php echo $customer['id']; ?>" class="kh-action-btn kh-edit-btn">Sửa</a>
+                            <a href="?delete=<?php echo $customer['id']; ?>" class="kh-action-btn kh-delete-btn" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="kh-pagination">
+        <?php if ($page > 1): ?>
+            <a href="?page=<?php echo $page - 1; ?>&limit=<?php echo $limit; ?>&search=<?php echo urlencode($search); ?>" class="kh-pagination-btn">«</a>
+        <?php else: ?>
+            <button class="kh-pagination-btn" disabled>«</button>
+        <?php endif; ?>
+        <?php if ($page < $total_pages): ?>
+            <a href="?page=<?php echo $page + 1; ?>&limit=<?php echo $limit; ?>&search=<?php echo urlencode($search); ?>" class="kh-pagination-btn">»</a>
+        <?php else: ?>
+            <button class="kh-pagination-btn" disabled>»</button>
+        <?php endif; ?>
+    </div>
+</div>
+</div>
+            </div>
+</main>
+<script>
+function updateLimit() {
+    const limit = document.getElementById('kh-show-number').value;
+    if (limit < 1) return;
+    window.location.href = `?page=1&limit=${limit}&search=<?php echo urlencode($search); ?>`;
+}
+
+function searchCustomers() {
+    const search = document.getElementById('kh-search-input').value;
+    window.location.href = `?page=1&limit=<?php echo $limit; ?>&search=${encodeURIComponent(search)}`;
+}
+</script>
+
+<?php
+$conn->close();
+?>
+</body>
+</html>
+
+
+
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            /* display: flex; */
+            /* justify-content: center; */
         }
 
         .kh-container {
-            width: 90%;
+            width: 100%;
             max-width: 1200px;
             background: white;
-            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
         }
 
         .kh-title {
@@ -288,120 +427,3 @@ $total_pages = ceil($total_customers / $limit);
             background-color: #c82333;
         }
     </style>
-</head>
-<body>
-<div class="kh-container">
-    <h2 class="kh-title">Thông tin khách hàng</h2>
-
-    <!-- Form to add new customer -->
-    <div class="kh-form-container">
-        <h3>Thêm khách hàng mới</h3>
-        <form method="POST" enctype="multipart/form-data">
-            <div class="kh-form-group">
-                <label for="fullName">Họ và tên</label>
-                <input type="text" name="fullName" id="fullName" required>
-            </div>
-            <div class="kh-form-group">
-                <label for="phoneNumber">Số điện thoại</label>
-                <input type="text" name="phoneNumber" id="phoneNumber" required>
-            </div>
-            <div class="kh-form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" required>
-            </div>
-            <div class="kh-form-group">
-                <label for="avatar">Avatar</label>
-                <input type="file" name="avatar" id="avatar" accept="image/*">
-            </div>
-            <div class="kh-form-group">
-                <label for="status_user">Tình trạng</label>
-                <select name="status_user" id="status_user" required>
-                    <option value="1">Đang hoạt động</option>
-                    <option value="0">Ngừng hoạt động</option>
-                </select>
-            </div>
-            <button type="submit" name="add_customer" class="kh-btn">Thêm khách hàng</button>
-        </form>
-    </div>
-
-    <!-- Filter and search -->
-    <div class="kh-filter-container">
-        <div class="kh-display-control">
-            <label class="kh-label" for="kh-show-number">Hiển thị</label>
-            <input type="number" class="kh-input-number kh-show-number" id="kh-show-number" value="<?php echo $limit; ?>" min="1" onchange="updateLimit()">
-            <span class="kh-label">dòng</span>
-        </div>
-        <div class="kh-search-box">
-            <label class="kh-label" for="kh-search-input">Tìm kiếm</label>
-            <input type="text" class="kh-input-text kh-search-input" id="kh-search-input" value="<?php echo htmlspecialchars($search); ?>" onkeyup="if(event.keyCode==13) searchCustomers()">
-        </div>
-    </div>
-
-    <!-- Customer table -->
-    <table class="kh-table">
-        <thead>
-            <tr>
-                <th class="kh-th">Tên</th>
-                <th class="kh-th">Số điện thoại</th>
-                <th class="kh-th">Avatar</th>
-                <th class="kh-th">Tình trạng</th>
-                <th class="kh-th">Hành động</th>
-            </tr>
-        </thead>
-        <tbody class="kh-tbody">
-            <?php if (empty($customers)): ?>
-                <tr class="kh-empty-row">
-                    <td colspan="5">Không tìm thấy khách hàng</td>
-                </tr>
-            <?php else: ?>
-                <?php foreach ($customers as $customer): ?>
-                    <tr class="kh-tr">
-                        <td class="kh-td"><?php echo htmlspecialchars($customer['fullName']); ?></td>
-                        <td class="kh-td"><?php echo htmlspecialchars($customer['phoneNumber']); ?></td>
-                        <td class="kh-td">
-                            <img class="kh-avatar-img" src="<?php echo htmlspecialchars($customer['avatar']); ?>" alt="Avatar">
-                        </td>
-                        <td class="kh-td"><?php echo $customer['status_user'] ? 'Đang hoạt động' : 'Ngừng hoạt động'; ?></td>
-                        <td class="kh-td">
-                            <a href="edit_customer.php?id=<?php echo $customer['id']; ?>" class="kh-action-btn kh-edit-btn">Sửa</a>
-                            <a href="?delete=<?php echo $customer['id']; ?>" class="kh-action-btn kh-delete-btn" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
-
-    <!-- Pagination -->
-    <div class="kh-pagination">
-        <?php if ($page > 1): ?>
-            <a href="?page=<?php echo $page - 1; ?>&limit=<?php echo $limit; ?>&search=<?php echo urlencode($search); ?>" class="kh-pagination-btn">«</a>
-        <?php else: ?>
-            <button class="kh-pagination-btn" disabled>«</button>
-        <?php endif; ?>
-        <?php if ($page < $total_pages): ?>
-            <a href="?page=<?php echo $page + 1; ?>&limit=<?php echo $limit; ?>&search=<?php echo urlencode($search); ?>" class="kh-pagination-btn">»</a>
-        <?php else: ?>
-            <button class="kh-pagination-btn" disabled>»</button>
-        <?php endif; ?>
-    </div>
-</div>
-
-<script>
-function updateLimit() {
-    const limit = document.getElementById('kh-show-number').value;
-    if (limit < 1) return;
-    window.location.href = `?page=1&limit=${limit}&search=<?php echo urlencode($search); ?>`;
-}
-
-function searchCustomers() {
-    const search = document.getElementById('kh-search-input').value;
-    window.location.href = `?page=1&limit=<?php echo $limit; ?>&search=${encodeURIComponent(search)}`;
-}
-</script>
-
-<?php
-$conn->close();
-?>
-</body>
-</html>

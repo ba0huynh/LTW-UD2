@@ -55,7 +55,7 @@
       <img src="/LTW-UD2/images/login/momopay.webp" class="h-10 w-auto">
     </div>
 
-    <p class="text-center text-sm text-gray-400 mt-6 pb-6">© 2025 Fahahasa. All rights reserved.</p>
+    <p class="text-center text-sm text-gray-400 mt-6 pb-6">© 2025 BookStore. All rights reserved.</p>
   </div>
 
   <style>

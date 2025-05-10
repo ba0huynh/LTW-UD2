@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['login'])) {
   <div class="w-[80%] flex flex-col items-center">
     <div class="flex flex-col">
       <?php include_once "./zui/suggested_book.php" ?>
-      
     </div>
   </div>
 </div>
