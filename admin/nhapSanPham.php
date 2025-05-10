@@ -156,7 +156,7 @@ if (isset($_GET['delete'])) {
 
 <main class="flex flex-row">
         <?php include_once './gui/sidebar.php' ?>
-        <div class="flex items-center w-full h-screen justify-center" style="max-height: 100vh; overflow-y: scroll; padding-top:90px !important;">
+        <div class="flex items-center w-full h-screen justify-center" style="max-height: 100vh; overflow-y: scroll;">
             <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-[80%]" style="padding: 0;">
 
 <div class="container">

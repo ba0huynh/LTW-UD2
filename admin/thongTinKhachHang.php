@@ -21,7 +21,7 @@ if ($conn->connect_error) {
 
 // Initialize variables
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10;
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 7;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $limit;
 $edit_id = isset($_GET['edit']) ? intval($_GET['edit']) : 0;
@@ -489,7 +489,7 @@ $total_pages = ceil($total_customers / $limit);
     </style>
 </head>
 <body>
-    <main class="flex flex-row min-h-screen">
+    <main class="flex flex-row min-h-screen" style="max-height: 100vh; overflow: scroll;">
         <?php 
         if (file_exists('./gui/sidebar.php')) {
             include_once './gui/sidebar.php';
@@ -497,7 +497,7 @@ $total_pages = ceil($total_customers / $limit);
             echo "<script>Swal.fire({title: 'Lỗi', text: 'Không tìm thấy file sidebar.php!', icon: 'error', timer: 1500, showConfirmButton: false}).then(() => { window.location.href='thongTinKhachHang.php'; });</script>";
         }
         ?>
-        <div class="flex-1 container py-8">
+        <div class="flex-1 container py-8" >
             <div class="card">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-800">Quản Lý Khách Hàng</h2>
