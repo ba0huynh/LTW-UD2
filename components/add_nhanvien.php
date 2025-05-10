@@ -7,6 +7,9 @@
     <title>Thêm Nhân Viên</title>
 </head>
 <body>
+            <div id="sidebar" class="hidden md:block md:w-64 bg-white shadow-md">
+            <?php include_once '../admin/gui/sidebar.php' ?>
+        </div>
     <h2>Thêm Nhân Viên</h2>
     <form action="add_nhanvien.php" method="POST">
         <label for="vai_tro">Vai trò:</label>

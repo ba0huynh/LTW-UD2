@@ -217,6 +217,9 @@ td .action-icon:hover {
     </style>
 </head>
 <body>
+            <div id="sidebar" class="hidden md:block md:w-64 bg-white shadow-md">
+            <?php include_once '../admin/gui/sidebar.php' ?>
+        </div>
     <h2>Danh sách nhân viên</h2>
     <table border="1" cellpadding="8">
         <thead>
