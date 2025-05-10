@@ -307,7 +307,7 @@ $conn->close();
         }
 
         .container {
-            width: 800px;
+            width: 100%;
             background: white;
             padding: 40px;
             border-radius: 10px;
