@@ -714,11 +714,9 @@ foreach ($status_types as $status_type) {
   </main>
 
   <script>
-    // Cancel order functionality
     function huyDon(idBill) {
       if (!confirm(`Bạn có chắc muốn huỷ đơn hàng #MD${idBill}?`)) return;
 
-      // Show loading indicator
       const btn = document.querySelector(`button[data-id="${idBill}"]`);
       if (btn) {
         const originalHTML = btn.innerHTML;
@@ -736,13 +734,11 @@ foreach ($status_types as $status_type) {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            // Show success notification
             const notification = document.createElement('div');
             notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 z-50 animate-fade-in';
             notification.innerHTML = `<div class="flex"><div class="flex-shrink-0"><i class="fas fa-check-circle text-green-500 mr-2"></i></div><div>${data.message}</div></div>`;
             document.body.appendChild(notification);
 
-            // Refresh page after delay
             setTimeout(() => {
               location.reload();
             }, 1500);
@@ -764,18 +760,15 @@ foreach ($status_types as $status_type) {
         });
     }
 
-    // Toggle filter modal
     function toggleFilterModal() {
       const modal = document.getElementById("filterModal");
       modal.classList.toggle("hidden");
     }
 
-    // Format currency
     function formatCurrency(n) {
       return new Intl.NumberFormat('vi-VN').format(n) + 'đ';
     }
 
-    // Show order detail
     function showOrderDetail(btn) {
       const texts = {
         1: 'Đang xử lý',
@@ -866,12 +859,10 @@ foreach ($status_types as $status_type) {
         });
     }
 
-    // Close detail modal
     function closeDetailModal() {
       document.getElementById("orderDetailModal").classList.add("hidden");
     }
 
-    // Open update modal
     function openUpdateModal(button) {
       document.getElementById("modalOrderId").textContent = "#MD" + button.dataset.id;
       document.getElementById("modalCustomer").textContent = button.dataset.name;
@@ -882,29 +873,39 @@ foreach ($status_types as $status_type) {
       document.getElementById("modalAddress").textContent = button.dataset.address;
       document.getElementById("modalCity").textContent = button.dataset.city;
 
-      // Set the correct status
       const select = document.getElementById("modalStatus");
       select.value = button.dataset.status;
 
       document.getElementById("updateModal").classList.remove("hidden");
     }
 
-    // Close modal
     function closeModal() {
       document.getElementById("updateModal").classList.add("hidden");
     }
 
-    // Save status update
     document.getElementById('saveStatusBtn').addEventListener('click', function() {
       const idText = document.getElementById('modalOrderId').textContent;
       const idBill = idText.replace('#MD', '');
       const status = document.getElementById('modalStatus').value;
 
-      // Show loading indicator
       const btn = document.getElementById('saveStatusBtn');
       const originalText = btn.innerHTML;
       btn.innerHTML = '<svg class="inline-block animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Đang cập nhật...';
       btn.disabled = true;
+      let products=[];
+      fetch("../controllers/get_order_detail.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: "id=" + btn.dataset.id
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          products = data.products; 
+        }
+      });
 
       fetch('../controllers/capnhat_trangthai_don.php', {
           method: 'POST',
@@ -913,18 +914,17 @@ foreach ($status_types as $status_type) {
           },
           body: JSON.stringify({
             idBill: idBill,
-            statusBill: status
+            statusBill: status,
+            products: products
           })
         })
         .then(res => res.json())
         .then(data => {
-          // Show success notification
           const notification = document.createElement('div');
           notification.className = 'fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 z-50 animate-fade-in';
           notification.innerHTML = `<div class="flex"><div class="flex-shrink-0"><i class="fas fa-check-circle text-green-500 mr-2"></i></div><div>${data.message || 'Cập nhật thành công'}</div></div>`;
           document.body.appendChild(notification);
 
-          // Refresh page after delay
           setTimeout(() => {
             location.reload();
           }, 1500);
@@ -937,7 +937,6 @@ foreach ($status_types as $status_type) {
         });
     });
 
-    // Province-District data
    const data = {
     "Đà Nẵng": {
       "Quận Liên Chiểu": ["Hòa Khánh Bắc", "Hòa Khánh Nam", "Hòa Minh", "Hòa Hiệp Bắc", "Hòa Hiệp Nam", "Hòa Hiệp Trung"],
@@ -2166,7 +2165,6 @@ foreach ($status_types as $status_type) {
     }
   };
 
-    // Initialize province dropdown
     const provinceSelect = document.getElementById("province");
     const districtSelect = document.getElementById("district");
 
@@ -2174,7 +2172,6 @@ foreach ($status_types as $status_type) {
       provinceSelect.innerHTML += `<option value="${province}">${province}</option>`;
     }
 
-    // Province change handler
     provinceSelect.addEventListener("change", function() {
       const province = this.value;
       districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
@@ -2189,14 +2186,11 @@ foreach ($status_types as $status_type) {
       }
     });
 
-    // Set selected province and district
     document.addEventListener('DOMContentLoaded', function() {
-      // Set province if already selected
       if (provinceSelect.options.length > 1 && "<?= htmlspecialchars($_GET['province'] ?? '') ?>") {
         provinceSelect.value = "<?= htmlspecialchars($_GET['province'] ?? '') ?>";
         provinceSelect.dispatchEvent(new Event('change'));
 
-        // Set district if already selected
         if ("<?= htmlspecialchars($_GET['district'] ?? '') ?>") {
           setTimeout(() => {
             districtSelect.value = "<?= htmlspecialchars($_GET['district'] ?? '') ?>";

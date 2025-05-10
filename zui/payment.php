@@ -329,9 +329,9 @@ if($conn->connect_error) {
         
         <br><?php echo $row["huyen"]?>,<?php echo $row["quan"]?>, TP. <?php echo $row["thanhpho"]?>
         </div>
-        <?php if ($row["status"]==1){?>
+        <!-- <?php if ($row["status"]==1){?>
         <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded inline-block mt-1">Mặc định</span>
-        <?php }?>
+        <?php }?> -->
       </div>
     </div>
     <?php }}?>
@@ -454,10 +454,10 @@ if($conn->connect_error) {
     </div>
 
     <!-- Mặc định -->
-    <div class="flex items-center space-x-2">
+    <!-- <div class="flex items-center space-x-2">
       <input type="checkbox" id="edit_status" value="" />
       <label for="default" class="text-sm text-gray-700">Đặt làm địa chỉ mặc định</label>
-    </div>
+    </div> -->
 
     <!-- Nút -->
     <div class="flex justify-between pt-4">
@@ -1762,12 +1762,12 @@ if($conn->connect_error) {
     document.getElementById("edit_name").value = name;
     document.getElementById("edit_phone").value = phone;
     document.getElementById("edit_address").value = address;
-    document.getElementById("edit_status").value = status;
-    if(status == 1) {
-      document.getElementById("edit_status").checked = true;
-    } else {
-      document.getElementById("edit_status").checked = false;
-    }
+    // document.getElementById("edit_status").value = status;
+    // if(status == 1) {
+    //   document.getElementById("edit_status").checked = true;
+    // } else {
+    //   document.getElementById("edit_status").checked = false;
+    // }
 
     document.getElementById("edit_city_bk").value = city;
     document.getElementById("edit_ward_bk").value = ward;
@@ -1812,7 +1812,7 @@ if($conn->connect_error) {
 
 
   function saveAddress() {
-    const status = document.getElementById("edit_status").checked ? 1 : 0;
+    // const status = document.getElementById("edit_status").checked ? 1 : 0;
     const id = document.getElementById("edit_id").value;
     const name = document.getElementById("edit_name").value;
     const phone = document.getElementById("edit_phone").value;
@@ -1835,7 +1835,7 @@ if($conn->connect_error) {
         city,
         district,
         ward,
-        status
+        //status
       })
     })
     .then(res => res.json())

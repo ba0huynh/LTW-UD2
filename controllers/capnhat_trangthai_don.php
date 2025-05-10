@@ -13,14 +13,30 @@ if ($conn->connect_error) {
     echo json_encode(['success' => false, 'message' => 'Kết nối thất bại']);
     exit;
 }
-
+/*
+const texts = {
+1: 'Đang xử lý',
+2: 'Đang được giao',
+3: 'Giao hàng thành công',
+4: 'Đơn hàng đã hủy'
+};
+*/
 $data = json_decode(file_get_contents("php://input"), true);
-
 $idBill = intval($data['idBill']);
 $status = intval($data['statusBill']);
+$products = $data['products'] ?? [];
 //$note = $conn->real_escape_string($data['note']);
 
 //$update = "UPDATE hoadon SET statusBill = $status, ly_do_huy = '$note' WHERE idBill = $idBill";
+if ($status === 3 && !empty($products)) {
+    foreach ($products as $product) {
+        $bookId = intval($product['id']);
+        $quantity = intval($product['quantity']);
+        $conn->query("UPDATE books SET quantitySold = quantitySold - $quantity WHERE id = $bookId");
+    }
+}
+
+$update_amount = "";
 $update = "UPDATE hoadon SET statusBill = $status  WHERE idBill = $idBill";
 $insertHoadon_trangthai = "INSERT INTO hoadon_trangthai (idBill, trangthai) VALUES ($idBill, $status)";
 
