@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 08, 2025 lúc 04:02 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: May 10, 2025 at 03:52 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `ltw_ud2`
+-- Database: `ltw_ud2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `books`
+-- Table structure for table `books`
 --
 
 CREATE TABLE `books` (
@@ -43,7 +43,7 @@ CREATE TABLE `books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `books`
+-- Dumping data for table `books`
 --
 
 INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `currentPrice`, `quantitySold`, `imageURL`, `status`, `isActive`, `description`, `type`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cart`
+-- Table structure for table `cart`
 --
 
 CREATE TABLE `cart` (
@@ -87,13 +87,13 @@ CREATE TABLE `cart` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cart`
+-- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
 (1, 1, 23000.00),
 (2, 2, 36000.00),
-(3, 3, 957000.00),
+(3, 3, 644000.00),
 (4, 4, 45000.00),
 (5, 5, 43000.00),
 (6, 6, 41000.00),
@@ -105,12 +105,13 @@ INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
 (12, 12, 56500.00),
 (13, 13, 29000.00),
 (14, 14, 230000.00),
-(15, 15, 240000.00);
+(15, 15, 0.00),
+(16, 16, 0.00);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `cartitems`
+-- Table structure for table `cartitems`
 --
 
 CREATE TABLE `cartitems` (
@@ -121,7 +122,7 @@ CREATE TABLE `cartitems` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `cartitems`
+-- Dumping data for table `cartitems`
 --
 
 INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
@@ -146,22 +147,15 @@ INSERT INTO `cartitems` (`id`, `bookId`, `cartId`, `amount`) VALUES
 (26, 14, 13, 1),
 (27, 14, 14, 1),
 (28, 15, 14, 1),
-(29, 15, 15, 1),
-(30, 16, 15, 1),
-(58, 5, 3, 34),
-(59, 3, 3, 14),
-(60, 1, 3, 2),
-(61, 19, 3, 1),
-(62, 17, 3, 1),
-(63, 4, 3, 1),
 (68, 7, 6, 1),
 (69, 5, 6, 1),
-(91, 7, 1, 1);
+(91, 7, 1, 1),
+(92, 7, 3, 28);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitiethoadon`
+-- Table structure for table `chitiethoadon`
 --
 
 CREATE TABLE `chitiethoadon` (
@@ -172,10 +166,25 @@ CREATE TABLE `chitiethoadon` (
   `pricePerItem` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `chitiethoadon`
+--
+
+INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`, `pricePerItem`) VALUES
+(60, 5, 77, 12, 18000),
+(61, 3, 77, 14, 17000),
+(62, 1, 77, 2, 16000),
+(63, 19, 77, 1, 30000),
+(64, 17, 77, 1, 26000),
+(65, 4, 77, 1, 19000),
+(66, 15, 78, 1, 24000),
+(67, 16, 78, 1, 25000),
+(68, 7, 79, 5, 23000);
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chitietphieunhap`
+-- Table structure for table `chitietphieunhap`
 --
 
 CREATE TABLE `chitietphieunhap` (
@@ -188,7 +197,7 @@ CREATE TABLE `chitietphieunhap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `chitietphieunhap`
+-- Dumping data for table `chitietphieunhap`
 --
 
 INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `soluong`, `gianhap`) VALUES
@@ -198,7 +207,7 @@ INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `sol
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `chucnang`
+-- Table structure for table `chucnang`
 --
 
 CREATE TABLE `chucnang` (
@@ -209,7 +218,7 @@ CREATE TABLE `chucnang` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoadon`
+-- Table structure for table `hoadon`
 --
 
 CREATE TABLE `hoadon` (
@@ -226,10 +235,19 @@ CREATE TABLE `hoadon` (
   `id_diachi` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `hoadon`
+--
+
+INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMethod`, `statusBill`, `ly_do_huy`, `ly_do_tra_hang`, `create_at`, `ngay_cap_nhat`, `id_diachi`) VALUES
+(77, 3, NULL, 561000.00, 'Chuyen khoan', 3, NULL, NULL, '2025-05-10 08:38:38', '2025-05-10 08:38:38', 3),
+(78, 15, NULL, 49000.00, 'Tien mat', 3, NULL, NULL, '2025-04-09 08:41:39', '2025-05-10 08:41:39', 15),
+(79, 16, NULL, 115000.00, 'Tien mat', 3, NULL, NULL, '2025-03-21 08:46:40', '2025-05-10 08:46:40', 19);
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoadonnhap`
+-- Table structure for table `hoadonnhap`
 --
 
 CREATE TABLE `hoadonnhap` (
@@ -241,7 +259,7 @@ CREATE TABLE `hoadonnhap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `hoadonnhap`
+-- Dumping data for table `hoadonnhap`
 --
 
 INSERT INTO `hoadonnhap` (`id`, `tongtien`, `idNguoiNhap`, `date`, `status`) VALUES
@@ -250,7 +268,7 @@ INSERT INTO `hoadonnhap` (`id`, `tongtien`, `idNguoiNhap`, `date`, `status`) VAL
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `hoadon_trangthai`
+-- Table structure for table `hoadon_trangthai`
 --
 
 CREATE TABLE `hoadon_trangthai` (
@@ -262,10 +280,20 @@ CREATE TABLE `hoadon_trangthai` (
   `create_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `hoadon_trangthai`
+--
+
+INSERT INTO `hoadon_trangthai` (`id`, `idBill`, `id_nhanvien`, `trangthai`, `ghi_chu`, `create_at`) VALUES
+(1, 77, NULL, '3', NULL, '2025-05-10 08:39:48'),
+(2, 77, NULL, '3', NULL, '2025-05-10 08:42:04'),
+(3, 78, NULL, '3', NULL, '2025-05-10 08:43:07'),
+(4, 79, NULL, '3', NULL, '2025-05-10 08:47:03');
+
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `manage`
+-- Table structure for table `manage`
 --
 
 CREATE TABLE `manage` (
@@ -276,7 +304,7 @@ CREATE TABLE `manage` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `nhacungcap`
+-- Table structure for table `nhacungcap`
 --
 
 CREATE TABLE `nhacungcap` (
@@ -285,7 +313,7 @@ CREATE TABLE `nhacungcap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `nhacungcap`
+-- Dumping data for table `nhacungcap`
 --
 
 INSERT INTO `nhacungcap` (`id`, `name`) VALUES
@@ -295,7 +323,39 @@ INSERT INTO `nhacungcap` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `review`
+-- Table structure for table `nhanvien`
+--
+
+CREATE TABLE `nhanvien` (
+  `id` int(11) NOT NULL,
+  `vai_tro` varchar(100) DEFAULT NULL,
+  `ten_nhan_vien` varchar(100) DEFAULT NULL,
+  `ngay_tao` date DEFAULT NULL,
+  `ngay_chinh_sua` date DEFAULT NULL,
+  `muc_luong` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nhanvien`
+--
+
+INSERT INTO `nhanvien` (`id`, `vai_tro`, `ten_nhan_vien`, `ngay_tao`, `ngay_chinh_sua`, `muc_luong`) VALUES
+(2, 'Nhân viên bán hàng', 'Trần Thị B', '2024-01-15', '2024-03-01', 8000000.00),
+(3, 'Kế toán', 'Lê Văn Cường', '2024-02-01', '2024-02-20', 12000000.00),
+(4, 'Bảo vệ', 'Phạm Văn Dũng', '2024-01-10', '2024-04-01', 6000000.00),
+(5, 'Tạp vụ', 'Nguyễn Thị Tuyết', '2024-03-01', '2025-05-09', 5000000.00),
+(6, 'Quản lý', 'Đỗ Thị Phương', '2024-02-10', '2025-05-09', 16000000.00),
+(7, 'Nhân viên kho', 'Bùi Văn Nghĩa', '2024-01-20', '2025-05-09', 9000000.00),
+(8, 'Thủ kho', 'Trần Văn Hoàng', '2024-01-05', '2025-05-09', 10000000.00),
+(9, 'Lễ tân', 'Lê Thị Lan', '2024-02-15', '2025-05-09', 7500000.00),
+(10, 'IT support', 'Ngô Văn Hiếu', '2024-01-30', '2025-05-09', 13000000.00),
+(11, 'IT support', 'Lê Hoàng Phúc', '2025-05-09', '2025-05-09', 15000000.00),
+(0, 'Bảo vệ', 'Huynh Bao', '2025-05-10', '2025-05-10', 10000000.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
 --
 
 CREATE TABLE `review` (
@@ -308,7 +368,7 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `review`
+-- Dumping data for table `review`
 --
 
 INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`) VALUES
@@ -344,7 +404,7 @@ INSERT INTO `review` (`id`, `userId`, `rating`, `review`, `bookId`, `create_at`)
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `role`
+-- Table structure for table `role`
 --
 
 CREATE TABLE `role` (
@@ -353,7 +413,7 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `role`
+-- Dumping data for table `role`
 --
 
 INSERT INTO `role` (`role_id`, `role_name`) VALUES
@@ -362,7 +422,7 @@ INSERT INTO `role` (`role_id`, `role_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `rolepermissions`
+-- Table structure for table `rolepermissions`
 --
 
 CREATE TABLE `rolepermissions` (
@@ -374,7 +434,7 @@ CREATE TABLE `rolepermissions` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `subjects`
+-- Table structure for table `subjects`
 --
 
 CREATE TABLE `subjects` (
@@ -383,7 +443,7 @@ CREATE TABLE `subjects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `subjects`
+-- Dumping data for table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `subjectName`) VALUES
@@ -399,7 +459,7 @@ INSERT INTO `subjects` (`id`, `subjectName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `thongtingiaohang`
+-- Table structure for table `thongtingiaohang`
 --
 
 CREATE TABLE `thongtingiaohang` (
@@ -415,7 +475,7 @@ CREATE TABLE `thongtingiaohang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `thongtingiaohang`
+-- Dumping data for table `thongtingiaohang`
 --
 
 INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `thanhpho`, `quan`, `huyen`, `sdt`, `status`) VALUES
@@ -436,12 +496,13 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1),
 (16, 'Đây là tên mới :Đ', NULL, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0),
 (17, 'Đây là tên mới :Đ', 1, 'fjkwlfkwle', 'Hà Nội', 'Quận Cầu Giấy', 'Phường Dịch Vọng Hậu', '0793472637', 0),
-(18, 'Đây là tên mớiii', 1, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0);
+(18, 'Đây là tên mớiii', 1, '506/49/60c', 'Hà Nội', 'Quận Đống Đa', 'Phường Cát Linh', '0793472637', 0),
+(19, 'bao', 16, '324 rhc', 'Hà Tĩnh', 'Thành phố Hà Tĩnh', 'Phường Bắc Hà', '0776929182', 0);
 
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -457,7 +518,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Đang đổ dữ liệu cho bảng `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`) VALUES
@@ -475,28 +536,29 @@ INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`,
 (12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333'),
 (13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444'),
 (14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555'),
-(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666');
+(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666'),
+(16, NULL, NULL, '$2y$10$e6L.ZbXgnPKc51sa6vZ2lOtuD/8qZnFHKqJWFywORWqxA6ukr742a', NULL, NULL, NULL, 'New user', '0776929128');
 
 --
--- Chỉ mục cho các bảng đã đổ
+-- Indexes for dumped tables
 --
 
 --
--- Chỉ mục cho bảng `books`
+-- Indexes for table `books`
 --
 ALTER TABLE `books`
   ADD PRIMARY KEY (`id`),
   ADD KEY `subjectId` (`subjectId`);
 
 --
--- Chỉ mục cho bảng `cart`
+-- Indexes for table `cart`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`idCart`),
   ADD KEY `idUser` (`idUser`);
 
 --
--- Chỉ mục cho bảng `cartitems`
+-- Indexes for table `cartitems`
 --
 ALTER TABLE `cartitems`
   ADD PRIMARY KEY (`id`),
@@ -504,7 +566,7 @@ ALTER TABLE `cartitems`
   ADD KEY `cartId` (`cartId`);
 
 --
--- Chỉ mục cho bảng `chitiethoadon`
+-- Indexes for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD PRIMARY KEY (`id`),
@@ -512,7 +574,7 @@ ALTER TABLE `chitiethoadon`
   ADD KEY `idHoadon` (`idHoadon`);
 
 --
--- Chỉ mục cho bảng `chitietphieunhap`
+-- Indexes for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
   ADD PRIMARY KEY (`id`),
@@ -521,13 +583,13 @@ ALTER TABLE `chitietphieunhap`
   ADD KEY `idCungCap` (`idCungCap`);
 
 --
--- Chỉ mục cho bảng `chucnang`
+-- Indexes for table `chucnang`
 --
 ALTER TABLE `chucnang`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `hoadon`
+-- Indexes for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD PRIMARY KEY (`idBill`),
@@ -536,14 +598,14 @@ ALTER TABLE `hoadon`
   ADD KEY `fk_hoadon_diachi` (`id_diachi`);
 
 --
--- Chỉ mục cho bảng `hoadonnhap`
+-- Indexes for table `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idNguoiNhap` (`idNguoiNhap`);
 
 --
--- Chỉ mục cho bảng `hoadon_trangthai`
+-- Indexes for table `hoadon_trangthai`
 --
 ALTER TABLE `hoadon_trangthai`
   ADD PRIMARY KEY (`id`),
@@ -551,19 +613,19 @@ ALTER TABLE `hoadon_trangthai`
   ADD KEY `id_nhanvien` (`id_nhanvien`);
 
 --
--- Chỉ mục cho bảng `manage`
+-- Indexes for table `manage`
 --
 ALTER TABLE `manage`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `nhacungcap`
+-- Indexes for table `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `review`
+-- Indexes for table `review`
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`id`),
@@ -571,14 +633,14 @@ ALTER TABLE `review`
   ADD KEY `bookId` (`bookId`);
 
 --
--- Chỉ mục cho bảng `role`
+-- Indexes for table `role`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`role_id`),
   ADD UNIQUE KEY `role_name` (`role_name`);
 
 --
--- Chỉ mục cho bảng `rolepermissions`
+-- Indexes for table `rolepermissions`
 --
 ALTER TABLE `rolepermissions`
   ADD PRIMARY KEY (`role_id`,`chucnang_id`,`manage_id`),
@@ -586,20 +648,20 @@ ALTER TABLE `rolepermissions`
   ADD KEY `manage_id` (`manage_id`);
 
 --
--- Chỉ mục cho bảng `subjects`
+-- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `thongtingiaohang`
+-- Indexes for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_user` (`id_user`);
 
 --
--- Chỉ mục cho bảng `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -609,137 +671,137 @@ ALTER TABLE `users`
   ADD KEY `role_id` (`role_id`);
 
 --
--- AUTO_INCREMENT cho các bảng đã đổ
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT cho bảng `books`
+-- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT cho bảng `cart`
+-- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT cho bảng `cartitems`
+-- AUTO_INCREMENT for table `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
--- AUTO_INCREMENT cho bảng `chitiethoadon`
+-- AUTO_INCREMENT for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
--- AUTO_INCREMENT cho bảng `chitietphieunhap`
+-- AUTO_INCREMENT for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT cho bảng `chucnang`
+-- AUTO_INCREMENT for table `chucnang`
 --
 ALTER TABLE `chucnang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `hoadon`
+-- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
--- AUTO_INCREMENT cho bảng `hoadonnhap`
+-- AUTO_INCREMENT for table `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `hoadon_trangthai`
+-- AUTO_INCREMENT for table `hoadon_trangthai`
 --
 ALTER TABLE `hoadon_trangthai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT cho bảng `manage`
+-- AUTO_INCREMENT for table `manage`
 --
 ALTER TABLE `manage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `nhacungcap`
+-- AUTO_INCREMENT for table `nhacungcap`
 --
 ALTER TABLE `nhacungcap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT cho bảng `review`
+-- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT cho bảng `role`
+-- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT cho bảng `subjects`
+-- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT cho bảng `thongtingiaohang`
+-- AUTO_INCREMENT for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT cho bảng `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- Các ràng buộc cho các bảng đã đổ
+-- Constraints for dumped tables
 --
 
 --
--- Các ràng buộc cho bảng `books`
+-- Constraints for table `books`
 --
 ALTER TABLE `books`
   ADD CONSTRAINT `books_ibfk_1` FOREIGN KEY (`subjectId`) REFERENCES `subjects` (`id`);
 
 --
--- Các ràng buộc cho bảng `cart`
+-- Constraints for table `cart`
 --
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
--- Các ràng buộc cho bảng `cartitems`
+-- Constraints for table `cartitems`
 --
 ALTER TABLE `cartitems`
   ADD CONSTRAINT `cartitems_ibfk_1` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`),
   ADD CONSTRAINT `cartitems_ibfk_2` FOREIGN KEY (`cartId`) REFERENCES `cart` (`idCart`);
 
 --
--- Các ràng buộc cho bảng `chitiethoadon`
+-- Constraints for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
   ADD CONSTRAINT `chitiethoadon_ibfk_1` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`),
   ADD CONSTRAINT `chitiethoadon_ibfk_2` FOREIGN KEY (`idHoadon`) REFERENCES `hoadon` (`idBill`);
 
 --
--- Các ràng buộc cho bảng `chitietphieunhap`
+-- Constraints for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
   ADD CONSTRAINT `fkBook` FOREIGN KEY (`idBook`) REFERENCES `books` (`id`),
@@ -747,7 +809,7 @@ ALTER TABLE `chitietphieunhap`
   ADD CONSTRAINT `fkncc` FOREIGN KEY (`idCungCap`) REFERENCES `nhacungcap` (`id`);
 
 --
--- Các ràng buộc cho bảng `hoadon`
+-- Constraints for table `hoadon`
 --
 ALTER TABLE `hoadon`
   ADD CONSTRAINT `fk_hoadon_diachi` FOREIGN KEY (`id_diachi`) REFERENCES `thongtingiaohang` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -755,27 +817,27 @@ ALTER TABLE `hoadon`
   ADD CONSTRAINT `hoadon_ibfk_2` FOREIGN KEY (`nhanvien_id`) REFERENCES `users` (`id`);
 
 --
--- Các ràng buộc cho bảng `hoadonnhap`
+-- Constraints for table `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
   ADD CONSTRAINT `fkNguoiNhap` FOREIGN KEY (`idNguoiNhap`) REFERENCES `users` (`id`);
 
 --
--- Các ràng buộc cho bảng `hoadon_trangthai`
+-- Constraints for table `hoadon_trangthai`
 --
 ALTER TABLE `hoadon_trangthai`
   ADD CONSTRAINT `hoadon_trangthai_ibfk_1` FOREIGN KEY (`idBill`) REFERENCES `hoadon` (`idBill`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `hoadon_trangthai_ibfk_2` FOREIGN KEY (`id_nhanvien`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Các ràng buộc cho bảng `review`
+-- Constraints for table `review`
 --
 ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`bookId`) REFERENCES `books` (`id`);
 
 --
--- Các ràng buộc cho bảng `rolepermissions`
+-- Constraints for table `rolepermissions`
 --
 ALTER TABLE `rolepermissions`
   ADD CONSTRAINT `rolepermissions_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
@@ -783,13 +845,13 @@ ALTER TABLE `rolepermissions`
   ADD CONSTRAINT `rolepermissions_ibfk_3` FOREIGN KEY (`manage_id`) REFERENCES `manage` (`id`);
 
 --
--- Các ràng buộc cho bảng `thongtingiaohang`
+-- Constraints for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
   ADD CONSTRAINT `thongtingiaohang_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
--- Các ràng buộc cho bảng `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`);
@@ -798,27 +860,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-CREATE TABLE `nhanvien` (
-  `id` int NOT NULL,
-  `vai_tro` varchar(100) DEFAULT NULL,
-  `ten_nhan_vien` varchar(100) DEFAULT NULL,
-  `ngay_tao` date DEFAULT NULL,
-  `ngay_chinh_sua` date DEFAULT NULL,
-  `muc_luong` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Đang đổ dữ liệu cho bảng `nhanvien`
---
-
-INSERT INTO `nhanvien` (`id`, `vai_tro`, `ten_nhan_vien`, `ngay_tao`, `ngay_chinh_sua`, `muc_luong`) VALUES
-(2, 'Nhân viên bán hàng', 'Trần Thị B', '2024-01-15', '2024-03-01', 8000000.00),
-(3, 'Kế toán', 'Lê Văn Cường', '2024-02-01', '2024-02-20', 12000000.00),
-(4, 'Bảo vệ', 'Phạm Văn Dũng', '2024-01-10', '2024-04-01', 6000000.00),
-(5, 'Tạp vụ', 'Nguyễn Thị Tuyết', '2024-03-01', '2025-05-09', 5000000.00),
-(6, 'Quản lý', 'Đỗ Thị Phương', '2024-02-10', '2025-05-09', 16000000.00),
-(7, 'Nhân viên kho', 'Bùi Văn Nghĩa', '2024-01-20', '2025-05-09', 9000000.00),
-(8, 'Thủ kho', 'Trần Văn Hoàng', '2024-01-05', '2025-05-09', 10000000.00),
-(9, 'Lễ tân', 'Lê Thị Lan', '2024-02-15', '2025-05-09', 7500000.00),
-(10, 'IT support', 'Ngô Văn Hiếu', '2024-01-30', '2025-05-09', 13000000.00),
-(11, 'IT support', 'Lê Hoàng Phúc', '2025-05-09', '2025-05-09', 15000000.00);
