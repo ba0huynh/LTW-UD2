@@ -341,7 +341,83 @@ function validateRegisterForm(event) {
     }
   }
 </script>
+<?php 
+if (isset($_POST['login_submit'])) {
+    $phone = trim($_POST['user_telephone'] ?? '');
+    $password = $_POST['user_password'] ?? '';
 
+    if (empty($phone) || empty($password)) {
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin.');</script>";
+    } else {
+        $stmt = $conn->prepare("SELECT id, password FROM users WHERE phoneNumber = ?");
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        if ($user && password_verify($password, $user['password'])) {
+            session_start();
+            $_SESSION["user_id"] = $user["id"];
+            header("Location: index.php");
+            exit;
+        } else {
+            echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
+        }
+        $stmt->close();
+    }
+}
+if (isset($_POST['submit_register'])) {
+    $phone = trim($_POST['newuser_telephone'] ?? '');
+    $password = $_POST['user_password'] ?? '';
+    $confirm = $_POST['user_comfirm_password'] ?? '';
+
+    if (empty($phone) || empty($password) || empty($confirm)) {
+        echo "<script>alert('Vui lòng nhập đầy đủ thông tin.');</script>";
+    } elseif ($password !== $confirm) {
+        echo "<script>alert('Mật khẩu nhập lại không khớp.');</script>";
+    } else {
+        // Check if phone already exists
+        $check = $conn->prepare("SELECT id FROM users WHERE phoneNumber = ?");
+        $check->bind_param("s", $phone);
+        $check->execute();
+        $check->store_result();
+
+        if ($check->num_rows > 0) {
+            echo "<script>alert('Số điện thoại đã tồn tại!');</script>";
+        } else {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $fullName = "Người dùng mới";
+            $userName = 'user_' . rand(1000, 9999);
+            $created_at = date('Y-m-d H:i:s');
+            $email = NULL;
+            $avatar = 'default.png';
+            $status_user = 1;
+
+            $stmt = $conn->prepare("INSERT INTO users 
+                (phoneNumber, password, fullName, userName, email, avatar, status_user, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param(
+                "ssssssis",
+                $phone,
+                $hashedPassword,
+                $fullName,
+                $userName,
+                $email,
+                $avatar,
+                $status_user,
+                $created_at
+            );
+            if ($stmt->execute()) {
+                echo "<script>alert('Đăng ký thành công! Vui lòng đăng nhập.');</script>";
+            } else {
+                echo "<script>alert('Đăng ký thất bại! " . $stmt->error . "');</script>";
+            }
+            $stmt->close();
+        }
+        $check->close();
+    }
+}
+?>
 
     <!-- Quốc kỳ -->
     <div id="vietNam">

@@ -30,29 +30,6 @@
             class="hover:bg-red-500 hover:text-white transition w-full bg-gray-300 text-gray-600 font-semibold py-2 rounded-lg">
       Đăng nhập
     </button>
-    
-    <?php
-      if (isset($_POST['login_submit'])) {
-    $phone = $_POST['user_telephone'];
-    $password = $_POST['user_password'];
-
-    $query = "SELECT * FROM users WHERE phoneNumber = '$phone'";
-    $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($result);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        if (password_verify($password, $user['password'])) {
-            $_SESSION["user_id"] = $user["id"];
-            header("Location: index.php");
-            exit;
-        } else {
-            echo "<script>alert('Sai mật khẩu!');</script>";
-        }
-    } else {
-        echo "<script>alert('Sai số điện thoại!');</script>";
-    }
-}
-?>
   </form>
   <form id="formdangki" onsubmit="return validateRegisterForm(event)" class="space-y-4 hidden" action="" method="post">
     <div>
@@ -87,28 +64,3 @@
     </button>
   </form>
 </div>
-<?php
-$conn = new mysqli("localhost", "root", "", "ltw_ud2");
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-if (isset($_POST['submit_register'])){
-$phone = $_POST['newuser_telephone'] ?? '';
-$password = $_POST['user_password'] ?? '';
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-$check = $conn->prepare("SELECT id FROM users WHERE phoneNumber = ?");
-$check->bind_param("s", $phone);
-$check->execute();
-$check->store_result();
-if ($check->num_rows > 0) {
-    echo "Số điện thoại đã tồn tại.";
-    exit;
-}
-$stmt = $conn->prepare("INSERT INTO users (phoneNumber, password, fullName) VALUES (?, ?, ?)");
-$fullName = 'New user';
-$stmt->bind_param("sss", $phone, $hashedPassword, $fullName);
-$stmt->execute();
-$stmt->close();
-$conn->close();
-}
-?>
