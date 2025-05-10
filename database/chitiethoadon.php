@@ -26,14 +26,14 @@ class ChiTietHoadonTable
 
 
     public function getProductSalesByDateRange($fromDate, $toDate)
-{
-    global $pdo;
+    {
+        global $pdo;
 
-    // Format dates to ensure consistency
-    $fromDate = date('Y-m-d 00:00:00', strtotime($fromDate));
-    $toDate = date('Y-m-d 23:59:59', strtotime($toDate));
+        // Format dates to ensure consistency
+        $fromDate = date('Y-m-d 00:00:00', strtotime($fromDate));
+        $toDate = date('Y-m-d 23:59:59', strtotime($toDate));
 
-    $query = "SELECT 
+        $query = "SELECT 
             b.id,
             b.bookName,
             b.currentPrice,
@@ -54,14 +54,47 @@ class ChiTietHoadonTable
         ORDER BY 
             total_revenue DESC";
 
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(':fromDate', $fromDate);
-    $stmt->bindParam(':toDate', $toDate);
-    $stmt->execute();
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':fromDate', $fromDate);
+        $stmt->bindParam(':toDate', $toDate);
+        $stmt->execute();
 
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    
-    return $results;
-}
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return $results;
+    }
+    public function getAllProductSales()
+    {
+        global $pdo;
+
+
+        $query = "SELECT 
+            b.id,
+            b.bookName,
+            b.currentPrice,
+            b.imageURL,
+            SUM(ct.amount) as quantity_sold,
+            SUM(ct.amount * ct.pricePerItem) as total_revenue
+        FROM 
+            chitiethoadon ct
+        JOIN 
+            books b ON ct.idBook = b.id
+        JOIN 
+            hoadon h ON ct.idHoadon = h.idBill
+        WHERE 
+ h.statusBill = 3 
+         GROUP BY 
+            b.id
+        ORDER BY 
+            total_revenue DESC";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+        return $results;
+    }
 }

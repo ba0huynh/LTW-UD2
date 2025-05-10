@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2025 at 03:57 PM
+-- Generation Time: May 10, 2025 at 06:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -52,7 +52,7 @@ INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `
 (4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 0, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
 (5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
 (6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, '/LTW-UD2/images/Products/681d4a736e040_hoahoc-8-baitap.jpg', 0, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
-(7, 'Toán 9 - Ôn Thi vào 10', 1, '10', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 0, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
+(7, 'Toán 9 - Ôn Thi vào 10', 1, '10', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
 (8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
 (9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
 (10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
@@ -72,8 +72,7 @@ INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `
 (24, 'Sinh Học 12 - Ôn Thi THPT', 6, '12', 30500.00, 28500.00, 115, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop10-12/On-tap-mon-sinh-hoc-chuan-bi-cho-ki-thi-thpt-quoc-gia-500x554.jpg', 1, 1, 'Ôn thi Sinh học THPT.', 'Ôn Thi'),
 (25, 'Hóa Học 12 - Ôn Thi THPT', 7, '12', 31000.00, 29000.00, 120, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcE4fBjAP-DYqMifDj65Bt8SeBvGSRy8RdIA&s', 1, 1, 'Ôn thi Hóa học THPT.', 'Ôn Thi'),
 (26, 'Ngữ Văn 12 - Bài Tập', 2, '12', 30000.00, 28000.00, 90, 'https://sachcanhdieu.vn/wp-content/uploads/2024/07/Bia-STKTY-Bai-tap-doc-hieu-Ngu-van-12-tap-1.png', 1, 1, 'Bài tập Văn học lớp 12.', 'Bài Tập'),
-(30, 'Sách giáo khoa Vật lý lớp 9', 5, '9', NULL, NULL, 0, '/LTW-UD2/images/Products/681d4ce5e4212_vatlii9-giaokhoa.jpg', 1, 0, 'Không thể không mua', NULL),
-(31, 'hóa học 9 - bồi dưỡng xuất sắc', 7, '2', NULL, NULL, 0, '/LTW-UD2/images/Products/681e0f83667b5_hoahoc-9-hocsinhgioi.jpg', 1, 0, 'nai xừ.', NULL);
+(35, 'testing', 2, '4', 234000.00, 2000.00, 0, '/LTW-UD2/images/Products/681f76c2839fd_Acer_Wallpaper_03_3840x2400.jpg', 0, 0, 'fiwwfwief', 'Giáo Khoa Nâng Cao');
 
 -- --------------------------------------------------------
 
@@ -106,7 +105,9 @@ INSERT INTO `cart` (`idCart`, `idUser`, `totalPrice`) VALUES
 (12, 12, 56500.00),
 (13, 13, 29000.00),
 (14, 14, 230000.00),
-(15, 15, 240000.00);
+(15, 15, 240000.00),
+(16, 16, 0.00),
+(17, 17, 0.00);
 
 -- --------------------------------------------------------
 
@@ -177,38 +178,10 @@ CREATE TABLE `chitiethoadon` (
 --
 
 INSERT INTO `chitiethoadon` (`id`, `idBook`, `idHoadon`, `amount`, `pricePerItem`) VALUES
-(1, 3, 32, 1, 17000),
-(2, 4, 32, 1, 19000),
-(3, 3, 33, 1, 17000),
-(4, 4, 33, 1, 19000),
-(5, 3, 34, 1, 17000),
-(6, 5, 34, 1, 18000),
-(7, 15, 35, 1, 24000),
-(8, 17, 35, 1, 26000),
-(9, 15, 36, 1, 24000),
-(10, 17, 36, 1, 26000),
-(11, 22, 37, 1, 29000),
-(12, 3, 38, 1, 17000),
-(13, 5, 39, 1, 18000),
-(14, 3, 39, 1, 17000),
-(15, 1, 40, 1, 16000),
-(16, 15, 41, 1, 24000),
-(17, 3, 42, 1, 17000),
-(18, 17, 43, 1, 26000),
-(19, 19, 43, 1, 30000),
-(20, 3, 44, 1, 17000),
-(21, 5, 45, 1, 18000),
-(22, 1, 46, 1, 16000),
-(23, 3, 47, 1, 17000),
-(24, 3, 48, 1, 17000),
-(25, 5, 49, 1, 18000),
-(26, 5, 50, 1, 18000),
-(27, 17, 51, 1, 26000),
-(28, 5, 52, 1, 18000),
-(29, 5, 53, 1, 18000),
-(30, 17, 54, 1, 26000),
-(31, 1, 55, 1, 16000),
-(32, 1, 56, 132, 16000);
+(33, 17, 57, 5, 26000),
+(34, 24, 57, 5, 28500),
+(35, 19, 58, 5, 30000),
+(36, 10, 59, 5, 22000);
 
 -- --------------------------------------------------------
 
@@ -287,62 +260,9 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`idBill`, `idUser`, `nhanvien_id`, `totalBill`, `paymentMethod`, `statusBill`, `ly_do_huy`, `ly_do_tra_hang`, `create_at`, `ngay_cap_nhat`, `id_diachi`) VALUES
-(1, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(2, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(3, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(4, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(5, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(6, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(7, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(8, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(9, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(10, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(11, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(12, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(13, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(14, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(15, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(16, 1, 1, 150000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(17, 2, 1, 160000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(18, 3, 1, 170000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(19, 4, 1, 180000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(20, 5, 1, 190000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(21, 6, 1, 200000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(22, 7, 1, 210000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(23, 8, 1, 220000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(24, 9, 1, 230000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(25, 10, 1, 240000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(26, 11, 1, 250000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(27, 12, 1, 260000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(28, 13, 1, 270000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(29, 14, 1, 280000.00, 'Chuyển khoản', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(30, 15, 1, 290000.00, 'Tiền mặt', 2, NULL, NULL, '2025-04-29 18:00:14', '2025-04-29 18:00:14', NULL),
-(31, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:18:57', '2025-04-29 23:18:57', 3),
-(32, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:19:26', '2025-04-29 23:19:26', 3),
-(33, 3, NULL, 36000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:20:51', '2025-04-29 23:20:51', 3),
-(34, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:28:38', '2025-04-29 23:28:38', 3),
-(35, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:29:41', '2025-04-29 23:29:41', 3),
-(36, 3, NULL, 50000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:33:46', '2025-04-29 23:33:46', 3),
-(37, 3, NULL, 29000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:34:05', '2025-04-29 23:34:05', 3),
-(38, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:41:54', '2025-04-29 23:41:54', 3),
-(39, 3, NULL, 35000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:42:56', '2025-04-29 23:42:56', 3),
-(40, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:43:42', '2025-04-29 23:43:42', 3),
-(41, 3, NULL, 24000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:49:31', '2025-04-29 23:49:31', 3),
-(42, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-29 23:51:51', '2025-04-29 23:51:51', 3),
-(43, 3, NULL, 56000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:22:24', '2025-04-30 00:22:24', 3),
-(44, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:24:29', '2025-04-30 00:24:29', 3),
-(45, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:27:13', '2025-04-30 00:27:13', 3),
-(46, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:28:58', '2025-04-30 00:28:58', 3),
-(47, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:29:51', '2025-04-30 00:29:51', 3),
-(48, 3, NULL, 17000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:31:29', '2025-04-30 00:31:29', 3),
-(49, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:32:09', '2025-04-30 00:32:09', 3),
-(50, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:35', '2025-04-30 00:35:35', 3),
-(51, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:35:51', '2025-04-30 00:35:51', 3),
-(52, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:38:18', '2025-04-30 00:38:18', 3),
-(53, 3, NULL, 18000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:01', '2025-04-30 00:39:01', 3),
-(54, 3, NULL, 26000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:39:51', '2025-04-30 00:39:51', 3),
-(55, 3, NULL, 16000.00, 'Tien mat', 2, NULL, NULL, '2025-04-30 00:41:06', '2025-04-30 00:41:06', 3),
-(56, 1, NULL, 2112000.00, 'Tien mat', 2, NULL, NULL, '2025-05-09 21:34:16', '2025-05-09 21:34:16', 1);
+(57, 16, NULL, 272500.00, 'Tien mat', 3, NULL, NULL, '2025-05-10 21:07:02', '2025-05-10 21:07:02', 16),
+(58, 16, NULL, 150000.00, 'Tien mat', 3, NULL, NULL, '2025-03-12 21:09:41', '2025-05-10 21:09:41', 17),
+(59, 17, NULL, 110000.00, 'Tien mat', 3, NULL, NULL, '2025-04-24 21:15:08', '2025-05-10 21:15:08', 18);
 
 -- --------------------------------------------------------
 
@@ -387,6 +307,17 @@ CREATE TABLE `hoadon_trangthai` (
   `ghi_chu` text DEFAULT NULL,
   `create_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hoadon_trangthai`
+--
+
+INSERT INTO `hoadon_trangthai` (`id`, `idBill`, `id_nhanvien`, `trangthai`, `ghi_chu`, `create_at`) VALUES
+(1, 57, NULL, '3', NULL, '2025-05-10 21:09:03'),
+(2, 58, NULL, '3', NULL, '2025-05-10 21:09:57'),
+(3, 58, NULL, '2', NULL, '2025-05-10 21:10:48'),
+(4, 58, NULL, '3', NULL, '2025-05-10 21:12:24'),
+(5, 59, NULL, '3', NULL, '2025-05-10 21:15:38');
 
 -- --------------------------------------------------------
 
@@ -610,7 +541,10 @@ INSERT INTO `thongtingiaohang` (`id`, `tennguoinhan`, `id_user`, `diachi`, `than
 (12, 'Đỗ Thị Lan', 12, '12 Đường Dương Quảng Hàm', 'Hồ Chí Minh', 'Gò Vấp', 'Phường 5', '0912000012', 1),
 (13, 'Hoàng Trung Nghĩa', 13, '21 Đường Nguyễn Kiệm', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 3', '0913000013', 1),
 (14, 'Tô Hoàng Nam', 14, '34 Đường Huỳnh Văn Bánh', 'Hồ Chí Minh', 'Phú Nhuận', 'Phường 17', '0914000014', 1),
-(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1);
+(15, 'Vũ Thị Ngọc Hà', 15, '90 Đường Trần Quang Diệu', 'Hồ Chí Minh', 'Quận 3', 'Phường 14', '0915000015', 1),
+(16, 'Bao Huynh', 16, 'jfiewf23', 'Ninh Bình', 'Thành phố Ninh Bình', 'Phường Đông Thành', '0776929128', 0),
+(17, 'Bao Huynh', 16, 'jfiewf23', 'Ninh Bình', 'Thành phố Ninh Bình', 'Phường Đông Thành', '0776929128', 0),
+(18, 'Dong', 17, '8 lạc', 'Khánh Hòa', 'Thành phố Nha Trang', 'Phường Vĩnh Trường', '0914356422', 0);
 
 -- --------------------------------------------------------
 
@@ -628,7 +562,7 @@ CREATE TABLE `users` (
   `status_user` tinyint(1) DEFAULT NULL,
   `fullName` varchar(100) DEFAULT NULL,
   `phoneNumber` varchar(20) DEFAULT NULL,
-  `created_at` date NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -636,21 +570,23 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `userName`, `password`, `email`, `avatar`, `status_user`, `fullName`, `phoneNumber`, `created_at`) VALUES
-(1, 1, 'Admin', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234', '2025-05-10'),
-(2, 2, 'minhtran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333', '2025-05-10'),
-(3, 1, 'thaole', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444', '2025-05-10'),
-(4, 2, 'huypham', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555', '2025-05-10'),
-(5, 3, 'lanho', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666', '2025-05-10'),
-(6, 3, 'namdang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777', '2025-05-10'),
-(7, 2, 'tuvu', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888', '2025-05-10'),
-(8, NULL, 'quynhanh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999', '2025-05-10'),
-(9, NULL, 'michaelng', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000', '2025-05-10'),
-(10, NULL, 'jessicatrinh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111', '2025-05-10'),
-(11, NULL, 'tommyle', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222', '2025-05-10'),
-(12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333', '2025-05-10'),
-(13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444', '2025-05-10'),
-(14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555', '2025-05-10'),
-(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666', '2025-05-10');
+(1, 1, 'Admin', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'admin@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Admin', '0911111234', '2025-05-10 00:00:00'),
+(2, 2, 'minhtran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'minhtran@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Minh Trần', '0911222333', '2025-05-10 00:00:00'),
+(3, 1, 'thaole', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'thaole@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Thảo Lê', '0911333444', '2025-05-10 00:00:00'),
+(4, 2, 'huypham', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'huypham@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Huy Phạm', '0911444555', '2025-05-10 00:00:00'),
+(5, 3, 'lanho', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'lanho@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Lan Hồ', '0911555666', '2025-05-10 00:00:00'),
+(6, 3, 'namdang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'namdang@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Nam Đặng', '0911666777', '2025-05-10 00:00:00'),
+(7, 2, 'tuvu', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tuvu@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tú Vũ', '0911777888', '2025-05-10 00:00:00'),
+(8, NULL, 'quynhanh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'quynhanh@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Quỳnh Anh', '0911888999', '2025-05-10 00:00:00'),
+(9, NULL, 'michaelng', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'michael@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Michael Nguyen', '0911999000', '2025-05-10 00:00:00'),
+(10, NULL, 'jessicatrinh', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'jessica@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Jessica Trinh', '0912000111', '2025-05-10 00:00:00'),
+(11, NULL, 'tommyle', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'tommy@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Tommy Le', '0912111222', '2025-05-10 00:00:00'),
+(12, NULL, 'davidhoang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'david@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'David Hoang', '0912222333', '2025-05-10 00:00:00'),
+(13, NULL, 'emilydang', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'emily@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Emily Dang', '0912333444', '2025-05-10 00:00:00'),
+(14, NULL, 'chloephan', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'chloe@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Chloe Phan', '0912444555', '2025-05-10 00:00:00'),
+(15, NULL, 'anthonytran', '$2y$10$IMFONH6sSOMQbjUElSu/Qe2NNqUfoH6eaPgwQsuLmgWQdNN8kl72e', 'anthony@gmail.com', 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png', 1, 'Anthony Tran', '0912555666', '2025-05-10 00:00:00'),
+(16, NULL, NULL, '$2y$10$dq0kE3fbl6ydrczj8jB.5.EKbKjtM/2R8UhdzNYdGpbjgri/xyq/2', NULL, NULL, NULL, 'New user', '0776929128', '2025-05-10 00:00:00'),
+(17, NULL, NULL, '$2y$10$yIUCcJ.Kq7ZYlxBgILzbMO.Q3vnLqPjOOVzNA9TnKORw/i2ZGTY6K', NULL, NULL, NULL, 'New user', '0914356422', '2025-05-10 00:00:00');
 
 --
 -- Indexes for dumped tables
@@ -789,25 +725,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `idCart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `cartitems`
 --
 ALTER TABLE `cartitems`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `chitiethoadon`
 --
 ALTER TABLE `chitiethoadon`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `chitietphieunhap`
@@ -825,7 +761,7 @@ ALTER TABLE `chucnang`
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `idBill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `hoadonnhap`
@@ -837,7 +773,7 @@ ALTER TABLE `hoadonnhap`
 -- AUTO_INCREMENT for table `hoadon_trangthai`
 --
 ALTER TABLE `hoadon_trangthai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `manage`
@@ -879,13 +815,13 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `thongtingiaohang`
 --
 ALTER TABLE `thongtingiaohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

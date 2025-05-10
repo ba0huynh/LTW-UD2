@@ -141,6 +141,7 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
 </head>
 
 <body class="bg-gray-100">
+   
     <main class="flex flex-col md:flex-row min-h-screen">
         <!-- Mobile sidebar toggle button -->
         <div class="md:hidden p-4 bg-white border-b">
