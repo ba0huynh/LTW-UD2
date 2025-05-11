@@ -26,7 +26,6 @@ function isSectionActive($pages) {
     /* Sidebar Styles */
     .sidebar {
         --sidebar-width: 240px;
-        --sidebar-collapsed-width: 70px;
         --primary-color: #2563eb;
         --primary-hover: #1e40af;
         --sidebar-bg: #1a2536;
@@ -51,9 +50,7 @@ function isSectionActive($pages) {
         flex-direction: column;
     }
     
-    .sidebar.collapsed {
-        width: var(--sidebar-collapsed-width);
-    }
+ 
     
     .sidebar-header {
         display: flex;
@@ -289,82 +286,7 @@ function isSectionActive($pages) {
         margin-right: 0.5rem;
     }
     
-    /* Collapsed state styles */
-    .sidebar.collapsed .logo span {
-        opacity: 0;
-        width: 0;
-    }
-    
-    .sidebar.collapsed .menu-section,
-    .sidebar.collapsed .menu-item span,
-    .sidebar.collapsed .menu-arrow {
-        opacity: 0;
-    }
-    
-    .sidebar.collapsed .menu-item {
-        padding: 0.75rem 0;
-        justify-content: center;
-    }
-    
-    .sidebar.collapsed .menu-item i {
-        margin-right: 0;
-        font-size: 1.25rem;
-    }
-    
-    .sidebar.collapsed .submenu {
-        position: absolute;
-        left: var(--sidebar-collapsed-width);
-        top: 0;
-        width: 200px;
-        background-color: var(--sidebar-bg);
-        box-shadow: 5px 0 10px rgba(0, 0, 0, 0.1);
-        z-index: 10;
-        max-height: 0;
-        border-radius: 0 0.375rem 0.375rem 0;
-    }
-    
-    .sidebar.collapsed .has-submenu:hover .submenu {
-        max-height: 500px;
-    }
-    
-    .sidebar.collapsed .submenu-item {
-        padding-left: 1rem;
-    }
-    
-    .sidebar.collapsed .submenu-item::before {
-        display: none;
-    }
-    
-    .sidebar.collapsed .user-info {
-        opacity: 0;
-        width: 0;
-    }
-    
-    .sidebar.collapsed .user-profile {
-        padding: 1rem 0;
-        justify-content: center;
-    }
-    
-    .sidebar.collapsed .user-avatar {
-        margin-right: 0;
-    }
-    
-    .sidebar.collapsed .logout-button span {
-        display: none;
-    }
-    
-    .sidebar.collapsed .logout-button {
-        padding: 0.75rem;
-        border-radius: 50%;
-        margin: 1rem auto;
-        width: 42px;
-        height: 42px;
-    }
-    
-    .sidebar.collapsed .logout-button i {
-        margin-right: 0;
-    }
-    
+ 
     /* Mobile styles */
     @media (max-width: 768px) {
         .sidebar {
