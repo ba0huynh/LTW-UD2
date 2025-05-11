@@ -1,15 +1,11 @@
 <?php 
 session_start();
-?>
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ltw_ud2";
+require_once("../database/database.php");
+require_once("../database/book.php");
+require_once("../database/user.php");
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli("localhost", "root", "", "ltw_ud2");
 
 // Check connection
 if ($conn->connect_error) {
@@ -22,7 +18,7 @@ if (!isset($_SESSION['import_list'])) {
 }
 
 // Get list of books and suppliers
-$books_query = "SELECT id, bookName, classNumber, currentPrice, imageURL FROM books WHERE isActive = 1";
+$books_query = "SELECT id, bookName, classNumber, currentPrice, quantitySold, imageURL FROM books WHERE isActive = 1";
 $books_result = $conn->query($books_query);
 $books = $books_result->fetch_all(MYSQLI_ASSOC);
 
@@ -30,12 +26,18 @@ $suppliers_query = "SELECT id, name FROM nhacungcap";
 $suppliers_result = $conn->query($suppliers_query);
 $suppliers = $suppliers_result->fetch_all(MYSQLI_ASSOC);
 
+// Get some statistics for the dashboard
+$total_books = count($books);
+$total_import_value = array_sum(array_column($_SESSION['import_list'], 'total'));
+$total_import_items = array_sum(array_column($_SESSION['import_list'], 'quantity'));
+$import_count = count($_SESSION['import_list']);
+
 // Handle form submission for adding to import list
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
     $book_id = intval($_POST['book_id']);
     $price = floatval($_POST['price']);
     $quantity = intval($_POST['quantity']);
-    $image = $_FILES['image']['name'];
+    $image = $_FILES['image']['name'] ?? '';
     
     // Find selected book
     $selected_book = null;
@@ -48,22 +50,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
     
     // Validate input
     if (!$selected_book) {
-        echo "<script>alert('Vui lòng chọn sách!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Vui lòng chọn sách!'
+            });
+        </script>";
     } elseif ($price <= 0) {
-        echo "<script>alert('Giá nhập phải lớn hơn 0!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Giá nhập phải lớn hơn 0!'
+            });
+        </script>";
     } elseif ($quantity <= 0) {
-        echo "<script>alert('Số lượng phải lớn hơn 0!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Số lượng phải lớn hơn 0!'
+            });
+        </script>";
     } else {
         // Handle image upload
         if (!empty($image)) {
-            $target_dir = "uploads/";
+            $target_dir = "../images/Products/";
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
             $target_file = $target_dir . basename($image);
             move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+            $image_path = "/LTW-UD2/images/Products/" . basename($image);
         } else {
-            $image = $selected_book['imageURL'];
+            $image_path = $selected_book['imageURL'];
         }
         
         // Calculate total
@@ -77,10 +98,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
             'price' => $price,
             'quantity' => $quantity,
             'total' => $total,
-            'image' => $image
+            'image' => $image_path
         ];
         
-        echo "<script>alert('Thêm sách vào danh sách thành công!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Thêm sách vào danh sách thành công!',
+                timer: 1500,
+                showConfirmButton: false
+            });
+        </script>";
+        
+        // Refresh the statistics
+        $total_import_value = array_sum(array_column($_SESSION['import_list'], 'total'));
+        $total_import_items = array_sum(array_column($_SESSION['import_list'], 'quantity'));
+        $import_count = count($_SESSION['import_list']);
     }
 }
 
@@ -89,15 +123,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
     $import_code = trim($_POST['import_code']);
     $import_date = $_POST['import_date'];
     $supplier_id = intval($_POST['supplier']);
-    $idNguoiNhap = 1; // Hard-code idNguoiNhap as 1 (Admin), update if needed
+    $idNguoiNhap = isset($_SESSION["user"]) ? $_SESSION["user"] : 1;
     $total = array_sum(array_column($_SESSION['import_list'], 'total'));
     
     if (empty($import_code)) {
-        echo "<script>alert('Vui lòng nhập mã phiếu nhập!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Vui lòng nhập mã phiếu nhập!'
+            });
+        </script>";
     } elseif (empty($supplier_id)) {
-        echo "<script>alert('Vui lòng chọn nhà cung cấp!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Vui lòng chọn nhà cung cấp!'
+            });
+        </script>";
     } elseif (empty($_SESSION['import_list'])) {
-        echo "<script>alert('Danh sách nhập đang rỗng!');</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Danh sách nhập đang rỗng!'
+            });
+        </script>";
     } else {
         // Insert into hoadonnhap table
         $sql = "INSERT INTO hoadonnhap (tongtien, idNguoiNhap, date, status) VALUES (?, ?, ?, 1)";
@@ -115,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
             $stmt->bind_param("iiidd", $import_id, $item['book_id'], $supplier_id, $item['quantity'], $item['price']);
             $stmt->execute();
             
-            // Update books quantity (assuming quantitySold as inventory)
+            // Update books quantity
             $sql = "UPDATE books SET quantitySold = quantitySold + ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $item['quantity'], $item['book_id']);
@@ -125,7 +177,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
         // Clear import list after successful import
         $_SESSION['import_list'] = [];
         
-        echo "<script>alert('Nhập hàng thành công!'); window.location.href='nhapSanPham.php';</script>";
+        echo "<script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Nhập hàng thành công!',
+                timer: 1500,
+                showConfirmButton: false
+            }).then(function() {
+                window.location.href = 'nhapSanPham.php';
+            });
+        </script>";
     }
 }
 
@@ -135,278 +197,336 @@ if (isset($_GET['delete'])) {
     if (isset($_SESSION['import_list'][$index])) {
         unset($_SESSION['import_list'][$index]);
         $_SESSION['import_list'] = array_values($_SESSION['import_list']);
+        header("Location: nhapSanPham.php");
+        exit;
     }
-    header("Location: nhapSanPham.php");
-    exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý nhập hàng</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
 </head>
-<body>
 
-<main class="flex flex-row">
-        <?php include_once './gui/sidebar.php' ?>
-        <div class="flex items-center w-full h-screen justify-center" style="max-height: 100vh; overflow-y: scroll;">
-            <div class="bg-white shadow-lg border border-gray-300 rounded-lg p-6 w-[80%]" style="padding: 0;">
+<body class="bg-gray-100">
+    <main class="flex flex-col md:flex-row min-h-screen">
+        <!-- Mobile sidebar toggle button -->
+        <div class="md:hidden p-4 bg-white border-b">
+            <button id="mobileSidebarToggle" class="text-gray-500 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
 
-<div class="container">
-    <h2>Nhập Phiếu Nhập</h2><br>
-    <form method="POST" action="" enctype="multipart/form-data">
-        <div class="flex-container">
-            <div class="form-group">
-                <label>Mã Phiếu Nhập</label>
-                <input type="text" name="import_code" placeholder="Nhập mã phiếu nhập" value="<?php echo isset($_POST['import_code']) ? htmlspecialchars($_POST['import_code']) : ''; ?>" required>
+        <!-- Sidebar - hidden on mobile by default -->
+        <div id="sidebar" class="hidden md:block md:w-64 bg-white shadow-md">
+            <?php include_once './gui/sidebar.php' ?>
+        </div>
+
+        <div class="flex-1 p-3 sm:p-4 md:p-6 h-screen overflow-auto">
+            <!-- Header -->
+            <div class="mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 flex items-center">
+                            <i class="fas fa-boxes mr-2 text-blue-600"></i>
+                            Quản Lý Nhập Hàng
+                        </h1>
+                        <p class="text-gray-600 mt-1">
+                            Thêm sản phẩm vào kho, cập nhật số lượng và giá nhập
+                        </p>
+                    </div>
+                </div>
             </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <!-- Total Books Card -->
+                <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Tổng số sách</p>
+                            <h3 class="text-2xl font-bold text-gray-800"><?php echo $total_books; ?></h3>
+                        </div>
+                        <div class="rounded-full bg-blue-100 p-3">
+                            <i class="fas fa-book text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items in Import List -->
+                <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-green-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Sản phẩm trong danh sách</p>
+                            <h3 class="text-2xl font-bold text-gray-800"><?php echo $import_count; ?></h3>
+                        </div>
+                        <div class="rounded-full bg-green-100 p-3">
+                            <i class="fas fa-list text-green-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Quantity -->
+                <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-yellow-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Tổng số lượng nhập</p>
+                            <h3 class="text-2xl font-bold text-gray-800"><?php echo $total_import_items; ?></h3>
+                        </div>
+                        <div class="rounded-full bg-yellow-100 p-3">
+                            <i class="fas fa-boxes-stacked text-yellow-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total Value -->
+                <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500 mb-1">Tổng giá trị</p>
+                            <h3 class="text-2xl font-bold text-gray-800"><?php echo number_format($total_import_value, 0, ',', '.'); ?>đ</h3>
+                        </div>
+                        <div class="rounded-full bg-purple-100 p-3">
+                            <i class="fas fa-money-bill-wave text-purple-500 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add Book Form -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="px-4 py-3 bg-gray-50 border-b flex items-center">
+                            <i class="fas fa-plus-circle text-blue-500 mr-2"></i>
+                            <h2 class="text-lg font-semibold text-gray-700">Thêm sách vào danh sách</h2>
+                        </div>
+                        
+                        <div class="p-5">
+                            <form method="POST" action="" enctype="multipart/form-data" class="space-y-4">
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tên sách</label>
+                                    <select name="book_id" id="book-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                        <option value="">-- Chọn sách --</option>
+                                        <?php foreach ($books as $book): ?>
+                                            <option value="<?php echo $book['id']; ?>" data-class="<?php echo $book['classNumber']; ?>" data-price="<?php echo $book['currentPrice']; ?>" data-stock="<?php echo $book['quantitySold']; ?>">
+                                                <?php echo htmlspecialchars($book['bookName']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Lớp</label>
+                                        <input type="text" id="class-display" class="mt-1 block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm outline-transparent sm:text-sm" disabled>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tồn kho</label>
+                                        <input type="text" id="stock-display" class="mt-1 block w-full outline-transparent rounded-md border-gray-300 bg-gray-100 shadow-sm sm:text-sm" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Giá nhập</label>
+                                        <div class="relative rounded-md shadow-sm">
+                                            <input type="number" name="price" id="price-input" placeholder="Giá nhập" step="1000" min="0" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 outline-transparent sm:text-sm pr-10" required>
+                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                                <span class="text-gray-500 sm:text-sm">đ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Số lượng</label>
+                                        <input type="number" name="quantity" placeholder="Số lượng nhập" min="1" value="1" class="mt-1 block w-full outline-transparent rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Hình ảnh (tùy chọn)</label>
+                                    <input type="file" name="image" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 outline-transparent file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                </div>
+
+                                <div class="mt-4 flex justify-end">
+                                    <button type="submit" name="add_to_list" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Thêm vào danh sách
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-6 border-t pt-6">
+                                <form method="POST" action="" class="space-y-4">
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="form-group">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Mã phiếu nhập</label>
+                                            <input type="text" name="import_code" placeholder="Nhập mã phiếu nhập" class="mt-1 block w-full rounded-md border-gray-300 outline-transparent focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Ngày nhập</label>
+                                            <input type="date" name="import_date" value="<?php echo date('Y-m-d'); ?>" class="mt-1 block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 outline-transparent sm:text-sm" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nhà cung cấp</label>
+                                        <select name="supplier" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                            <option value="">-- Chọn nhà cung cấp --</option>
+                                            <?php foreach ($suppliers as $supplier): ?>
+                                                <option value="<?php echo $supplier['id']; ?>">
+                                                    <?php echo htmlspecialchars($supplier['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tổng giá trị</label>
+                                        <div class="relative rounded-md shadow-sm">
+                                            <input type="text" value="<?php echo number_format($total_import_value, 0, ',', '.'); ?>đ" class="mt-1 outline-transparent block w-full rounded-md border-gray-300 bg-gray-100 shadow-sm sm:text-sm" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <button type="submit" name="import" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" <?php echo empty($_SESSION['import_list']) ? 'disabled' : ''; ?>>
+                                            <i class="fas fa-save mr-2"></i>
+                                            Hoàn tất nhập hàng
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Import List -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="px-4 py-3 bg-gray-50 border-b flex justify-between items-center">
+                            <div class="flex items-center">
+                                <i class="fas fa-clipboard-list text-blue-500 mr-2"></i>
+                                <h2 class="text-lg font-semibold text-gray-700">Danh sách sách nhập</h2>
+                            </div>
+                            <span class="text-sm text-gray-500">
+                                Tổng: <span class="font-semibold"><?php echo count($_SESSION['import_list']); ?></span> mặt hàng
+                            </span>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hình ảnh</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên sách</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lớp</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Giá nhập</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Số lượng</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tổng tiền</th>
+                                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <?php if (empty($_SESSION['import_list'])): ?>
+                                        <tr>
+                                            <td colspan="7" class="px-6 py-10 text-center text-sm text-gray-500">
+                                                <div class="flex flex-col items-center">
+                                                    <i class="fas fa-inbox text-gray-300 text-5xl mb-3"></i>
+                                                    Chưa có mặt hàng nào trong danh sách nhập
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php else: ?>
+                                        <?php foreach ($_SESSION['import_list'] as $index => $item): ?>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <img src="<?php echo htmlspecialchars($item['image']); ?>" class="h-12 w-12 rounded-md object-cover" alt="Book Image">
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                    <?php echo htmlspecialchars($item['book_name']); ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    Lớp <?php echo htmlspecialchars($item['class_number']); ?>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <?php echo number_format($item['price'], 0, ',', '.'); ?>đ
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        <?php echo $item['quantity']; ?>
+                                                    </span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                    <?php echo number_format($item['total'], 0, ',', '.'); ?>đ
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="?delete=<?php echo $index; ?>" class="text-red-600 hover:text-red-900" onclick="return confirm('Bạn có chắc muốn xóa mặt hàng này?')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <?php if (!empty($_SESSION['import_list'])): ?>
+                        <div class="bg-gray-50 px-6 py-3 flex justify-between items-center border-t">
+                            <span class="text-sm text-gray-500">
+                                Tổng số lượng: <span class="font-semibold"><?php echo $total_import_items; ?></span>
+                            </span>
+                            <span class="text-sm font-medium text-gray-900">
+                                Tổng giá trị: <span class="font-semibold"><?php echo number_format($total_import_value, 0, ',', '.'); ?>đ</span>
+                            </span>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('mobileSidebarToggle')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('hidden');
+        });
+
+        // Handle responsiveness on window resize
+        window.addEventListener('resize', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth >= 768) { // md breakpoint
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        });
         
-            <div class="form-group">
-                <label>Ngày nhập</label>
-                <input type="date" name="import_date" value="<?php echo isset($_POST['import_date']) ? htmlspecialchars($_POST['import_date']) : date('Y-m-d'); ?>" required>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Tên sách</label>
-            <select name="book_id" required>
-                <option value="">-- Chọn sách --</option>
-                <?php foreach ($books as $book): ?>
-                    <option value="<?php echo $book['id']; ?>" <?php echo isset($_POST['book_id']) && $_POST['book_id'] == $book['id'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($book['bookName']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-
-        <div class="flex-container">
-            <div class="form-group">
-                <label>Lớp</label>
-                <input type="text" value="<?php echo isset($_POST['book_id']) && ($selected_book = array_filter($books, fn($b) => $b['id'] == $_POST['book_id'])) ? reset($selected_book)['classNumber'] : ''; ?>" disabled>
-            </div>
-
-            <div class="form-group">
-                <label>Số lượng tồn kho</label>
-                <input type="text" value="<?php echo isset($_POST['book_id']) && ($selected_book = array_filter($books, fn($b) => $b['id'] == $_POST['book_id'])) ? reset($selected_book)['quantitySold'] : '0'; ?>" disabled>
-            </div>
-        </div>
-
-        <div class="flex-container">
-            <div class="form-group">
-                <label>Giá nhập</label>
-                <input type="number" name="price" placeholder="Giá nhập" step="0.01" min="0" value="<?php echo isset($_POST['price']) ? htmlspecialchars($_POST['price']) : ''; ?>" required>
-            </div>
-
-            <div class="form-group">
-                <label>Số lượng nhập</label>
-                <input type="number" name="quantity" placeholder="Số lượng nhập" min="1" value="<?php echo isset($_POST['quantity']) ? htmlspecialchars($_POST['quantity']) : ''; ?>" required>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Hình ảnh (tùy chọn)</label>
-            <input type="file" name="image" accept="image/*">
-        </div>
-
-        <div class="but-Contain">
-            <button type="submit" name="add_to_list" class="btn inButton">Thêm vào danh sách nhập</button>
-        </div>
-    </form>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Hình ảnh</th>
-                <th>Tên sách</th>
-                <th>Lớp</th>
-                <th>Giá nhập</th>
-                <th>Số lượng</th>
-                <th>Tổng tiền</th>
-                <th>Chức năng</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($_SESSION['import_list'])): ?>
-                <tr>
-                    <td colspan="7" class="text-center">Chưa có mặt hàng nào</td>
-                </tr>
-            <?php else: ?>
-                <?php foreach ($_SESSION['import_list'] as $index => $item): ?>
-                    <tr>
-                        <td><img src="<?php echo htmlspecialchars($item['image']); ?>" class="book-img" alt="Book Image"></td>
-                        <td><?php echo htmlspecialchars($item['book_name']); ?></td>
-                        <td><?php echo htmlspecialchars($item['class_number']); ?></td>
-                        <td><?php echo number_format($item['price'], 2); ?>đ</td>
-                        <td><?php echo $item['quantity']; ?></td>
-                        <td><?php echo number_format($item['total'], 2); ?>đ</td>
-                        <td>
-                            <a href="?delete=<?php echo $index; ?>" class="btn button-red" 
-                               onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
-
-    <form method="POST" action="">
-        <div class="flex-container">
-            <div class="form-group">
-                <label>Nhà cung cấp</label>
-                <select name="supplier" required>
-                    <option value="">-- Chọn nhà cung cấp --</option>
-                    <?php foreach ($suppliers as $supplier): ?>
-                        <option value="<?php echo $supplier['id']; ?>" <?php echo isset($_POST['supplier']) && $_POST['supplier'] == $supplier['id'] ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($supplier['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Tổng tiền danh sách nhập</label>
-                <input type="text" value="<?php 
-                    $total = array_sum(array_column($_SESSION['import_list'], 'total'));
-                    echo number_format($total, 2) . 'đ';
-                ?>" disabled>
-            </div>
-        </div>
-        
-        <input type="hidden" name="import_code" value="<?php echo isset($_POST['import_code']) ? htmlspecialchars($_POST['import_code']) : ''; ?>">
-        <input type="hidden" name="import_date" value="<?php echo isset($_POST['import_date']) ? htmlspecialchars($_POST['import_date']) : date('Y-m-d'); ?>">
-        
-        <div class="but-Contain">
-            <button type="submit" name="import" class="btn button-red">Nhập hàng</button>
-        </div>
-    </form>
-</div>
-
-          </div>
-            </div>
-</main>
+        // Book select change handler
+        document.getElementById('book-select').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById('class-display').value = selectedOption.dataset.class ? 'Lớp ' + selectedOption.dataset.class : '';
+            document.getElementById('stock-display').value = selectedOption.dataset.stock || '0';
+            
+            // Suggest import price (80% of current price)
+            const currentPrice = parseFloat(selectedOption.dataset.price);
+            if (!isNaN(currentPrice)) {
+                const suggestedPrice = Math.round(currentPrice * 0.8 / 1000) * 1000;
+                document.getElementById('price-input').value = suggestedPrice;
+            }
+        });
+    </script>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>
-
-<style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 100%;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            font-size: xx-large;
-
-        }
-        .flex-container {
-            display: flex;
-            gap: 20px; 
-        }
-        
-        .flex-container .form-group {
-            flex: 1;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        input:disabled {
-            background-color: #e9ecef;
-        }
-
-        .btn {
-            width: 30%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .inButton {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .inButton:hover {
-            background-color: #0056b3;
-        }
-
-        .button-red {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .button-red:hover {
-            background-color: #a71d2a;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f1f1f1;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-        .but-Contain {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .book-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-    </style>
