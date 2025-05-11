@@ -2133,7 +2133,7 @@ function showAddressChecked() {
     .then(data => {
       if (data.includes("Thanh toán thành công")) {
         alert("Thanh toán thành công!");
-        window.location.href = "/LTW-UD2/zui/responseOrder.php";
+        window.location.href = "../zui/responseOrder.php";
       } else {
         alert("Đã xảy ra lỗi khi thanh toán: " + data);
       }
