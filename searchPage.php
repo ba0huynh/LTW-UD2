@@ -55,8 +55,8 @@ if (!empty($subject)) {
     $query_result_books .= " WHERE books.subjectId = " . (int)$subject;
     $countQuery .= " WHERE books.subjectId = " . (int)$subject;
 } else {
-    $query_result_books .= "WHERE books.isActive=1 and books.status = 1  ";  
-    $countQuery .= "WHERE  books.isActive=1 and books.status = 1 ";
+    $query_result_books .= "WHERE books.isActive=1 and books.status = 1 and books.quantitySold > 0  ";  
+    $countQuery .= "WHERE  books.isActive=1 and books.status = 1 and books.quantitySold > 0 ";
 }
 
 

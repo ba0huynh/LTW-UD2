@@ -94,10 +94,9 @@ while ($row = $result->fetch_assoc()) {
 $address_value = ($address_id > 0) ? $address_id : "NULL";
 
 $insertInvoice = "
-    INSERT INTO hoadon (idUser, id_diachi, totalBill, create_at, ngay_cap_nhat, paymentMethod)
-    VALUES ($user_id, $address_value, $tongtien, NOW(), NOW(), '$paymentMethod')
+    INSERT INTO hoadon (idUser, id_diachi, totalBill, create_at, ngay_cap_nhat, paymentMethod, statusBill)
+    VALUES ($user_id, $address_value, $tongtien, NOW(), NOW(), '$paymentMethod', 1)
 ";
-
 
 if (!$conn->query($insertInvoice)) {
     die("Lỗi khi tạo hóa đơn: " . $conn->error);
@@ -111,7 +110,7 @@ foreach ($items as $item) {
     $thanhtien = $item['thanhtien'];
 
     $insertDetail = "
-        INSERT INTO chitiethoadon (idHoadon, idBook, amount,pricePerItem)
+        INSERT INTO chitiethoadon (idHoadon, idBook, amount, pricePerItem)
         VALUES ($hoadon_id, $bookId, $amount, $thanhtien/$amount)
     ";
 
@@ -126,7 +125,6 @@ $conn->query("
     WHERE cartId IN (SELECT idCart FROM cart WHERE idUser = $user_id)
     AND amount > 0
 ");
-
 
 $total_result = $conn->query("
     SELECT SUM(amount * currentPrice) AS total FROM cartitems

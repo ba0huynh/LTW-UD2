@@ -72,7 +72,7 @@
     </div>
         
     <div class="mainForm bg-white  rounded-2xl shadow-lg w-full max-w-2xl">
-      <form action="" method="post" class="profile-form">
+      <form  action="" method="post" class="profile-form">
         <div class="bg-white rounded-2xl  p-8">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Hồ sơ cá nhân</h2>
       

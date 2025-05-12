@@ -13,8 +13,8 @@ class ChiTietPhieuNhap {
         $sql = "
             SELECT 
                 ct.*, 
-                b.name as ten_sach,
-                b.image as hinh_anh,
+                b.bookName as ten_sach,
+                b.imageURL as hinh_anh,
                 ncc.name as ten_ncc,
                 (ct.soluong * ct.gianhap) as thanh_tien
             FROM chitietphieunhap ct

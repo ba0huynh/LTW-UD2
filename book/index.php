@@ -20,7 +20,6 @@ if ($bookId == null) {
   $subjectTable = new SubjectsTable();
   $subject = $subjectTable->getSubjectById($book["subjectId"]);
 }
-
 // Handle cart actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   if (!isset($_SESSION['user_id'])) {
@@ -46,11 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit;
   } else if ($_POST['action'] === 'buy_now') {
+    // Automatically add item to cart before redirecting to payment
     if ($cartTable->addItemToCart($userId, $bookId, $quantity)) {
-      header("Location: ../cart/checkout.php");
+      $_SESSION['cart_message'] = "Đã thêm sản phẩm vào giỏ hàng, chuyển đến trang thanh toán";
+      header("Location: ../zui/payment.php");
       exit;
     } else {
-      $_SESSION['cart_message'] = "Có lỗi xảy ra khi mua ngay";
+      $_SESSION['cart_message'] = "Có lỗi xảy ra khi thêm vào giỏ hàng";
       header("Location: " . $_SERVER['REQUEST_URI']);
       exit;
     }

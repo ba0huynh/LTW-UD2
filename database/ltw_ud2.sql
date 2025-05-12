@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2025 at 06:00 PM
+-- Generation Time: May 11, 2025 at 12:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,20 +50,20 @@ INSERT INTO `books` (`id`, `bookName`, `subjectId`, `classNumber`, `oldPrice`, `
 (1, 'Toán 6 - Giáo Khoa Cơ Bản', 2, '6', 18000.00, 16000.00, 166, 'https://sachhoc.com/image/cache/catalog/LuyenThi/Lop6-9/Sach-giao-khoa-toan-lop-6-tap-1-ket-noi-tri-thuc-voi-cuoc-song-500x554.jpg', 0, 1, 'Toán lớp 6 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
 (3, 'Toán 7 - Giáo Khoa Cơ Bản', 1, '7', 19000.00, 17000.00, 133, 'https://classbook.vn/static/covers/STK07TCBNC02/cover.clsbi', 0, 1, 'Toán lớp 7 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
 (4, 'Ngữ Văn 7 - Bài Tập', 2, '7', 21000.00, 19000.00, 85, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvFq42_zLyEGSnqgSIvQHnedai8cmUFR9DQ&s', 0, 1, 'Bài tập Ngữ văn lớp 7.', 'Bài Tập'),
-(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 95, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
-(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 70, '/LTW-UD2/images/Products/681d4a736e040_hoahoc-8-baitap.jpg', 0, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
+(5, 'Toán 8 - Giáo Khoa Nâng Cao', 1, '8', 20000.00, 18000.00, 106, 'https://down-vn.img.susercontent.com/file/vn-11134208-7qukw-lk1ug2tsdm9u08', 0, 1, 'Toán lớp 8 nâng cao.', 'Giáo Khoa Nâng Cao'),
+(6, 'Hóa Học 8 - Bài Tập', 7, '8', 22000.00, 20000.00, 71, '/LTW-UD2/images/Products/681d4a736e040_hoahoc-8-baitap.jpg', 0, 1, 'Bài tập Hóa học lớp 8.', 'Bài Tập'),
 (7, 'Toán 9 - Ôn Thi vào 10', 1, '10', 25000.00, 23000.00, 150, 'https://sobee.vn/wp-content/uploads/2025/02/Bia-On-thi-vao-10-mon-Toan-1-600x853.jpg', 1, 1, 'Ôn thi Toán lớp 9 vào 10.', 'Ôn Thi'),
-(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 140, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
+(8, 'Ngữ Văn 9 - Ôn Thi vào 10', 2, '9', 24000.00, 22000.00, 144, 'https://ebdbook.vn/upload/stk/lop9/ngu-van/lam-chu-kien-thuc-ngu-van-9-luyen-thi-vao-lop-10-phan-1-doc-hieu-van-ban/11-compressed.jpg?v=1.0.1', 1, 1, 'Ôn thi Ngữ văn lớp 9.', 'Ôn Thi'),
 (9, 'Tiếng Anh 9 - Ôn Thi', 8, '9', 23000.00, 21000.00, 100, 'https://cdn1.fahasa.com/media/flashmagazine/images/page_images/tong_on_tieng_anh_9___tap_1_chuong_trinh_sgk_moi/2024_11_14_16_58_00_1-390x510.jpg', 1, 1, 'Ôn thi tiếng Anh lớp 9.', 'Ôn Thi'),
 (10, 'Toán 9 - Giáo Khoa Cơ Bản', 1, '9', 24000.00, 22000.00, 90, 'https://img.websosanh.vn/v10/users/review/images/a9cwtpmu6641q/sgk-toan-lop-9-tap-2.jpg?compress=85', 1, 1, 'Toán lớp 9 cơ bản.', 'Giáo Khoa Cơ Bản'),
-(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 80, '/LTW-UD2/images/Products/681d6ab95cc65_681d4ce5e4212_vatlii9-giaokhoa.jpg', 1, 1, 'Vật lý lớp 9.', 'Giáo Trình'),
+(11, 'Vật Lý 9 - Giáo Trình', 5, '9', 22500.00, 20500.00, 81, '/LTW-UD2/images/Products/681d6ab95cc65_681d4ce5e4212_vatlii9-giaokhoa.jpg', 1, 1, 'Vật lý lớp 9.', 'Giáo Trình'),
 (12, 'Ngữ Văn 9 - Bài Tập', 2, '9', 22000.00, 20000.00, 95, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoFovmyLGrJTbyg_rv2UsCqcgTPbb4onaOHw&s', 1, 1, 'Bài tập văn học lớp 9.', 'Bài Tập'),
 (13, 'Sinh Học 9 - Ôn Thi', 6, '9', 23000.00, 21500.00, 65, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE9q_gBT0Pvuds7_z_s_go_18krS2qah-_4w&s', 1, 1, 'Ôn thi Sinh học lớp 9.', 'Ôn Thi'),
 (14, 'Hóa Học 9 - Ôn Thi', 7, '9', 23500.00, 21500.00, 60, 'https://down-vn.img.susercontent.com/file/db208c68264f1bd4d60237a97607a091', 1, 1, 'Ôn thi Hóa lớp 9.', 'Ôn Thi'),
-(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 130, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
+(15, 'Toán 10 - Giáo Khoa Cơ Bản', 1, '10', 26000.00, 24000.00, 131, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCVeWm0ZmbHqcJ-1E3OCKGYOr5RZapAF_xqA&s', 1, 1, 'Toán lớp 10 bản cơ bản.', 'Giáo Khoa Cơ Bản'),
 (16, 'Ngữ Văn 10 - Bài Giảng', 2, '10', 27000.00, 25000.00, 95, '/LTW-UD2/images/Products/681d6ad687211_681d209832b76_nguvan-9-onthivaolop10.jpg', 1, 1, 'Bài giảng Văn học lớp 10.', 'Bài Giảng'),
 (17, 'Toán 11 - Giáo Trình', 1, '11', 28000.00, 26000.00, 85, 'https://toanmath.com/wp-content/uploads/2022/12/sach-giao-khoa-toan-11-tap-1-canh-dieu.png', 1, 1, 'Giáo trình Toán lớp 11.', 'Giáo Trình'),
-(18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 80, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
+(18, 'Ngữ Văn 11 - Ôn Thi', 2, '11', 28500.00, 26500.00, 81, 'https://video.vietjack.com/upload/images/documents/banner/gk1-ctst-1687763095.png', 1, 1, 'Ôn thi Ngữ văn lớp 11.', 'Ôn Thi'),
 (19, 'Toán 12 - Ôn Thi THPT', 1, '12', 32000.00, 30000.00, 180, 'https://toanmath.com/wp-content/uploads/2025/03/chuyen-de-on-thi-tot-nghiep-thpt-2025-mon-toan-nguyen-tien-ha.png', 1, 1, 'Ôn thi tốt nghiệp môn Toán.', 'Ôn Thi'),
 (20, 'Ngữ Văn 12 - Ôn Thi THPT', 2, '12', 31000.00, 29000.00, 170, 'https://hieusach24h.com/wp-content/uploads/2021/09/Toan-5-1.jpg', 1, 1, 'Ôn thi tốt nghiệp môn Ngữ văn.', 'Ôn Thi'),
 (21, 'Tiếng Anh 12 - Ôn Thi THPT', 8, '12', 30000.00, 28000.00, 150, 'https://sachhoc.com/image/cache/catalog/Sachtienganh/Luyen-thi/Lop10-12/12-chuyen-de-on-thi-thpt-quoc-gia-mon-tieng-anh-co-mai-phuong-500x554.jpg', 1, 1, 'Ôn thi tiếng Anh THPT.', 'Ôn Thi'),
@@ -205,12 +205,14 @@ CREATE TABLE `chitietphieunhap` (
 --
 
 INSERT INTO `chitietphieunhap` (`id`, `idPhieuNhap`, `idBook`, `idCungCap`, `soluong`, `gianhap`, `status`, `loinhuan`) VALUES
-(1, 1, 6, 1, 100, 10000.00, 1, 10),
-(2, 1, 21, 1, 100, 15000.00, 1, 10),
-(4, 1, 25, 1, 34, 20000.00, 1, 10),
-(5, 8, 1, 1, 23, 309000.00, 1, 10),
-(6, 8, 1, 1, 23, 309000.00, 1, 10),
-(7, 9, 3, 1, 23, 309000.00, 1, 10);
+(8, 10, 6, 1, 1, 16000.00, 1, 10),
+(9, 10, 5, 1, 1, 14000.00, 1, 10),
+(10, 11, 8, 2, 4, 18000.00, 1, 10),
+(11, 12, 5, 1, 1, 14000.00, 1, 10),
+(12, 12, 5, 1, 9, 14000.00, 1, 10),
+(13, 12, 11, 1, 1, 16000.00, 1, 10),
+(14, 13, 18, 1, 1, 21000.00, 1, 10),
+(15, 13, 15, 1, 1, 19000.00, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -283,15 +285,10 @@ CREATE TABLE `hoadonnhap` (
 --
 
 INSERT INTO `hoadonnhap` (`id`, `tongtien`, `idNguoiNhap`, `date`, `status`) VALUES
-(1, 2500000.00, 1, '2025-05-03 06:02:16', 1),
-(2, 5000000.00, 4, '2025-05-08 04:50:22', 1),
-(3, 40000000.00, 2, '2025-05-08 04:50:22', 1),
-(4, 4000000.00, 3, '2025-05-09 05:00:34', 1),
-(5, 3500000.00, 1, '2025-05-09 05:00:51', 1),
-(6, 700000.00, 2, '2025-05-09 05:01:05', 1),
-(7, 2500000.00, 1, '2025-05-09 05:54:19', 1),
-(8, 14214000.00, 1, '2025-05-09 00:00:00', 1),
-(9, 7107000.00, 1, '2025-05-10 00:00:00', 1);
+(10, 30000.00, 1, '2025-05-11 00:00:00', 1),
+(11, 72000.00, 1, '2025-05-11 00:00:00', 1),
+(12, 156000.00, 1, '2025-04-15 00:00:00', 1),
+(13, 40000.00, 1, '2025-03-20 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -749,7 +746,7 @@ ALTER TABLE `chitiethoadon`
 -- AUTO_INCREMENT for table `chitietphieunhap`
 --
 ALTER TABLE `chitietphieunhap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `chucnang`
@@ -767,7 +764,7 @@ ALTER TABLE `hoadon`
 -- AUTO_INCREMENT for table `hoadonnhap`
 --
 ALTER TABLE `hoadonnhap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `hoadon_trangthai`
