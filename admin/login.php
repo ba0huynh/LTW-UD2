@@ -2,7 +2,6 @@
 // filepath: c:\xampp\htdocs\LTW-UD2\admin\login.php
 session_start();
 require_once "../database/user.php";
-
 $usersTable = new UsersTable();
 $error = "";
 
@@ -20,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['admin_id'] = $admin['id'];
             $_SESSION['user_name'] = $admin['userName'] ?? '';
             $_SESSION['user_avatar'] = $admin['avatar'] ?? '';
-            
+
             // Redirect with a small delay to show success message
             header("Refresh: 0.8; URL=index.php");
             $success = true;
@@ -74,43 +73,45 @@ if (isset($_SESSION['admin_id'])) {
     </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
         }
-        
-        .form-input:focus + .input-icon {
+
+        .form-input:focus+.input-icon {
             color: #2563eb;
         }
-        
+
         .login-animation {
             animation: fadeInUp 0.5s ease-out;
         }
-        
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .success-checkmark {
             animation: scaleUp 0.5s ease-out;
         }
-        
+
         @keyframes scaleUp {
             from {
                 transform: scale(0);
             }
+
             to {
                 transform: scale(1);
             }
         }
-        
+
         .wave {
             position: absolute;
             bottom: 0;
@@ -156,7 +157,7 @@ if (isset($_SESSION['admin_id'])) {
                 <h1 class="text-white text-2xl font-bold text-center">Admin Portal</h1>
                 <p class="text-primary-200 text-center mt-1">Book Management System</p>
             </div>
-            
+
             <!-- Form section -->
             <div class="p-8">
                 <h2 class="text-gray-700 text-xl font-semibold mb-6">Sign in to your account</h2>
@@ -172,7 +173,7 @@ if (isset($_SESSION['admin_id'])) {
                         </div>
                     </div>
                 <?php endif; ?>
-                
+
                 <form action="" method="POST" class="space-y-6" id="loginForm">
                     <!-- Username field -->
                     <div class="relative">
@@ -181,12 +182,12 @@ if (isset($_SESSION['admin_id'])) {
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 input-icon">
                                 <i class="fas fa-user"></i>
                             </span>
-                            <input type="text" name="username" id="username" 
+                            <input type="text" name="username" id="username"
                                 class="form-input block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary-300 focus:border-primary-500 focus:outline-none transition-all"
                                 placeholder="Enter your username" required>
                         </div>
                     </div>
-                    
+
                     <!-- Password field -->
                     <div class="relative">
                         <div class="flex justify-between mb-2">
@@ -196,7 +197,7 @@ if (isset($_SESSION['admin_id'])) {
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 input-icon">
                                 <i class="fas fa-lock"></i>
                             </span>
-                            <input type="password" name="password" id="password" 
+                            <input type="password" name="password" id="password"
                                 class="form-input block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-primary-300 focus:border-primary-500 focus:outline-none transition-all"
                                 placeholder="••••••••" required>
                             <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
@@ -204,13 +205,13 @@ if (isset($_SESSION['admin_id'])) {
                             </button>
                         </div>
                     </div>
-                    
+
                     <!-- Remember me -->
                     <div class="flex items-center">
                         <input type="checkbox" name="remember" id="remember" class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded">
                         <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
                     </div>
-                    
+
                     <!-- Login button -->
                     <button type="submit" id="loginBtn" class="w-full flex items-center justify-center bg-primary-600 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 shadow-md transition-all">
                         <span id="loginText">Sign In</span>
@@ -224,7 +225,7 @@ if (isset($_SESSION['admin_id'])) {
                     </button>
                 </form>
             </div>
-            
+
             <!-- Footer -->
             <div class="px-8 py-4 bg-gray-50 border-t">
                 <p class="text-center text-xs text-gray-500">
@@ -239,23 +240,23 @@ if (isset($_SESSION['admin_id'])) {
             // Toggle password visibility
             const togglePassword = document.getElementById('togglePassword');
             const passwordInput = document.getElementById('password');
-            
+
             if (togglePassword && passwordInput) {
                 togglePassword.addEventListener('click', function() {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
-                    
+
                     // Toggle icon
                     togglePassword.innerHTML = type === 'password' ? '<i class="fas fa-eye"></i>' : '<i class="fas fa-eye-slash"></i>';
                 });
             }
-            
+
             // Show loading state on form submission
             const loginForm = document.getElementById('loginForm');
             const loginBtn = document.getElementById('loginBtn');
             const loginText = document.getElementById('loginText');
             const loginLoading = document.getElementById('loginLoading');
-            
+
             if (loginForm && loginBtn && loginText && loginLoading) {
                 loginForm.addEventListener('submit', function() {
                     if (this.checkValidity()) {
@@ -265,7 +266,7 @@ if (isset($_SESSION['admin_id'])) {
                     }
                 });
             }
-            
+
             // Focus username field on load
             const usernameInput = document.getElementById('username');
             if (usernameInput) {
@@ -274,4 +275,5 @@ if (isset($_SESSION['admin_id'])) {
         });
     </script>
 </body>
+
 </html>

@@ -251,4 +251,23 @@ class RoleManager
             return false;
         }
     }
+    public function isAuthorized($userId, $functionId, $manageId)
+    {
+        global $pdo;
+        try {
+
+            $query = "SELECT COUNT(*) as count FROM rolepermissions rp
+              JOIN users u ON rp.roleId = u.role_id
+              WHERE u.id = :userId AND rp.chucnang_id = :functionId AND rp.manage_id = :manageId";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->bindParam(':functionId', $functionId, PDO::PARAM_INT);
+            $stmt->bindParam(':manageId', $manageId, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['count'] > 0;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
 }

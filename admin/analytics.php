@@ -3,17 +3,19 @@ session_start();
 require_once("../database/database.php");
 require_once("../database/user.php");
 require_once("../database/book.php");
+require_once("../database/role.php");
 require_once("../database/hoadon.php");
 require_once("../database/chitiethoadon.php");
 $userTable = new UsersTable();
 $bookTable = new BooksTable();
+$roleTable = new RoleManager();
 $hoadonTable = new HoadonTable();
 $chiTietHoadonTable = new ChiTietHoadonTable();
 $user = null;
-if (isset($_SESSION["user"]) && $_SESSION["user"] != null) {
-    $user = $userTable->getUserDetailsById($_SESSION["user"]);
+if (isset($_SESSION["admin_id"]) && $_SESSION["admin_id"] != null) {
+    $user = $userTable->getUserDetailsById($_SESSION["admin_id"]);
     if ($user == null) {
-        unset($_SESSION["user"]);
+        unset($_SESSION["admin_id"]);
     }
 }
 
@@ -72,9 +74,6 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thống kê kinh doanh</title>
-         <?php 
-    // echo json_encode($customerSales);
-    ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -141,7 +140,7 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
 </head>
 
 <body class="bg-gray-100">
-   
+
     <main class="flex flex-col md:flex-row min-h-screen">
         <!-- Mobile sidebar toggle button -->
         <div class="md:hidden p-4 bg-white border-b">
@@ -205,6 +204,8 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
                         </a>
                     </nav>
                 </div>
+
+                
 
                 <?php if ($view == 'dashboard'): ?>
                 <!-- Dashboard View -->
