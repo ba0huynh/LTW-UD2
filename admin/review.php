@@ -137,8 +137,12 @@ $stats = $reviewTable->getReviewStatistics();
                                         <th class="py-3 px-4 border-b text-left">Đánh giá</th>
                                         <th class="py-3 px-4 border-b text-left">Nhận xét</th>
                                         <th class="py-3 px-4 border-b text-left">Ngày đăng</th>
-                                        <th class="py-3 px-4 border-b text-center">Thao tác</th>
+                                        <?php if ($roleTableSidebar->isAuthorized($adminID, 9, 4)) { ?>
+
+                                            <th class="py-3 px-4 border-b text-center">Thao tác</th>
+                                        <?php } ?>
                                     </tr>
+
                                 </thead>
                                 <tbody>
                                     <?php if (count($reviews) > 0): ?>
@@ -190,18 +194,21 @@ $stats = $reviewTable->getReviewStatistics();
                                                 <td class="py-3 px-4 border-b">
                                                     <?php echo date('d/m/Y', strtotime($review['create_at'])); ?>
                                                 </td>
-                                                <td class="py-3 px-4 border-b">
-                                                    <div class="flex justify-center gap-2">
-                                                     
-                                                        <form method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa đánh giá này không?');">
-                                                            <input type="hidden" name="reviewId" value="<?php echo $review['id']; ?>">
-                                                            <button type="submit" name="action" value="delete"
-                                                                class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
+                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 9, 4)) { ?>
+
+                                                    <td class="py-3 px-4 border-b">
+                                                        <div class="flex justify-center gap-2">
+
+                                                            <form method="POST" onsubmit="return confirm('Bạn có chắc muốn xóa đánh giá này không?');">
+                                                                <input type="hidden" name="reviewId" value="<?php echo $review['id']; ?>">
+                                                                <button type="submit" name="action" value="delete"
+                                                                    class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                <?php } ?>
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php else: ?>

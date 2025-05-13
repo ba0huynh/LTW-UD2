@@ -18,7 +18,7 @@ if (isset($_POST['update-status']) && isset($_POST['id']) && isset($_POST['isAct
         echo json_encode([
             'success' => true,
             'message' => $message,
-            'newStatus' => $isActive 
+            'newStatus' => $isActive
         ]);
     } else {
         echo json_encode([
@@ -123,7 +123,7 @@ foreach ($productSales as $product) {
 </head>
 
 <body class="bg-gray-100">
-   
+
     <main class="flex flex-col md:flex-row min-h-screen">
         <!-- Mobile sidebar toggle button -->
         <div class="md:hidden p-4 bg-white border-b">
@@ -131,12 +131,12 @@ foreach ($productSales as $product) {
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </div>
-        
+
         <!-- Sidebar - hidden on mobile by default -->
         <div id="sidebar" class="hidden md:block md:w-64 bg-white shadow-md">
             <?php include_once './gui/sidebar.php' ?>
         </div>
-        
+
         <div class="flex-1 p-3 sm:p-4 md:p-6 h-screen overflow-auto">
             <div class="mb-6">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -150,18 +150,27 @@ foreach ($productSales as $product) {
                         </p>
                     </div>
                     <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                        <a href="themsanpham.php" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            <i class="fas fa-plus mr-2"></i>
-                            Thêm sách mới
-                        </a>
-                        <a href="nhapsanpham.php" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                            <i class="fas fa-file-import mr-2"></i>
-                            Nhập sách
-                        </a>
-                        <a href="lichsunhap.php" class="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                            <i class="fas fa-history mr-2"></i>
-                            Lịch sử nhập
-                        </a>
+                        <?php if ($roleTableSidebar->isAuthorized($adminID, 7, 2)) { ?>
+
+                            <a href="themsanpham.php" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i class="fas fa-plus mr-2"></i>
+                                Thêm sách mới
+                            </a>
+                        <?php } ?>
+                        <?php if ($roleTableSidebar->isAuthorized($adminID, 12, 2)) { ?>
+
+                            <a href="nhapsanpham.php" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                <i class="fas fa-file-import mr-2"></i>
+                                Nhập sách
+                            </a>
+                        <?php } ?>
+                        <?php if ($roleTableSidebar->isAuthorized($adminID, 12, 1)) { ?>
+
+                            <a href="lichsunhap.php" class="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                <i class="fas fa-history mr-2"></i>
+                                Lịch sử nhập
+                            </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -171,20 +180,20 @@ foreach ($productSales as $product) {
                 <?php
                 // Get statistics
                 $totalBooks = $totalItems;
-                
+
                 $stmt = $pdo->prepare("SELECT SUM(quantitySold) as total FROM books WHERE status = 1");
                 $stmt->execute();
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 $totalSold = $result['total'] ?? 0;
-                
+
                 $stmt = $pdo->prepare("SELECT COUNT(*) as total FROM books WHERE isActive = 1 AND status = 1");
                 $stmt->execute();
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 $activeBooks = $result['total'] ?? 0;
-                
-            
+
+
                 ?>
-                
+
                 <div class="bg-white rounded-lg shadow p-4 border-l-4 border-blue-500 stats-card">
                     <div class="flex justify-between">
                         <div>
@@ -196,7 +205,7 @@ foreach ($productSales as $product) {
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-white rounded-lg shadow p-4 border-l-4 border-green-500 stats-card">
                     <div class="flex justify-between">
                         <div>
@@ -211,7 +220,7 @@ foreach ($productSales as $product) {
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-white rounded-lg shadow p-4 border-l-4 border-amber-500 stats-card">
                     <div class="flex justify-between">
                         <div>
@@ -223,7 +232,7 @@ foreach ($productSales as $product) {
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="bg-white rounded-lg shadow p-4 border-l-4 border-purple-500 stats-card">
                     <div class="flex justify-between">
                         <div>
@@ -249,39 +258,39 @@ foreach ($productSales as $product) {
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tên sách</label>
                             <div class="relative">
-                                <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" 
-                                       placeholder="Tìm kiếm sách..." 
-                                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pl-10 pr-3 py-2 border">
+                                <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>"
+                                    placeholder="Tìm kiếm sách..."
+                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 pl-10 pr-3 py-2 border">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fas fa-search text-gray-400"></i>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Môn học</label>
                             <select name="subject" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 border">
                                 <option value="0">Tất cả môn học</option>
                                 <?php foreach ($subjects as $subject): ?>
-                                <option value="<?php echo $subject['id']; ?>" <?php echo $subjectFilter == $subject['id'] ? 'selected' : ''; ?>>
-                                    <?php echo $subject['subjectName']; ?>
-                                </option>
+                                    <option value="<?php echo $subject['id']; ?>" <?php echo $subjectFilter == $subject['id'] ? 'selected' : ''; ?>>
+                                        <?php echo $subject['subjectName']; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Lớp</label>
                             <select name="class" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 border">
                                 <option value="0">Tất cả các lớp</option>
                                 <?php foreach ($classes as $class): ?>
-                                <option value="<?php echo $class['classNumber']; ?>" <?php echo $classFilter == $class['classNumber'] ? 'selected' : ''; ?>>
-                                    Lớp <?php echo $class['classNumber']; ?>
-                                </option>
+                                    <option value="<?php echo $class['classNumber']; ?>" <?php echo $classFilter == $class['classNumber'] ? 'selected' : ''; ?>>
+                                        Lớp <?php echo $class['classNumber']; ?>
+                                    </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Sắp xếp theo</label>
                             <select name="sort" class="block w-full mt-1 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 border">
@@ -295,7 +304,7 @@ foreach ($productSales as $product) {
                                 <option value="quantitySold-asc" <?php echo $sortBy == 'quantitySold-asc' ? 'selected' : ''; ?>>Bán chậm nhất</option>
                             </select>
                         </div>
-                        
+
                         <div class="flex items-end">
                             <button type="submit" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                 <i class="fas fa-filter mr-2"></i>
@@ -313,165 +322,173 @@ foreach ($productSales as $product) {
                         <i class="fas fa-th-list mr-2 text-blue-600"></i>
                         Danh sách (<?php echo $totalItems; ?> cuốn)
                     </h2>
-                    
-                    <?php if($totalItems > 0): ?>
-                    <span class="text-sm text-gray-500">
-                        Hiển thị <?php echo min($itemPerPage, $totalItems); ?> trên <?php echo $totalItems; ?> cuốn
-                    </span>
+
+                    <?php if ($totalItems > 0): ?>
+                        <span class="text-sm text-gray-500">
+                            Hiển thị <?php echo min($itemPerPage, $totalItems); ?> trên <?php echo $totalItems; ?> cuốn
+                        </span>
                     <?php endif; ?>
                 </div>
-                
-                <?php if(count($products) > 0): ?>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 table-hover">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Thông tin sách
-                                </th>
-                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Lớp
-                                </th>
-                                <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Giá
-                                </th>
-                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-Còn kho                                </th>
-                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Trạng thái
-                                </th>
-                                <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Thao tác
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            <?php foreach ($products as $product): ?>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-16 w-16 rounded overflow-hidden bg-gray-100">
-                                            <?php if (!empty($product['imageURL'])): ?>
-                                                <img class="h-16 w-16 object-cover" src="<?php echo htmlspecialchars($product['imageURL']); ?>" alt="<?php echo htmlspecialchars($product['bookName']); ?>">
-                                            <?php else: ?>
-                                                <div class="h-16 w-16 flex items-center justify-center bg-gray-200">
-                                                    <i class="fas fa-book text-gray-400 text-3xl"></i>
+
+                <?php if (count($products) > 0): ?>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 table-hover">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Thông tin sách
+                                    </th>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Lớp
+                                    </th>
+                                    <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Giá
+                                    </th>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Còn kho </th>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Trạng thái
+                                    </th>
+                                    <th scope="col" class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <?php foreach ($products as $product): ?>
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-4 py-3">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-16 w-16 rounded overflow-hidden bg-gray-100">
+                                                    <?php if (!empty($product['imageURL'])): ?>
+                                                        <img class="h-16 w-16 object-cover" src="<?php echo htmlspecialchars($product['imageURL']); ?>" alt="<?php echo htmlspecialchars($product['bookName']); ?>">
+                                                    <?php else: ?>
+                                                        <div class="h-16 w-16 flex items-center justify-center bg-gray-200">
+                                                            <i class="fas fa-book text-gray-400 text-3xl"></i>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900">
+                                                        <?php echo htmlspecialchars($product['bookName']); ?>
+                                                    </div>
+                                                    <div class="text-xs text-gray-500 mt-1">
+                                                        Môn: <?php echo htmlspecialchars($bookTable->getSubjectNameById($product['subjectId'])); ?>
+                                                    </div>
+                                                    <div class="text-xs text-gray-500 mt-0.5 truncate max-w-xs">
+                                                        <?php echo !empty($product['description']) ? htmlspecialchars(substr($product['description'], 0, 50)) . '...' : 'Không có mô tả'; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                <?php echo $product['classNumber']; ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-3 text-right">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                <?php echo number_format($product['currentPrice'], 0, ',', '.'); ?>đ
+                                            </div>
+                                            <?php if ($product['currentPrice'] < $product['oldPrice']): ?>
+                                                <div class="text-xs text-gray-500 line-through">
+                                                    <?php echo number_format($product['oldPrice'], 0, ',', '.'); ?>đ
                                                 </div>
                                             <?php endif; ?>
-                                        </div>
-                                        <div class="ml-4">
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
                                             <div class="text-sm font-medium text-gray-900">
-                                                <?php echo htmlspecialchars($product['bookName']); ?>
+                                                <?php echo number_format($product['quantitySold']); ?>
                                             </div>
-                                            <div class="text-xs text-gray-500 mt-1">
-                                                Môn: <?php echo htmlspecialchars($bookTable->getSubjectNameById($product['subjectId'])); ?>
-                                            </div>
-                                            <div class="text-xs text-gray-500 mt-0.5 truncate max-w-xs">
-                                                <?php echo !empty($product['description']) ? htmlspecialchars(substr($product['description'], 0, 50)) . '...' : 'Không có mô tả'; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        <?php echo $product['classNumber']; ?>
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 text-right">
-                                    <div class="text-sm font-medium text-gray-900">
-                                        <?php echo number_format($product['currentPrice'], 0, ',', '.'); ?>đ
-                                    </div>
-                                    <?php if($product['currentPrice'] < $product['oldPrice']): ?>
-                                    <div class="text-xs text-gray-500 line-through">
-                                        <?php echo number_format($product['oldPrice'], 0, ',', '.'); ?>đ
-                                    </div>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    <div class="text-sm font-medium text-gray-900">
-                                        <?php echo number_format($product['quantitySold']); ?>
-                                    </div>
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    <?php if ($product['isActive'] == 1): ?>
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                            <i class="fas fa-check-circle mr-1"></i> Đang bán
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                            <i class="fas fa-ban mr-1"></i> Ngừng bán
-                                        </span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="px-4 py-3 text-center">
-                                    <div class="flex justify-center items-center space-x-3">
-                                        <button class="text-blue-600 hover:text-blue-900 update-icon" data-id="<?php echo $product['id']; ?>" title="Sửa sách">
-                                            <i class="fas fa-edit text-lg"></i>
-                                        </button>
-                                        
-                                        <button class="text-<?php echo $product['isActive'] == 1 ? 'green' : 'red'; ?>-600 hover:text-<?php echo $product['isActive'] == 1 ? 'green' : 'red'; ?>-900 check-icon" 
-                                                data-id="<?php echo $product['id']; ?>" 
-                                                data-active="<?php echo $product['isActive']; ?>"
-                                                title="<?php echo $product['isActive'] == 1 ? 'Đang bán' : 'Ngừng bán'; ?>">
-                                            <i class="fas fa-toggle-<?php echo $product['isActive'] == 1 ? 'on' : 'off'; ?> text-xl"></i>
-                                        </button>
-                                        
-                                        <button class="text-red-600 hover:text-red-900 delete-icon" data-id="<?php echo $product['id']; ?>" title="Xóa sách">
-                                            <i class="fas fa-trash-alt text-lg"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <?php if($totalPages > 1): ?>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <?php if ($product['isActive'] == 1): ?>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                    <i class="fas fa-check-circle mr-1"></i> Đang bán
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                    <i class="fas fa-ban mr-1"></i> Ngừng bán
+                                                </span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <?php if ($roleTableSidebar->isAuthorized($adminID, 7, 3) || $roleTableSidebar->isAuthorized($adminID, 7, 4)) { ?>
+
+                                            <td class="px-4 py-3 text-center">
+                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 7, 3)) { ?>
+                                                    <button class="text-blue-600 hover:text-blue-900 update-icon" data-id="<?php echo $product['id']; ?>" title="Sửa sách">
+                                                        <i class="fas fa-edit text-lg"></i>
+                                                    </button>
+
+
+                                                    <button class="text-<?php echo $product['isActive'] == 1 ? 'green' : 'red'; ?>-600 hover:text-<?php echo $product['isActive'] == 1 ? 'green' : 'red'; ?>-900 check-icon"
+                                                        data-id="<?php echo $product['id']; ?>"
+                                                        data-active="<?php echo $product['isActive']; ?>"
+                                                        title="<?php echo $product['isActive'] == 1 ? 'Đang bán' : 'Ngừng bán'; ?>">
+                                                        <i class="fas fa-toggle-<?php echo $product['isActive'] == 1 ? 'on' : 'off'; ?> text-xl"></i>
+                                                    </button>
+                                                <?php } ?>
+                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 7, 4)) { ?>
+
+                                                    <button class="text-red-600 hover:text-red-900 delete-icon" data-id="<?php echo $product['id']; ?>" title="Xóa sách">
+                                                        <i class="fas fa-trash-alt text-lg"></i>
+                                                    </button>
+                                                <?php } ?>
+                    </div>
+                <?php } ?>
+
+                </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+            </table>
+            </div>
+
+            <?php if ($totalPages > 1): ?>
                 <div class="px-4 py-3 border-t border-gray-200 sm:px-6">
                     <div class="flex justify-center">
                         <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            <?php if($currentPage > 1): ?>
-                            <a href="?page=<?php echo $currentPage - 1; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>" 
-                               class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Previous</span>
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
+                            <?php if ($currentPage > 1): ?>
+                                <a href="?page=<?php echo $currentPage - 1; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Previous</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
                             <?php endif; ?>
-                            
-                            <?php for($i = 1; $i <= $totalPages; $i++): ?>
-                            <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>" 
-                               class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium <?php echo $i == $currentPage ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'; ?>">
-                                <?php echo $i; ?>
-                            </a>
+
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <a href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>"
+                                    class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium <?php echo $i == $currentPage ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:bg-gray-50'; ?>">
+                                    <?php echo $i; ?>
+                                </a>
                             <?php endfor; ?>
-                            
-                            <?php if($currentPage < $totalPages): ?>
-                            <a href="?page=<?php echo $currentPage + 1; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>" 
-                               class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Next</span>
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
+
+                            <?php if ($currentPage < $totalPages): ?>
+                                <a href="?page=<?php echo $currentPage + 1; ?>&search=<?php echo urlencode($search); ?>&subject=<?php echo $subjectFilter; ?>&class=<?php echo $classFilter; ?>&sort=<?php echo $sortBy; ?>"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <span class="sr-only">Next</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
                             <?php endif; ?>
                         </nav>
                     </div>
                 </div>
-                <?php endif; ?>
-                
-                <?php else: ?>
-                <div class="p-8 text-center">
-                    <div class="inline-block p-4 rounded-full bg-blue-100 text-blue-500 mb-4">
-                        <i class="fas fa-search text-4xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Không tìm thấy sách</h3>
-                    <p class="text-gray-500 mb-6">Không có sách nào phù hợp với tiêu chí tìm kiếm của bạn.</p>
-                    <a href="sanphan.php" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                        <i class="fas fa-redo mr-2"></i>
-                        Xem tất cả sách
-                    </a>
+            <?php endif; ?>
+
+        <?php else: ?>
+            <div class="p-8 text-center">
+                <div class="inline-block p-4 rounded-full bg-blue-100 text-blue-500 mb-4">
+                    <i class="fas fa-search text-4xl"></i>
                 </div>
-                <?php endif; ?>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Không tìm thấy sách</h3>
+                <p class="text-gray-500 mb-6">Không có sách nào phù hợp với tiêu chí tìm kiếm của bạn.</p>
+                <a href="sanphan.php" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                    <i class="fas fa-redo mr-2"></i>
+                    Xem tất cả sách
+                </a>
             </div>
+        <?php endif; ?>
+        </div>
         </div>
     </main>
 
@@ -507,7 +524,7 @@ Còn kho                                </th>
                 const id = this.getAttribute('data-id');
                 const isCurrentlyActive = this.getAttribute('data-active') === '1';
                 const newStatus = isCurrentlyActive ? 0 : 1;
-                
+
                 Swal.fire({
                     title: isCurrentlyActive ? 'Ngừng bán sách?' : 'Bắt đầu bán sách?',
                     text: isCurrentlyActive ? 'Sách sẽ không còn được hiển thị để bán' : 'Sách sẽ được hiển thị để bán',
@@ -564,7 +581,7 @@ Còn kho                                </th>
         document.querySelectorAll('.delete-icon').forEach(function(button) {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
-                
+
                 Swal.fire({
                     title: 'Xóa sách?',
                     text: 'Bạn sẽ không thể khôi phục lại sách sau khi xóa!',
@@ -629,13 +646,16 @@ Còn kho                                </th>
         .stats-card {
             transition: all 0.3s ease;
         }
+
         .stats-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+
         .table-hover tr:hover {
             background-color: #f9fafb;
         }
     </style>
 </body>
+
 </html>

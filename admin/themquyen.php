@@ -30,14 +30,14 @@ $permissions = [];
 // Form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $roleName = trim($_POST['role_name'] ?? '');
-    
+
     // Validate role name
     if (empty($roleName)) {
         $error = 'Tên vai trò không được để trống';
     } else {
         // Create new role
         $newRoleId = $roleManager->createRole($roleName);
-        
+
         if ($newRoleId) {
             // Process permissions
             $permissions = [];
@@ -49,16 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-            
+
             // Set permissions for the new role
             if (!empty($permissions)) {
                 $roleManager->setRolePermissions($newRoleId, $permissions);
                 $success = true;
                 // $roleName = '';
                 // $permissions = [];
-                
-            }
-            else{
+
+            } else {
                 $error = 'Vui lòng chọn ít nhất một quyền cho vai trò này';
             }
             // Clear form after successful submission
@@ -147,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg-gray-100">
- 
+
     <main class="flex flex-col md:flex-row min-h-screen">
         <!-- Mobile sidebar toggle button -->
         <div class="md:hidden p-4 bg-white border-b">
@@ -173,12 +172,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             Tạo vai trò mới và phân quyền cho người dùng trong hệ thống
                         </p>
                     </div>
+                          <?php if ($roleTableSidebar->isAuthorized($adminID, 10, 1)) { ?>
+
                     <div class="mt-4 md:mt-0">
                         <a href="xemquyen.php" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             <i class="fas fa-arrow-left mr-2"></i>
                             Quay lại
                         </a>
                     </div>
+                            <?php } ?>
                 </div>
             </div>
 

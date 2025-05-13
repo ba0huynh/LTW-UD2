@@ -249,10 +249,13 @@ $data = $phieunhap->getPhieuNhapPagination($offset, $itemPerPage, $search, $star
                             <i class="fas fa-file-export mr-2"></i>
                             Xuất dữ liệu
                         </button>
+                                                                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 12, 2)) { ?>
+
                         <a href="nhapSanPham.php" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             <i class="fas fa-plus mr-2"></i>
                             Tạo phiếu nhập
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -452,15 +455,19 @@ $data = $phieunhap->getPhieuNhapPagination($offset, $itemPerPage, $search, $star
                                       
                                         <td>
                                             <div class="actions">
+                                                
                                                 <a href="#" class="view" data-id="<?= $pn['id']; ?>" title="Xem chi tiết">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <a href="in-phieu-nhap.php?id=<?= $pn['id']; ?>" class="edit" title="In phiếu nhập">
                                                     <i class="fas fa-print"></i>
                                                 </a>
+                                                                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 12, 4)) { ?>
+
                                                 <button onclick="deleteProduct(<?= $pn['id'] ?>)" class="delete" title="Xóa">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
+                                                <?php } ?>
                                             </div>
                                         </td>
                                     </tr>

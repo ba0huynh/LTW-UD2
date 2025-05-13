@@ -323,6 +323,8 @@ $rolePermissions = $roleManager->getRolePermissions($roleId);
                 </div>
 
                 <!-- Action buttons -->
+            <?php if ($roleTableSidebar->isAuthorized($adminID, 8, 3)) { ?>
+
                 <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
                     <div class="flex justify-end space-x-3">
                         <button
@@ -333,6 +335,7 @@ $rolePermissions = $roleManager->getRolePermissions($roleId);
                         </button>
                     </div>
                 </div>
+            <?php } ?>
             </div>
 
             <!-- Permissions Section -->
