@@ -304,9 +304,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 case 9:
                                                                                     echo 'star';
                                                                                     break; // Đánh giá
-                                                                                case 10:
+                                                                                 case 10:
                                                                                     echo 'shopping-cart';
                                                                                     break; // Quản lý đơn hàng
+                                                                                case 11:
+                                                                                    echo 'plug';
+                                                                                    break;
+                                                                                case 12:
+                                                                                    echo 'truck-ramp-box';
+                                                                                    break;
+                                                                                case 13:
+                                                                                    echo 'industry';
+                                                                                    break;
                                                                                 default:
                                                                                     echo 'cog';
                                                                             }

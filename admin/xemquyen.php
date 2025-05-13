@@ -298,11 +298,11 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                             <p class="text-sm text-gray-600">Chi tiết quyền hạn và chức năng</p>
                         </div>
                         <div class="mt-2 sm:mt-0 flex">
-                          <?php if ($roleTableSidebar->isAuthorized($adminID, 10, 3)) { ?>
+                            <?php if ($roleTableSidebar->isAuthorized($adminID, 10, 3)) { ?>
 
-                            <a href="suaquyen.php?role_id=<?php echo $selectedRole['role_id']; ?>" class="mr-2 inline-flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
-                                <i class="fas fa-edit mr-1"></i> Sửa
-                            </a>
+                                <a href="suaquyen.php?role_id=<?php echo $selectedRole['role_id']; ?>" class="mr-2 inline-flex items-center px-3 py-1 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200">
+                                    <i class="fas fa-edit mr-1"></i> Sửa
+                                </a>
                             <?php } ?>
                             <?php if ($selectedRole['role_id'] > 3): // Prevent deletion of core roles 
                             ?>
@@ -356,6 +356,15 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                                                                 case 10:
                                                                                     echo 'shopping-cart';
                                                                                     break; // Quản lý đơn hàng
+                                                                                case 11:
+                                                                                    echo 'plug';
+                                                                                    break;
+                                                                                case 12:
+                                                                                    echo 'truck-ramp-box';
+                                                                                    break;
+                                                                                case 13:
+                                                                                    echo 'industry';
+                                                                                    break;
                                                                                 default:
                                                                                     echo 'cog';
                                                                             }
@@ -430,8 +439,8 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
                                 <?php echo $totalUsers; ?>
                             </span>
                         </h3>
-                                                        
-                    
+
+
                     </div>
 
                     <?php if (count($usersWithRole) > 0): ?>
