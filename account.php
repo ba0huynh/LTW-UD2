@@ -3,35 +3,28 @@ session_start();
 require_once "./database/database.php";
 require_once "./database/user.php";
 
-// Initialize database connection and user table
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ltw_ud2";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Create user table instance for improved security
 $userTable = new UsersTable();
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Initialize message variables
 $successMessage = "";
 $errorMessage = "";
 
-// Handle Login Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     $phone = trim($_POST['user_telephone'] ?? '');
     $password = $_POST['user_password'] ?? '';
 
-    // Input validation
     if (empty($phone) || empty($password)) {
         $errorMessage = "Vui lòng nhập số điện thoại và mật khẩu.";
     } else {
-        // Use prepared statement to prevent SQL injection
         $query = "SELECT * FROM users WHERE phoneNumber = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("s", $phone);
@@ -54,12 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
     }
 }
 
-// Get user details if logged in
 $user = null;
 $user_id = $_SESSION["user_id"] ?? null;
 
 if ($user_id) {
-    // Use prepared statements for all database queries
     $sql = "SELECT * FROM users WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
@@ -68,7 +59,6 @@ if ($user_id) {
     $user = $result->fetch_assoc();
     $stmt->close();
     
-    // Parse birthday
     $birthDate = null;
     $birthDay = '';
     $birthMonth = '';
@@ -82,13 +72,11 @@ if ($user_id) {
     }
 }
 
-// Handle Password Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     $old_pass = $_POST['user_old_password'] ?? '';
     $new_pass = $_POST['user_new_password'] ?? '';
     $confirm_pass = $_POST['user_confirm_new_password'] ?? '';
     
-    // Input validation
     if (empty($old_pass) || empty($new_pass) || empty($confirm_pass)) {
         $errorMessage = "Vui lòng điền đầy đủ thông tin mật khẩu.";
     } elseif ($new_pass !== $confirm_pass) {
@@ -96,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     } elseif (strlen($new_pass) < 6) {
         $errorMessage = "Mật khẩu mới phải có ít nhất 6 ký tự.";
     } else {
-        // Use the improved user class for password verification and update
         if ($userTable->verifyUserPassword($user_id, $old_pass)) {
             if ($userTable->updateUserPassword($user_id, $new_pass)) {
                 $successMessage = "Đổi mật khẩu thành công!";
@@ -109,12 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updatePassword'])) {
     }
 }
 
-// Handle Profile Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
-    // Create an array to store user data for updating
     $userData = [];
     
-    // Validate and sanitize input
     $userName = trim($_POST['userName'] ?? '');
     if (!empty($userName)) {
         $userData['userName'] = $userName;
@@ -127,17 +111,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
     
     $phoneNumber = trim($_POST['phoneNumber'] ?? '');
     if (!empty($phoneNumber)) {
-        // Basic phone number format validation
         if (preg_match('/^[0-9]{9,15}$/', $phoneNumber)) {
             $userData['phoneNumber'] = $phoneNumber;
+            $sql = "SELECT id FROM users WHERE phoneNumber = ? AND id != ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("si", $phoneNumber, $user_id);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows > 0) {
+                $errorMessage = "Số điện thoại đã được sử dụng bởi người dùng khác.";
+                unset($userData['phoneNumber']); 
+            }
+            $stmt->close();
         } else {
             $errorMessage = "Số điện thoại không hợp lệ.";
         }
     }
+
     
     $email = trim($_POST['email'] ?? '');
     if (!empty($email)) {
-        // Email validation
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $userData['email'] = $email;
         } else {
@@ -145,15 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
         }
     }
     
-    // Birth date handling
     $date = trim($_POST['dateOfBirth'] ?? '');
     $month = trim($_POST['monthOfBirth'] ?? '');
     $year = trim($_POST['yearOfBirth'] ?? '');
     
     if (!empty($date) && !empty($month) && !empty($year)) {
-        // Validate date
         if (checkdate((int)$month, (int)$date, (int)$year)) {
-            // Format date: YYYY-MM-DD
             $dob = sprintf("%04d-%02d-%02d", intval($year), intval($month), intval($date));
             $userData['dateOfBirth'] = $dob;
         } else {
@@ -161,12 +152,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
         }
     }
     
-    // Only update if there's no error and we have data
     if (empty($errorMessage) && !empty($userData)) {
         if ($userTable->updateUserProfile($user_id, $userData)) {
             $successMessage = "Cập nhật thông tin thành công!";
             
-            // Reload user data to show updated information
             $sql = "SELECT * FROM users WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("i", $user_id);
@@ -175,7 +164,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateProfile'])) {
             $user = $result->fetch_assoc();
             $stmt->close();
             
-            // Update birthday variables
             if (!empty($user["dateOfBirth"])) {
                 $birthDate = new DateTime($user["dateOfBirth"]);
                 $birthDay = $birthDate->format('d');
