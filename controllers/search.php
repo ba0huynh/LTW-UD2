@@ -38,15 +38,15 @@ if ($option == 1) {
   $max_cost = 200000;
 }
 
-$countQuery = "SELECT COUNT(*) AS total FROM books ";
-$query_result_books = "SELECT books.* FROM books ";
+$countQuery = "SELECT COUNT(*) AS total FROM books where 1=1 ";
+$query_result_books = "SELECT books.* FROM books where 1=1  ";
 
 if (!empty($subject)) {
-    $query_result_books .= " WHERE books.subjectId = " . (int)$subject;
-    $countQuery .= " WHERE books.subjectId = " . (int)$subject;
+    $query_result_books .= " and books.subjectId = " . (int)$subject;
+    $countQuery .= " and books.subjectId = " . (int)$subject;
 } else {
-    $query_result_books .= "WHERE books.isActive=1 and books.status = 1 and books.quantitySold > 0  ";  
-    $countQuery .= "WHERE  books.isActive=1 and books.status = 1 and books.quantitySold > 0 ";
+    $query_result_books .= " and books.isActive=1 and books.status = 1 and books.quantitySold > 0  ";  
+    $countQuery .= "and  books.isActive=1 and books.status = 1 and books.quantitySold > 0 ";
 }
 
 

@@ -64,7 +64,8 @@
       </div>
     <?php }} ?>
     
-    <?php if ($count_books>=4){?>
+    <?php if ($count_books>=4){  ?>
+      
     <a href="searchPage.php?subject=<?= $row['id'] ?>"
        class="bg-white transition duration-300 rounded-lg sm:rounded-xl flex flex-col justify-center items-center text-[#0081c2] hover:text-blue-700 p-3 sm:p-4 md:p-6 text-xs sm:text-sm font-medium group">
       <div class="flex flex-col items-center gap-1 sm:gap-2 transform group-hover:scale-105 transition">

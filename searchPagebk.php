@@ -33,11 +33,11 @@ session_start();
             <h2 class="text-xl font-semibold mb-4">LỌC THEO</h2>
 
             <div class="mb-6">
-              <!-- <?php //if (!empty($_GET["subject"])) { ?>
-              <h3 class="font-semibold mb-2">MÔN HỌC :  -->
-              <input name="subject" type="hidden" >
+              <?php if (!empty($_GET["subject"])) { ?>
+              <h3 class="font-semibold mb-2">MÔN HỌC : 
+              <input name="subject" type="text" value="<?php echo htmlspecialchars($_GET["subject"]); ?>">
               </h3>
-              <!-- <?php // } ?> -->
+              <?php } ?>
               <?php if (!empty($_GET["type"])) { ?>
               <h3 class="font-semibold mb-2">THỂ LOẠI : 
               <input  name="type" type="text" value="<?php echo htmlspecialchars($_GET["type"]); ?>">
@@ -49,6 +49,7 @@ session_start();
                   Từ khóa tìm kiếm : <?= htmlspecialchars($search); ?><br>
                 <?php endif; ?>
                 <input type="hidden" name="search" value="<?php if (!empty($_GET["search"])) echo htmlspecialchars($_GET["search"]); ?>">
+                Kết quả tìm kiếm : (<?php echo $num_rows ?? 0; ?>) <br>
                 <?php if (!empty($subject)): ?>
                   Môn: <?= htmlspecialchars($subject); ?><br>
                 <?php endif; ?>
@@ -100,14 +101,6 @@ session_start();
               </label>
             </div> -->
 
-            <div class="flex gap-2">
-              <select name="sort" class="border rounded p-1 text-sm " onchange="document.getElementById('filterForm').submit();">
-                <option>Sắp xếp theo</option>
-                <option value="asc">Giá tăng dần</option>
-                <option value="desc">Giá giảm dần</option>
-              </select>
-            </div>
-
             <button type="submit" class="bg-[#D10024] px-4 text-white m-2 rounded">Tìm kiếm</button>
         </aside>
       </form>
@@ -118,11 +111,75 @@ session_start();
         <!-- Products Grid -->
         <div class="bg-white rounded-2xl shadow p-4 min-h-full">
           <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500" id="search-summary"> </span></h2>
+
+            <h2 class="text-lg font-semibold">KẾT QUẢ TÌM KIẾM: <span class="text-blue-500"> <?php if(!empty($search)) echo $search ;?> (<?php echo $num_rows;?> kết quả)</span></h2>
+            <form action="searchPage.php" method="GET" id="filterForm" class="flex items-center gap-2">
+              <div class="flex gap-2">
+
+                <select name="sort" class="border rounded p-1 text-sm " onchange="document.getElementById('filterForm').submit();">
+                  <option>Sắp xếp theo</option>
+                  <option value="asc">Giá tăng dần</option>
+                  <option value="desc">Giá giảm dần</option>
+                </select>
+              </div>
+            </form>
+
           </div>
-          <div id="booksContainer"  >
+          <div id="booksContainer"  class="grid grid-cols-4 gap-4">
+            <?php
+            $result_books = $conn->query($query_result_books);
+            if($result_books->num_rows>0){
+              while($row=$result_books->fetch_assoc()){
+            ?>
+            <!-- <div class="bg-white rounded-2xl shadow p-2"> -->
+            <div class=" bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 relative group">
+              <img src="<?php echo $row['imageURL'];?>" alt="Book" class="w-full h-80 object-cover transition duration-300 group-hover:brightness-75">
 
+              <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                
+                <a href="book?bookId=<?php echo $row["id"]?>" class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+                  <span class="icon text-xl">🔍</span>
+                </a>
 
+                <button onclick="themVaoGio(<?= $row['id'] ?>)" 
+                type="" 
+                class="bg-white p-2 rounded-full shadow hover:bg-gray-100">
+                  <span class="icon text-xl">🛒</span>
+                </button>
+              </div>
+
+              <!-- <h3 class="text-sm font-semibold m-4"><?php //echo $row['bookName'];?></h3>
+              <div class="text-red-600 font-semibold m-4"><?php //echo number_format($row['currentPrice'], 0, ',', '.'); ?> đ <span class="text-xs text-gray-500 line-through"><?php //echo number_format($row['oldPrice'], 0, ',', '.'); ?> đ</span></div>
+               -->
+              <div class="p-4">
+                <h3 class="text-lg font-semibold text-gray-800"><?php echo htmlspecialchars($row["bookName"]); ?></h3>
+                <div class="flex items-center space-x-2 mt-2">
+                  <span class="text-lg font-bold text-red-500"><?php echo number_format($row["currentPrice"], 0, ',', '.'); ?> đ</span>
+                  <span class="text-sm text-gray-400 line-through"><?php echo number_format($row["oldPrice"], 0, ',', '.'); ?> đ</span>
+
+                </div>
+                <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
+                    <?php
+                    $old = (float)$row["oldPrice"];
+                    $current = (float)$row["currentPrice"];
+
+                    $discount = ($old > 0) ? number_format((1 - $current / $old) * 100, 3) : 0;
+
+                    ?>
+
+                    <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
+                        -<?= $discount ?>%
+                    </span>
+                </span>
+                <span class="ml-2 inline-block bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-0.5 rounded-full shadow-sm">
+                  Còn lại: <?= $row["quantitySold"] ?> cuốn
+                </span>
+              </div>
+            </div>
+            <?php
+              }
+            }
+            ?>
           </div>
         </div>
 
@@ -130,12 +187,54 @@ session_start();
       
     </div>
 
+    <div class="flex justify-center mt-8">
+      <?php
+      if($totalPages > 1) {
+
+      ?>
+      <nav class="inline-flex items-center space-x-1 rounded-xl bg-white px-4 py-2 shadow-md border border-gray-200">
+
+        <?php if ($currentPage > 1): ?>
+          <?php
+            $params = $_GET;
+            $params['page'] = $currentPage - 1;
+          ?>
+          <a href="?<?= http_build_query($params) ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+            «
+          </a>
+        <?php endif; ?>
+
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+          <?php
+            $params = $_GET;
+            $params['page'] = $i;
+          ?>
+          <a href="?<?= http_build_query($params) ?>"
+            class="px-3 py-1 rounded-lg <?= $i == $currentPage ? 'bg-blue-500 text-white font-semibold shadow' : 'text-gray-600 hover:bg-gray-100' ?> transition">
+            <?= $i ?>
+          </a>
+        <?php endfor; ?>
+
+        <?php if ($currentPage < $totalPages): ?>
+          <?php
+            $params = $_GET;
+            $params['page'] = $currentPage + 1;
+          ?>
+          <a href="?<?= http_build_query($params) ?>" class="px-3 py-1 rounded-lg bg-gray-100 text-gray-500 hover:bg-gray-200 transition">
+            »
+          </a>
+        <?php endif; ?>
+
+      </nav>
+      <?php }?>
+    </div>
+
     
   </div>
 
 
   <?php include_once "./components/footer.php";?>
-<script>
+  <script>
   document.addEventListener('DOMContentLoaded', function () {
   const classInput = document.querySelector('input[name="class"]');
   const minClassInput = document.querySelector('input[name="min_class"]');
@@ -176,6 +275,7 @@ session_start();
   .then(data => {
     if (data.success) {
       alert(data.message);
+      // 👉 Update số lượng
       const cartCountSpan = document.getElementById('cart-count');
       if (cartCountSpan) {
         cartCountSpan.innerText = data.count;
@@ -198,22 +298,15 @@ function getFormData(form) {
   const formData = new FormData(form);
   return new URLSearchParams(formData).toString();
 }
-document.addEventListener('DOMContentLoaded', function () {
-  fetchBooks(); 
-});
+
 function fetchBooks() {
   const form = document.getElementById('filterForm');
   const params = getFormData(form);
 
-  fetch('./controllers/search.php?' + params)
+  fetch('ajax_books.php?' + params)
     .then(response => response.text())
     .then(html => {
       document.getElementById('booksContainer').innerHTML = html;
-      const summaryEl = document.querySelector('.search-summary');
-      if (summaryEl) {
-        document.getElementById('search-summary').innerHTML = summaryEl.innerHTML;
-        summaryEl.remove(); // Xoá bản tạm sau khi chèn lên trên
-      }
     })
     .catch(error => {
       console.error("Lỗi AJAX:", error);
@@ -226,24 +319,7 @@ document.getElementById('filterForm').addEventListener('submit', function (e) {
   fetchBooks();
 });
 </script>
-<script>
-  function changePage(page) {
-  const form = document.getElementById('filterForm');
-  const formData = new FormData(form);
-  formData.set('page', page);
 
-  const params = new URLSearchParams(formData).toString();
 
-  fetch('./controllers/search.php?' + params)
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('booksContainer').innerHTML = html;
-    })
-    .catch(error => {
-      console.error("Lỗi phân trang AJAX:", error);
-    });
-  }
-
-</script>
 </body>
 </html>
