@@ -82,61 +82,60 @@ if($conn->connect_error) {
       </div>
 
       <?php 
-      $query_delivering = "SELECT * FROM thongTinGiaoHang where id_user=".$_SESSION["user_id"] ." and status=1";//địa chỉ mặc định
-      $result_query_delivering = $conn->query($query_delivering);
-      if($result_query_delivering->num_rows>0){
-        while($row=$result_query_delivering->fetch_assoc()){
-      ?>
-      <div id="showAddressInfor" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
-        <div class="flex-1">
+      $query = "SELECT * FROM thongTinGiaoHang WHERE id_user = {$_SESSION['user_id']} AND status = 1";
+      $result = $conn->query($query);
 
-          <input type="hidden" id="submitId_Diachi" value="<?php echo $row["id"]?>">
+      $hasDefault = $result && $result->num_rows > 0;
+      $row = $hasDefault ? $result->fetch_assoc() : [
+        "id" => "",
+        "tennguoinhan" => "",
+        "sdt" => "",
+        "diachi" => "",
+        "huyen" => "",
+        "quan" => "",
+        "thanhpho" => "",
+        "status" => ""
+      ];
+      ?>
+
+      <div id="showAddressInfor" class="<?= $hasDefault ? '' : 'hidden' ?> flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+        <div class="flex-1">
+          <input type="hidden" id="submitId_Diachi" value="<?= $row['id'] ?>">
           
-          <span class="font-bold text-gray-900"><span id="submitName"><?php echo $row["tennguoinhan"]?></span></span> 
-          <span class="text-gray-700"> SĐT : <span id="submitSDT"><?php echo $row["sdt"]?></span></span><br>
-          <span id="submitDiachi"><?php echo $row["diachi"]?></span>
-          ,<span id="submitWard"><?php echo $row["huyen"]?></span> , 
-          <span id="submitDistrict"><?php echo $row["quan"]?></span>, 
-          <span id="submitCity"><?php echo $row["thanhpho"]?></span>
-          <input type="hidden" id="macdinh" name="macdinh" value="<?php echo $row["status"]?>">
+            <span class="font-bold text-gray-900" id="submitName"><?= htmlspecialchars($row["tennguoinhan"]) ?></span>
+            <span class="text-gray-700"> SĐT: <span id="submitSDT"><?= htmlspecialchars($row["sdt"]) ?></span></span><br>
+
+            <?php
+            $parts = array_filter([
+              htmlspecialchars($row["diachi"]),
+              htmlspecialchars($row["huyen"]),
+              htmlspecialchars($row["quan"]),
+              htmlspecialchars($row["thanhpho"])
+            ]);
+
+            $fullAddress = implode(', ', $parts);
+            ?>
+
+            <span id="fullAddress"><?= $fullAddress ?></span>
+
+
+          <input type="hidden" id="macdinh" name="macdinh" value="<?= $row["status"] ?>">
         </div>
 
         <div class="flex gap-3 items-center mt-2 sm:mt-0">
-          <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">
-              Mặc Định
-          </span>
-          <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thay Đổi</a>
-        </div>
-      </div>
-      <?php }}else{?>
-      <div id="showAddressInfor" class="hidden flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
-        <div class="flex-1">
-
-          <input type="hidden" id="submitId_Diachi" value="">
-          
-          <span class="font-bold text-gray-900"><span id="submitName"></span></span> 
-          <span class="text-gray-700"> SĐT : <span id="submitSDT"></span></span><br>
-          <span id="submitDiachi"></span>
-          ,<span id="submitWard"></span> , 
-          <span id="submitDistrict"></span>, 
-          <span id="submitCity"></span>
-          <input type="hidden" id="macdinh" name="macdinh" value="">
-        </div>
-
-        <div  class="flex gap-3 items-center mt-2 sm:mt-0">
-          <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">
-              Mặc Định
-          </span>
+          <!-- <span class="text-xs border border-red-500 text-red-500 px-2 py-1 rounded">Mặc Định</span> -->
           <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thay Đổi</a>
         </div>
       </div>
 
-      <div id="add-address"  class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
+      <?php if (!$hasDefault): ?>
+      <div id="add-address" class="flex flex-wrap justify-between items-start text-sm text-gray-800 font-medium">
         <div>
           <a onclick="toggleAddressPopup()" class="cursor-pointer text-blue-600 text-sm font-medium hover:underline">Thêm</a>
         </div>
       </div>
-      <?php }?>
+      <?php endif; ?>
+
     </div>
   </div>
 
@@ -269,7 +268,7 @@ if($conn->connect_error) {
           <!-- Nút thanh toán -->
           <button
             type="button"
-            onclick="xacNhanThanhToan()"
+            onclick="return xacNhanThanhToan()"
             class="flex items-center gap-2 px-7 py-3 bg-gradient-to-r from-pink-500 to-red-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 -ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1974,12 +1973,12 @@ if($conn->connect_error) {
 //   document.getElementById("new-address-form").classList.add("hidden");
 // }
 function showNewAddress() {
-  const ten = document.getElementById("tennguoinhan").value.trim();
-  const sdt = document.getElementById("sdt").value.trim();
-  const diachi = document.getElementById("diachi").value.trim();
-  const ward = document.getElementById("ward").value.trim();
-  const district = document.getElementById("district").value.trim();
-  const province = document.getElementById("province").value.trim();
+  const ten = document.getElementById("tennguoinhan")?.value.trim();
+  const sdt = document.getElementById("sdt")?.value.trim();
+  const diachi = document.getElementById("diachi")?.value.trim();
+  const ward = document.getElementById("ward")?.value.trim();
+  const district = document.getElementById("district")?.value.trim();
+  const province = document.getElementById("province")?.value.trim();
 
   if (!ten || !sdt || !diachi || !ward || !district || !province) {
     alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
@@ -1992,16 +1991,35 @@ function showNewAddress() {
     return;
   }
 
+  const fullAddress = [diachi, ward, district, province]
+    .filter(part => part !== "")
+    .join(", ");
 
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = ward;
-  document.getElementById("submitDistrict").innerText = district;
-  document.getElementById("submitCity").innerText = province;
-  document.getElementById("submitId_Diachi").value = "0"; // Đặt ID địa chỉ là 0 cho địa chỉ mới
-  document.getElementById("new-address-form").classList.add("hidden");
+  const nameEl = document.getElementById("submitName");
+  const sdtEl = document.getElementById("submitSDT");
+  const addressEl = document.getElementById("fullAddress");
+  const idEl = document.getElementById("submitId_Diachi");
+
+  if (!nameEl || !sdtEl || !addressEl || !idEl) {
+    console.warn("❌ Một số phần tử hiển thị không tồn tại trong DOM.");
+    return;
+  }
+
+  nameEl.innerText = ten;
+  sdtEl.innerText = sdt;
+  addressEl.innerText = fullAddress;
+  idEl.value = "0";
+
+  const form = document.getElementById("new-address-form");
+  if (form) form.classList.add("hidden");
+
+  const showInfo = document.getElementById("showAddressInfor");
+  const addAddress = document.getElementById("add-address");
+
+  if (showInfo) showInfo.classList.remove("hidden");
+  if (addAddress) addAddress.classList.add("hidden");
 }
+
 </script>
 
 
@@ -2018,44 +2036,54 @@ function showAddressChecked() {
   const parent = selected.closest(".parentDiachi");
   const ten = parent.querySelector(".showTenNguoiNhan")?.innerText.trim() || "";
   const sdtFull = parent.querySelector(".showSDT")?.innerText.trim() || "";
-  const sdt = sdtFull.replace("SDT : ", "").trim();
-  const diachiElement = parent.querySelector(".text-sm.text-gray-600");
-  const spans = diachiElement.querySelectorAll("span");
-  const diachi = spans[0]?.innerText.trim() || "";
+  const sdt = sdtFull.replace("SĐT :", "").trim();
 
-  const addressLine = diachiElement.innerText.split("\n")[1]?.trim();
-  const [huyen = "", quan = "", thanhpho = ""] = addressLine?.replace("TP. ", "").split(",") || [];
+  const addressEl = parent.querySelector(".text-sm.text-gray-600");
+  const fullAddress = addressEl?.innerText.trim() || "";
 
-  document.getElementById("submitName").innerText = ten;
-  document.getElementById("submitSDT").innerText = sdt;
-  document.getElementById("submitDiachi").innerText = diachi;
-  document.getElementById("submitWard").innerText = huyen.trim();
-  document.getElementById("submitDistrict").innerText = quan.trim();
-  document.getElementById("submitCity").innerText = thanhpho.trim();
+  const id = selected.value;
 
-  document.getElementById("addressPopup").classList.add("hidden");
-  if(document.getElementById("add-address") && !document.getElementById("add-address").classList.contains('hidden'))
-    document.getElementById("showAddressInfor").classList.toggle("hidden");
+  const nameEl = document.getElementById("submitName");
+  const sdtEl = document.getElementById("submitSDT");
+  const fullAddressEl = document.getElementById("fullAddress");
+  const idEl = document.getElementById("submitId_Diachi");
 
-  if(document.getElementById("add-address")) document.getElementById("add-address").classList.toggle("hidden");
+  if (!nameEl || !sdtEl || !fullAddressEl || !idEl) {
+    console.warn("⛔ Thiếu phần tử DOM để cập nhật địa chỉ.");
+    return;
+  }
 
+  nameEl.innerText = ten;
+  sdtEl.innerText = sdt;
+  fullAddressEl.innerText = fullAddress;
+  idEl.value = id;
+
+  // Ẩn popup, hiển thị phần địa chỉ chính
+  const popup = document.getElementById("addressPopup");
+  if (popup) popup.classList.add("hidden");
+
+  const showInfo = document.getElementById("showAddressInfor");
+  const addAddress = document.getElementById("add-address");
+
+  if (addAddress && !addAddress.classList.contains("hidden")) {
+    if (showInfo) showInfo.classList.remove("hidden");
+    addAddress.classList.add("hidden");
+  }
 }
+
 
 
 </script>
 
 <script>
   async function xacNhanThanhToan() {
-    const tennguoinhan = document.getElementById("submitName").innerText.trim();
-    const sdt = document.getElementById("submitSDT").innerText.trim();
-    const diachi = document.getElementById("submitDiachi").innerText.trim();
-    const ward = document.getElementById("submitWard").innerText.trim();
-    const district = document.getElementById("submitDistrict").innerText.trim();
-    const province = document.getElementById("submitCity").innerText.trim();
+    const tennguoinhan = document.getElementById("submitName")?.innerText.trim() || "";
+    const sdt = document.getElementById("submitSDT")?.innerText.trim() || "";
+    const fullAddress = document.getElementById("fullAddress")?.innerText.trim() || "";
     const selectedPayment = document.querySelector('input[name="payment"]:checked');
-    const selected = document.getElementById("submitId_Diachi").value; 
+    const selected = document.getElementById("submitId_Diachi")?.value || "";
 
-    if (!tennguoinhan || !sdt || !diachi || !ward || !district || !province) {
+    if (!tennguoinhan || !sdt || !fullAddress) {
       alert("Vui lòng điền đầy đủ thông tin địa chỉ và người nhận.");
       return;
     }
@@ -2064,20 +2092,26 @@ function showAddressChecked() {
       alert("Vui lòng chọn phương thức thanh toán.");
       return;
     }
+
     console.log("selected:", selected);
     console.log("tennguoinhan:", tennguoinhan);
     console.log("sdt:", sdt);
+    console.log("fullAddress:", fullAddress);
 
     let addressId = null;
 
+    // Nếu là địa chỉ mới
     if (!selected || selected === "0") {
+      // Phân tách địa chỉ từ fullAddress
+      const [diachi = "", huyen = "", quan = "", thanhpho = ""] = fullAddress.split(',').map(part => part.trim());
+
       const newAddress = {
         tennguoinhan,
         sdt,
-        ward,
-        quan: district,  // dùng key "quan" đúng với PHP
-        thanhpho: province,
-        diachi
+        ward: huyen,
+        quan: quan,
+        thanhpho: thanhpho,
+        diachi: diachi
       };
 
       try {
@@ -2137,5 +2171,6 @@ function showAddressChecked() {
     });
   }
 </script>
+
 </body>
 </html>
