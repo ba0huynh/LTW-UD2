@@ -93,7 +93,7 @@ if ($subject_results->num_rows > 0) {
                     while ($type = $type_results->fetch_assoc()):
                 ?>
                     <div class="type-item group">
-                        <a href="/LTW-UD2/searchPage.php?subject=<?= $subject["id"] ?>&type=<?= urlencode($type["type"]) ?>"
+                        <a href="/LTW-UD2/searchPage.php?subject=<?= $subject["id"] ?>&type=<?= urlencode($type["type"]) ?>&class=<?= urlencode($class) ?>"
                            class="flex items-center justify-between text-blue-600 hover:text-blue-800 py-1 px-2 hover:bg-blue-50 rounded-md transition-colors">
                             <div class="flex items-center">
                                 <span class="text-blue-400 mr-2">
