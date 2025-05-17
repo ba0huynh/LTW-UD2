@@ -1,7 +1,14 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['admin_id'])) {
     echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+    exit;
+}
+$id = $_POST['id'];
+
+$id = $_POST['id'] ?? null;
+if (!$id) {
+    echo json_encode(['success' => false, 'message' => 'Thiếu ID đơn hàng']);
     exit;
 }
 ?>

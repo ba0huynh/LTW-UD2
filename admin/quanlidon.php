@@ -826,7 +826,8 @@ foreach ($status_types as $status_type) {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body: "id=" + btn.dataset.id
+      body: "id=" + encodeURIComponent(btn.dataset.id)
+
     })
     .then(res => res.json())
     .then(data => {
@@ -884,13 +885,15 @@ foreach ($status_types as $status_type) {
       select.value = button.dataset.status;
 
 
-      if (parseInt(button.dataset.status) === 3 && parseInt(button.dataset.status) === 4) {
+      if (parseInt(button.dataset.status) === 3 || parseInt(button.dataset.status) === 4) {
         select.disabled = true;
         select.classList.add("opacity-50", "cursor-not-allowed");
       } else {
         select.disabled = false;
         select.classList.remove("opacity-50", "cursor-not-allowed");
       }
+        console.log("dataaaaaaaaaaaaaa",button.dataset.status)
+      console.log("dataaaaaaaaaaaaaa",select)
 
 
       document.getElementById("updateModal").classList.remove("hidden");
