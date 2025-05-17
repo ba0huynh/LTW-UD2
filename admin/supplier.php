@@ -183,10 +183,7 @@ $totalPages = ceil($totalItems / $itemPerPage);
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Tên nhà cung cấp
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Số sản phẩm
-                                </th>
-                                                                                <?php if ($roleTableSidebar->isAuthorized($adminID, 13, 4) || $roleTableSidebar->isAuthorized($adminID,13,3)) { ?>
+                                                                                                             <?php if ($roleTableSidebar->isAuthorized($adminID, 13, 4) || $roleTableSidebar->isAuthorized($adminID,13,3)) { ?>
 
                                 <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Thao tác
@@ -210,9 +207,7 @@ $totalPages = ceil($totalItems / $itemPerPage);
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             <?= htmlspecialchars($supplier['name']) ?>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?= $supplierTable->countBooksWithSupplier($supplier['id']) ?> sách
-                                        </td>
+                                     
                                                 <?php if ($roleTableSidebar->isAuthorized($adminID, 13, 4) || $roleTableSidebar->isAuthorized($adminID,13,3)) { ?>
 
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
