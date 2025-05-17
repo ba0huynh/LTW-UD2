@@ -775,6 +775,7 @@ foreach ($status_types as $status_type) {
     }
 
     function showOrderDetail(btn) {
+      if (!btn) return;
       const texts = {
         1: 'Đang xử lý',
         2: 'Đang được giao',
@@ -820,50 +821,48 @@ foreach ($status_types as $status_type) {
   `;
   console.log(btn.dataset.id)
 
-      fetch("../controllers/get_order_detail.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: "id=" + btn.dataset.id
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            console.log("✅ Danh sách sản phẩm:", data.products);
-            let subtotal = 0;
-            tbody.innerHTML = '';
-
-            if (data.products.length === 0) {
-              tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-gray-500">Không có sản phẩm nào</td></tr>`;
-            } else {
-              data.products.forEach((item, i) => {
-                const total = item.price * item.quantity;
-                subtotal += total;
-                tbody.innerHTML += `
-            <tr class="${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
-              <td class="px-4 py-3 whitespace-nowrap font-mono text-xs">${item.id}</td>
-              <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
-              <td class="px-4 py-3 text-center">${item.quantity}</td>
-              <td class="px-4 py-3 text-right">${formatCurrency(item.price)}</td>
-              <td class="px-4 py-3 text-right font-medium">${formatCurrency(total)}</td>
-            </tr>
-          `;
-              });
-            }
-
-            document.getElementById("orderSummary").innerHTML = formatCurrency(subtotal);
-          } else {
-            tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-red-500">❌ Không tìm thấy sản phẩm</td></tr>`;
-            document.getElementById("orderSummary").innerHTML = '0đ';
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-red-500">❌ Lỗi khi tải sản phẩm</td></tr>`;
-          document.getElementById("orderSummary").innerHTML = '0đ';
-        });
-     }
+  fetch("../controllers/get_order_detail.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: "id=" + btn.dataset.id
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        console.log("✅ Danh sách sản phẩm:", data.products);
+        let subtotal = 0;
+        tbody.innerHTML = '';
+        if (data.products.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-gray-500">Không có sản phẩm nào</td></tr>`;
+        } else {
+          data.products.forEach((item, i) => {
+            const total = item.price * item.quantity;
+            subtotal += total;
+            tbody.innerHTML += `
+        <tr class="${i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}">
+          <td class="px-4 py-3 whitespace-nowrap font-mono text-xs">${item.id}</td>
+          <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
+          <td class="px-4 py-3 text-center">${item.quantity}</td>
+          <td class="px-4 py-3 text-right">${formatCurrency(item.price)}</td>
+          <td class="px-4 py-3 text-right font-medium">${formatCurrency(total)}</td>
+        </tr>
+        `;
+          });
+        }
+        document.getElementById("orderSummary").innerHTML = formatCurrency(subtotal);
+      } else {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-red-500">❌ Không tìm thấy sản phẩm</td></tr>`;
+        document.getElementById("orderSummary").innerHTML = '0đ';
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-red-500">❌ Lỗi khi tải sản phẩm</td></tr>`;
+      document.getElementById("orderSummary").innerHTML = '0đ';
+    });
+  }
 
     function closeDetailModal() {
       document.getElementById("orderDetailModal").classList.add("hidden");
