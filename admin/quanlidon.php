@@ -818,6 +818,7 @@ foreach ($status_types as $status_type) {
       </td>
     </tr>
   `;
+  console.log(btn.dataset.id)
 
       fetch("../controllers/get_order_detail.php", {
           method: "POST",
@@ -862,7 +863,7 @@ foreach ($status_types as $status_type) {
           tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-center text-red-500">❌ Lỗi khi tải sản phẩm</td></tr>`;
           document.getElementById("orderSummary").innerHTML = '0đ';
         });
-    }
+     }
 
     function closeDetailModal() {
       document.getElementById("orderDetailModal").classList.add("hidden");
