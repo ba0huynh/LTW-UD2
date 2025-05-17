@@ -1,10 +1,10 @@
-<?php
+<?php 
 session_start();
 require_once("../database/database.php");
 require_once("../database/book.php");
 require_once("../database/user.php");
 
-$bookTable = new BooksTable();
+// Create connection
 $conn = new mysqli("localhost", "root", "", "ltw_ud2");
 
 // Check connection
@@ -17,7 +17,10 @@ if (!isset($_SESSION['import_list'])) {
     $_SESSION['import_list'] = [];
 }
 
-$books = $bookTable->getAllBook();
+// Get list of books and suppliers
+$books_query = "SELECT id, bookName, classNumber, currentPrice, quantitySold, imageURL FROM books WHERE isActive = 1";
+$books_result = $conn->query($books_query);
+$books = $books_result->fetch_all(MYSQLI_ASSOC);
 
 $suppliers_query = "SELECT id, name FROM nhacungcap";
 $suppliers_result = $conn->query($suppliers_query);
@@ -35,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
     $price = floatval($_POST['price']);
     $quantity = intval($_POST['quantity']);
     $image = $_FILES['image']['name'] ?? '';
-
+    
     // Find selected book
     $selected_book = null;
     foreach ($books as $book) {
@@ -44,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
             break;
         }
     }
-
+    
     // Validate input
     if (!$selected_book) {
         echo "<script>
@@ -83,10 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
         } else {
             $image_path = $selected_book['imageURL'];
         }
-
+        
         // Calculate total
         $total = $price * $quantity;
-
+        
         // Add to session import list
         $_SESSION['import_list'][] = [
             'book_id' => $book_id,
@@ -97,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
             'total' => $total,
             'image' => $image_path
         ];
-
+        
         echo "<script>
             Swal.fire({
                 icon: 'success',
@@ -107,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
                 showConfirmButton: false
             });
         </script>";
-
+        
         // Refresh the statistics
         $total_import_value = array_sum(array_column($_SESSION['import_list'], 'total'));
         $total_import_items = array_sum(array_column($_SESSION['import_list'], 'quantity'));
@@ -117,12 +120,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_list'])) {
 
 // Handle form submission for final import
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
+    $import_code = trim($_POST['import_code']);
     $import_date = $_POST['import_date'];
     $supplier_id = intval($_POST['supplier']);
     $idNguoiNhap = isset($_SESSION["user"]) ? $_SESSION["user"] : 1;
     $total = array_sum(array_column($_SESSION['import_list'], 'total'));
-
-    if (empty($supplier_id)) {
+    
+    if (empty($import_code)) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Vui lòng nhập mã phiếu nhập!'
+            });
+        </script>";
+    } elseif (empty($supplier_id)) {
         echo "<script>
             Swal.fire({
                 icon: 'error',
@@ -144,9 +156,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("dis", $total, $idNguoiNhap, $import_date);
         $stmt->execute();
-
+        
         $import_id = $conn->insert_id;
-
+        
         // Insert into chitietphieunhap table
         foreach ($_SESSION['import_list'] as $item) {
             $sql = "INSERT INTO chitietphieunhap (idPhieuNhap, idBook, idCungCap, soluong, gianhap) 
@@ -154,17 +166,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['import'])) {
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("iiidd", $import_id, $item['book_id'], $supplier_id, $item['quantity'], $item['price']);
             $stmt->execute();
-
+            
             // Update books quantity
             $sql = "UPDATE books SET quantitySold = quantitySold + ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $item['quantity'], $item['book_id']);
             $stmt->execute();
         }
-
+        
         // Clear import list after successful import
         $_SESSION['import_list'] = [];
-
+        
         echo "<script>
             Swal.fire({
                 icon: 'success',
@@ -193,7 +205,6 @@ if (isset($_GET['delete'])) {
 
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -202,6 +213,30 @@ if (isset($_GET['delete'])) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Thêm Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Thêm Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Tùy chỉnh giao diện Select2 -->
+    <style>
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            height: 38px; /* Phù hợp với chiều cao của input */
+            padding: 0.5rem; /* Tailwind's p-2 */
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 28px; /* Căn giữa văn bản */
+        }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 38px; /* Phù hợp với chiều cao */
+        }
+        .select2-container--default .select2-selection--single:focus {
+            outline: none;
+            border-color: #3b82f6; /* Tailwind's border-blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* Tailwind's ring-blue-500 */
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -262,7 +297,6 @@ if (isset($_GET['delete'])) {
                     </div>
                 </div>
 
-             
                 <!-- Total Quantity -->
                 <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-yellow-500">
                     <div class="flex items-center justify-between">
@@ -275,6 +309,8 @@ if (isset($_GET['delete'])) {
                         </div>
                     </div>
                 </div>
+
+                <!-- Total Value -->
                 <div class="bg-white rounded-lg shadow-sm p-4 border-l-4 border-purple-500">
                     <div class="flex items-center justify-between">
                         <div>
@@ -289,18 +325,19 @@ if (isset($_GET['delete'])) {
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add Book Form -->
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <div class="px-4 py-3 bg-gray-50 border-b flex items-center">
                             <i class="fas fa-plus-circle text-blue-500 mr-2"></i>
                             <h2 class="text-lg font-semibold text-gray-700">Thêm sách vào danh sách</h2>
                         </div>
-
+                        
                         <div class="p-5">
                             <form method="POST" action="" enctype="multipart/form-data" class="space-y-4">
                                 <div class="form-group">
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Tên sách</label>
-                                    <select name="book_id" id="book-select" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                    <select name="book_id" id="book-select" class="select2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
                                         <option value="">-- Chọn sách --</option>
                                         <?php foreach ($books as $book): ?>
                                             <option value="<?php echo $book['id']; ?>" data-class="<?php echo $book['classNumber']; ?>" data-price="<?php echo $book['currentPrice']; ?>" data-stock="<?php echo $book['quantitySold']; ?>">
@@ -339,7 +376,10 @@ if (isset($_GET['delete'])) {
                                     </div>
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Hình ảnh (tùy chọn)</label>
+                                    <input type="file" name="image" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 outline-transparent file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                </div>
 
                                 <div class="mt-4 flex justify-end">
                                     <button type="submit" name="add_to_list" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
@@ -352,6 +392,10 @@ if (isset($_GET['delete'])) {
                             <div class="mt-6 border-t pt-6">
                                 <form method="POST" action="" class="space-y-4">
                                     <div class="grid grid-cols-2 gap-4">
+                                        <div class="form-group">
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Mã phiếu nhập</label>
+                                            <input type="text" name="import_code" placeholder="Nhập mã phiếu nhập" class="mt-1 block w-full rounded-md border-gray-300 outline-transparent focus:border-blue-500 focus:ring-blue-500 sm:text-sm" required>
+                                        </div>
 
                                         <div class="form-group">
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Ngày nhập</label>
@@ -402,7 +446,7 @@ if (isset($_GET['delete'])) {
                                 Tổng: <span class="font-semibold"><?php echo count($_SESSION['import_list']); ?></span> mặt hàng
                             </span>
                         </div>
-
+                        
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
@@ -460,16 +504,16 @@ if (isset($_GET['delete'])) {
                                 </tbody>
                             </table>
                         </div>
-
+                        
                         <?php if (!empty($_SESSION['import_list'])): ?>
-                            <div class="bg-gray-50 px-6 py-3 flex justify-between items-center border-t">
-                                <span class="text-sm text-gray-500">
-                                    Tổng số lượng: <span class="font-semibold"><?php echo $total_import_items; ?></span>
-                                </span>
-                                <span class="text-sm font-medium text-gray-900">
-                                    Tổng giá trị: <span class="font-semibold"><?php echo number_format($total_import_value, 0, ',', '.'); ?>đ</span>
-                                </span>
-                            </div>
+                        <div class="bg-gray-50 px-6 py-3 flex justify-between items-center border-t">
+                            <span class="text-sm text-gray-500">
+                                Tổng số lượng: <span class="font-semibold"><?php echo $total_import_items; ?></span>
+                            </span>
+                            <span class="text-sm font-medium text-gray-900">
+                                Tổng giá trị: <span class="font-semibold"><?php echo number_format($total_import_value, 0, ',', '.'); ?>đ</span>
+                            </span>
+                        </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -494,20 +538,28 @@ if (isset($_GET['delete'])) {
             }
         });
 
-        // Book select change handler
-        document.getElementById('book-select').addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            document.getElementById('class-display').value = selectedOption.dataset.class ? 'Lớp ' + selectedOption.dataset.class : '';
-            document.getElementById('stock-display').value = selectedOption.dataset.stock || '0';
+        // Initialize Select2
+        $(document).ready(function() {
+            $('#book-select').select2({
+                placeholder: "-- Chọn sách --",
+                allowClear: true,
+                width: '100%'
+            });
 
-            // Suggest import price (80% of current price)
-            const currentPrice = parseFloat(selectedOption.dataset.price);
-            if (!isNaN(currentPrice)) {
-                const suggestedPrice = Math.round(currentPrice * 0.8 / 1000) * 1000;
-                document.getElementById('price-input').value = suggestedPrice;
-            }
+            // Book select change handler
+            $('#book-select').on('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                document.getElementById('class-display').value = selectedOption.dataset.class ? 'Lớp ' + selectedOption.dataset.class : '';
+                document.getElementById('stock-display').value = selectedOption.dataset.stock || '0';
+                
+                // Suggest import price (80% of current price)
+                const currentPrice = parseFloat(selectedOption.dataset.price);
+                if (!isNaN(currentPrice)) {
+                    const suggestedPrice = Math.round(currentPrice * 0.8 / 1000) * 1000;
+                    document.getElementById('price-input').value = suggestedPrice;
+                }
+            });
         });
     </script>
 </body>
-
 </html>
