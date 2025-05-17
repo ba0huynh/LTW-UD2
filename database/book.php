@@ -91,12 +91,31 @@ public function changeActive($id, $isActive)
     }
 
     public function deleteById($id)
-    {
-        global $pdo;
-        $query = "UPDATE books SET status = 0 WHERE id = $id ";
+{
+    global $pdo;
+    try {
+        // Kiểm tra xem sách có liên quan đến bất kỳ bản ghi bán hàng nào không
+        $query = "SELECT COUNT(*) as count FROM chitiethoadon WHERE idBook = ?";
         $stmt = $pdo->prepare($query);
-        return $stmt->execute();
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['count'] > 0) {
+            // Nếu sách đã được bán, chỉ cập nhật status thành 0 (xóa mềm)
+            $query = "UPDATE books SET status = 0 WHERE id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$id]);
+        } else {
+            // Nếu sách chưa được bán, xóa vĩnh viễn
+            $query = "DELETE FROM books WHERE id = ?";
+            $stmt = $pdo->prepare($query);
+            return $stmt->execute([$id]);
+        }
+    } catch (PDOException $e) {
+        error_log("Lỗi cơ sở dữ liệu trong deleteById: " . $e->getMessage());
+        return false;
     }
+}
 
     public function getAllSubject()
     {

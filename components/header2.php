@@ -359,25 +359,38 @@ if (isset($_POST['login_submit'])) {
     if (empty($phone) || empty($password)) {
         echo "<script>alert('Vui lòng nhập đầy đủ thông tin.');</script>";
     } else {
-        $stmt = $conn->prepare("SELECT id, password FROM users WHERE phoneNumber = ?");
+        // Chuẩn bị truy vấn lấy thông tin người dùng
+        $stmt = $conn->prepare("SELECT id, password, status_user FROM users WHERE phoneNumber = ?");
         $stmt->bind_param("s", $phone);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
-        if ($user && password_verify($password, $user['password'])) {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
+        if ($user) {
+            if ((int)$user['status_user'] === 0) {
+                // Nếu tài khoản bị khóa
+                echo "<script>alert('Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');</script>";
+            } elseif (password_verify($password, $user['password'])) {
+                // Đăng nhập thành công
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION["user_id"] = $user["id"];
+                echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
+                exit;
+            } else {
+                // Mật khẩu sai
+                echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
             }
-            $_SESSION["user_id"] = $user["id"];
-            echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
-            exit;
         } else {
+            // Không tìm thấy người dùng
             echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
         }
+
         $stmt->close();
     }
 }
+
 
 if (isset($_POST['submit_register'])) {
     $phone = trim($_POST['newuser_telephone'] ?? '');
