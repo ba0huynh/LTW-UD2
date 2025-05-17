@@ -196,29 +196,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <select id="class" name="class"
                                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 px-3 border">
                                         <option value="">-- Chọn lớp --</option>
-                                        <?php for ($i = 1; $i <= 12; $i++): ?>
+                                        <?php for ($i = 6; $i <= 12; $i++): ?>
                                             <option value="<?php echo $i; ?>">Lớp <?php echo $i; ?></option>
                                         <?php endfor; ?>
                                     </select>
                                 </div>
 
                                 <!-- Price Information -->
-                                <div>
-                                    <label for="originalPrice" class="block text-sm font-medium text-gray-700 mb-1">
-                                        Giá gốc <span class="text-red-600">*</span>
-                                    </label>
-                                    <div class="relative">
-                                        <input type="number" id="originalPrice" name="originalPrice" min="0" step="1000" placeholder="VD: 20000"
-                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 pl-3 pr-10 border">
-                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                            <span class="text-gray-500">VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                
 
                                 <div>
                                     <label for="currentPrice" class="block text-sm font-medium text-gray-700 mb-1">
-                                        Giá bán <span class="text-red-600">*</span>
+                                        Giá gốc <span class="text-red-600">*</span>
                                     </label>
                                     <div class="relative">
                                         <input type="number" id="currentPrice" name="currentPrice" min="0" step="1000" placeholder="VD: 18000"
@@ -229,6 +218,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </div>
                                 </div>
 
+                                <div>
+                                    <label for="originalPrice" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Giá bán <span class="text-red-600">*</span>
+                                    </label>
+                                    <div class="relative">
+                                        <input type="number" id="originalPrice" name="originalPrice" min="0" step="1000" placeholder="VD: 20000"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 py-2 pl-3 pr-10 border">
+                                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <span class="text-gray-500">VNĐ</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="md:col-span-2">
                                     <label for="bookType" class="block text-sm font-medium text-gray-700 mb-1">
                                         Loại sách <span class="text-red-600">*</span>
@@ -251,12 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
 
                                 <!-- Publish settings -->
-                                <div class="md:col-span-2 flex items-center space-x-2">
+                                <!-- <div class="md:col-span-2 flex items-center space-x-2">
                                     <input type="checkbox" id="publishNow" name="publishNow" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     <label for="publishNow" class="text-sm font-medium text-gray-700">
                                         Đăng bán ngay sau khi tạo
                                     </label>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -436,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Additional validations
                 if (parseFloat(currentPrice) > parseFloat(originalPrice)) {
-                    markInvalid('#currentPrice', 'Giá bán không thể cao hơn giá gốc');
+                    markInvalid('#currentPrice', 'Giá bán phải cao hơn giá gốc');
                     hasError = true;
                 }
 
