@@ -120,6 +120,7 @@ foreach ($productSales as $product) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/script/product.js"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -491,7 +492,10 @@ foreach ($productSales as $product) {
         </div>
         </div>
     </main>
-
+ <div id="myModal" class="modal" style="display: none;">
+        <div class="modal-content">
+        </div>
+    </div>
     <!-- Book Edit Modal (placeholder, would be shown via JavaScript) -->
     <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-screen overflow-y-auto">
@@ -634,12 +638,12 @@ foreach ($productSales as $product) {
         });
 
         // Handle book update/edit
-        document.querySelectorAll('.update-icon').forEach(function(button) {
-            button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                window.location.href = `suasanpham.php?id=${id}`;
-            });
-        });
+        // document.querySelectorAll('.update-icon').forEach(function(button) {
+        //     button.addEventListener('click', function() {
+        //         const id = this.getAttribute('data-id');
+        //         window.location.href = `suasanpham.php?id=${id}`;
+        //     });
+        // });
     </script>
 
     <style>
