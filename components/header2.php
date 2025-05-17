@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
   </div>
   <img src="/LTW-UD2/images/forHeader/menucontent.png" alt="" class=" h-10 animate-fade-in shadow-lg cursor-pointer" id="menuTrigger">
   <div class="flex-1 max-w-2xl mx-4">
-    <form action="/LTW-UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
+    <form id="filterForm"  class="flex rounded border border-gray-300 overflow-hidden">
       <input type="text" name="search" placeholder="Tìm kiếm" class="flex-1 px-4 py-2 outline-none text-sm" required />
       <button type="submit" class="bg-[#D10024] px-4 text-white m-2 rounded">
         🔍
@@ -563,6 +563,28 @@ if (isset($_POST['submit_register'])) {
   });
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  fetchBooks(); 
+});
+function fetchBooks() {
+  const form = document.getElementById('filterForm');
+  const params = getFormData(form);
 
+  fetch('./controllers/search.php?' + params)
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('booksContainer').innerHTML = html;
+      const summaryEl = document.querySelector('.search-summary');
+      if (summaryEl) {
+        document.getElementById('search-summary').innerHTML = summaryEl.innerHTML;
+        summaryEl.remove(); // Xoá bản tạm sau khi chèn lên trên
+      }
+    })
+    .catch(error => {
+      console.error("Lỗi AJAX:", error);
+    });
+}
+</script>
 
 
