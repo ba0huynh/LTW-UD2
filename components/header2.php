@@ -465,7 +465,6 @@ if (isset($_POST['submit_register'])) {
             })
           })
           function openTab(tab, Class) {
-
             const Tablinks = document.querySelectorAll(".tablinks");
             for (let i = 0; i < Tablinks.length; i++) {
               Tablinks[i].className = Tablinks[i].className.replace(" onTab", "");

@@ -1,10 +1,8 @@
 <?php
 
-// Database connection
 require_once("./database/database.php");
 $conn = mysqli_connect("localhost", "root", "", "ltw_ud2");
 
-// Check connection
 if (mysqli_connect_errno()) {
     echo '<div class="p-4 mb-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-md shadow-sm">
             <div class="flex items-center">
@@ -15,7 +13,6 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
-// Validate Class parameter
 if (!isset($_GET['Class']) || !is_numeric($_GET['Class'])) {
     echo '<div class="p-4 mb-4 bg-amber-50 border-l-4 border-amber-500 text-amber-700 rounded-md shadow-sm">
             <div class="flex items-center">
@@ -26,10 +23,8 @@ if (!isset($_GET['Class']) || !is_numeric($_GET['Class'])) {
     exit();
 }
 
-// Sanitize input
 $class = intval($_GET['Class']);
 
-// Get all subjects for the selected class using prepared statement
 $subjects_query = "SELECT DISTINCT s.id, s.subjectName
                   FROM books b
                   JOIN subjects s ON b.subjectId = s.id
@@ -41,7 +36,6 @@ $stmt->bind_param("i", $class);
 $stmt->execute();
 $subject_results = $stmt->get_result();
 
-// Display content or fallback message
 if ($subject_results->num_rows > 0) {
 ?>
 <div class="subject-menu space-y-6 animate-fadeIn">
@@ -60,7 +54,6 @@ if ($subject_results->num_rows > 0) {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
     <?php while ($subject = $subject_results->fetch_assoc()): ?>
         <div class="subject-group bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 hover:border-pink-100">
-            <!-- Subject heading -->
             <div class="flex items-center mb-3 pb-2 border-b border-gray-50">
                 <div class="text-pink-500 mr-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,10 +67,8 @@ if ($subject_results->num_rows > 0) {
                 </a>
             </div>
             
-            <!-- Book types within this subject -->
             <div class="pl-3 space-y-2 mt-3">
                 <?php
-                // Get types for this subject and class
                 $types_query = "SELECT DISTINCT type, COUNT(*) as book_count 
                               FROM books 
                               WHERE subjectId = ? AND classNumber = ?
@@ -153,7 +144,6 @@ if ($subject_results->num_rows > 0) {
           </div>';
 }
 
-// Close database connections
 $stmt->close();
 if (isset($type_stmt)) {
     $type_stmt->close();
