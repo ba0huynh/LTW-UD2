@@ -2075,101 +2075,104 @@ function showAddressChecked() {
 
 </script>
 
-<script>
-  async function xacNhanThanhToan() {
-    const tennguoinhan = document.getElementById("submitName")?.innerText.trim() || "";
-    const sdt = document.getElementById("submitSDT")?.innerText.trim() || "";
-    const fullAddress = document.getElementById("fullAddress")?.innerText.trim() || "";
-    const selectedPayment = document.querySelector('input[name="payment"]:checked');
-    const selected = document.getElementById("submitId_Diachi")?.value || "";
+<script>async function xacNhanThanhToan() {
+  const tennguoinhan = document.getElementById("submitName")?.innerText.trim() || "";
+  const sdt = document.getElementById("submitSDT")?.innerText.trim() || "";
+  const fullAddress = document.getElementById("fullAddress")?.innerText.trim() || "";
+  const selectedPayment = document.querySelector('input[name="payment"]:checked');
+  const selected = document.getElementById("submitId_Diachi")?.value || "";
 
-    if (!tennguoinhan || !sdt || !fullAddress) {
-      alert("Vui lòng điền đầy đủ thông tin địa chỉ và người nhận.");
-      return;
-    }
+  if (!tennguoinhan || !sdt || !fullAddress) {
+    alert("Vui lòng điền đầy đủ thông tin địa chỉ và người nhận.");
+    return;
+  }
 
-    if (!selectedPayment) {
-      alert("Vui lòng chọn phương thức thanh toán.");
-      return;
-    }
+  if (!selectedPayment) {
+    alert("Vui lòng chọn phương thức thanh toán.");
+    return;
+  }
 
-    console.log("selected:", selected);
-    console.log("tennguoinhan:", tennguoinhan);
-    console.log("sdt:", sdt);
-    console.log("fullAddress:", fullAddress);
+  console.log("selected:", selected);
+  console.log("tennguoinhan:", tennguoinhan);
+  console.log("sdt:", sdt);
+  console.log("fullAddress:", fullAddress);
 
-    let addressId = null;
+  let addressId = null;
 
-    // Nếu là địa chỉ mới
-    if (!selected || selected === "0") {
-      // Phân tách địa chỉ từ fullAddress
-      const [diachi = "", huyen = "", quan = "", thanhpho = ""] = fullAddress.split(',').map(part => part.trim());
+  // Nếu là địa chỉ mới
+  if (!selected || selected === "0") {
+    // Phân tách địa chỉ từ fullAddress
+    const [diachi = "", huyen = "", quan = "", thanhpho = ""] = fullAddress.split(',').map(part => part.trim());
 
-      const newAddress = {
-        tennguoinhan,
-        sdt,
-        ward: huyen,
-        quan: quan,
-        thanhpho: thanhpho,
-        diachi: diachi
-      };
+    const newAddress = {
+      tennguoinhan,
+      sdt,
+      ward: huyen,
+      quan: quan,
+      thanhpho: thanhpho,
+      diachi: diachi
+    };
 
-      try {
-        const res = await fetch("../controllers/them_dia_chi.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(newAddress)
-        });
+    try {
+      const res = await fetch("../controllers/them_dia_chi.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newAddress)
+      });
 
-        const result = await res.json();
+      const result = await res.json();
 
-        if (!result.success) {
-          alert("Không thể thêm địa chỉ mới: " + result.message);
-          return;
-        }
-
-        if (!result.address_id) {
-          alert("Thêm địa chỉ thành công nhưng thiếu ID trả về.");
-          return;
-        }
-
-        addressId = result.address_id;
-
-      } catch (err) {
-        console.error(err);
-        alert("Lỗi khi thêm địa chỉ mới.");
+      if (!result.success) {
+        alert("Không thể thêm địa chỉ mới: " + result.message);
         return;
       }
 
-    } else {
-      addressId = selected;
+      if (!result.address_id) {
+        alert("Thêm địa chỉ thành công nhưng thiếu ID trả về.");
+        return;
+      }
+
+      addressId = result.address_id;
+
+    } catch (err) {
+      console.error(err);
+      alert("Lỗi khi thêm địa chỉ mới.");
+      return;
     }
 
-    const paymentMethod = selectedPayment.value;
-
-    fetch("../controllers/thanhtoan.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: `address_id=${encodeURIComponent(addressId)}&payment_method=${encodeURIComponent(paymentMethod)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert(data.message);
-        window.location.href = "/LTW-UD2/zui/responseOrder.php";
-      } else {
-        alert(data.message);
-      }
-    })
-    .catch(error => {
-      console.error("Lỗi khi thanh toán:", error);
-      alert("Thanh toán thất bại!");
-    });
+  } else {
+    addressId = selected;
   }
+
+  const paymentMethod = selectedPayment.value;
+
+  fetch("../controllers/thanhtoan.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: `address_id=${encodeURIComponent(addressId)}&payment_method=${encodeURIComponent(paymentMethod)}`
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // Store the hoadonID in the session storage to use it on the receipt page if needed
+      if (data.hoadonID) {
+        sessionStorage.setItem("hoadonID", data.hoadonID);
+      }
+      // Redirect to receipt.php instead of responseOrder.php
+      window.location.href = "/LTW-UD2/receipt.php";
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(error => {
+    console.error("Lỗi khi thanh toán:", error);
+    alert("Thanh toán thất bại!");
+  });
+}
 </script>
 
 </body>
