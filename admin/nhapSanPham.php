@@ -18,7 +18,7 @@ if (!isset($_SESSION['import_list'])) {
 }
 
 // Get list of books and suppliers
-$books_query = "SELECT id, bookName, classNumber, currentPrice, quantitySold, imageURL FROM books WHERE isActive = 1";
+$books_query = "SELECT id, bookName, classNumber, currentPrice, quantitySold, imageURL FROM books WHERE status = 1";
 $books_result = $conn->query($books_query);
 $books = $books_result->fetch_all(MYSQLI_ASSOC);
 
