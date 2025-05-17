@@ -282,45 +282,6 @@ if (isset($_SESSION['user_id'])) {
       }
     }
   }
-  function isValidPhoneNumber(phone) {
-  const regex = /^0\d{9}$/;
-  return regex.test(phone);
-}
-//Bắt đầu bằng số 0
-//Có tổng cộng 10 chữ số
-function isValidPassword(password) {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return regex.test(password);
-}
-//Ít nhất 8 ký tự
-//Ít nhất một chữ hoa
-//Ít nhất một chữ thường
-//Ít nhất một số
-//Ít nhất một ký tự đặc biệt
-function validateRegisterForm(event) {
-  const phone = document.querySelector('#formdangki input[name="user_telephone"]').value.trim();
-  const password = document.querySelector('#formdangki input[name="user_password"]').value.trim();
-  const confirmPassword = document.querySelector('#formdangki input[name="user_comfirm_password"]').value.trim();
-
-  if (!isValidPhoneNumber(phone)) {
-    alert("Số điện thoại không hợp lệ. Phải có 10 số và bắt đầu bằng 0.");
-    return false;
-  }
-
-  if (!isValidPassword(password)) {
-    alert("Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
-    return false;
-  }
-
-  if (password !== confirmPassword) {
-    alert("Mật khẩu xác nhận không khớp.");
-    return false;
-  }
-
-  // Nếu mọi thứ OK
-  return true;
-}
-
 
   function closeLoginModal() {
     document.getElementById('loginModal').classList.remove('show');
@@ -340,8 +301,57 @@ function validateRegisterForm(event) {
       closeLoginModal();
     }
   }
+function isValidPhoneNumber(phone) {
+  const regex = /^0\d{9}$/;
+  return regex.test(phone);
+}
+
+function isValidPassword(password) {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return regex.test(password);
+}
+
+function validateRegisterForm() {
+  const phone = document.querySelector('#formdangki input[name="newuser_telephone"]').value.trim();
+  const password = document.querySelector('#formdangki input[name="user_password"]').value.trim();
+  const confirmPassword = document.querySelector('#formdangki input[name="user_comfirm_password"]').value.trim();
+
+  if (/[a-zA-Z]/.test(phone)) {
+    alert("Số điện thoại không được chứa chữ cái.");
+    return false;
+  }
+
+  if (!isValidPhoneNumber(phone)) {
+    alert("Số điện thoại không hợp lệ. Phải có 10 số và bắt đầu bằng 0.");
+    return false;
+  }
+
+  if (!isValidPassword(password)) {
+    alert("Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
+    return false;
+  }
+
+  if (password !== confirmPassword) {
+    alert("Mật khẩu xác nhận không khớp.");
+    return false;
+  }
+
+  return true;
+}
+
+// Gắn kiểm tra khi submit
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("formdangki");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      if (!validateRegisterForm()) {
+        e.preventDefault(); // chặn submit nếu không hợp lệ
+      }
+    });
+  }
+});
 </script>
-<?php 
+<?php
 if (isset($_POST['login_submit'])) {
     $phone = trim($_POST['user_telephone'] ?? '');
     $password = $_POST['user_password'] ?? '';
@@ -368,17 +378,20 @@ if (isset($_POST['login_submit'])) {
         $stmt->close();
     }
 }
+
 if (isset($_POST['submit_register'])) {
     $phone = trim($_POST['newuser_telephone'] ?? '');
     $password = $_POST['user_password'] ?? '';
     $confirm = $_POST['user_comfirm_password'] ?? '';
 
-    if (empty($phone) || empty($password) || empty($confirm)) {
-        echo "<script>alert('Vui lòng nhập đầy đủ thông tin.');</script>";
+    // PHP kiểm tra thêm (phòng trường hợp bypass JS)
+    if (!preg_match('/^0\d{9}$/', $phone)) {
+        echo "<script>alert('Số điện thoại không hợp lệ. Phải có 10 số và bắt đầu bằng 0.');</script>";
+    } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/', $password)) {
+        echo "<script>alert('Mật khẩu phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.');</script>";
     } elseif ($password !== $confirm) {
         echo "<script>alert('Mật khẩu nhập lại không khớp.');</script>";
     } else {
-        // Check if phone already exists
         $check = $conn->prepare("SELECT id FROM users WHERE phoneNumber = ?");
         $check->bind_param("s", $phone);
         $check->execute();
@@ -420,6 +433,7 @@ if (isset($_POST['submit_register'])) {
     }
 }
 ?>
+
 
     <!-- Quốc kỳ -->
     <div id="vietNam">

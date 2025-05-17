@@ -35,14 +35,14 @@
     <div>
       <label class="block text-sm font-medium text-gray-700">Số điện thoại</label>
       <input name="newuser_telephone" type="tel" placeholder="Nhập số điện thoại"
-             class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 mt-1">
+             class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 mt-1" required>
     </div>
 
     <div>
       <label class="block text-sm font-medium text-gray-700">Mật khẩu</label>
       <div class="relative mt-1">
         <input name="user_password" type="password" id="password" placeholder="Nhập mật khẩu"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none">
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none" required>
         <button type="button" onclick="togglePassword('password', 'togglePasswordBtn')" id="togglePasswordBtn"
                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-600 text-sm font-medium">Hiện</button>
       </div>
@@ -52,7 +52,7 @@
       <label class="block text-sm font-medium text-gray-700">Nhập lại mật khẩu</label>
       <div class="relative mt-1">
         <input name="user_comfirm_password" type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu"
-               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none">
+               class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none" required>
         <button type="button" onclick="togglePassword('confirmPassword', 'toggleConfirmBtn')" id="toggleConfirmBtn"
                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-600 text-sm font-medium">Hiện</button>
       </div>
