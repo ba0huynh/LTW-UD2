@@ -110,7 +110,6 @@ $num_rows = $result->num_rows;
         while($row=$result_books->fetch_assoc()){
     ?>
 
-
     <!-- <div class="bg-white rounded-2xl shadow p-2"> -->
     <div class=" bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300 relative group">
         <img src="<?php echo $row['imageURL'];?>" alt="Book" class="w-full h-80 object-cover transition duration-300 group-hover:brightness-75">
@@ -136,7 +135,6 @@ $num_rows = $result->num_rows;
         <div class="flex items-center space-x-2 mt-2">
             <span class="text-lg font-bold text-red-500"><?php echo number_format($row["currentPrice"], 0, ',', '.'); ?> đ</span>
             <span class="text-sm text-gray-400 line-through"><?php echo number_format($row["oldPrice"], 0, ',', '.'); ?> đ</span>
-
         </div>
         <span class="text-sm text-white bg-red-400 px-2 py-0.5 rounded">
             <?php
