@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
   </div>
   <img src="/LTW-UD2/images/forHeader/menucontent.png" alt="" class=" h-10 animate-fade-in shadow-lg cursor-pointer" id="menuTrigger">
   <div class="flex-1 max-w-2xl mx-4">
-    <form action="/LTW-UD2/searchPage.php" method="GET" class="flex rounded border border-gray-300 overflow-hidden">
+    <form id="filterForm"  class="flex rounded border border-gray-300 overflow-hidden">
       <input type="text" name="search" placeholder="Tìm kiếm" class="flex-1 px-4 py-2 outline-none text-sm" required />
       <button type="submit" class="bg-[#D10024] px-4 text-white m-2 rounded">
         🔍
@@ -359,25 +359,38 @@ if (isset($_POST['login_submit'])) {
     if (empty($phone) || empty($password)) {
         echo "<script>alert('Vui lòng nhập đầy đủ thông tin.');</script>";
     } else {
-        $stmt = $conn->prepare("SELECT id, password FROM users WHERE phoneNumber = ?");
+        // Chuẩn bị truy vấn lấy thông tin người dùng
+        $stmt = $conn->prepare("SELECT id, password, status_user FROM users WHERE phoneNumber = ?");
         $stmt->bind_param("s", $phone);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
-        if ($user && password_verify($password, $user['password'])) {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
+        if ($user) {
+            if ((int)$user['status_user'] === 0) {
+                // Nếu tài khoản bị khóa
+                echo "<script>alert('Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.');</script>";
+            } elseif (password_verify($password, $user['password'])) {
+                // Đăng nhập thành công
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+                $_SESSION["user_id"] = $user["id"];
+                echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
+                exit;
+            } else {
+                // Mật khẩu sai
+                echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
             }
-            $_SESSION["user_id"] = $user["id"];
-            echo "<script>alert('Đăng nhập thành công!'); window.location.href='index.php';</script>";
-            exit;
         } else {
+            // Không tìm thấy người dùng
             echo "<script>alert('Sai số điện thoại hoặc mật khẩu!');</script>";
         }
+
         $stmt->close();
     }
 }
+
 
 if (isset($_POST['submit_register'])) {
     $phone = trim($_POST['newuser_telephone'] ?? '');
@@ -563,6 +576,28 @@ if (isset($_POST['submit_register'])) {
   });
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  fetchBooks(); 
+});
+function fetchBooks() {
+  const form = document.getElementById('filterForm');
+  const params = getFormData(form);
 
+  fetch('./controllers/search.php?' + params)
+    .then(response => response.text())
+    .then(html => {
+      document.getElementById('booksContainer').innerHTML = html;
+      const summaryEl = document.querySelector('.search-summary');
+      if (summaryEl) {
+        document.getElementById('search-summary').innerHTML = summaryEl.innerHTML;
+        summaryEl.remove(); // Xoá bản tạm sau khi chèn lên trên
+      }
+    })
+    .catch(error => {
+      console.error("Lỗi AJAX:", error);
+    });
+}
+</script>
 
 

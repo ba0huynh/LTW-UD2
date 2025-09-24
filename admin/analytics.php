@@ -390,11 +390,7 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
                                                         </td>
                                                         <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-right"><?php echo $customer['order_count']; ?></td>
                                                         <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-right font-medium text-blue-600"><?php echo number_format($customer['total_spent'], 0, ',', '.'); ?>đ</td>
-                                                        <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-center">
-                                                            <a href="./quanlidon.php?user_id=<?php echo $customer['id']; ?>" class="text-blue-600 hover:text-blue-900 hover:underline">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                        </td>
+
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -417,7 +413,6 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
                                                     <th scope="col" class="px-3 py-2 md:px-4 md:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sản phẩm</th>
                                                     <th scope="col" class="px-3 py-2 md:px-4 md:py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Số lượng</th>
                                                     <th scope="col" class="px-3 py-2 md:px-4 md:py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Doanh thu</th>
-                                                    <th scope="col" class="px-3 py-2 md:px-4 md:py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Hoá đơn</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
@@ -435,12 +430,7 @@ $growthRate = $previousMonth > 0 ? (($currentMonth - $previousMonth) / $previous
                                                             </div>
                                                         </td>
                                                         <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-right"><?php echo $product['quantity_sold']; ?></td>
-                                                        <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-right font-medium text-green-600"><?php echo number_format($product['total_revenue'], 0, ',', '.'); ?>đ</td>
-                                                        <td class="px-3 py-2 md:px-4 md:py-3 whitespace-nowrap text-xs md:text-sm text-center">
-                                                            <a href="./quanlidon.php?product_id=<?php echo $product['id']; ?>" class="text-blue-600 hover:text-blue-900 hover:underline">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                        </td>
+                                                       
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
